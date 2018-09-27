@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\raw\\country_code.db",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\raw\\country_code.db"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\raw\\fy.mp3",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\raw\\fy.mp3"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\raw\\data1.zip",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\raw\\data1.zip"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\raw\\beep.ogg",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\raw\\beep.ogg"
+    }
+]

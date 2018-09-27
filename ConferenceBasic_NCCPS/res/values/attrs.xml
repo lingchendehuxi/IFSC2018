@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ZSwipeItem">
+        <attr name="drag_edge" format="enum">
+            <enum name="left" value="0" />
+            <enum name="right" value="1" />
+            <enum name="top" value="2" />
+            <enum name="bottom" value="3" />
+        </attr>
+        <attr name="horizontalSwipeOffset" format="dimension" />
+        <attr name="verticalSwipeOffset" format="dimension" />
+        <attr name="show_mode" format="enum">
+            <enum name="lay_down" value="0" />
+            <enum name="pull_out" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <!-- 圆形图片 -->
+    <declare-styleable name="CircleImageView">
+        <attr name="border_width" format="dimension" />
+        <attr name="border_color" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="SegmentedGroup">
+        <attr name="sc_corner_radius" format="dimension" />
+        <attr name="sc_border_width" format="dimension" />
+        <attr name="sc_tint_color" format="color" />
+        <attr name="sc_checked_text_color" format="color" />
+    </declare-styleable>
+
+    <!-- 扫一扫 -->
+    <declare-styleable name="innerrect">
+        <attr name="inner_width" format="dimension"/>
+        <attr name="inner_height" format="dimension"/>
+        <attr name="inner_margintop" format="dimension" />
+        <attr name="inner_corner_color" format="color" />
+        <attr name="inner_corner_length" format="dimension" />
+        <attr name="inner_corner_width" format="dimension" />
+        <attr name="inner_scan_bitmap" format="reference" />
+        <attr name="inner_scan_speed" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="TagFlowLayout">
+        <attr name="auto_select_effect" format="boolean"></attr>
+        <attr name="max_select" format="integer"></attr>
+        <attr name="gravity" format="string"></attr>
+    </declare-styleable>
+
+    <declare-styleable name="StickyListHeadersListView">
+        <attr name="stickyListHeadersListViewStyle" format="reference"/>
+
+        <!-- View attributes -->
+        <attr name="android:clipToPadding" />
+        <attr name="android:scrollbars" />
+        <attr name="android:overScrollMode" />
+        <attr name="android:padding" />
+        <attr name="android:paddingLeft" />
+        <attr name="android:paddingTop" />
+        <attr name="android:paddingRight" />
+        <attr name="android:paddingBottom" />
+
+        <!-- ListView attributes -->
+        <attr name="android:fadingEdgeLength" />
+        <attr name="android:requiresFadingEdge" />
+        <attr name="android:cacheColorHint" />
+        <attr name="android:choiceMode" />
+        <attr name="android:drawSelectorOnTop" />
+        <attr name="android:fastScrollEnabled" />
+        <attr name="android:fastScrollAlwaysVisible" />
+        <attr name="android:listSelector" />
+        <attr name="android:scrollingCache" />
+        <attr name="android:scrollbarStyle" />
+        <attr name="android:divider" />
+        <attr name="android:dividerHeight" />
+        <attr name="android:transcriptMode" />
+        <attr name="android:stackFromBottom" />
+
+        <!-- StickyListHeaders attributes -->
+        <attr name="hasStickyHeaders" format="boolean" />
+        <attr name="isDrawingListUnderStickyHeader" format="boolean" />
+    </declare-styleable>
+</resources>

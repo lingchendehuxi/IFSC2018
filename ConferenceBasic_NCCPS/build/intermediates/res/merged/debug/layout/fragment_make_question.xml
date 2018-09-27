@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/white"
+    android:padding="@dimen/layout_padding"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_topic"
+        android:layout_width="match_parent"
+        android:textSize="@dimen/text_size_large"
+        android:textColor="@color/theme_color"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/et_email"
+        android:hint="@string/question_email"
+        android:textSize="@dimen/text_size_media"
+        android:layout_marginBottom="@dimen/layout_margin"
+        android:layout_marginTop="@dimen/layout_margin"
+        android:background="@null"
+        android:textColorHint="@color/gray"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:textColorHint="@color/gray"
+        android:id="@+id/et_question"
+        android:textColor="@color/black"
+        android:hint="@string/question_content_hint"
+        android:background="@null"
+        android:gravity="start|left"
+        android:textSize="@dimen/text_size_media"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/rl_top"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="@color/action_bar_bg">
+        <TextView
+            android:id="@+id/title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:ellipsize="middle"
+            android:gravity="center"
+            android:text="@string/home_messagestation"
+            android:textColor="#FFF"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/message_type"
+        android:layout_below="@id/rl_top"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:orientation="horizontal">
+        <RelativeLayout
+            android:id="@+id/massage_xt_layout"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/massage_xt"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/system_message"
+                android:textColor="@color/alpha_theme_color"
+                android:gravity="center"
+                android:textSize="16dp"
+                />
+            <ImageView
+                android:id="@+id/massage_xt_img"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/alpha_theme_color"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/massage_gr_layout"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/massage_gr"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:layout_centerInParent="true"
+                android:layout_height="wrap_content"
+                android:textColor="@color/normal_gray"
+                android:text="@string/personal_message"
+                android:textSize="16dp"
+                />
+            <ImageView
+                android:id="@+id/massage_gr_tz"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:src="@drawable/message_tz"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"
+                android:layout_toRightOf="@+id/massage_gr"/>
+            <ImageView
+                android:id="@+id/massage_gr_img"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:visibility="gone"
+                android:layout_alignParentBottom="true"
+                android:background="@color/alpha_theme_color"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <com.jcodecraeer.xrecyclerview.XRecyclerView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/recyclerview"
+        android:layout_width="match_parent"
+        android:layout_below="@id/message_type"
+        android:layout_height="match_parent"
+        android:background="@color/ios_background_color" />
+
+    <TextView
+        android:id="@+id/tv_tips"
+        android:text="@string/system_nomessage"
+        android:visibility="gone"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="3dp"
+    android:background="@color/white">
+    <TextView
+        android:id="@+id/tv_tips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/tips_question_meeting"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tv_question"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/theme_color"
+        android:gravity="center"
+        android:padding="@dimen/layout_padding"
+        android:text="@string/make_question"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_large" />
+
+    <com.jcodecraeer.xrecyclerview.XRecyclerView
+        android:layout_above="@id/tv_question"
+        android:id="@+id/rv_question"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <ProgressBar
+        android:layout_centerInParent="true"
+        android:id="@+id/pb_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

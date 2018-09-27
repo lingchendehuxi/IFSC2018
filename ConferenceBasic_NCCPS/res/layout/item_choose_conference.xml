@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_margin="3dp"
+    android:background="#F2F2F2"
+    android:layout_height="wrap_content">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/layout_padding">
+
+        <ImageView
+            android:id="@+id/iv_conference"
+            android:layout_width="60dip"
+            android:layout_height="60dip"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/tv_conference_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/tv_conference_time_and_location"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="6dp"
+            android:textSize="10sp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/gray" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_download"
+        android:src="@drawable/home_choose_conference_download"
+        android:layout_alignParentRight="true"
+        android:scaleType="fitCenter"
+        android:layout_margin="@dimen/layout_margin"
+        android:layout_width="20dp"
+        android:layout_height="20dp" />
+</RelativeLayout>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="@color/white"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:padding="@dimen/layout_padding"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+          >
+
+            <com.android.incongress.cd.conference.widget.IncongressTextView
+                android:id="@+id/mycenter_note_child_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:paddingLeft="10dp"
+                android:singleLine="false"
+                android:text="@string/test"
+                android:textColor="#000"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="10dp">
+
+                <com.android.incongress.cd.conference.widget.IncongressTextView
+                    android:id="@+id/mycenter_note_child_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/hyrc_icon_time"
+                    android:drawablePadding="5dp"
+                    android:paddingLeft="10dp"
+                    android:textColor="#8b8a90"
+                    android:textSize="12sp" />
+
+                <com.android.incongress.cd.conference.widget.IncongressTextView
+                    android:id="@+id/mycenter_note_child_room"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/hyrc_icon_house"
+                    android:drawablePadding="5dp"
+                    android:ellipsize="end"
+                    android:paddingLeft="10dp"
+                    android:singleLine="true"
+                    android:textColor="#8b8a90"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/mycenter_note_child_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/me_next" />
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

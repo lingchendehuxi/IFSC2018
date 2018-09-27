@@ -1,0 +1,550 @@
+[
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\login_et_bg.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\login_et_bg.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\common_google_signin_btn_text_light.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable\\common_google_signin_btn_text_light.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\identity_button_selector.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\identity_button_selector.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\identity_selector.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\identity_selector.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\button_selector.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\button_selector.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\bg_login_selected.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\bg_login_selected.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\bus_remind_normal.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\bus_remind_normal.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\green_round_rectle_background.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\green_round_rectle_background.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\operater_more_background.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\operater_more_background.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\marquee_bg.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\marquee_bg.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\alertdialog.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\alertdialog.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\design_bottom_navigation_item_background.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\67e2355ffe87152db1182b968ab8d572b74148b0\\output\\res\\drawable\\design_bottom_navigation_item_background.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\bg_border.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\bg_border.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_clear_material.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\drawable\\abc_ic_clear_material.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\design_snackbar_background.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\67e2355ffe87152db1182b968ab8d572b74148b0\\output\\res\\drawable\\design_snackbar_background.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_seekbar_thumb_material.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\drawable\\abc_seekbar_thumb_material.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_item_background_holo_dark.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\drawable\\abc_item_background_holo_dark.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\table_row_divider.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\table_row_divider.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_seekbar_tick_mark_material.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\drawable\\abc_seekbar_tick_mark_material.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\divider_bg.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\divider_bg.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\bg_login_unselected.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\bg_login_unselected.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_dialog_material_background.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\drawable\\abc_dialog_material_background.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\dots_normal.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\dots_normal.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\radio_unchecked.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\radio_unchecked.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\common_google_signin_btn_icon_dark.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable\\common_google_signin_btn_icon_dark.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\bus_tips.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\bus_tips.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_list_selector_background_transition_holo_dark.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\drawable\\abc_list_selector_background_transition_holo_dark.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\btn_settingupdate.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\btn_settingupdate.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\common_google_signin_btn_icon_light.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable\\common_google_signin_btn_icon_light.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\tips_bg.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\tips_bg.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\circle_bg.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\circle_bg.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\home_circle_number_bg.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\home_circle_number_bg.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\bg_room_tag_normal.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\bg_room_tag_normal.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\bg_segment_selected.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\bg_segment_selected.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\selector_edit_bg.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\selector_edit_bg.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_list_selector_holo_light.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\drawable\\abc_list_selector_holo_light.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_tab_indicator_material.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\drawable\\abc_tab_indicator_material.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\line_left_right_bottom.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\line_left_right_bottom.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ratingbar_small_material.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\drawable\\abc_ratingbar_small_material.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\button_text_color.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\button_text_color.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\common_plus_signin_btn_text_light.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable\\common_plus_signin_btn_text_light.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\circle_white_bg.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\circle_white_bg.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\radio_checked.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\radio_checked.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\umeng_socialize_edit_bg.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\umeng_socialize_edit_bg.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\bt_background.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\bt_background.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\bg_button.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\bg_button.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_go_search_api_material.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\drawable\\abc_ic_go_search_api_material.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\umeng_socialize_btn_bg.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\umeng_socialize_btn_bg.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\detail_no.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\detail_no.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\umeng_socialize_copy.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\umeng_socialize_copy.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\umeng_socialize_share_video.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\umeng_socialize_share_video.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\home_icon_lefttop.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\home_icon_lefttop.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\home_icon_leftbottom.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\home_icon_leftbottom.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\bg_room.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\bg_room.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_item_background_holo_light.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\drawable\\abc_item_background_holo_light.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\home_icon_rightbottom.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\home_icon_rightbottom.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\notification_bg_low.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\drawable\\notification_bg_low.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_spinner_textfield_background_material.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\drawable\\abc_spinner_textfield_background_material.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_list_selector_holo_dark.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\drawable\\abc_list_selector_holo_dark.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\bg_segment_unselected.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\bg_segment_unselected.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\btn_switch.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\btn_switch.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\bg_register_editor.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\bg_register_editor.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_text_cursor_material.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\drawable\\abc_text_cursor_material.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\bus_selected.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\bus_selected.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\icon_tips_information.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\icon_tips_information.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\home_circle_bg.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\home_circle_bg.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_arrow_drop_right_black_24dp.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\drawable\\abc_ic_arrow_drop_right_black_24dp.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\icon_tips_classes.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\icon_tips_classes.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\design_password_eye.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\67e2355ffe87152db1182b968ab8d572b74148b0\\output\\res\\drawable\\design_password_eye.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\notification_bg.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\drawable\\notification_bg.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\detail_yes.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\detail_yes.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\bg_skip.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\bg_skip.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_voice_search_api_material.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\drawable\\abc_ic_voice_search_api_material.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\bg_photo.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\bg_photo.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_ab_back_material.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\drawable\\abc_ic_ab_back_material.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\bg_room_tag_selected.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\bg_room_tag_selected.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\umeng_socialize_copyurl.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\umeng_socialize_copyurl.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_edit_text_material.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\drawable\\abc_edit_text_material.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\button_handle_bg.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\button_handle_bg.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\common_google_signin_btn_text_dark.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable\\common_google_signin_btn_text_dark.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\selector_checkbox.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\selector_checkbox.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_btn_check_material.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\drawable\\abc_btn_check_material.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_cab_background_internal_bg.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\drawable\\abc_cab_background_internal_bg.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\vpi__tab_indicator.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\vpi__tab_indicator.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\design_fab_background.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\67e2355ffe87152db1182b968ab8d572b74148b0\\output\\res\\drawable\\design_fab_background.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ratingbar_indicator_material.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\drawable\\abc_ratingbar_indicator_material.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\background_speakers_roles.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\background_speakers_roles.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\bus_remind_layout_right.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\bus_remind_layout_right.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_btn_default_mtrl_shape.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\drawable\\abc_btn_default_mtrl_shape.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\bg_button_gray.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\bg_button_gray.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\bus_remind_layout_left.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\bus_remind_layout_left.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\label_yy.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\label_yy.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\progressloading.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2c513b258b476fbd6259381dfb401282fedd1606\\output\\res\\drawable\\progressloading.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\label_background.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\label_background.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_switch_thumb_material.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\drawable\\abc_switch_thumb_material.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\table_row_divider_gap.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\table_row_divider_gap.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\button_unselected.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\button_unselected.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_btn_borderless_material.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\drawable\\abc_btn_borderless_material.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\bg_gf_crop_texture.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\00f81b563bc26b67b1050c22bcf9be5a413d676d\\output\\res\\drawable\\bg_gf_crop_texture.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\umeng_socialize_share_music.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\umeng_socialize_share_music.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\progressbar.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\progressbar.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\umeng_socialize_share_web.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\umeng_socialize_share_web.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\umeng_socialize_menu_default.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\umeng_socialize_menu_default.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\home_icon_layout.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\home_icon_layout.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_btn_colored_material.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\drawable\\abc_btn_colored_material.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\common_plus_signin_btn_icon_dark.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable\\common_plus_signin_btn_icon_dark.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\notification_icon_background.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\drawable\\notification_icon_background.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\tip_inf_expand.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\tip_inf_expand.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_list_selector_background_transition_holo_light.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\drawable\\abc_list_selector_background_transition_holo_light.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\common_plus_signin_btn_text_dark.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable\\common_plus_signin_btn_text_dark.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\home_icon_righttop.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\home_icon_righttop.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\bg_home.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\bg_home.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\progress.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\progress.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_cab_background_top_material.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\drawable\\abc_cab_background_top_material.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\bus_remind_pressed.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\bus_remind_pressed.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\umeng_socialize_back_icon.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\umeng_socialize_back_icon.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\button_selected.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\button_selected.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ratingbar_material.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\drawable\\abc_ratingbar_material.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\navigation_empty_icon.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\67e2355ffe87152db1182b968ab8d572b74148b0\\output\\res\\drawable\\navigation_empty_icon.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_search_api_material.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\drawable\\abc_ic_search_api_material.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_textfield_search_material.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\drawable\\abc_textfield_search_material.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\umeng_socialize_delete.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\umeng_socialize_delete.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\light_blue_background.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\light_blue_background.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\now_next_alldoom.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\now_next_alldoom.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\common_plus_signin_btn_icon_light.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable\\common_plus_signin_btn_icon_light.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\umeng_socialize_more.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\umeng_socialize_more.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_vector_test.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\drawable\\abc_vector_test.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_menu_overflow_material.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\drawable\\abc_ic_menu_overflow_material.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\notification_tile_bg.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\drawable\\notification_tile_bg.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\identity_checked.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\identity_checked.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\dots_focuse.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\dots_focuse.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\identity_unchecked.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\identity_unchecked.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_btn_radio_material.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\drawable\\abc_btn_radio_material.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\button_delete_bg.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\button_delete_bg.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\loading_dialog_style.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\loading_dialog_style.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\image_bounds.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable\\image_bounds.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_seekbar_track_material.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\drawable\\abc_seekbar_track_material.xml"
+    }
+]

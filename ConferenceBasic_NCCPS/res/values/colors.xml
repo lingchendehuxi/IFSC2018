@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="action_bar_bg">#06161f</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="normal_gray">#8b8a90</color>
+    <color name="gray">#CACACA</color>
+    <color name="alpha_gray">#11CACACA</color>
+    <color name="transparent">#00000000</color>
+    <color name="little_gray">#EAF2F0</color>
+    <color name="alpha_black">#e0000000</color>
+
+    <color name="alpha_color">#996db1f1</color>
+    <color name="theme_color">#FF6db1f1</color>
+    <color name="alpha_theme_color">#CC6db1f1</color>
+    <color name="alpha_more_theme_color">#196db1f1</color>
+    <color name="theme_icon">#406B8E</color>
+    <color name="theme_bg">#59B1F7</color>
+    <color name="no_data_text_color">#505050</color>
+    <color name="selectorgray">#0BCACACA</color>
+    <color name="dividerColor">#CACACA</color>
+
+    <color name="titlebardivider">#3e3250</color>
+
+    <color name="splash_progress_bar">#4ea5b6</color>
+
+    <!-- ZXing-->
+    <color name="possible_result_points">#c0ffff00</color>
+    <color name="result_view">#b0000000</color>
+    <color name="viewfinder_mask">#60000000</color>
+
+    <color name="recyler_gray">#E8E8E8</color>
+    <color name="transparents">#8000</color>
+    <!-- CIT2016 首页色值-->
+    <color name="home_bg">#1b293a</color>
+    <color name="home_green">#ffebbe</color>
+    <color name="home_firt_blue">#BEE1F5</color>
+    <color name="home_second_blue">#BEE1F5</color>
+    <color name="home_third_blue">#BEE1F5</color>
+    <color name="ios_background_color">#EBF0F4</color>
+
+    <color name="holo_blue">#FF33E5B5</color>
+    <color name="title_color">#15293A</color>
+    <color name="bus_qx">#00c832</color>
+
+    <!-- 现场互动 -->
+    <color name="hd_session_color_first">@color/theme_color</color>
+    <color name="hd_session_color_second">@color/home_firt_blue</color>
+    <color name="hd_session_divider_first">#263343</color>
+    <color name="hd_session_divider_second">#EFEEF3</color>
+
+    <color name="home_circle_num_bg">#A9568E</color>
+    <color name="scenic_xiu_comment_background">#F4F4F4</color>
+    <color name="make_post_bg">#FFEAF0F4</color>
+
+    <color name="search_normal_color">#838383</color>
+
+    <color name="home_text_color">#142850</color>
+
+    <color name="light_blue_100">#EFEFEF</color>
+    <color name="light_blue_300">#C5C5C5</color>
+    <color name="light_blue_500">#C5C5C5</color>
+    <color name="field_text_color">#9c9c9c</color>
+
+    <!-- 首页icon背景色 -->
+    <color name="home_blue_100">#00599c</color>
+    <color name="home_blue_300">#01305c</color>
+    <color name="home_blue_500">#021f49</color>
+    <color name="home_blue_800">#000d31</color>
+</resources>

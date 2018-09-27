@@ -1,0 +1,38 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_height="match_parent"
+    android:id="@+id/rl_whole_view">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:text="Tips：日程相关模块可完全离线使用哦~~"
+        android:background="@drawable/tips_bg"
+        android:id="@+id/tv_tips"
+        android:layout_margin="3dp"
+        android:textColor="#7E7E7E"
+        android:visibility="gone"
+        android:textSize="@dimen/text_size_small"
+        android:drawableRight="@drawable/edittext_delete"
+        android:layout_height="wrap_content" />
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tablayout"
+        android:layout_width="match_parent"
+        app:tabIndicatorColor="@color/theme_color"
+        android:background="@color/white"
+        app:tabSelectedTextColor="@color/theme_color"
+        style="@style/MyCustomTabTextAppearance"
+        android:layout_height="wrap_content"
+        />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_weight="1">
+    </android.support.v4.view.ViewPager>
+
+</LinearLayout>

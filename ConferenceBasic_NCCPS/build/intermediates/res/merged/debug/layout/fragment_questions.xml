@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tablayout"
+        android:layout_width="match_parent"
+        app:tabIndicatorColor="@color/theme_color"
+        android:background="@color/white"
+        app:tabSelectedTextColor="@color/theme_color"
+        style="@style/MyCustomTabTextAppearance"
+        android:layout_height="wrap_content"
+        />
+    <View style="@style/h_line" android:background="@color/theme_color"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_weight="1">
+    </android.support.v4.view.ViewPager>
+
+    <TextView
+        android:id="@+id/tv_question"
+        android:text="@string/make_question"
+        android:background="@color/theme_color"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_large"
+        android:gravity="center"
+        android:padding="@dimen/layout_padding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+</LinearLayout>

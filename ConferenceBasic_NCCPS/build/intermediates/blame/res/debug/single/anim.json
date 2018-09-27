@@ -1,0 +1,182 @@
+[
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\anim\\abc_fade_in.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\anim\\abc_fade_in.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\anim\\alpha_in.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\anim\\alpha_in.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\anim\\slide_down.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\anim\\slide_down.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\anim\\anim_right_in.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\503c3f9b2ef8fb9080e4cfbf94f0e36119037913\\output\\res\\anim\\anim_right_in.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\anim\\scale.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\anim\\scale.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\anim\\design_snackbar_in.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\67e2355ffe87152db1182b968ab8d572b74148b0\\output\\res\\anim\\design_snackbar_in.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\anim\\slide_up.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\anim\\slide_up.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\anim\\rotate_up.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\anim\\rotate_up.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\anim\\fade.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\anim\\fade.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\anim\\alpha_out.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\anim\\alpha_out.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_in_bottom.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\anim\\abc_slide_in_bottom.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\anim\\hold.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\anim\\hold.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\anim\\anim_top_in.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\503c3f9b2ef8fb9080e4cfbf94f0e36119037913\\output\\res\\anim\\anim_top_in.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\anim\\slide_from_right_left.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\anim\\slide_from_right_left.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\anim\\design_bottom_sheet_slide_in.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\67e2355ffe87152db1182b968ab8d572b74148b0\\output\\res\\anim\\design_bottom_sheet_slide_in.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\anim\\anim_right_out.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\503c3f9b2ef8fb9080e4cfbf94f0e36119037913\\output\\res\\anim\\anim_right_out.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\anim\\anim_top_out.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\503c3f9b2ef8fb9080e4cfbf94f0e36119037913\\output\\res\\anim\\anim_top_out.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\anim\\abc_fade_out.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\anim\\abc_fade_out.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_out_bottom.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\anim\\abc_slide_out_bottom.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\anim\\rotate_circle.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\anim\\rotate_circle.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\anim\\push_up_out.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\anim\\push_up_out.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\anim\\design_fab_in.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\67e2355ffe87152db1182b968ab8d572b74148b0\\output\\res\\anim\\design_fab_in.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\anim\\abc_shrink_fade_out_from_bottom.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\anim\\abc_shrink_fade_out_from_bottom.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\anim\\addpost.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\anim\\addpost.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\anim\\design_bottom_sheet_slide_out.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\67e2355ffe87152db1182b968ab8d572b74148b0\\output\\res\\anim\\design_bottom_sheet_slide_out.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\anim\\anim_left_out.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\503c3f9b2ef8fb9080e4cfbf94f0e36119037913\\output\\res\\anim\\anim_left_out.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\anim\\design_fab_out.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\67e2355ffe87152db1182b968ab8d572b74148b0\\output\\res\\anim\\design_fab_out.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\anim\\gf_flip_horizontal_out.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\00f81b563bc26b67b1050c22bcf9be5a413d676d\\output\\res\\anim\\gf_flip_horizontal_out.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\anim\\anim_left_in.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\503c3f9b2ef8fb9080e4cfbf94f0e36119037913\\output\\res\\anim\\anim_left_in.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\anim\\rotate_anim.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\anim\\rotate_anim.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\anim\\anim_bottom_in.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\503c3f9b2ef8fb9080e4cfbf94f0e36119037913\\output\\res\\anim\\anim_bottom_in.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\anim\\push_up_in.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\anim\\push_up_in.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\anim\\abc_popup_enter.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\anim\\abc_popup_enter.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\anim\\rotate_down.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\anim\\rotate_down.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\anim\\slide_from_left_right.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\anim\\slide_from_left_right.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\anim\\anim_bottom_out.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\503c3f9b2ef8fb9080e4cfbf94f0e36119037913\\output\\res\\anim\\anim_bottom_out.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_out_top.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\anim\\abc_slide_out_top.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\anim\\rotate.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\anim\\rotate.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\anim\\abc_popup_exit.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\anim\\abc_popup_exit.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\anim\\abc_grow_fade_in_from_bottom.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\anim\\abc_grow_fade_in_from_bottom.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\anim\\gf_flip_horizontal_in.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\00f81b563bc26b67b1050c22bcf9be5a413d676d\\output\\res\\anim\\gf_flip_horizontal_in.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\anim\\home_anim.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\anim\\home_anim.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\anim\\design_snackbar_out.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\67e2355ffe87152db1182b968ab8d572b74148b0\\output\\res\\anim\\design_snackbar_out.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_in_top.xml",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\anim\\abc_slide_in_top.xml"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\anim\\fade_in.xml",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\anim\\fade_in.xml"
+    }
+]

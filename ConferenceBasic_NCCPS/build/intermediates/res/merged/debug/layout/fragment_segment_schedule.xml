@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/rl_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingBottom="@dimen/layout_padding"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:paddingTop="@dimen/layout_padding">
+
+        <ImageView
+            android:id="@+id/iv_prev"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/left_arrow" />
+
+        <TextView
+            android:id="@+id/tv_current_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:drawableLeft="@drawable/search_day_logo"
+            android:drawablePadding="@dimen/layout_padding"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:text="3月19日"
+            android:textColor="@color/theme_color"
+            android:textSize="@dimen/text_size_large" />
+
+        <ImageView
+            android:id="@+id/iv_last"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/right_arrow_clickable" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_certain_time"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@id/rl_time"
+        android:layout_marginTop="@dimen/layout_margin"
+        android:background="@color/white">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_bottom_search"
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:padding="@dimen/layout_padding">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/theme_color"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/iv_reset"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside"
+                android:src="@drawable/search_reset" />
+
+            <View
+                android:layout_width="0.1dp"
+                android:layout_height="match_parent"
+                android:background="@color/white" />
+
+            <TextView
+                android:id="@+id/tv_start_search"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="9"
+                android:gravity="center"
+                android:text="@string/searc_start_search"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_large" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/ll_bottom_search"
+        android:layout_below="@id/rl_certain_time"
+        android:layout_marginTop="@dimen/layout_margin"
+        android:background="@color/white"
+        android:gravity="center"
+        android:padding="3dp">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_room"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white" />
+    </RelativeLayout>
+
+    <ProgressBar
+        android:id="@+id/progressbar"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

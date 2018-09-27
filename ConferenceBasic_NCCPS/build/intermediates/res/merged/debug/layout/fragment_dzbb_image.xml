@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+    <RelativeLayout
+        android:id="@+id/include_title"
+        android:layout_width="match_parent"
+        android:background="@color/action_bar_bg"
+        android:layout_height="50dp">
+        <ImageView
+            android:id="@+id/title_back"
+            android:layout_width="55dp"
+            android:layout_height="match_parent"
+            android:clickable="false"
+            android:focusable="false"
+            android:scaleType="center"
+            android:src="@drawable/nav_btn_back" />
+        <com.android.incongress.cd.conference.widget.IncongressTextView
+            android:id="@+id/title_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/title_back"
+            android:layout_marginRight="50dp"
+            android:ellipsize="middle"
+            android:gravity="center"
+            android:singleLine="true"
+            android:textColor="#FFF"
+            android:textSize="20sp" />
+    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/rl_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/theme_color"
+        android:gravity="center"
+        android:orientation="horizontal"
+         >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@color/theme_color"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/dzbb_im" />
+
+            <com.android.incongress.cd.conference.widget.IncongressTextView
+                android:id="@+id/bt_discussion"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="6dp"
+                android:clickable="true"
+                android:drawablePadding="8dp"
+                android:gravity="center"
+                android:text="参与讨论"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <View android:visibility="gone" style="@style/v_line" android:background="@color/white" android:layout_marginTop="8dp" android:layout_marginBottom="8dp"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:id="@+id/ll_ask_question"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/poster_question" />
+
+            <com.android.incongress.cd.conference.widget.IncongressTextView
+                android:id="@+id/bt_question"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="6dp"
+                android:drawablePadding="8dp"
+                android:gravity="center"
+                android:text="@string/dzbb_question"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/iv_praise"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/layout_margin"
+            android:layout_weight="2"
+            android:background="@color/theme_color"
+            android:src="@drawable/postter_unzan"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/rl_bottom"
+        android:gravity="center"
+        android:padding="50dp">
+
+        <ImageView
+            android:id="@+id/iv_small_pic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter" />
+    </LinearLayout>
+
+</RelativeLayout>

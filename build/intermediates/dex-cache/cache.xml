@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="C:\Users\Admin\.android\build-cache\22badfb4255f2e1d9adc36de8fdbecbd460c5a04\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="052f5f840f21174a3ecf6544130194e2652cbb73">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\10\classes_b234b60a66a394d2bcd0293cbfebd4a578ec8edb\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Admin\.android\build-cache\c75b4f20b658d8ff41dcfc3a0e19096bae299863\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="62b68bc80ccd889ca086ebf9486aca63f395e4cb">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\10\classes_7a9f115798ff45b37945ccacb1f2a5cac475f414\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\libs\libammsdk.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="11b09244aedaa51bfd09269637be7c32c60da314">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\2\libammsdk_f7cbe6f0a694ec6331fca11f529b41b4d00df877\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\libs\jpush-android-2.1.5.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="0f26f97f6d6c7cb02247e1ec35034732f234badb">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\2\jpush-android-2.1.5_56ef7b644eea092b5ccf4e86685f96392f8127c1\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Admin\.android\build-cache\52098e8d5b1bae30b109a460e587480007bcd047\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="6666dd525c3da197e7d07f4f23ef5fc7881a697b">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\10\classes_f9d535b9b093c6da75b5c95497d009b8593e829e\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Admin\.android\build-cache\97f7a86ef7d86261f2d2f6890c53dbfa4065466d\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="ac0d958638682d312195173403cb207e49738f97">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\10\classes_3b2fe3abd6d1cf17fe111a0ab7e6d4cd71aaca50\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Admin\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.5\686c608d1805b6d4d425ec4459e88164ffc85870\gson-2.5.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="686c608d1805b6d4d425ec4459e88164ffc85870">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\10\gson-2.5_104c843bf48b5bbd33f2b83236b893322d892e8a\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Admin\.gradle\caches\modules-2\files-2.1\cz.msebera.android\httpclient\4.3.6\526a9f794eab830eae4f23a62c572878b3f491ab\httpclient-4.3.6.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="526a9f794eab830eae4f23a62c572878b3f491ab">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\10\httpclient-4.3.6_14997f6e401bdc3aae2c7bd4bc3ac842de90df2b\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\libs\umeng_social_tool.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="1b54d64ceb6e0e720f54f48178d9f797c2133ebc">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\2\umeng_social_tool_f3bafc003e9ac972aa2edf5fc616f9b989a92797\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\myCode\IFSC2018\Library_SuperRecyclerView\build\intermediates\bundles\default\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="bd049da464dfeeead483a3c85b8968b451117f19">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\4\classes_7effc8c49429c8d15870eb30be869eded0e8838b\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Admin\.android\build-cache\2685792c7e263b5561ff50b32a6ba8b30bef9375\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="150252b33b00274cc868578ade018fda0d43a3eb">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\10\classes_b18b91232d907829d942c60473e8c59aa2703064\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Admin\.android\build-cache\3d483f703df31e11d670c32c24aaef65c1d85040\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="30a4938ea5235ccf532b3e9f04200e68547e36ad">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\10\classes_8606d27664eab7a1f9450130b0ea5442947fb89e\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Admin\.gradle\caches\modules-2\files-2.1\com.jakewharton\butterknife-annotations\8.2.1\d6f54d76edfbe779a50a8636b10fd3f555d8f780\butterknife-annotations-8.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="d6f54d76edfbe779a50a8636b10fd3f555d8f780">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\10\butterknife-annotations-8.2.1_c008b22a94012c72e55f774c8abd6b922d790447\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Admin\.android\build-cache\60f03e4e20306c68d88d2a03c4d5567779713117\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="6ef31f1555bb4cc513ec8d52711365a8b89f3600">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\10\classes_a39e0017eb8b3566875d5558e07bd3823bcdc310\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Admin\.android\build-cache\f3af5877126404557884e956b059d721b9e7b2c4\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\10\classes_7365e6e3e90647676ae07c10449f784881dd11ac\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Admin\.android\build-cache\71262845f54e2a0c5217ccd88f5972de3cd081ec\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="9a24b1b000b211eabfa13b5834c059818bc98fd5">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\10\classes_d56d53e1a239734ff15992b2ba3cb6663080726e\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Admin\.gradle\caches\modules-2\files-2.1\com.github.bumptech.glide\glide\3.7.0\9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4\glide-3.7.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\10\glide-3.7.0_2a6d8b6d439392063df173dd541b8b23a73bd5ec\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\libs\SocialSDK_WeChat_Simplify.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="7d158ad96c9a17df4e5457a5e714bb4664ee4588">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\2\SocialSDK_WeChat_Simplify_a0b1a4dbfb0e3b8c6a1083200b8be1af3e21527c\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\AndroidSDK\extras\android\m2repository\com\android\support\support-annotations\25.3.1\support-annotations-25.3.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="bf8841d29fa39e077730e7a91222c2ce269fa7c9">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-25.3.1_75c7942c36a382e2ca0bd6e9f4db8fa8bc429a3e\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Admin\.gradle\caches\modules-2\files-2.1\com.loopj.android\android-async-http\1.4.9\386a4339ffe52d5d63e80f9bed8d2b1d1a418249\android-async-http-1.4.9.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="386a4339ffe52d5d63e80f9bed8d2b1d1a418249">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\10\android-async-http-1.4.9_e1f8ba4301a43218a25276280938b498c1109542\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\libs\zxing.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="6fe22c135f19470d05b0816d5996c442ef67da3f">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\2\zxing_25e62b608883958f0e36cdf45259e7e9207744a0\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Admin\.android\build-cache\318b73cc972e5e7348070815eefc72841d3d0183\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="ca5e58104f56f918f0fb3a5b1b371ab599ae56b2">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\10\classes_f2fe8baf50ea1dd87c5bd90bd2443fffbcae6121\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\libs\SocialSDK_WeChat_Simplify.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="7d158ad96c9a17df4e5457a5e714bb4664ee4588">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\2\SocialSDK_WeChat_Simplify_a0b1a4dbfb0e3b8c6a1083200b8be1af3e21527c\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Admin\.android\build-cache\ba3c39765feca45139a0901ee17d8a355bf914e3\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="e51c2f662bb72419632af5192553c37e33890a99">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\10\classes_e7b7c2ed4ced33c897d17a294e772ef1c370394d\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Admin\.android\build-cache\ecadd5bab7e80de19051034e58ce4e16989638de\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="fef2b3e4b6b1b0e5fe7b69fa137a5fa55a3182ab">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\10\classes_e58446b764f60860940051c7432f1775e29049d2\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\myCode\IFSC2018\bottom-navigation-bar\build\intermediates\bundles\default\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="b234dd1b0a25c9277895d5f11c211c5f72e232bc">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\4\classes_8cebbe891cef29e39103d2d4aace23ce7e011736\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Admin\.gradle\caches\modules-2\files-2.1\com.umeng.analytics\analytics\6.1.4\c1d30c2bbdce435b775cadca57df2098044a0f5e\analytics-6.1.4.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="c1d30c2bbdce435b775cadca57df2098044a0f5e">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\10\analytics-6.1.4_7f71e6d650bf863aa1f2ed2fef84862260d7601c\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\libs\umeng_social_shareboard.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="2e81bbda132904c2584f86e324fa7aecc04d9aa2">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\2\umeng_social_shareboard_2c225e80c74b0b318bf7115bac1a87a937a4aec8\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\libs\umeng_social_net.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="1aa11c64ffb61549c2314a2eaf109eb26d34cd7b">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\2\umeng_social_net_189f225863a670f4a53adca5cc8a92bb49f3300b\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Admin\.android\build-cache\e9167f3ceee1c678a37f0b1d4269ad2a79d166e1\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="45f697922e6f072daa12f8a2995dc77ab03c11da">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\10\classes_ce295bf7ab921143a32274d0f803c33a4318b9cb\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Admin\.android\build-cache\6ab4504b36ef2fbeef88fc88e064ca5533ac6013\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="efb8cb62d47d157c29d1521daac7eefd4cb881ee">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\10\classes_760b568ce06bb62ba8c9d27b6590b2a529c91eaf\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\libs\pinyin4j-2.5.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="ae353005f973da1cd8545b54354504c2503f6865">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\2\pinyin4j-2.5.0_773f53e3b553b397e00eeacd63a0edef2d63c9f1\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\libs\SocialSDK_Sina_Simplify.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="5866e1a5ca7a49ac28ee0bd9430346a137375b1c">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\2\SocialSDK_Sina_Simplify_7dc255d926f77a42a8056b4c1ec51b9323238dcc\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\libs\jpush-android-2.1.5.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="0f26f97f6d6c7cb02247e1ec35034732f234badb">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\2\jpush-android-2.1.5_56ef7b644eea092b5ccf4e86685f96392f8127c1\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Admin\.gradle\caches\modules-2\files-2.1\org.greenrobot\eventbus\3.0.0\ddd99896e9569eaababbe81b35d80e1b91c4ad85\eventbus-3.0.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="ddd99896e9569eaababbe81b35d80e1b91c4ad85">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\10\eventbus-3.0.0_7a8673ad799183cf4ddc360bca5af7321d0ae938\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\libs\umeng_shareboard_widget.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="caf9e4cc471f48ac1fa263b2c60f00f01c74b48f">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\2\umeng_shareboard_widget_88801d8c28f0c032b41d4269371e6470356a5c34\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\libs\zxing.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="6fe22c135f19470d05b0816d5996c442ef67da3f">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\2\zxing_25e62b608883958f0e36cdf45259e7e9207744a0\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Admin\.gradle\caches\modules-2\files-2.1\com.nineoldandroids\library\2.4.0\e9b63380f3a242dbdbf103a2355ad7e43bad17cb\library-2.4.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\10\library-2.4.0_8145473287de8c2ff70de33d83ab99a0a921997e\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Admin\.android\build-cache\67e2355ffe87152db1182b968ab8d572b74148b0\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="ea6a989b83d19b1b461281e0475a6cd6514897f8">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\10\classes_86ac067c0e423736a69ae838f6e151016cdd9305\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\libs\SocialSDK_Sina_Simplify.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="5866e1a5ca7a49ac28ee0bd9430346a137375b1c">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\2\SocialSDK_Sina_Simplify_7dc255d926f77a42a8056b4c1ec51b9323238dcc\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\libs\libammsdk.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="11b09244aedaa51bfd09269637be7c32c60da314">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\2\libammsdk_f7cbe6f0a694ec6331fca11f529b41b4d00df877\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\libs\umeng_social_api.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="f2da3c1332d13d3e29069e2144dec29ef0608f1f">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\2\umeng_social_api_4cbb1e07713657837eb3ef0080ea5204b887079e\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\libs\umeng_social_tool.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="1b54d64ceb6e0e720f54f48178d9f797c2133ebc">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\2\umeng_social_tool_f3bafc003e9ac972aa2edf5fc616f9b989a92797\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Admin\.android\build-cache\fb4cd8f0f3099ea8924ba93cebbcf94a11d6c066\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="47635644d0d5c103c1dd8360549eb9ba3225c7d3">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\10\classes_c5b6fbf2d7f6b812eee3d0648e9553d9b0f289ad\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Admin\.android\build-cache\2cfc5e83dfe100edc44235c4ec727f6983c23703\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="da27a32db6af8954ee8061537c7d476fcb1df46f">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\10\classes_e9ff6cbeb5e0a005cbba72ad29bc78271cc79b2b\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Admin\.android\build-cache\72f4f5b04698ce246071f4a37ae76d1248846ddb\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="4a26a1154d053ab11aaf4c3967c42a4d66390991">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\10\classes_b726f6683b3a3d40063aec7b0204796a03fe2425\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Admin\.android\build-cache\106d6e951cc639f9d632818b4a138927123a134a\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="152de8da301561dcb0946471697a420d8f7a68c5">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\10\classes_f2221ba98233b35a5d2078de195c7d762070aec6\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Admin\.android\build-cache\00f81b563bc26b67b1050c22bcf9be5a413d676d\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="c74f0952cfb481882d8cedf4ca9f3c60289a3301">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\10\classes_a7263c69feae1769c5cf3d1d9c66260396f35c7f\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\libs\pinyin4j-2.5.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="ae353005f973da1cd8545b54354504c2503f6865">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\2\pinyin4j-2.5.0_773f53e3b553b397e00eeacd63a0edef2d63c9f1\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Admin\.android\build-cache\94a5271fb1d9d5e382c91d3032613196866b3e43\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="65d086ee9daaf87b5af62ad24471edafa433354c">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\10\classes_781ad0f3e55261fe92848d9d960dcfa455864239\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Admin\.android\build-cache\a54d044894272a7431c1b08db9e58bafcbeed000\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="966da5b6a8bfdef0bfc660e349f8765dde5cb6f3">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\10\classes_7a1c49415c0c5eb874f45e53cbd2bae090089781\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Admin\.android\build-cache\1b90a51d1cd22a682753038200e88bb09e2389d2\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="8e673cdfadd8f2d98fdb2fda2285c30f6e449782">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\10\classes_9eccc0cf384b4df248a6e00ae8b345ec6a791d7e\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\libs\umeng_social_net.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="1aa11c64ffb61549c2314a2eaf109eb26d34cd7b">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\2\umeng_social_net_189f225863a670f4a53adca5cc8a92bb49f3300b\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\libs\umeng_social_shareboard.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="2e81bbda132904c2584f86e324fa7aecc04d9aa2">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\2\umeng_social_shareboard_2c225e80c74b0b318bf7115bac1a87a937a4aec8\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Admin\.android\build-cache\2c513b258b476fbd6259381dfb401282fedd1606\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="0724e4d93c85866c8953b74776fa320efa122205">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\10\classes_21cbc66f62ff33a3fd3479c8b6fc2fbff508b639\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\libs\umeng_social_api.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="f2da3c1332d13d3e29069e2144dec29ef0608f1f">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\2\umeng_social_api_4cbb1e07713657837eb3ef0080ea5204b887079e\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\libs\umeng_shareboard_widget.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="caf9e4cc471f48ac1fa263b2c60f00f01c74b48f">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\2\umeng_shareboard_widget_88801d8c28f0c032b41d4269371e6470356a5c34\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Admin\.android\build-cache\503c3f9b2ef8fb9080e4cfbf94f0e36119037913\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="4559dc252e7bd375038592bb82d8c1b3157a87f3">
+        <dex dex="D:\myCode\IFSC2018\ConferenceBasic_NCCPS\build\intermediates\transforms\dex\debug\folders\1000\10\classes_a81ae5ba45e4aef07a663ce185faef64e7cb5512\classes.dex" />
+    </item>
+
+</items>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center"
+    >
+    <ImageView
+        android:id="@+id/speaker_img"
+        android:layout_width="wrap_content"
+        android:src="@drawable/point_speaker_other"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        />
+    <TextView
+        android:id="@+id/speaker_name"
+        android:layout_marginLeft="8dp"
+        android:layout_width="wrap_content"
+        android:textColor="#A4A6A7"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="repeate_dis">
+        <item>0 minutes before</item>
+        <item>1 minutes before</item>
+        <item>3 minutes before</item>
+        <item>5 minutes before</item>
+        <item>10 minutes before</item>
+        <item>15 minutes before</item>
+        <item>20 minutes before</item>
+    </string-array>
+    <string-array name="repeate_dis_value">
+        <item>0</item>
+        <item>1</item>
+        <item>3</item>
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+        <item>20</item>
+    </string-array>
+    <string-array name="repeate_time_dis">
+        <item>Never</item>
+        <item>Every 3 minutes</item>
+        <item>Every 5 minutes</item>
+        <item>Every 10 minutes</item>
+        <item>Every 15 minutes</item>
+        <item>Every 30 minutes</item>
+        <item>Every 60 minutes</item>
+    </string-array>
+    <string-array name="repeate_time_dis_value">
+        <item>0</item>
+        <item>3</item>
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+    </string-array>
+    <string-array name="repeate_times">
+        <item>Never</item>
+        <item>1Time</item>
+        <item>2Times</item>
+        <item>3Times</item>
+        <item>4Times</item>
+        †
+        <item>5Times</item>
+        <item>6Times</item>
+    </string-array>
+    <string-array name="repeate_times_value">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </string-array>
+    <string name="action_settings">Settings</string>
+    <string name="add_description">Compose</string>
+    <string name="alert_pending">Later</string>
+    <string name="alert_start">%1$s will start in %2$s in %3$s</string>
+    <string name="app_name">IFSC</string>
+    <string name="ask_sb">Ask To %1$s</string>
+    <string name="bottom_broadcast">Podcast</string>
+    <string name="bottom_home">Home</string>
+    <string name="bottom_me">Me</string>
+    <string name="bottom_message">Message</string>
+    <string name="bottom_tab_broadcast">Podcast</string>
+    <string name="bottom_tab_home">Home</string>
+    <string name="bottom_tab_me">Personal Center</string>
+    <string name="bus_tips">No data</string>
+    <string name="c_code">C-Code</string>
+    <string name="c_code_info">Please find your own C-Code at the right bottom of your conference badge－as illustrated as here</string>
+    <string name="cancel">Cancel</string>
+    <string name="cit_net_error">Network error, please try again later.</string>
+    <string name="close_my_meeting_alarm">Stop meeting reminder</string>
+    <string name="comment_no_empty">please enter your comment!</string>
+    <string name="complete_your_info">need complete info</string>
+    <string name="conference_exit_app">Are you sure to exit app?</string>
+    <string name="country_code">Country</string>
+    <string name="create_post">Make Post</string>
+    <string name="days_ago">%d Days ago</string>
+    <string name="dialog_tips">Tips</string>
+    <string name="dzbb_comment_tie">%d Comments</string>
+    <string name="dzbb_detail">e-Poster</string>
+    <string name="dzbb_discuss">Discuss</string>
+    <string name="dzbb_discussion">Comment(%d)</string>
+    <string name="dzbb_discussion_no_blacket">Comment</string>
+    <string name="dzbb_no_data">no results</string>
+    <string name="dzbb_question">Question</string>
+    <string name="dzbb_search_title_author">Search by Title/First Author</string>
+    <string name="dzbb_share">Share</string>
+    <string name="dzbb_sort">Sort by</string>
+    <string name="enter_blank">blank is not allowed!</string>
+    <string name="enter_secretary_name">Please input your name</string>
+    <string name="exhibitor_activity_detail_attention">Attention</string>
+    <string name="exhibitor_activity_detail_attentioned">Attentioned</string>
+    <string name="exhibitor_activity_detail_title">Introduction</string>
+    <string name="exhibitor_activity_no_data">Exhibitor activities are not available at this moment.Please stay up to date!</string>
+    <string name="exhibitor_activity_no_data_no_network">Please connect to the network, view event details exhibitors</string>
+    <string name="exhibitor_detail_address_title">Address</string>
+    <string name="exhibitor_detail_contact_title">Contacts</string>
+    <string name="exhibitor_detail_introduce_title">introduction</string>
+    <string name="exhibitor_detail_learning_center">Learning Center Program</string>
+    <string name="exhibitor_detail_no_introduce_msg">No description</string>
+    <string name="exhibitor_detail_read_more">Read more</string>
+    <string name="exhibitor_detail_title">Exhibitor</string>
+    <string name="exhibitor_detail_zanwei">Booth:%s</string>
+    <string name="exhibitor_list_item_guanzhuchengong">You\'re adding this exhibitor to your favorite exhibitors</string>
+    <string name="exhibitor_list_item_guanzhuquxiao">You\'re removing this exhibitor from your favorite exhibitors</string>
+    <string name="exhibitor_list_no_data">Exhibitor informations are not available at this moment.Please stay up to date!</string>
+    <string name="faculty_attendance">As an invited faculty or distinguised guest</string>
+    <string name="faculty_no_assignments">The faculty do not have any Assignments!</string>
+    <string name="family_name">Family Name</string>
+    <string name="find_back_team_tips"/>
+    <string name="find_tips_name_and_mobile">Please input your mobile phone number and name completely right</string>
+    <string name="findback_c_code">Click here to find your C-Code</string>
+    <string name="findback_ccode_title">find your C-Code</string>
+    <string name="first_author">First Author:</string>
+    <string name="get_c_code">Find your C-Code</string>
+    <string name="get_code">Get Code</string>
+    <string name="given_name">Given Name</string>
+    <string name="guide_in">start</string>
+    <string name="history_post_empty">You haven\'t posted anything yet.What\'s on your mind?</string>
+    <string name="home_bus">Shuttle Bus</string>
+    <string name="home_cit_college">IFSC On-Demand</string>
+    <string name="home_cit_live">IFSC Live</string>
+    <string name="home_commend">Recommendation videos</string>
+    <string name="home_community">Interactive\nChannel</string>
+    <string name="home_electroniccase">e-Case</string>
+    <string name="home_exhibitoractivity">Industrial\nEvents</string>
+    <string name="home_exhibitors">Exhibitors</string>
+    <string name="home_hands_on">Learning\nCenter</string>
+    <string name="home_icon_presidium">Faculty\nExclusive</string>
+    <string name="home_icon_professor_trip">Faculty\nProgram</string>
+    <string name="home_icon_reg_online">Online Reg</string>
+    <string name="home_interactive">Interactive\nDiscussion</string>
+    <string name="home_look_schedule">Program</string>
+    <string name="home_me">User Center</string>
+    <string name="home_meetingguide">Congress\nInformation</string>
+    <string name="home_messagestation">Message Center</string>
+    <string name="home_my_schedule">My Agenda</string>
+    <string name="home_newscenter">Media Center</string>
+    <string name="home_next">Next</string>
+    <string name="home_now">Now</string>
+    <string name="home_phono">Photo Album</string>
+    <string name="home_review">IFSC On-Demand</string>
+    <string name="home_scane">Scan Me</string>
+    <string name="home_scene_xiu">Info\nRelease</string>
+    <string name="home_schedule">Detailed\nProgram</string>
+    <string name="home_search">Search</string>
+    <string name="home_search_schedule">Search</string>
+    <string name="home_secretary">Faculty\nExclusive</string>
+    <string name="home_setting">Settings</string>
+    <string name="home_skip">skip </string>
+    <string name="home_speakersearch">Faculty\nIndex</string>
+    <string name="home_wallpaper">Poster</string>
+    <string name="hours_ago">%d Hours ago</string>
+    <string name="hysq_home_comment_gen">Add a comment…</string>
+    <string name="hysq_home_comment_post">Send</string>
+    <string name="hysq_home_comment_send_msg_error_hint">Post information failed!</string>
+    <string name="hysq_home_comment_send_msg_hint">Please enter the published information!</string>
+    <string name="hysq_home_comment_send_msg_success_hint">Information published success!</string>
+    <string name="hysq_home_comment_tie">%d Comments</string>
+    <string name="hysq_home_comment_zan">%d Likes</string>
+    <string name="hysq_home_hint">What\'s on your mind</string>
+    <string name="hysq_home_huiyimingcheng_all">All</string>
+    <string name="hysq_home_huiyimingcheng_now">Ongoing</string>
+    <string name="hysq_home_huiyimingcheng_sousuo">Search by Session</string>
+    <string name="hysq_home_item_detail">Details</string>
+    <string name="hysq_home_jiangliangju_biaoqing">Emoticon</string>
+    <string name="hysq_home_jiangliangju_huiyi">Session</string>
+    <string name="hysq_home_jiangliangju_huiyi_name">Session Name</string>
+    <string name="hysq_home_jiangliangju_jiangzhe">Speaker</string>
+    <string name="hysq_home_jiangliangju_jianpan">Keyboard</string>
+    <string name="hysq_home_jiangliangju_sousuo">Search Speaker Name</string>
+    <string name="hysq_home_jiangliangju_title">Post</string>
+    <string name="hysq_home_pinlun">Comments</string>
+    <string name="hysq_home_right_navbar_title">Post</string>
+    <string name="hysq_home_zan">Like</string>
+    <string name="hysq_item_no_data">No Comments at the moment. Break the ice!</string>
+    <string name="hysq_jiangliangju_nozuijin">No Recently speaker</string>
+    <string name="hysq_jiangliangju_titlebar_send_hint">Send</string>
+    <string name="hysq_jiangliangju_zuijin">Recently speaker</string>
+    <string name="hysq_list_no_data">No posts at the moment. Break the ice!</string>
+    <string name="hyzs_list_no_data">Media Center is not available at this moment.Please stay up to date!</string>
+    <string name="icon_phono1">Camera</string>
+    <string name="icon_phono2">Choose from Album</string>
+    <string name="icon_phono3">Cancel</string>
+    <string name="identity_not_register_and_paid_first">I do attend the conference and have not got my conference badge (Regular Users)</string>
+    <string name="identity_not_register_and_paid_second">I do not attend the conference (Regular Users)</string>
+    <string name="identity_participant">I have arrived at the conference and got conference badge (Premium Users)</string>
+    <string name="incongress_connect_fail">Connection fails, please re-operation!</string>
+    <string name="incongress_connect_remaind">Please connect to the network!</string>
+    <string name="incongress_data_update">New meeting information, whether it is now updated？</string>
+    <string name="incongress_data_update_fail">Connection fails, whether reconnecting？</string>
+    <string name="incongress_login">Log In</string>
+    <string name="incongress_register">Register</string>
+    <string name="incongress_send_fail">Failed to send!</string>
+    <string name="incongress_send_no_more_data">No more data!</string>
+    <string name="incongress_send_success">Sent successfully!</string>
+    <string name="industrial_events">Industrial Events</string>
+    <string name="interactive_no_data">Interactive Discussion is only available during the sessions</string>
+    <string name="live_show">Live Show</string>
+    <string name="loading">Loading…</string>
+    <string name="login">Login</string>
+    <string name="login_empty_tips">Please complete all the info</string>
+    <string name="login_first">Please login first</string>
+    <string name="login_forget_success_title">Find Password</string>
+    <string name="login_info_empty">please complete your login info!</string>
+    <string name="login_no_phone_password">Please enter the phone number and password!</string>
+    <string name="login_out">Logout</string>
+    <string name="login_out_tips">Some service stop once you log out.Are you sure you want to log out?</string>
+    <string name="login_password_forget">Forget Password</string>
+    <string name="login_password_hint">Password</string>
+    <string name="login_phone_hint">Mobile</string>
+    <string name="login_success">success</string>
+    <string name="login_try_use">I\'m a Visitor</string>
+    <string name="logout">Logout</string>
+    <string name="logout_secretary">This will stop meeting reminder.Are you\nsure you want to log out of the function?</string>
+    <string name="look_all">View All</string>
+    <string name="make_question">make a question</string>
+    <string name="me_choose">Choose</string>
+    <string name="media_center">Media Center</string>
+    <string name="meeting_schedule_alarm">Alarm</string>
+    <string name="meeting_schedule_circle">Moments</string>
+    <string name="meeting_schedule_detail_title">Program</string>
+    <string name="meeting_schedule_dx">Message</string>
+    <string name="meeting_schedule_location">Location</string>
+    <string name="meeting_schedule_note">Note</string>
+    <string name="meeting_schedule_room_location">Location map</string>
+    <string name="meeting_schedule_share">Share</string>
+    <string name="meeting_schedule_txwb">Tencent Weibo</string>
+    <string name="meeting_schedule_wx">WeChat</string>
+    <string name="meeting_schedule_yj">Email</string>
+    <string name="meeting_share_info">I follow “%1$s” presentation,http://m.incongress.cn/ifsc2018/app</string>
+    <string name="meeting_video_reservation">Video Reservation</string>
+    <string name="meeting_voice_all_msg">Read All</string>
+    <string name="metting_node_edit_no_data">No Content.</string>
+    <string name="mins_ago">%d Mins ago</string>
+    <string name="month_day_no_year">MMMM d</string>
+    <string formatted="false" name="month_day_year">MMM d, yyyy</string>
+    <string name="my_question">My Question(%1$s)</string>
+    <string name="my_role">Role</string>
+    <string name="my_schedule_edit">Edit</string>
+    <string name="my_schedule_tips">Go to "Detailed Programme" to set up your own meeting schedule alarm</string>
+    <string name="my_secretary">Exclusive</string>
+    <string name="my_task">My Task(%1$s)</string>
+    <string name="my_time">Time</string>
+    <string name="mymeeting_activity">My Exhibitor Events</string>
+    <string name="mymeeting_exhibitor">My Exhibitor</string>
+    <string name="mymeeting_finish">Done</string>
+    <string name="mymeeting_manage">Edit</string>
+    <string name="mymeeting_meeting">My favorite Sessions &amp; Presentations</string>
+    <string name="mymeeting_no_attention_exhibitor">Go and add your favorite exhibitors !</string>
+    <string name="mymeeting_no_attention_exhibitoractivity">Go and add your favorite exhibitor events !</string>
+    <string name="mymeeting_no_note">You haven\'t taken any notes yet.</string>
+    <string name="mymeeting_no_session_metting">Go and add your favorite sessions and presentations !</string>
+    <string name="mymeeting_no_tiezhi">You haven\'t posted anything yet. What\'s on your mind ?</string>
+    <string name="mymeeting_note">My Notes</string>
+    <string name="mymeeting_note_delete_msg">Are you sure to delete notes</string>
+    <string name="mymeeting_tiezi">My Posts</string>
+    <string name="mymeeting_w_repeate">Repeat Interval</string>
+    <string name="mymeeting_w_switch">Alarms</string>
+    <string name="mymeeting_w_timemanage">Reminder Timing Set</string>
+    <string name="mymeeting_w_times">Repeat Times</string>
+    <string name="mymeeting_warning">My Reminder</string>
+    <string name="mymeeting_welcome_sb">%1$s,Welcome to attend our conference!</string>
+    <string name="mymeeting_wellcome">Welcome</string>
+    <string name="mymeeting_wellcome1">Welcome,</string>
+    <string name="mymeeting_wellcome2">,to IFSC!</string>
+    <string name="negative_button">cancel</string>
+    <string name="new_ago">New</string>
+    <string name="no_bus">No Data \n Recapture Again</string>
+    <string name="no_more_data">no more data</string>
+    <string name="no_more_date">No More Data</string>
+    <string name="no_such_secretary_name">No result or incorrect spelling on the name of faculty.\nTry with the different one.</string>
+    <string name="nomailaddress">Please input your Email address</string>
+    <string name="nophonenumber">Please input your Phone number</string>
+    <string name="normal_phone_number">mobile phone</string>
+    <string name="note_save_success">Save Note Success.</string>
+    <string name="nowifi">The current network is not available.\nPlease check your network settings</string>
+    <string name="only_professor_can_use">only faculty can use</string>
+    <string name="open_my_meeting_alarm">Set meeting reminder</string>
+    <string name="part_in_activitys">I Will participate the following secretary_no_infory alert function</string>
+    <string name="person_attendance">As an individual </string>
+    <string name="personal_message">My Messages</string>
+    <string name="personal_nomessage">You have no messages</string>
+    <string name="phone_can_not_empty">Plesase provide correct email</string>
+    <string name="photo_tips">Please Try Again</string>
+    <string name="photos">Photos</string>
+    <string name="please_choose_your_attend_type">I attend the conference</string>
+    <string name="please_choose_your_identity">请选择您一下身份</string>
+    <string name="please_enter_your_true_mobile_or_your_can_not_use_some_module">
+        *For successful access to all the resourses and fuctions, you have to input your mobile phone number completely right
+    </string>
+    <string name="please_enter_your_true_name_or_your_can_not_use_some_module">
+        *For successful access to all the recourses and functions, you have to spell your name
+    </string>
+    <string name="positive_button">ok</string>
+    <string name="post">Post</string>
+    <string name="post_prompt">What\'s happening?</string>
+    <string name="push_tips">Push Info</string>
+    <string name="question">Question</string>
+    <string name="question_check_poster">check poster</string>
+    <string name="question_content_hint">your question：...</string>
+    <string name="question_email">your email</string>
+    <string name="question_list">Question</string>
+    <string name="question_meeting">Program</string>
+    <string name="question_post">Poster</string>
+    <string name="question_poster_tips">no question here</string>
+    <string name="register_next">Next</string>
+    <string name="register_success">register success</string>
+    <string name="register_title">Register</string>
+    <string name="register_title_msg">Register</string>
+    <string name="retrieval_results">Retrieval results：</string>
+    <string name="save">Save</string>
+    <string name="scan_right_tips">scan poster</string>
+    <string name="scan_text">Aim scanner at the QR code</string>
+    <string name="scenic_content">You cannot submit a post\nwithout writing any words.</string>
+    <string name="scenic_xiu_speaker_list">Speaker List</string>
+    <string name="schedule_comment_sth">say something...</string>
+    <string name="searc_start_search">Search</string>
+    <string name="search_afternoon">night</string>
+    <string name="search_afternoon_time">18:00-20:00</string>
+    <string name="search_all_class">All</string>
+    <string name="search_cancel">Cancel</string>
+    <string name="search_custom_time">Set Time</string>
+    <string name="search_end_time">end Time</string>
+    <string name="search_faculty_hint">Please enter faculty name</string>
+    <string name="search_fayan">Presentations</string>
+    <string name="search_hint">Search session</string>
+    <string name="search_meeting_hint">Search by Presentation</string>
+    <string name="search_metting">Sessions</string>
+    <string name="search_midday">p.m.</string>
+    <string name="search_midday_time">12:00-18:00</string>
+    <string name="search_morning">a.m.</string>
+    <string name="search_morning_time">8.00-12:00</string>
+    <string name="search_no_data">No Results</string>
+    <string name="search_no_data_tips">No Search Result</string>
+    <string name="search_result">Search Result</string>
+    <string name="search_search_result_title">Search Result</string>
+    <string name="search_session_hint">Search by Session</string>
+    <string name="search_start_time">start Time</string>
+    <string name="search_tab_professor">Faculty</string>
+    <string name="search_tab_schedule">Program</string>
+    <string name="search_time">The end time should not be earlier than the start time. Please select again</string>
+    <string name="secretary_info">Faculty Bios</string>
+    <string name="secretary_loading">Secretary is loading…</string>
+    <string name="secretary_location">Room:</string>
+    <string name="secretary_login">Set meeting reminder</string>
+    <string name="secretary_module_not_available">Only memebers of the Presidium can use this module</string>
+    <string name="secretary_no_info">All the presentations you participated are over now.\nSee you next IFSC conference!</string>
+    <string name="secretary_no_task">You do not have any meeting arrangements</string>
+    <string name="secretary_session">Session:</string>
+    <string name="secretary_speaker">Presentation:</string>
+    <string name="secretary_time">Time:</string>
+    <string name="secretary_title">His/Her Assignments</string>
+    <string name="secretary_type_role">Role:</string>
+    <string name="secretay_reminding">Reminding</string>
+    <string name="secretay_role">Role:</string>
+    <string name="see_detail">Watch Detail</string>
+    <string name="send">send</string>
+    <string name="server_error">something error in server</string>
+    <string name="session_take_note">Note</string>
+    <string name="setting_tel">Tel:021-52981008</string>
+    <string name="settings_about">About</string>
+    <string name="settings_about_text">China Interventional Therapeutics (CHC) presents this app named ‘iConference’ for CHC Conference 2016 which is the four-day conference in your hand!
+\nThis APP gives you the opportunity you to
+\n-View live keynote speeches broadcasted from CHC conference center 
+\n-Automatic meeting reminder, the privileges only for faculty members to meeting reminder
+\n-View e-cases
+\n-Browse, search and view the Scientific Programme of the CHC Conference by Time, Date,Session, Presentation, Track, Speaker and Keywords. \n-Comment on presentations
+\n-Q&amp;A on Speakers
+\n-Create your personal Itinerary
+\n-Access the Maps to easily find exhibitors, meetings rooms and spots onsite 
+Before first use, you’ll need to download the latest conference data. Afterwards, you can use this APP offline.
+\nThis APP is being released by Incongress.
+\nPlease send any feedback or inquires to service@incongress.net</string>
+    <string name="settings_contact">Contact Us</string>
+    <string name="settings_contact_test">Dear Users,\nFor any questions or bugs found when using this app,please contact us.Thanks!
+</string>
+    <string name="settings_contact_text_fax">Fax: 021–52981008 ext 808 </string>
+    <string name="settings_contact_text_mail">Email:service@incongress.net\nWeChat:incongress</string>
+    <string name="settings_data_current">Current Version </string>
+    <string name="settings_data_manual">Update Manually</string>
+    <string name="settings_data_new">Latest Version</string>
+    <string name="settings_data_newversion">Latest Version  %.1f</string>
+    <string name="settings_data_noupdate">No Need to Update</string>
+    <string name="settings_data_title">Data Updates</string>
+    <string name="settings_data_version">Version  %.1f</string>
+    <string name="settings_database">Data Updates</string>
+    <string name="settings_help">Feedback &amp; Support </string>
+    <string name="settings_help_content">Details</string>
+    <string name="settings_help_content_submit_hit">Please enter a feedback!</string>
+    <string name="settings_help_mail">Please enter your email address</string>
+    <string name="settings_help_phone">Please enter your mobile No.</string>
+    <string name="settings_help_phone_mail">Please enter your Contact</string>
+    <string name="settings_help_suggest">Leave your contacts</string>
+    <string name="settings_help_title">Feedback &amp; Support </string>
+    <string name="settings_help_way1">You can：</string>
+    <string name="settings_help_way2">Or：</string>
+    <string name="settings_help_wechat">Follow ‘incongress’ by our Wechat official account to give us feedbacks or contact InCongress Ltd.Co directly.</string>
+    <string name="settings_login">Log In</string>
+    <string name="settings_logout">Click to exit</string>
+    <string name="settings_nologin">Log in to see more</string>
+    <string name="settings_share">Share App with My Friends</string>
+    <string name="settings_share_content">Come and join me with ‘iConference’ APP! Download now at: http://m.incongress.cn/ifsc2018/app</string>
+    <string name="settings_share_hint">Share to</string>
+    <string name="settings_share_mail">Email</string>
+    <string name="settings_share_sms">SMS</string>
+    <string name="settings_share_title">Share to My Friends</string>
+    <string name="settings_version">Software Updates</string>
+    <string name="settings_version_new">Latest Version</string>
+    <string name="settings_version_newversion">Latest Version  %s</string>
+    <string name="settings_version_title">Software Updates</string>
+    <string name="settings_version_version">Version  %s</string>
+    <string name="share_wechat_circle">Share on moments</string>
+    <string name="share_wechat_friend">Send to friends</string>
+    <string name="sign_up">Sign Up></string>
+    <string name="sort_by_author">First Author</string>
+    <string name="sort_by_code">Abstract NO.</string>
+    <string name="speaker_detial">Faculty List</string>
+    <string name="speaker_moderator">Chairs</string>
+    <string name="speaker_no_data">%1$s List is not available at this moment.Please stay up to date!</string>
+    <string name="speaker_role">Filters</string>
+    <string name="speaker_speaker">Speakers</string>
+    <string name="splash_checking">Checking contents…</string>
+    <string name="splash_downloaded">Downloaded,Upgrading…</string>
+    <string name="splash_downloading">Downloading…%1$s</string>
+    <string name="splash_exhibitor">Save exhibitor info ,wait moment...</string>
+    <string name="splash_loading">initial,wait moment</string>
+    <string name="splash_login">Logining…</string>
+    <string name="splash_onference">Save conference info ,wait moment...</string>
+    <string name="splash_schedule">Save meeting info,wait moment...</string>
+    <string name="splash_speaker">Save speaker info, wait moment...</string>
+    <string name="success_close_alarm">Meeting reminder stops.</string>
+    <string name="success_open_alarm">Meeting reminder is set. You will\nreceive notification %d minutes before\nthe start of the sessions or presentations!</string>
+    <string name="success_send_regist_code">success send sms</string>
+    <string name="survey">Survey</string>
+    <string name="system_message">Notifications</string>
+    <string name="system_nomessage">You have no notifications</string>
+    <string name="team_attendance"/>
+    <string name="team_attendance_tips"/>
+    <string name="telephone_number">Email</string>
+    <string name="test">Test</string>
+    <string name="tips">Tips：meeting module can use offline</string>
+    <string name="tips_poster">Tips:you can scan to get the poster detail and make question~~</string>
+    <string name="tips_question_meeting">no question here</string>
+    <string name="tips_title_classes">Floor Plan</string>
+    <string name="tips_title_information">General Info</string>
+    <string name="true_name">name</string>
+    <string name="tv_tips">No data</string>
+    <string name="update_database">wait for the database update</string>
+    <string name="verification_code">Verification Code</string>
+    <string name="verify_attendance">Verify Your Attendance</string>
+    <string name="xxx_comments">%1$s Comments</string>
+    <string name="xxx_praise">%1$s Likes</string>
+    <string name="yes_such_secretary_name"><Data>
+ &lt;h3>Congratulations, your meeting reminder is set!&lt;/h3> You will receive notification 5 minutes before the start of the sessions or presentations, please stay up to date!
+For any changes of reminder time,please go to "My IFSC > My reminder".
+</Data></string>
+</resources>

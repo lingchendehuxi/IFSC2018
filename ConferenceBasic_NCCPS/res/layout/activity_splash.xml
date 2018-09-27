@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#FFF">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/loading_logo" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+            <com.android.incongress.cd.conference.widget.IncongressTextView
+                android:id="@+id/splash_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/splash_loading"
+              />
+
+            <TextView
+                android:id="@+id/tv_dots"
+                android:layout_marginLeft="6dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+        <ProgressBar
+            android:id="@+id/splash_pbh"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="300dp"
+            android:layout_height="12dp"
+            android:layout_marginTop="10dp"
+            android:max="100"
+            android:progressDrawable="@drawable/progress"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:visibility="gone"
+        android:layout_margin="40dp"
+        android:src="@drawable/logo_incongress" />
+    <TextView
+        android:id="@+id/tv_appversion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_margin="40dp"
+        />
+
+</FrameLayout>

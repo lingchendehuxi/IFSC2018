@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@drawable/login_bg"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:padding="@dimen/layout_padding"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:src="@drawable/login_logo"
+            android:layout_width="wrap_content"
+            android:layout_marginBottom="@dimen/layout_margin"
+            android:layout_height="wrap_content" />
+
+        <com.android.incongress.cd.conference.widget.ClearEditText
+            android:drawableRight="@drawable/edittext_delete"
+            android:id="@+id/et_name"
+            android:layout_width="match_parent"
+            android:textColor="@color/theme_color"
+            android:padding="@dimen/layout_padding"
+            android:textColorHint="@color/white"
+            android:textSize="@dimen/text_size_media"
+            android:background="@drawable/selector_edit_bg"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:hint="@string/true_name"
+            />
+        <TextView
+            android:visibility="invisible"
+            android:id="@+id/name_tips"
+            android:text="@string/please_enter_your_true_name_or_your_can_not_use_some_module"
+            android:textColor="@color/white"
+            android:layout_width="match_parent"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
+            android:layout_height="wrap_content" />
+
+        <com.android.incongress.cd.conference.widget.ClearEditText
+            android:drawableRight="@drawable/edittext_delete"
+            android:id="@+id/et_mobile"
+            android:layout_width="match_parent"
+            android:textColor="@color/theme_color"
+            android:padding="@dimen/layout_padding"
+            android:textColorHint="@color/white"
+            android:textSize="@dimen/text_size_media"
+            android:background="@drawable/selector_edit_bg"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:hint="@string/normal_phone_number"
+            />
+
+        <TextView
+            android:text="@string/please_enter_your_true_mobile_or_your_can_not_use_some_module"
+            android:textColor="@color/white"
+            android:layout_width="match_parent"
+            android:id="@+id/mobile_tips"
+            android:visibility="invisible"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
+            android:layout_height="wrap_content" />
+
+        <com.android.incongress.cd.conference.widget.ClearEditText
+            android:drawableRight="@drawable/edittext_delete"
+            android:id="@+id/et_ccode"
+            android:layout_width="match_parent"
+            android:textColor="@color/theme_color"
+            android:padding="@dimen/layout_padding"
+            android:textColorHint="@color/white"
+            android:textSize="@dimen/text_size_media"
+            android:background="@drawable/selector_edit_bg"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:hint="@string/c_code"
+            />
+
+        <TextView
+            android:id="@+id/ccode_info"
+            android:text="@string/c_code_info"
+            android:layout_width="match_parent"
+            android:textColor="@color/white"
+            android:layout_marginTop="@dimen/layout_margin"
+            android:layout_marginBottom="@dimen/layout_margin"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/login"
+            android:background="@drawable/bg_button"
+            android:text="@string/login"
+            android:textAllCaps="false"
+            android:layout_width="match_parent"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_large"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/find_back_ccode"
+        android:textColor="@color/white"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/findback_c_code"
+        android:layout_margin="@dimen/layout_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/ll_ccode"
+        android:layout_width="match_parent"
+        android:background="@color/alpha_black"
+        android:visibility="gone"
+        android:gravity="center"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/ccode"
+            android:src="@drawable/ccode_info_tips"
+            android:layout_width="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</RelativeLayout>

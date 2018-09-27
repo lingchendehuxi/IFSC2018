@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_make_question"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.android.incongress.cd.conference.MakeQuestionActivity"
+    android:background="@color/white">
+    <RelativeLayout
+        android:id="@+id/include_title"
+        android:layout_width="match_parent"
+        android:background="@color/action_bar_bg"
+        android:layout_height="50dp">
+        <ImageView
+            android:id="@+id/title_back"
+            android:layout_width="55dp"
+            android:layout_height="match_parent"
+            android:clickable="false"
+            android:focusable="false"
+            android:scaleType="center"
+            android:src="@drawable/nav_btn_back" />
+        <com.android.incongress.cd.conference.widget.IncongressTextView
+            android:id="@+id/title_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/title_back"
+            android:layout_marginRight="50dp"
+            android:ellipsize="middle"
+            android:gravity="center"
+            android:singleLine="true"
+            android:textColor="#FFF"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/title_question"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/question"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:textSize="14sp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="12dp"
+            />
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/layout_padding">
+    <TextView
+        android:id="@+id/tv_topic"
+        android:layout_width="match_parent"
+        android:textSize="@dimen/text_size_large"
+        android:textColor="@color/theme_color"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/et_email"
+        android:hint="@string/question_email"
+        android:textSize="@dimen/text_size_media"
+        android:layout_marginBottom="@dimen/layout_margin"
+        android:layout_marginTop="@dimen/layout_margin"
+        android:background="@null"
+        android:textColorHint="@color/gray"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:textColorHint="@color/gray"
+        android:id="@+id/et_question"
+        android:textColor="@color/black"
+        android:hint="@string/question_content_hint"
+        android:background="@null"
+        android:gravity="start|left"
+        android:textSize="@dimen/text_size_media"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    </LinearLayout>
+</LinearLayout>

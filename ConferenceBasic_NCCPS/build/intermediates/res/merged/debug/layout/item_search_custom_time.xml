@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:gravity="center"
+    android:id="@+id/ll_custom_time"
+    android:layout_height="120dp">
+
+    <TextView
+        android:id="@+id/tv_custom_time"
+        android:textSize="@dimen/text_size_media"
+        android:layout_width="wrap_content"
+        android:background="@drawable/bg_segment_unselected"
+        android:padding="@dimen/layout_padding"
+        android:textColor="@color/theme_color"
+        android:gravity="center"
+        android:text="16:00-20:00"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

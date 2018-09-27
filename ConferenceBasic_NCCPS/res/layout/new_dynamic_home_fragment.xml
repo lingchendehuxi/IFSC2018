@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/ad_top"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_gravity="top"
+        android:layout_weight="0"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/iamge_content_description"
+        android:scaleType="fitXY" />
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:background="#EEEFF7"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/layout_ad_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"/>
+            <RelativeLayout
+                android:id="@+id/animatorlayout"
+                android:layout_width="match_parent"
+                android:layout_marginRight="30dp"
+                android:layout_marginLeft="30dp"
+                android:padding="5dp"
+                android:layout_marginTop="-12dp"
+                android:elevation="25dp"
+                android:background="@drawable/home_icon_layout"
+                android:layout_height="wrap_content">
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/ll_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"/>
+            <LinearLayout
+                android:layout_below="@id/ll_container"
+                android:id="@+id/zk_layout"
+                android:layout_width="40dp"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:layout_height="40dp">
+                <ImageView
+                    android:id="@+id/zk_button"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="15dp"
+                    android:layout_height="20dp"
+                    android:tint="@color/alpha_theme_color"
+                    android:src="@drawable/zk"/>
+                    </LinearLayout>
+            </RelativeLayout>
+            <!--专家秘书模块-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/ll_secretary"
+                android:gravity="center"
+                android:layout_marginTop="30dp"
+                android:orientation="vertical"
+                android:padding="6dp"
+                android:background="@drawable/bg_home"
+                android:layout_width="match_parent"
+                android:layout_marginRight="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/my_secretary"
+                        android:textColor="@color/no_data_text_color"
+                        android:textSize="@dimen/text_size_media" />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:tint="@color/alpha_theme_color"
+                        android:src="@drawable/right_arrow_clickable" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.1dp"
+                    android:layout_marginBottom="6dp"
+                    android:layout_marginTop="6dp"
+                    android:background="@color/alpha_theme_color" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_secretary_time"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@color/no_data_text_color" />
+
+                    <TextView
+                        android:id="@+id/tv_secretary_room"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:textColor="@color/no_data_text_color" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_secretary_task"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/text_size_small"
+                    android:layout_marginBottom="6dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="#C8C8C8" />
+
+                <TextView
+                    android:id="@+id/tv_secretary_session_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:textSize="@dimen/text_size_small"
+                    android:textColor="#C8C8C8" />
+            </LinearLayout>
+            </LinearLayout>
+            <!--提示信息跑马灯模块-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/marquee_layout"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginRight="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="30dp"
+                android:visibility="gone"
+                android:elevation="10dp"
+                android:padding="5dp"
+                android:background="@drawable/bg_home"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:src="@drawable/messageimg"
+                    android:tint="@color/alpha_theme_color"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp" />
+                <!--<com.sunfusheng.marqueeview.MarqueeView
+                    android:id="@+id/marqueeView"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    app:mvAnimDuration="1000"
+                    app:mvDirection="bottom_to_top"
+                    app:mvInterval="2000"
+                    app:mvTextColor="@color/no_data_text_color"
+                    app:mvTextSize="14sp"/>-->
+                <ViewFlipper
+                    android:id="@+id/viewflipper"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:autoStart="true"
+                    android:flipInterval="3500"
+                    android:inAnimation="@anim/push_up_in"
+                    android:outAnimation="@anim/push_up_out">
+                </ViewFlipper>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginRight="25dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:id="@+id/courseware_layout"
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center_vertical"
+                    android:visibility="gone"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="10dp"
+                        android:layout_height="18dp"
+                        android:tint="@color/theme_color"
+                        android:src="@drawable/spl_img"/>
+                    <TextView
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:textSize="14dp"
+                        android:text="@string/home_commend"/>
+                </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/courseware_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                </android.support.v7.widget.RecyclerView>
+            </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

@@ -1,0 +1,723 @@
+-- Merging decision tree log ---
+manifest
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:2:1-322:12
+	package
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:3:5-62
+		INJECTED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml
+		INJECTED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml
+	android:versionName
+		INJECTED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml
+		INJECTED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml
+	xmlns:android
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:2:11-69
+	android:versionCode
+		INJECTED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml
+		INJECTED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml
+uses-permission#android.permission.INTERNET
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:5:5-67
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:5:22-64
+uses-permission#android.permission.ACCESS_COARSE_LOCATION
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:6:5-81
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:6:22-78
+uses-permission#android.permission.ACCESS_FINE_LOCATION
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:7:5-79
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:7:22-76
+uses-permission#android.permission.ACCESS_GPS
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:8:5-69
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:8:22-66
+uses-permission#android.permission.ACCESS_ASSISTED_GPS
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:9:5-78
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:9:22-75
+uses-permission#android.permission.ACCESS_LOCATION
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:10:5-74
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:10:22-71
+uses-permission#android.permission.READ_LOGS
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:11:5-68
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:11:22-65
+uses-permission#android.permission.CHANGE_CONFIGURATION
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:12:5-79
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:12:22-76
+uses-permission#android.permission.SUPPRESSACCESSCHECKS
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:13:5-79
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:13:22-76
+uses-permission#android.permission.READ_PHONE_STATE
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:14:5-75
+MERGED from [cn.finalteam:toolsfinal:1.1.5] C:\Users\Admin\.android\build-cache\a54d044894272a7431c1b08db9e58bafcbeed000\output\AndroidManifest.xml:18:5-75
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:14:22-72
+uses-permission#android.permission.RECORD_AUDIO
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:15:5-71
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:15:22-68
+uses-permission#android.permission.MOUNT_UNMOUNT_FILESYSTEMS
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:16:5-84
+MERGED from [cn.finalteam:galleryfinal:1.4.8.7] C:\Users\Admin\.android\build-cache\00f81b563bc26b67b1050c22bcf9be5a413d676d\output\AndroidManifest.xml:12:5-84
+MERGED from [cn.finalteam:toolsfinal:1.1.5] C:\Users\Admin\.android\build-cache\a54d044894272a7431c1b08db9e58bafcbeed000\output\AndroidManifest.xml:12:5-84
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:16:22-81
+uses-permission#android.permission.ACCESS_WIFI_STATE
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:17:5-76
+MERGED from [cn.finalteam:toolsfinal:1.1.5] C:\Users\Admin\.android\build-cache\a54d044894272a7431c1b08db9e58bafcbeed000\output\AndroidManifest.xml:20:5-76
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:17:22-73
+uses-permission#android.permission.CHANGE_WIFI_STATE
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:18:5-76
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:18:22-73
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:19:5-79
+MERGED from [cn.finalteam:toolsfinal:1.1.5] C:\Users\Admin\.android\build-cache\a54d044894272a7431c1b08db9e58bafcbeed000\output\AndroidManifest.xml:24:5-79
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:19:22-76
+uses-permission#android.permission.CAMERA
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:20:5-65
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:20:22-62
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:21:5-81
+MERGED from [cn.finalteam:galleryfinal:1.4.8.7] C:\Users\Admin\.android\build-cache\00f81b563bc26b67b1050c22bcf9be5a413d676d\output\AndroidManifest.xml:14:5-81
+MERGED from [cn.finalteam:toolsfinal:1.1.5] C:\Users\Admin\.android\build-cache\a54d044894272a7431c1b08db9e58bafcbeed000\output\AndroidManifest.xml:14:5-81
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:21:22-78
+uses-permission#android.permission.WAKE_LOCK
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:22:5-68
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:22:22-65
+uses-permission#android.permission.SYSTEM_ALERT_WINDOW
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:23:5-78
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:23:22-75
+uses-permission#android.permission.SYSTEM_OVERLAY_WINDOW
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:24:5-80
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:24:22-77
+uses-permission#android.permission.VIBRATE
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:25:5-66
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:25:22-63
+uses-permission#android.permission.FLASHLIGHT
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:26:5-69
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:26:22-66
+uses-feature#android.hardware.camera
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:30:5-60
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:30:19-57
+uses-feature#android.hardware.camera.autofocus
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:31:5-70
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:31:19-67
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:33:5-80
+MERGED from [cn.finalteam:galleryfinal:1.4.8.7] C:\Users\Admin\.android\build-cache\00f81b563bc26b67b1050c22bcf9be5a413d676d\output\AndroidManifest.xml:16:5-80
+MERGED from [cn.finalteam:toolsfinal:1.1.5] C:\Users\Admin\.android\build-cache\a54d044894272a7431c1b08db9e58bafcbeed000\output\AndroidManifest.xml:16:5-80
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:33:22-77
+uses-permission#android.permission.USE_CREDENTIALS
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:34:5-74
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:34:22-71
+uses-permission#android.permission.GET_ACCOUNTS
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:35:5-71
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:35:22-68
+uses-permission#android.permission.READ_PROFILE
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:36:5-71
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:36:22-68
+permission#com.android.incongress.cd.conference.permission.JPUSH_MESSAGE
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:40:5-42:47
+	android:protectionLevel
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:42:9-44
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:41:9-85
+uses-permission#com.android.incongress.cd.conference.permission.JPUSH_MESSAGE
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:45:5-101
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:45:22-98
+uses-permission#android.permission.RECEIVE_USER_PRESENT
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:46:5-79
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:46:22-76
+uses-permission#android.permission.WRITE_SETTINGS
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:48:5-73
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:48:22-70
+uses-permission#android.permission.ACCESS_LOCATION_EXTRA_COMMANDS
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:52:5-89
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:52:22-86
+uses-permission#android.permission.CHANGE_NETWORK_STATE
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:53:5-79
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:53:22-76
+application
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:60:5-320:19
+MERGED from [com.android.support:cardview-v7:25.2.0] C:\Users\Admin\.android\build-cache\3d483f703df31e11d670c32c24aaef65c1d85040\output\AndroidManifest.xml:22:5-20
+MERGED from [com.bm.photoview:library:1.3.6] C:\Users\Admin\.android\build-cache\97f7a86ef7d86261f2d2f6890c53dbfa4065466d\output\AndroidManifest.xml:11:5-12:19
+MERGED from [cn.finalteam:galleryfinal:1.4.8.7] C:\Users\Admin\.android\build-cache\00f81b563bc26b67b1050c22bcf9be5a413d676d\output\AndroidManifest.xml:18:5-34:19
+MERGED from [org.litepal.android:core:1.3.2] C:\Users\Admin\.android\build-cache\71262845f54e2a0c5217ccd88f5972de3cd081ec\output\AndroidManifest.xml:11:5-14:19
+MERGED from [com.jcodecraeer:xrecyclerview:1.2.7] C:\Users\Admin\.android\build-cache\2c513b258b476fbd6259381dfb401282fedd1606\output\AndroidManifest.xml:11:5-20
+MERGED from [IFSC2018:Library_SuperRecyclerView:unspecified] D:\myCode\IFSC2018\Library_SuperRecyclerView\build\intermediates\bundles\default\AndroidManifest.xml:10:5-20
+MERGED from [IFSC2018:bottom-navigation-bar:unspecified] D:\myCode\IFSC2018\bottom-navigation-bar\build\intermediates\bundles\default\AndroidManifest.xml:9:5-11:38
+MERGED from [com.android.support:design:25.2.0] C:\Users\Admin\.android\build-cache\67e2355ffe87152db1182b968ab8d572b74148b0\output\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:transition:25.2.0] C:\Users\Admin\.android\build-cache\ba3c39765feca45139a0901ee17d8a355bf914e3\output\AndroidManifest.xml:22:5-20
+MERGED from [com.sunfusheng:marqueeview:1.3.1] C:\Users\Admin\.android\build-cache\503c3f9b2ef8fb9080e4cfbf94f0e36119037913\output\AndroidManifest.xml:11:5-15:19
+MERGED from [com.android.support:appcompat-v7:25.3.1] C:\Users\Admin\.android\build-cache\2685792c7e263b5561ff50b32a6ba8b30bef9375\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:animated-vector-drawable:25.3.1] C:\Users\Admin\.android\build-cache\fb4cd8f0f3099ea8924ba93cebbcf94a11d6c066\output\AndroidManifest.xml:26:5-20
+MERGED from [com.android.support:support-vector-drawable:25.3.1] C:\Users\Admin\.android\build-cache\6ab4504b36ef2fbeef88fc88e064ca5533ac6013\output\AndroidManifest.xml:26:5-20
+MERGED from [com.google.android.gms:play-services-appindexing:8.4.0] C:\Users\Admin\.android\build-cache\94a5271fb1d9d5e382c91d3032613196866b3e43\output\AndroidManifest.xml:19:5-20
+MERGED from [com.google.android.gms:play-services-basement:8.4.0] C:\Users\Admin\.android\build-cache\1b90a51d1cd22a682753038200e88bb09e2389d2\output\AndroidManifest.xml:20:5-24:19
+MERGED from [com.android.support:support-v4:25.3.1] C:\Users\Admin\.android\build-cache\f3af5877126404557884e956b059d721b9e7b2c4\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-fragment:25.3.1] C:\Users\Admin\.android\build-cache\72f4f5b04698ce246071f4a37ae76d1248846ddb\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-media-compat:25.3.1] C:\Users\Admin\.android\build-cache\e9167f3ceee1c678a37f0b1d4269ad2a79d166e1\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-core-ui:25.3.1] C:\Users\Admin\.android\build-cache\22badfb4255f2e1d9adc36de8fdbecbd460c5a04\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-core-utils:25.3.1] C:\Users\Admin\.android\build-cache\60f03e4e20306c68d88d2a03c4d5567779713117\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-compat:25.3.1] C:\Users\Admin\.android\build-cache\2cfc5e83dfe100edc44235c4ec727f6983c23703\output\AndroidManifest.xml:29:5-20
+	android:label
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:65:9-41
+	android:supportsRtl
+		ADDED from [cn.finalteam:galleryfinal:1.4.8.7] C:\Users\Admin\.android\build-cache\00f81b563bc26b67b1050c22bcf9be5a413d676d\output\AndroidManifest.xml:21:9-35
+	android:hardwareAccelerated
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:63:9-43
+	android:allowBackup
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:62:9-35
+	android:icon
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:64:9-45
+	android:largeHeap
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:66:9-33
+	android:theme
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:67:9-44
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:61:9-80
+activity#com.android.incongress.cd.conference.SplashActivity
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:74:9-87:20
+	android:screenOrientation
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:79:13-49
+	android:label
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:78:13-45
+	android:hardwareAccelerated
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:77:13-47
+	android:exported
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:76:13-36
+	android:windowSoftInputMode
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:81:13-56
+	android:theme
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:80:13-69
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:75:13-79
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:82:13-86:29
+action#android.intent.action.MAIN
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:83:17-69
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:83:25-66
+category#android.intent.category.LAUNCHER
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:85:17-77
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:85:27-74
+activity#com.android.incongress.cd.conference.AdvertisesActivity
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:88:9-90:75
+	android:theme
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:90:13-72
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:89:13-83
+activity#com.android.incongress.cd.conference.GuideAcitivity
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:91:9-94:75
+	android:screenOrientation
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:93:13-49
+	android:theme
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:94:13-72
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:92:13-79
+activity#com.android.incongress.cd.conference.HomeActivity
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:95:9-109:20
+	android:screenOrientation
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:98:13-49
+	android:launchMode
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:97:13-44
+	android:windowSoftInputMode
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:100:13-52
+	android:theme
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:99:13-57
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:96:13-77
+intent-filter#android.intent.action.VIEW+android.intent.category.BROWSABLE+android.intent.category.DEFAULT
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:101:13-108:29
+action#android.intent.action.VIEW
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:102:17-69
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:102:25-66
+category#android.intent.category.DEFAULT
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:104:17-76
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:104:27-73
+category#android.intent.category.BROWSABLE
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:105:17-78
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:105:27-75
+data
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:107:17-48
+	android:scheme
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:107:23-45
+activity#com.android.incongress.cd.conference.fragments.cit_live.CitLiveFragment
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:110:9-114:63
+	android:screenOrientation
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:113:13-49
+	android:configChanges
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:112:13-74
+	android:theme
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:114:13-60
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:111:13-99
+activity#com.android.incongress.cd.conference.CollegeActivity
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:115:9-120:55
+	android:screenOrientation
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:118:13-49
+	android:windowSoftInputMode
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:120:13-52
+	android:configChanges
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:117:13-74
+	android:theme
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:119:13-60
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:116:13-80
+activity#com.android.incongress.cd.conference.LoginActivity
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:121:9-124:73
+	android:windowSoftInputMode
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:124:13-70
+	android:theme
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:123:13-47
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:122:13-78
+activity#com.android.incongress.cd.conference.GestureImageViewActivity
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:125:9-128:63
+	android:screenOrientation
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:127:13-49
+	android:theme
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:128:13-60
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:126:13-89
+activity#com.android.incongress.cd.conference.WebViewVideoActivity
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:129:9-132:63
+	android:configChanges
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:131:13-85
+	android:theme
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:132:13-60
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:130:13-85
+receiver#com.android.incongress.cd.conference.utils.AlarmInitReceiver
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:134:9-141:20
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:134:19-94
+intent-filter#android.intent.action.BOOT_COMPLETED+android.intent.action.LOCALE_CHANGED+android.intent.action.TIMEZONE_CHANGED+android.intent.action.TIME_SET
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:135:13-140:29
+action#android.intent.action.BOOT_COMPLETED
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:136:17-79
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:136:25-76
+action#android.intent.action.TIME_SET
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:137:17-73
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:137:25-70
+action#android.intent.action.TIMEZONE_CHANGED
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:138:17-81
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:138:25-78
+action#android.intent.action.LOCALE_CHANGED
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:139:17-79
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:139:25-76
+receiver#com.android.incongress.cd.conference.utils.AlarmReceiver
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:142:9-148:20
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:142:19-90
+intent-filter#alarm_killed+cancel_snooze+com.android.incongress.cd.conference.alarm_start
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:143:13-147:29
+action#com.android.incongress.cd.conference.alarm_start
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:144:17-91
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:144:25-88
+action#alarm_killed
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:145:17-55
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:145:25-52
+action#cancel_snooze
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:146:17-56
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:146:25-53
+service#com.android.incongress.cd.conference.utils.AlarmKlaxon
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:150:9-154:19
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:150:18-87
+intent-filter#com.android.incongress.cd.conference.alarm_start
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:151:13-153:29
+service#com.android.incongress.cd.conference.services.AdService
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:155:9-91
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:155:18-88
+activity#com.android.incongress.cd.conference.WebViewContainerActivity
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:157:9-98
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:157:19-95
+activity#com.android.incongress.cd.conference.ScenicXiuPicsViewpagerActivity
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:158:9-160:74
+	android:theme
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:160:13-71
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:159:13-95
+activity#com.android.incongress.cd.conference.fragments.professor_secretary.AnswerQuestionActivity
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:161:9-126
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:161:19-123
+activity#com.android.incongress.cd.conference.RegisterActivity
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:164:9-90
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:164:19-87
+activity#com.android.incongress.cd.conference.RegisterConfirmActivity
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:165:9-97
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:165:19-94
+activity#com.android.incongress.cd.conference.fragments.professor_secretary.SecretaryActivity
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:166:9-121
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:166:19-118
+service#cn.jpush.android.service.PushService
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:168:9-178:19
+	android:enabled
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:170:13-35
+	android:exported
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:171:13-37
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:169:13-64
+intent-filter#cn.jpush.android.intent.PUSH_TIME+cn.jpush.android.intent.PushService+cn.jpush.android.intent.REGISTER+cn.jpush.android.intent.REPORT
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:172:13-177:29
+action#cn.jpush.android.intent.REGISTER
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:173:17-75
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:173:25-72
+action#cn.jpush.android.intent.REPORT
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:174:17-73
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:174:25-70
+action#cn.jpush.android.intent.PushService
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:175:17-78
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:175:25-75
+action#cn.jpush.android.intent.PUSH_TIME
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:176:17-76
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:176:25-73
+receiver#com.android.incongress.cd.conference.receiver.JPushReceiver
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:180:9-192:20
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:180:19-93
+intent-filter#cn.incongress.ifsc+cn.jpush.android.intent.ACTION_RICHPUSH_CALLBACK+cn.jpush.android.intent.CONNECTION+cn.jpush.android.intent.MESSAGE_RECEIVED+cn.jpush.android.intent.NOTIFICATION_OPENED+cn.jpush.android.intent.NOTIFICATION_RECEIVED+cn.jpush.android.intent.REGISTRATION+cn.jpush.android.intent.UNREGISTRATION
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:181:13-191:29
+action#cn.jpush.android.intent.REGISTRATION
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:182:17-79
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:182:25-76
+action#cn.jpush.android.intent.UNREGISTRATION
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:183:17-81
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:183:25-78
+action#cn.jpush.android.intent.MESSAGE_RECEIVED
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:184:17-83
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:184:25-80
+action#cn.jpush.android.intent.NOTIFICATION_RECEIVED
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:185:17-88
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:185:25-85
+action#cn.jpush.android.intent.NOTIFICATION_OPENED
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:186:17-86
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:186:25-83
+action#cn.jpush.android.intent.ACTION_RICHPUSH_CALLBACK
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:187:17-91
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:187:25-88
+action#cn.jpush.android.intent.CONNECTION
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:188:17-77
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:188:25-74
+category#cn.incongress.ifsc
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:190:17-63
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:190:27-60
+receiver#cn.jpush.android.service.PushReceiver
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:195:9-213:20
+	android:enabled
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:197:13-35
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:196:13-65
+intent-filter#cn.incongress.ifsc+cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:198:13-202:29
+	android:priority
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:198:28-51
+action#cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:199:17-94
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:199:25-91
+intent-filter#android.intent.action.USER_PRESENT+android.net.conn.CONNECTIVITY_CHANGE
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:203:13-206:29
+action#android.intent.action.USER_PRESENT
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:204:17-77
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:204:25-74
+action#android.net.conn.CONNECTIVITY_CHANGE
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:205:17-79
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:205:25-76
+intent-filter#android.intent.action.PACKAGE_ADDED+android.intent.action.PACKAGE_REMOVED
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:207:13-212:29
+action#android.intent.action.PACKAGE_ADDED
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:208:17-78
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:208:25-75
+action#android.intent.action.PACKAGE_REMOVED
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:209:17-80
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:209:25-77
+activity#cn.jpush.android.ui.PushActivity
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:215:9-225:20
+	android:configChanges
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:217:13-63
+	android:theme
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:218:13-72
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:216:13-60
+intent-filter#android.intent.category.DEFAULT+cn.incongress.ifsc+cn.jpush.android.ui.PushActivity
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:219:13-224:29
+action#cn.jpush.android.ui.PushActivity
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:220:17-75
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:220:25-72
+service#cn.jpush.android.service.DownloadService
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:228:9-231:40
+	android:enabled
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:230:13-35
+	android:exported
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:231:13-37
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:229:13-68
+receiver#cn.jpush.android.service.AlarmReceiver
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:233:9-75
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:233:19-72
+meta-data#JPUSH_CHANNEL
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:242:9-244:49
+	android:value
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:244:13-46
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:243:13-41
+meta-data#JPUSH_APPKEY
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:246:9-248:56
+	android:value
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:248:13-53
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:247:13-40
+activity#com.android.incongress.cd.conference.CountryCodeActivity
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:250:9-93
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:250:19-90
+activity#com.android.incongress.cd.conference.ChooseIdentityActivity
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:251:9-96
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:251:19-93
+activity#com.android.incongress.cd.conference.ConferencedDownloadDetailActivity
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:252:9-107
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:252:19-104
+activity#com.android.incongress.cd.conference.FindbackCCodeFirstActivity
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:253:9-100
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:253:19-97
+activity#com.android.incongress.cd.conference.ParticipantLoginActivity
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:254:9-98
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:254:19-95
+activity#com.android.incongress.cd.conference.FindbackCCodeSecondActivity
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:255:9-101
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:255:19-98
+activity#com.android.incongress.cd.conference.ChooseFieldActivity
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:256:9-93
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:256:19-90
+activity#com.android.incongress.cd.conference.ChooseKeShiActivity
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:257:9-93
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:257:19-90
+activity#com.android.incongress.cd.conference.widget.zxing.activity.CaptureActivity
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:258:9-262:63
+	android:screenOrientation
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:261:13-49
+	android:windowSoftInputMode
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:262:13-60
+	android:configChanges
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:260:13-63
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:259:13-102
+activity#com.android.incongress.cd.conference.wxapi.WXEntryActivity
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:265:9-268:64
+	android:exported
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:267:13-36
+	android:theme
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:268:13-61
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:266:13-86
+meta-data#UMENG_APPKEY
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:271:9-273:56
+	android:value
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:273:13-53
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:272:13-40
+service#com.android.incongress.cd.conference.services.DownloadService
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:282:9-97
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:282:18-94
+activity#com.android.incongress.cd.conference.ConferenceActivity
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:284:9-92
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:284:19-89
+activity#com.android.incongress.cd.conference.DialogActivity
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:285:9-291:59
+	android:screenOrientation
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:289:13-49
+	android:hardwareAccelerated
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:288:13-47
+	android:exported
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:287:13-36
+	android:windowSoftInputMode
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:291:13-56
+	android:theme
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:290:13-49
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:286:13-79
+activity#com.android.incongress.cd.conference.AlarmActivity
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:292:9-87
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:292:19-84
+activity#com.android.incongress.cd.conference.fragments.wall_poster.PosterImageFragment
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:293:9-115
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:293:19-112
+activity#com.android.incongress.cd.conference.fragments.wall_poster.PosterDiscussFragment
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:294:9-117
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:294:19-114
+activity#com.android.incongress.cd.conference.MakeQuestionActivity
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:295:9-94
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:295:19-91
+activity#com.android.incongress.cd.conference.fragments.me.MyMeetingNoteEditorActivity
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:300:9-114
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:300:19-111
+meta-data#com.google.android.gms.version
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:302:9-304:69
+MERGED from [com.google.android.gms:play-services-basement:8.4.0] C:\Users\Admin\.android\build-cache\1b90a51d1cd22a682753038200e88bb09e2389d2\output\AndroidManifest.xml:21:9-23:69
+	android:value
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:304:13-66
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:303:13-58
+activity#com.android.incongress.cd.conference.fragments.meeting_schedule.MeetingScheduleDetailActivity
+ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:317:9-318:62
+	android:screenOrientation
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:318:13-50
+	android:name
+		ADDED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml:317:19-127
+uses-sdk
+INJECTED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml reason: use-sdk injection requested
+MERGED from [com.android.support:cardview-v7:25.2.0] C:\Users\Admin\.android\build-cache\3d483f703df31e11d670c32c24aaef65c1d85040\output\AndroidManifest.xml:20:5-43
+MERGED from [com.bm.photoview:library:1.3.6] C:\Users\Admin\.android\build-cache\97f7a86ef7d86261f2d2f6890c53dbfa4065466d\output\AndroidManifest.xml:7:5-9:41
+MERGED from [com.yqritc:recyclerview-flexibledivider:1.2.8] C:\Users\Admin\.android\build-cache\c75b4f20b658d8ff41dcfc3a0e19096bae299863\output\AndroidManifest.xml:8:5-10:41
+MERGED from [cn.finalteam:galleryfinal:1.4.8.7] C:\Users\Admin\.android\build-cache\00f81b563bc26b67b1050c22bcf9be5a413d676d\output\AndroidManifest.xml:7:5-9:41
+MERGED from [cn.finalteam:toolsfinal:1.1.5] C:\Users\Admin\.android\build-cache\a54d044894272a7431c1b08db9e58bafcbeed000\output\AndroidManifest.xml:7:5-9:41
+MERGED from [org.litepal.android:core:1.3.2] C:\Users\Admin\.android\build-cache\71262845f54e2a0c5217ccd88f5972de3cd081ec\output\AndroidManifest.xml:7:5-9:41
+MERGED from [com.jakewharton:butterknife:8.2.1] C:\Users\Admin\.android\build-cache\318b73cc972e5e7348070815eefc72841d3d0183\output\AndroidManifest.xml:5:5-43
+MERGED from [com.jcodecraeer:xrecyclerview:1.2.7] C:\Users\Admin\.android\build-cache\2c513b258b476fbd6259381dfb401282fedd1606\output\AndroidManifest.xml:7:5-9:41
+MERGED from [com.android.support:multidex:1.0.0] C:\Users\Admin\.android\build-cache\52098e8d5b1bae30b109a460e587480007bcd047\output\AndroidManifest.xml:18:5-42
+MERGED from [IFSC2018:Library_SuperRecyclerView:unspecified] D:\myCode\IFSC2018\Library_SuperRecyclerView\build\intermediates\bundles\default\AndroidManifest.xml:6:5-8:41
+MERGED from [IFSC2018:bottom-navigation-bar:unspecified] D:\myCode\IFSC2018\bottom-navigation-bar\build\intermediates\bundles\default\AndroidManifest.xml:5:5-7:41
+MERGED from [com.android.support:design:25.2.0] C:\Users\Admin\.android\build-cache\67e2355ffe87152db1182b968ab8d572b74148b0\output\AndroidManifest.xml:21:5-23:62
+MERGED from [com.android.support:recyclerview-v7:25.2.0] C:\Users\Admin\.android\build-cache\106d6e951cc639f9d632818b4a138927123a134a\output\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:transition:25.2.0] C:\Users\Admin\.android\build-cache\ba3c39765feca45139a0901ee17d8a355bf914e3\output\AndroidManifest.xml:20:5-44
+MERGED from [com.sunfusheng:marqueeview:1.3.1] C:\Users\Admin\.android\build-cache\503c3f9b2ef8fb9080e4cfbf94f0e36119037913\output\AndroidManifest.xml:7:5-9:41
+MERGED from [com.android.support:appcompat-v7:25.3.1] C:\Users\Admin\.android\build-cache\2685792c7e263b5561ff50b32a6ba8b30bef9375\output\AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:animated-vector-drawable:25.3.1] C:\Users\Admin\.android\build-cache\fb4cd8f0f3099ea8924ba93cebbcf94a11d6c066\output\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:25.3.1] C:\Users\Admin\.android\build-cache\6ab4504b36ef2fbeef88fc88e064ca5533ac6013\output\AndroidManifest.xml:20:5-43
+MERGED from [com.google.android.gms:play-services-appindexing:8.4.0] C:\Users\Admin\.android\build-cache\94a5271fb1d9d5e382c91d3032613196866b3e43\output\AndroidManifest.xml:18:5-42
+MERGED from [com.google.android.gms:play-services-base:8.4.0] C:\Users\Admin\.android\build-cache\ecadd5bab7e80de19051034e58ce4e16989638de\output\AndroidManifest.xml:18:5-42
+MERGED from [com.google.android.gms:play-services-basement:8.4.0] C:\Users\Admin\.android\build-cache\1b90a51d1cd22a682753038200e88bb09e2389d2\output\AndroidManifest.xml:18:5-42
+MERGED from [com.android.support:support-v4:25.3.1] C:\Users\Admin\.android\build-cache\f3af5877126404557884e956b059d721b9e7b2c4\output\AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-fragment:25.3.1] C:\Users\Admin\.android\build-cache\72f4f5b04698ce246071f4a37ae76d1248846ddb\output\AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-media-compat:25.3.1] C:\Users\Admin\.android\build-cache\e9167f3ceee1c678a37f0b1d4269ad2a79d166e1\output\AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-core-ui:25.3.1] C:\Users\Admin\.android\build-cache\22badfb4255f2e1d9adc36de8fdbecbd460c5a04\output\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-core-utils:25.3.1] C:\Users\Admin\.android\build-cache\60f03e4e20306c68d88d2a03c4d5567779713117\output\AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:support-compat:25.3.1] C:\Users\Admin\.android\build-cache\2cfc5e83dfe100edc44235c4ec727f6983c23703\output\AndroidManifest.xml:21:5-23:58
+	tools:overrideLibrary
+		ADDED from [com.android.support:design:25.2.0] C:\Users\Admin\.android\build-cache\67e2355ffe87152db1182b968ab8d572b74148b0\output\AndroidManifest.xml:23:9-59
+	android:targetSdkVersion
+		INJECTED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml
+		INJECTED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml
+		INJECTED from D:\myCode\IFSC2018\ConferenceBasic_NCCPS\AndroidManifest.xml
+activity#cn.finalteam.galleryfinal.PhotoSelectActivity
+ADDED from [cn.finalteam:galleryfinal:1.4.8.7] C:\Users\Admin\.android\build-cache\00f81b563bc26b67b1050c22bcf9be5a413d676d\output\AndroidManifest.xml:22:9-25:52
+	android:screenOrientation
+		ADDED from [cn.finalteam:galleryfinal:1.4.8.7] C:\Users\Admin\.android\build-cache\00f81b563bc26b67b1050c22bcf9be5a413d676d\output\AndroidManifest.xml:25:13-49
+	android:configChanges
+		ADDED from [cn.finalteam:galleryfinal:1.4.8.7] C:\Users\Admin\.android\build-cache\00f81b563bc26b67b1050c22bcf9be5a413d676d\output\AndroidManifest.xml:24:13-83
+	android:name
+		ADDED from [cn.finalteam:galleryfinal:1.4.8.7] C:\Users\Admin\.android\build-cache\00f81b563bc26b67b1050c22bcf9be5a413d676d\output\AndroidManifest.xml:23:13-73
+activity#cn.finalteam.galleryfinal.PhotoEditActivity
+ADDED from [cn.finalteam:galleryfinal:1.4.8.7] C:\Users\Admin\.android\build-cache\00f81b563bc26b67b1050c22bcf9be5a413d676d\output\AndroidManifest.xml:26:9-29:52
+	android:screenOrientation
+		ADDED from [cn.finalteam:galleryfinal:1.4.8.7] C:\Users\Admin\.android\build-cache\00f81b563bc26b67b1050c22bcf9be5a413d676d\output\AndroidManifest.xml:29:13-49
+	android:configChanges
+		ADDED from [cn.finalteam:galleryfinal:1.4.8.7] C:\Users\Admin\.android\build-cache\00f81b563bc26b67b1050c22bcf9be5a413d676d\output\AndroidManifest.xml:28:13-83
+	android:name
+		ADDED from [cn.finalteam:galleryfinal:1.4.8.7] C:\Users\Admin\.android\build-cache\00f81b563bc26b67b1050c22bcf9be5a413d676d\output\AndroidManifest.xml:27:13-71
+activity#cn.finalteam.galleryfinal.PhotoPreviewActivity
+ADDED from [cn.finalteam:galleryfinal:1.4.8.7] C:\Users\Admin\.android\build-cache\00f81b563bc26b67b1050c22bcf9be5a413d676d\output\AndroidManifest.xml:30:9-33:52
+	android:screenOrientation
+		ADDED from [cn.finalteam:galleryfinal:1.4.8.7] C:\Users\Admin\.android\build-cache\00f81b563bc26b67b1050c22bcf9be5a413d676d\output\AndroidManifest.xml:33:13-49
+	android:configChanges
+		ADDED from [cn.finalteam:galleryfinal:1.4.8.7] C:\Users\Admin\.android\build-cache\00f81b563bc26b67b1050c22bcf9be5a413d676d\output\AndroidManifest.xml:32:13-83
+	android:name
+		ADDED from [cn.finalteam:galleryfinal:1.4.8.7] C:\Users\Admin\.android\build-cache\00f81b563bc26b67b1050c22bcf9be5a413d676d\output\AndroidManifest.xml:31:13-74
+uses-permission#android.permission.GET_TASKS
+ADDED from [cn.finalteam:toolsfinal:1.1.5] C:\Users\Admin\.android\build-cache\a54d044894272a7431c1b08db9e58bafcbeed000\output\AndroidManifest.xml:22:5-68
+	android:name
+		ADDED from [cn.finalteam:toolsfinal:1.1.5] C:\Users\Admin\.android\build-cache\a54d044894272a7431c1b08db9e58bafcbeed000\output\AndroidManifest.xml:22:22-65
+uses-permission#android.permission.CALL_PHONE
+ADDED from [cn.finalteam:toolsfinal:1.1.5] C:\Users\Admin\.android\build-cache\a54d044894272a7431c1b08db9e58bafcbeed000\output\AndroidManifest.xml:26:5-69
+	android:name
+		ADDED from [cn.finalteam:toolsfinal:1.1.5] C:\Users\Admin\.android\build-cache\a54d044894272a7431c1b08db9e58bafcbeed000\output\AndroidManifest.xml:26:22-66
+meta-data#android.support.VERSION
+ADDED from [com.android.support:appcompat-v7:25.3.1] C:\Users\Admin\.android\build-cache\2685792c7e263b5561ff50b32a6ba8b30bef9375\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:animated-vector-drawable:25.3.1] C:\Users\Admin\.android\build-cache\fb4cd8f0f3099ea8924ba93cebbcf94a11d6c066\output\AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:support-vector-drawable:25.3.1] C:\Users\Admin\.android\build-cache\6ab4504b36ef2fbeef88fc88e064ca5533ac6013\output\AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:support-v4:25.3.1] C:\Users\Admin\.android\build-cache\f3af5877126404557884e956b059d721b9e7b2c4\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-fragment:25.3.1] C:\Users\Admin\.android\build-cache\72f4f5b04698ce246071f4a37ae76d1248846ddb\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-media-compat:25.3.1] C:\Users\Admin\.android\build-cache\e9167f3ceee1c678a37f0b1d4269ad2a79d166e1\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-core-ui:25.3.1] C:\Users\Admin\.android\build-cache\22badfb4255f2e1d9adc36de8fdbecbd460c5a04\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-core-utils:25.3.1] C:\Users\Admin\.android\build-cache\60f03e4e20306c68d88d2a03c4d5567779713117\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-compat:25.3.1] C:\Users\Admin\.android\build-cache\2cfc5e83dfe100edc44235c4ec727f6983c23703\output\AndroidManifest.xml:25:5-27:34
+	android:value
+		ADDED from [com.android.support:appcompat-v7:25.3.1] C:\Users\Admin\.android\build-cache\2685792c7e263b5561ff50b32a6ba8b30bef9375\output\AndroidManifest.xml:27:9-31
+	android:name
+		ADDED from [com.android.support:appcompat-v7:25.3.1] C:\Users\Admin\.android\build-cache\2685792c7e263b5561ff50b32a6ba8b30bef9375\output\AndroidManifest.xml:26:9-47

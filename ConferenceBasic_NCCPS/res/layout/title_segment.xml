@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.android.incongress.cd.conference.widget.SegmentedGroup
+        android:id="@+id/sg_tab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:orientation="horizontal"
+        segmentedgroup:sc_border_width="1dp"
+        segmentedgroup:sc_corner_radius="5dp">
+
+        <RadioButton
+            android:id="@+id/rb_schedule"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/search_tab_schedule"
+            style="@style/RadioButton"
+            />
+
+        <RadioButton
+            android:id="@+id/rb_professor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/search_tab_professor"
+            style="@style/RadioButton"
+            />
+
+    </com.android.incongress.cd.conference.widget.SegmentedGroup>
+</LinearLayout>

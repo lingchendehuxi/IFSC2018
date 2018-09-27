@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:gravity="center"
+    android:id="@+id/ll_time_item"
+    android:layout_height="120dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/iv_time_logo"
+            android:layout_width="wrap_content"
+            android:src="@drawable/search_time_morning"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:text="早上"
+            android:id="@+id/tv_time_name"
+            android:textSize="@dimen/text_size_media"
+            android:textColor="@color/theme_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_time_num"
+        android:text="8.00-12:00"
+        android:textSize="@dimen/text_size_media"
+        android:textColor="@color/theme_color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</LinearLayout>

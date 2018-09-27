@@ -1,0 +1,794 @@
+[
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\role_selected.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\role_selected.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\common_plus_signin_btn_text_light_disabled.9.png",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-xxhdpi\\common_plus_signin_btn_text_light_disabled.9.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\operate_comment.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\operate_comment.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\room_down.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\room_down.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\more.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\more.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\home_icon_czs.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\home_icon_czs.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\meeting_table.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\meeting_table.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\guide_1.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\guide_1.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\home_icon_news.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\home_icon_news.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\my_schedule.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\my_schedule.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\home_icon_exhibitor.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\home_icon_exhibitor.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\ic_gf_camera.png",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\00f81b563bc26b67b1050c22bcf9be5a413d676d\\output\\res\\drawable-xxhdpi\\ic_gf_camera.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\common_google_signin_btn_icon_light_pressed.9.png",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-xxhdpi\\common_google_signin_btn_icon_light_pressed.9.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\search_schedule.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\search_schedule.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\ic_gf_crop.png",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\00f81b563bc26b67b1050c22bcf9be5a413d676d\\output\\res\\drawable-xxhdpi\\ic_gf_crop.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\messagestation_no_url.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\messagestation_no_url.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\check_unselected.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\check_unselected.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\hdsession_loading.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\hdsession_loading.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\common_plus_signin_btn_icon_light_pressed.9.png",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-xxhdpi\\common_plus_signin_btn_icon_light_pressed.9.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\schedule_list.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\schedule_list.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\gf_ic_preview.png",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\00f81b563bc26b67b1050c22bcf9be5a413d676d\\output\\res\\drawable-xxhdpi\\gf_ic_preview.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\point_speaker.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\point_speaker.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\home_icon_venuepic.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\home_icon_venuepic.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\common_plus_signin_btn_icon_light_disabled.9.png",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-xxhdpi\\common_plus_signin_btn_icon_light_disabled.9.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\question_share.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\question_share.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\home_icon_case.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\home_icon_case.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\umeng_socialize_wechat.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\umeng_socialize_wechat.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\photo5.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\photo5.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\home_icon_myschedule.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\home_icon_myschedule.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\look_schedule.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\look_schedule.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\add_text_info.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\add_text_info.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\exhibitor_new.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\exhibitor_new.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\my_schedule_bg.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\my_schedule_bg.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\hdsession_location.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\hdsession_location.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\hdsession_question_will.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\hdsession_question_will.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\home_icon_searchschedule.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\home_icon_searchschedule.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\home_background.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\home_background.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\home_icon_handson.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\home_icon_handson.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\photo9.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\photo9.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\operate_praise.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\operate_praise.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\professor_default.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\professor_default.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\identity_selected.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\identity_selected.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\common_plus_signin_btn_text_dark_disabled.9.png",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-xxhdpi\\common_plus_signin_btn_text_dark_disabled.9.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\news_tips.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\news_tips.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\common_plus_signin_btn_icon_dark_pressed.9.png",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-xxhdpi\\common_plus_signin_btn_icon_dark_pressed.9.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\common_google_signin_btn_text_light_disabled.9.png",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-xxhdpi\\common_google_signin_btn_text_light_disabled.9.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\wddy_icon_note.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\wddy_icon_note.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\photo10.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\photo10.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\home_icon_dzbb.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\home_icon_dzbb.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\home_icon_me.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\home_icon_me.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\ic_folder_check.png",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\00f81b563bc26b67b1050c22bcf9be5a413d676d\\output\\res\\drawable-xxhdpi\\ic_folder_check.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\jqqd.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\jqqd.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\common_google_signin_btn_text_dark_disabled.9.png",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-xxhdpi\\common_google_signin_btn_text_dark_disabled.9.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\home_scene_xiu.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\home_scene_xiu.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\company_activity_tips.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\company_activity_tips.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\hdsession_loading_en.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\hdsession_loading_en.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\common_plus_signin_btn_icon_dark_normal.9.png",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-xxhdpi\\common_plus_signin_btn_icon_dark_normal.9.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\poster_question.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\poster_question.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\czs_icon_introduce.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\czs_icon_introduce.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\schedule_detail_location.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\schedule_detail_location.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\czs_icon_adress.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\czs_icon_adress.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\photo3.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\photo3.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\home_icon_photowall.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\home_icon_photowall.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\common_full_open_on_phone.png",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-xxhdpi\\common_full_open_on_phone.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\common_google_signin_btn_text_light_normal.9.png",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-xxhdpi\\common_google_signin_btn_text_light_normal.9.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\common_google_signin_btn_icon_dark_focused.9.png",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-xxhdpi\\common_google_signin_btn_icon_dark_focused.9.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\common_google_signin_btn_text_dark_focused.9.png",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-xxhdpi\\common_google_signin_btn_text_dark_focused.9.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\common_plus_signin_btn_icon_dark_disabled.9.png",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-xxhdpi\\common_plus_signin_btn_icon_dark_disabled.9.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\check_selected.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\check_selected.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\right_arrow_clickable.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\right_arrow_clickable.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\show_guide.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\show_guide.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\hdsession_question.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\hdsession_question.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\dzbb_im.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\dzbb_im.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\home_icon_guide.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\home_icon_guide.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\common_plus_signin_btn_icon_dark_focused.9.png",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-xxhdpi\\common_plus_signin_btn_icon_dark_focused.9.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\home_icon_schedule.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\home_icon_schedule.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\home_icon_jzjs.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\home_icon_jzjs.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\bt_selector.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\bt_selector.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\hdsession_server_will.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\hdsession_server_will.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\home_icon_scane.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\home_icon_scane.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\common_plus_signin_btn_icon_light_focused.9.png",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-xxhdpi\\common_plus_signin_btn_icon_light_focused.9.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\common_plus_signin_btn_icon_light_normal.9.png",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-xxhdpi\\common_plus_signin_btn_icon_light_normal.9.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\common_google_signin_btn_text_light_focused.9.png",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-xxhdpi\\common_google_signin_btn_text_light_focused.9.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\common_plus_signin_btn_text_dark_pressed.9.png",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-xxhdpi\\common_plus_signin_btn_text_dark_pressed.9.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\umeng_socialize_sina.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\umeng_socialize_sina.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\left_arrow_clickable.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\left_arrow_clickable.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\schedule_location_2.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\schedule_location_2.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\interactive_guide.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\interactive_guide.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\ic_gf_back.png",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\00f81b563bc26b67b1050c22bcf9be5a413d676d\\output\\res\\drawable-xxhdpi\\ic_gf_back.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\home_icon_cit_college.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\home_icon_cit_college.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\watch_schedule.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\watch_schedule.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\czs_icon_phone.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\czs_icon_phone.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\home_icon_reminder.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\home_icon_reminder.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\schedule_switch_cn.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\schedule_switch_cn.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\umeng_socialize_wxcircle.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\umeng_socialize_wxcircle.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\czs_icon_internet.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\czs_icon_internet.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\home_icon_next.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\home_icon_next.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\photo4.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\photo4.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\home_icon_college.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\home_icon_college.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\see_detail_attach.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\see_detail_attach.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\common_google_signin_btn_icon_dark_normal.9.png",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-xxhdpi\\common_google_signin_btn_icon_dark_normal.9.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\ic_launcher.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\ic_gf_rotate.png",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\00f81b563bc26b67b1050c22bcf9be5a413d676d\\output\\res\\drawable-xxhdpi\\ic_gf_rotate.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\sessiondetail_alarmon.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\sessiondetail_alarmon.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\nav_btn_back.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\nav_btn_back.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\shuttlebus_vip.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\shuttlebus_vip.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\photo8.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\photo8.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\cna_bg.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\cna_bg.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\scane_scane.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\scane_scane.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\photo6.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\photo6.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\refresh_circle.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\refresh_circle.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\notifacation_tip_en.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\notifacation_tip_en.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\notification.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\notification.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\home_icon_bb.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\home_icon_bb.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\scenic_xiu_new.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\scenic_xiu_new.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\arrow_down.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\arrow_down.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\hdsession_qas.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\hdsession_qas.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\guide_2.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\guide_2.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\add_pic_title.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\add_pic_title.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\schedule_alarm.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\schedule_alarm.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\praised.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\praised.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\search_day_logo.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\search_day_logo.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\my_schedule_new.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\my_schedule_new.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\common_plus_signin_btn_text_light_pressed.9.png",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-xxhdpi\\common_plus_signin_btn_text_light_pressed.9.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\umeng_socialize_fav.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\umeng_socialize_fav.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\secretary_bg.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\secretary_bg.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\edittext_delete.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\edittext_delete.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\common_plus_signin_btn_text_light_normal.9.png",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-xxhdpi\\common_plus_signin_btn_text_light_normal.9.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\search_reset.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\search_reset.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\home_icon_question.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\home_icon_question.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\secretary_new.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\secretary_new.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\schedule_location.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\schedule_location.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\common_google_signin_btn_icon_light_focused.9.png",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-xxhdpi\\common_google_signin_btn_icon_light_focused.9.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\speaker_search_new.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\speaker_search_new.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\search.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\search.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\news_tips_en.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\news_tips_en.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\photo_album_type.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\photo_album_type.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\notifacation_tip.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\notifacation_tip.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\sessiondetail_alarmoff.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\sessiondetail_alarmoff.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\common_plus_signin_btn_text_dark_normal.9.png",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-xxhdpi\\common_plus_signin_btn_text_dark_normal.9.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\common_google_signin_btn_text_dark_pressed.9.png",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-xxhdpi\\common_google_signin_btn_text_dark_pressed.9.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\common_google_signin_btn_icon_dark_pressed.9.png",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-xxhdpi\\common_google_signin_btn_icon_dark_pressed.9.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\me_next.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\me_next.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\home_icon_xxz.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\home_icon_xxz.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\photo2.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\photo2.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\search_schedule_new.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\search_schedule_new.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\home_icon_msg.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\home_icon_msg.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\hdsession_server.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\hdsession_server.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\me_my_note.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\me_my_note.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\ic_gf_done.png",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\00f81b563bc26b67b1050c22bcf9be5a413d676d\\output\\res\\drawable-xxhdpi\\ic_gf_done.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\home_icon_live.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\home_icon_live.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\scenicxiu_news.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\scenicxiu_news.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\home_icon_now.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\home_icon_now.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\common_plus_signin_btn_text_dark_focused.9.png",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-xxhdpi\\common_plus_signin_btn_text_dark_focused.9.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\scenic_xiu_company.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\scenic_xiu_company.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\home_icon_chzn.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\home_icon_chzn.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\comment_more.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\comment_more.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\common_plus_signin_btn_text_light_focused.9.png",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-xxhdpi\\common_plus_signin_btn_text_light_focused.9.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\praise.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\praise.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\common_google_signin_btn_icon_light_disabled.9.png",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-xxhdpi\\common_google_signin_btn_icon_light_disabled.9.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\home_first_background.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\home_first_background.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\comment_icon.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\comment_icon.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\bt_uncollected.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\bt_uncollected.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\scenicxiu_news_en.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\scenicxiu_news_en.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\hd_session_new.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\hd_session_new.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\my_secretary_right.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\my_secretary_right.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\czs_icon_fax.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\czs_icon_fax.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\home_top_banner_cit2016.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\home_top_banner_cit2016.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\photo_praise.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\photo_praise.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\wddy_icon_tie.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\wddy_icon_tie.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\common_google_signin_btn_icon_light_normal.9.png",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-xxhdpi\\common_google_signin_btn_icon_light_normal.9.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\now_meeting.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\now_meeting.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\home_icon_qa.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\home_icon_qa.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\ccode_info_tips.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\ccode_info_tips.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\home_icon_zjms.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\home_icon_zjms.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\home_back_guide.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\home_back_guide.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\common_google_signin_btn_icon_dark_disabled.9.png",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-xxhdpi\\common_google_signin_btn_icon_dark_disabled.9.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\ic_gf_clear.png",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\00f81b563bc26b67b1050c22bcf9be5a413d676d\\output\\res\\drawable-xxhdpi\\ic_gf_clear.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\home_icon_interactive.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\home_icon_interactive.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\look_schedule_new.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\look_schedule_new.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\common_google_signin_btn_text_dark_normal.9.png",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-xxhdpi\\common_google_signin_btn_text_dark_normal.9.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\home_hands_on.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\home_hands_on.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\question_poster.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\question_poster.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\home_icon_dzbl.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\home_icon_dzbl.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\schedule_switch.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\schedule_switch.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\messagestation_url.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\messagestation_url.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\session_guide.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\session_guide.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\common_google_signin_btn_text_light_pressed.9.png",
+        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-xxhdpi\\common_google_signin_btn_text_light_pressed.9.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\me_my_create_post.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\me_my_create_post.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\bt_collected.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\bt_collected.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\guide_3.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\guide_3.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\home_top_2017.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\home_top_2017.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\photo1.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\photo1.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\home_icon_scenicxiu.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\home_icon_scenicxiu.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\photo7.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\photo7.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\photo_praised.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\photo_praised.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\splash_bj.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\splash_bj.png"
+    },
+    {
+        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\hdsession_location_will.png",
+        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-xxhdpi\\hdsession_location_will.png"
+    }
+]

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.android.incongress.cd.conference.widget.HVScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:id="@+id/hv_scrollview"
+      >
+        <RelativeLayout android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/rl_table_container">
+            <TableLayout
+                android:id="@+id/table_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                ></TableLayout>
+            <AbsoluteLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/abs_container"
+                ></AbsoluteLayout>
+        </RelativeLayout>
+    </com.android.incongress.cd.conference.widget.HVScrollView>
+</RelativeLayout>
