@@ -130,8 +130,10 @@
             android:id="@+id/iv_operate_more"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_marginEnd="-1dp"
             android:scaleType="fitCenter"
             android:src="@drawable/comment_more" />
 

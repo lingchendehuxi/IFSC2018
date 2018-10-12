@@ -39,6 +39,7 @@ import com.android.incongress.cd.conference.beans.SceneShowTopBean;
 import com.android.incongress.cd.conference.beans.ScenicXiuBean;
 import com.android.incongress.cd.conference.fragments.DynamicHomeFragment;
 import com.android.incongress.cd.conference.fragments.me.PersonCenterFragment;
+import com.android.incongress.cd.conference.save.SharePreferenceUtils;
 import com.android.incongress.cd.conference.utils.MyLogger;
 import com.android.incongress.cd.conference.utils.StringUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
@@ -372,14 +373,14 @@ public class ScenicXiuFragment extends BaseFragment implements View.OnClickListe
      * 显示指示页
      */
     private void showGuideInfo() {
-        if (AppApplication.getSPIntegerValue(Constants.GUIDE_XIU) != 1) {
+        if (!"1".equals(SharePreferenceUtils.getApp(Constants.GUIDE_XIU))) {
             getActivity().findViewById(R.id.home_guide).setVisibility(View.VISIBLE);
             ((ImageView) getActivity().findViewById(R.id.home_guide)).setImageResource(R.drawable.show_guide);
             ((ImageView) getActivity().findViewById(R.id.home_guide)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     getActivity().findViewById(R.id.home_guide).setVisibility(View.GONE);
-                    AppApplication.setSPIntegerValue(Constants.GUIDE_XIU, 1);
+                    SharePreferenceUtils.saveAppString(Constants.GUIDE_XIU, "1");
                 }
             });
         }

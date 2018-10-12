@@ -23,6 +23,8 @@ import android.widget.TextView;
 
 import com.android.incongress.cd.conference.beans.IncongressBean;
 import com.android.incongress.cd.conference.model.Ad;
+import com.android.incongress.cd.conference.save.ParseUser;
+import com.android.incongress.cd.conference.save.SharePreferenceUtils;
 import com.android.incongress.cd.conference.services.AdService;
 import com.android.incongress.cd.conference.utils.LogUtils;
 import com.android.incongress.cd.conference.widget.zxing.activity.ZXingLibrary;
@@ -61,7 +63,7 @@ public class AppApplication extends LitePalApplication {
     public static String COMPAS_ID = "1";
 
     //conference id
-    public static int conId = 353;
+    public static int conId = 348;
 
     //表明类型 在初始化数据时会用
     public static int conType = 2;
@@ -196,13 +198,14 @@ public class AppApplication extends LitePalApplication {
         //相册配置
         GalleryFinal.init(coreConfig);
         //初始化用户数据
-        if (StringUtils.isAllNotEmpty(AppApplication.getSPStringValue(Constants.USER_NAME),
-            AppApplication.getSPIntegerValue(Constants.USER_ID) + "", AppApplication.getSPIntegerValue(Constants.USER_TYPE) + "")) {
+        ParseUser.initUserInfo();
+        /*if (StringUtils.isAllNotEmpty(SharePreferenceUtils.getUser(Constants.USER_NAME),
+            SharePreferenceUtils.getUser(Constants.USER_ID) , SharePreferenceUtils.getUser(Constants.USER_TYPE))) {
             AppApplication.userId = AppApplication.getSPIntegerValue(Constants.USER_ID);
             AppApplication.userType = AppApplication.getSPIntegerValue(Constants.USER_TYPE);
             AppApplication.username = AppApplication.getSPStringValue(Constants.USER_NAME);
             AppApplication.facultyId = AppApplication.getSPIntegerValue(Constants.USER_FACULTYID);
-        }
+        }*/
         //不默认统计Activity
         MobclickAgent.openActivityDurationTrack(false);
     }
@@ -264,7 +267,7 @@ public class AppApplication extends LitePalApplication {
      * @param value
      * @return
      */
-    public static boolean setSPBooleanValue(String key, boolean value) {
+    /*public static boolean setSPBooleanValue(String key, boolean value) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
         return sp.edit().putBoolean(key, value).commit();
     }
@@ -276,13 +279,13 @@ public class AppApplication extends LitePalApplication {
     public static boolean getSPBooleanValue2(String key) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
         return sp.getBoolean(key,true);
-    }
+    }*/
     /**
      * 判断用户是否是登录状态
      * @return
      */
     public static boolean isUserLogIn() {
-        return getSPBooleanValue(Constants.USER_IS_LOGIN);
+        return "true".equals(SharePreferenceUtils.getUser(Constants.USER_IS_LOGIN));
     }
 
     public void setDisPlayMetrics(DisplayMetrics mDisplayMetrics) {
@@ -382,13 +385,7 @@ public class AppApplication extends LitePalApplication {
         stopService(new Intent(getApplicationContext(), AdService.class));
     }
 
-    /**
-     * shezhi sp value
-     *
-     * @param key
-     * @param value
-     */
-    public static boolean setSPStringValue(String key, String value) {
+    /*public static boolean setSPStringValue(String key, String value) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
         return sp.edit().putString(key, value).commit();
     }
@@ -396,15 +393,9 @@ public class AppApplication extends LitePalApplication {
     public static String getSPStringValue(String key) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
         return sp.getString(key, "");
-    }
+    }*/
 
-    /**
-     * shezhi sp value
-     *
-     * @param key
-     * @param value
-     */
-    public static boolean setSPIntegerValue(String key, int value) {
+    /*public static boolean setSPIntegerValue(String key, int value) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
         return sp.edit().putInt(key, value).commit();
     }
@@ -412,15 +403,8 @@ public class AppApplication extends LitePalApplication {
     public static int getSPIntegerValue(String key) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
         return sp.getInt(key, 0);
-    }
+    }*/
 
-    /**
-     * 清空所有sp信息
-     */
-    public static void clearSPValues() {
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
-        sp.edit().clear().apply();
-    }
 
     @Override
     protected void attachBaseContext(Context base) {

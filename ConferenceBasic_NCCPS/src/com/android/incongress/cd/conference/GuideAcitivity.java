@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.BaseActivity;
 import com.android.incongress.cd.conference.base.Constants;
+import com.android.incongress.cd.conference.save.SharePreferenceUtils;
 import com.android.incongress.cd.conference.widget.VerticalLinearLayout;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 import com.umeng.analytics.MobclickAgent;
@@ -39,7 +40,7 @@ public class GuideAcitivity extends BaseActivity {
         mTvGo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppApplication.setSPIntegerValue(Constants.NEED_GUIDE, Constants.NEED_GUIDE_FALSE);
+                SharePreferenceUtils.saveAppString(Constants.NEED_GUIDE, Constants.NEED_GUIDE_FALSE+"");
                 //广告页
                 Intent intent = new Intent();
                 intent.setClass(GuideAcitivity.this, AdvertisesActivity.class);

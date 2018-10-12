@@ -39,7 +39,7 @@ public class MeetingScheduleListActionFragment extends BaseFragment {
     private TabLayout mTabLayout;
     private MeetingScheduleListFragmentAdapter mPageAdapter;
     private List<String> mSessionDaysList = new ArrayList<>();
-    //private TextView mTvTips;
+    private TextView mTvTips;
 
     @Override
     public void onAttach(Context context) {
@@ -52,9 +52,9 @@ public class MeetingScheduleListActionFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_meeting_schedule_list, null, false);
         mViewPager = (ViewPager) view.findViewById(R.id.viewpager);
         mTabLayout = (TabLayout) view.findViewById(R.id.tablayout);
-        /*mTvTips = (TextView) view.findViewById(R.id.tv_tips);
+        mTvTips = (TextView) view.findViewById(R.id.tv_tips);
 
-        mTvTips.setOnClickListener(new View.OnClickListener() {
+        /*mTvTips.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlphaAnimation alphaAnimation = new AlphaAnimation(1f,0f);
@@ -81,8 +81,7 @@ public class MeetingScheduleListActionFragment extends BaseFragment {
 
         if(AppApplication.getSPBooleanValue(Constants.LOOK_SCHEDULE_TIPS)) {
             mTvTips.setVisibility(View.GONE);
-        }
-*/
+        }*/
         getSessionDays();
 
         mPageAdapter = new MeetingScheduleListFragmentAdapter(getChildFragmentManager(), mSessionDaysList);
@@ -127,6 +126,11 @@ public class MeetingScheduleListActionFragment extends BaseFragment {
                 mSessionDaysList.add(session.getSessionDay());
             }
         }
+//        if(mSessionDaysList.size()==0){
+//            mTvTips.setVisibility(View.VISIBLE);
+//        }else {
+//            mTvTips.setVisibility(View.GONE);
+//        }
     }
 
     public void setRightListener(View view) {

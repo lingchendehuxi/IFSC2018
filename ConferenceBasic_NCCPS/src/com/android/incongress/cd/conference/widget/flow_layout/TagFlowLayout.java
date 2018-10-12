@@ -18,7 +18,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 /**
- * Created by zhy on 15/9/10.
+ * Created by zhy on 15/9/10.  瀑布流用于日程详情中人员的列表
  */
 public class TagFlowLayout extends FlowLayout implements TagAdapter.OnDataChangedListener {
     private TagAdapter mTagAdapter;

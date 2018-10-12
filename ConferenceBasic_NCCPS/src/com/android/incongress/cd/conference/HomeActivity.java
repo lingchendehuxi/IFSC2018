@@ -48,7 +48,10 @@ import com.android.incongress.cd.conference.fragments.scenic_xiu.ScenicXiuFragme
 import com.android.incongress.cd.conference.fragments.wall_poster.PosterImageFragment;
 import com.android.incongress.cd.conference.model.Ad;
 import com.android.incongress.cd.conference.model.ConferenceDbUtils;
+import com.android.incongress.cd.conference.save.ParseUser;
+import com.android.incongress.cd.conference.save.SharePreferenceUtils;
 import com.android.incongress.cd.conference.services.AdService;
+import com.android.incongress.cd.conference.utils.ConvertUtil;
 import com.android.incongress.cd.conference.widget.zxing.activity.CodeUtils;
 import com.android.incongress.cd.conference.utils.CommonUtils;
 import com.android.incongress.cd.conference.utils.ExampleUtil;
@@ -266,7 +269,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
         }
 
         if (AppApplication.userId != -1) {
-            String token = AppApplication.getSPStringValue(Constants.USER_RONG_TOKEN);
+            String token = SharePreferenceUtils.getUser(Constants.USER_RONG_TOKEN);
 
             if (TextUtils.isEmpty(token)) {
                 CHYHttpClientUsage.getInstanse().doGetToken(AppApplication.userId, new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
@@ -279,7 +282,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
                             if (state == 1) {
                                 String tokenRes = response.getString("token");
                                 if (!TextUtils.isEmpty(tokenRes)) {
-                                    AppApplication.setSPStringValue(Constants.USER_RONG_TOKEN, tokenRes);
+                                    SharePreferenceUtils.saveUserString(Constants.USER_RONG_TOKEN, tokenRes);
                                 }
                             }
                         } catch (JSONException e) {
@@ -304,8 +307,8 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
      * 根据用户id更新用户信息
      */
     private void initRefreshUser() {
-        String mobile = AppApplication.getSPStringValue(Constants.USER_MOBILE);
-        String trueName = AppApplication.getSPStringValue(Constants.USER_NAME);
+        String mobile = SharePreferenceUtils.getUser(Constants.USER_MOBILE);
+        String trueName = SharePreferenceUtils.getUser(Constants.USER_NAME);
         try {
             trueName = URLEncoder.encode(trueName, Constants.ENCODING_UTF8);
         } catch (Exception e) {
@@ -322,7 +325,8 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
                         try {
                             int state = response.getInt("state");
                             if (state == 1) {
-                                Gson gson = new Gson();
+                                ParseUser.saveUserInfo(response.toString());
+                                /*Gson gson = new Gson();
                                 UserInfoBean user = gson.fromJson(response.toString(), UserInfoBean.class);
                                 AppApplication.setSPStringValue(Constants.USER_NAME, user.getName());
                                 AppApplication.setSPStringValue(Constants.USER_IMG, user.getImg());
@@ -334,7 +338,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
                                 AppApplication.userId = user.getUserId();
                                 AppApplication.username = user.getName();
                                 AppApplication.userType = user.getUserType();
-                                AppApplication.facultyId = user.getFacultyId();
+                                AppApplication.facultyId = user.getFacultyId();*/
                                 if(mMeFragment!=null){
                                     mMeFragment.showLoginResult();
                                 }
@@ -357,19 +361,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
                         try {
                             int state = response.getInt("state");
                             if (state == 1) {
-                                Gson gson = new Gson();
-                                UserInfoEnBean user = gson.fromJson(response.toString(), UserInfoEnBean.class);
-                                AppApplication.setSPStringValue(Constants.USER_NAME, user.getName());
-                                AppApplication.setSPStringValue(Constants.USER_IMG, user.getImg());
-                                AppApplication.setSPStringValue(Constants.USER_MOBILE, user.getEmail());
-                                AppApplication.setSPIntegerValue(Constants.USER_ID, user.getUserId());
-                                AppApplication.setSPIntegerValue(Constants.USER_FACULTYID, user.getFacultyId());
-                                AppApplication.setSPIntegerValue(Constants.USER_TYPE, user.getUserType());
-                                AppApplication.setSPBooleanValue(Constants.USER_IS_LOGIN, true);
-                                AppApplication.userId = user.getUserId();
-                                AppApplication.username = user.getName();
-                                AppApplication.userType = user.getUserType();
-                                AppApplication.facultyId = user.getFacultyId();
+                                ParseUser.saveUserInfo(response.toString());
                                 if(mMeFragment!=null){
                                     mMeFragment.showLoginResult();
                                 }
@@ -395,8 +387,8 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
     protected void initViewsAction() {
     }
     private void getDialog() {
-        int version = AppApplication.getSPIntegerValue("dialogversion");
-        final int count = AppApplication.getSPIntegerValue("dialogcount");
+        int version = ConvertUtil.convertToInt(SharePreferenceUtils.getApp("dialogversion"),0);
+        final int count = ConvertUtil.convertToInt(SharePreferenceUtils.getApp("dialogcount"),0);
 
         CHYHttpClientUsage.getInstanse().doGetAlertAd(version, new JsonHttpResponseHandler("gbk") {
             @Override
@@ -408,13 +400,14 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
                     if(openState == 1){
                         if(state == 1){
                             int count = response.getInt("count")-1;
-                            AppApplication.setSPIntegerValue("dialogversion",response.getInt("version"));
+                            ParseUser.saveDataInfo(response.toString());
+                            /*AppApplication.setSPIntegerValue("dialogversion",response.getInt("version"));
                             AppApplication.setSPIntegerValue("dialogcount",count);
                             AppApplication.setSPStringValue("dialogimgUrl",response.getString("picUrl"));
                             AppApplication.setSPIntegerValue("dialogtime",response.getInt("time"));
                             AppApplication.setSPStringValue("dialoglinkUrl",response.getString("linkUrl"));
                             AppApplication.setSPIntegerValue("dialogalertAdId",response.getInt("alertAdId"));
-                            AppApplication.setSPStringValue("dialogalertAdName",response.getString("alertAdName"));
+                            AppApplication.setSPStringValue("dialogalertAdName",response.getString("alertAdName"));*/
                             Intent intent = new Intent(HomeActivity.this,DialogActivity.class);
                             intent.putExtra("imgUrl",response.getString("picUrl"));
                             intent.putExtra("time",response.getInt("time"));
@@ -424,14 +417,14 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
                             startActivity(intent);
                         }else{
                             if(count != 0 && state != 3){
-                                int counttow = AppApplication.getSPIntegerValue("dialogcount")-1;
-                                AppApplication.setSPIntegerValue("dialogcount",counttow);
+                                int counttow = ConvertUtil.convertToInt(SharePreferenceUtils.getApp("dialogcount"),0)-1;
+                                SharePreferenceUtils.saveAppString("dialogcount",counttow+"");
                                 Intent intent = new Intent(HomeActivity.this,DialogActivity.class);
-                                intent.putExtra("imgUrl",AppApplication.getSPStringValue("dialogimgUrl"));
-                                intent.putExtra("time",AppApplication.getSPIntegerValue("dialogtime"));
-                                intent.putExtra("linkUrl",AppApplication.getSPStringValue("dialoglinkUrl"));
-                                intent.putExtra("alertAdId",AppApplication.getSPIntegerValue("dialogalertAdId"));
-                                intent.putExtra("alertAdName",AppApplication.getSPStringValue("dialogalertAdName"));
+                                intent.putExtra("imgUrl",SharePreferenceUtils.getApp("dialogimgUrl"));
+                                intent.putExtra("time",SharePreferenceUtils.getApp("dialogtime"));
+                                intent.putExtra("linkUrl",SharePreferenceUtils.getApp("dialoglinkUrl"));
+                                intent.putExtra("alertAdId",SharePreferenceUtils.getApp("dialogalertAdId"));
+                                intent.putExtra("alertAdName",SharePreferenceUtils.getApp("dialogalertAdName"));
                                 startActivity(intent);
                             }
                         }
@@ -793,9 +786,9 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
         mTitleEntries.get(mTitleEntries.size() - 1).setShowNavigationBottom(true);
 
         //显示引导
-        if(AppApplication.getSPBooleanValue(Constants.SHOW_HOME_BACK_GUIDE)) {
+        if(SharePreferenceUtils.getSPBooleanValueF(Constants.SHOW_HOME_BACK_GUIDE)) {
             mHomeGuide.setVisibility(View.VISIBLE);
-            AppApplication.setSPBooleanValue(Constants.SHOW_HOME_BACK_GUIDE, false);
+            SharePreferenceUtils.setSPBooleanValue(Constants.SHOW_HOME_BACK_GUIDE, false);
         }
     }
 

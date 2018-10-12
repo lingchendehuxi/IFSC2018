@@ -16,7 +16,7 @@ public class Constants {
     public static final boolean SPEAKER_TIP_OPEN = true;
 
     /** 是否处于调试状态，调试状态都是测试地址；非调试状态都是正是地址 **/
-    public static final boolean isDebug = true;
+    public static final boolean isDebug = false;
     /** 用户融云的token **/
     public static final String USER_RONG_TOKEN = "userRongToken";
 
@@ -97,7 +97,7 @@ public class Constants {
 
     /** 用户登录名 **/
     public static final String USER_IS_LOGIN = "userLogIn";//用户是否登录
-    public static final String USER_NAME = "userName";
+    public static final String USER_NAME = "name";
     public static final String USER_FAMILY_NAME = "familyName";
     public static final String USER_GIVEN_NAME = "givenName";
     public static final String USER_IMG = "img";

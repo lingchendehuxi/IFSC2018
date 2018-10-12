@@ -2,9 +2,11 @@ package com.android.incongress.cd.conference.widget;
 
 import java.util.List;   
 
-import android.content.Context;   
-import android.graphics.Rect;   
-import android.util.AttributeSet;   
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Rect;
+import android.util.AttributeSet;
+import android.util.Log;
 import android.view.FocusFinder;   
 import android.view.KeyEvent;   
 import android.view.MotionEvent;   
@@ -14,7 +16,9 @@ import android.view.ViewConfiguration;
 import android.view.ViewGroup;   
 import android.view.ViewParent;   
 import android.view.animation.AnimationUtils;   
-import android.widget.FrameLayout;   
+import android.widget.FrameLayout;
+import android.widget.HorizontalScrollView;
+import android.widget.ScrollView;
 import android.widget.Scroller;
 
 /**
@@ -31,6 +35,8 @@ public class HVScrollView extends FrameLayout {
 
     private HScroll mHScroll;
     private VScroll mVScroll;
+    private ScrollView parentView;
+    private HorizontalScrollView parentView2;
 
     public void setHScroll(HScroll scroll) {
         this.mHScroll = scroll;
@@ -112,12 +118,58 @@ public class HVScrollView extends FrameLayout {
         this(context, null);   
     }   
  
-    public HVScrollView(Context context, AttributeSet attrs) {   
-        super(context, attrs);   
-        initScrollView();   
-    }   
- 
-    @Override   
+    public HVScrollView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        initScrollView();
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        parentView = (ScrollView) getParent().getParent();
+        parentView2 = (HorizontalScrollView) getParent();
+        parentView2.setOnScrollChangeListener(new OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                Log.d("sgqTest", "onScrollChange: X= "+scrollX+"-------Y= "+scrollY+"----oldx = "+oldScrollX+"------oldy = "+oldScrollY);
+                HorizontalScrollView sv = (HorizontalScrollView) v;
+                mHScroll.scrollTo(scrollX,0);
+                // 判断 scrollView 当前滚动位置在顶部
+                if(sv.getScrollX() == 0){
+                    mHScroll.fullScroll(ScrollView.FOCUS_LEFT);
+                }
+
+                // 判断scrollview 滑动到底部
+                // scrollY 的值和子view的高度一样，这人物滑动到了底部
+                if (sv.getChildAt(0).getWidth() - sv.getWidth()
+                        == sv.getScrollX()){
+                    mHScroll.fullScroll(ScrollView.FOCUS_RIGHT);
+                }
+            }
+        });
+        parentView.setOnScrollChangeListener(new OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                Log.d("sgqTest", "onScrollChange: X= "+scrollX+"-------Y= "+scrollY+"----oldx = "+oldScrollX+"------oldy = "+oldScrollY);
+                ScrollView sv = (ScrollView) v;
+                mHScroll.scrollTo(scrollX,0);
+                mVScroll.scrollTo(0,scrollY);
+                // 判断 scrollView 当前滚动位置在顶部
+                if(sv.getScrollY() == 0){
+                    mVScroll.fullScroll(ScrollView.FOCUS_UP);
+                }
+
+                // 判断scrollview 滑动到底部
+                // scrollY 的值和子view的高度一样，这人物滑动到了底部
+                if (sv.getChildAt(0).getHeight() - sv.getHeight()
+                        == sv.getScrollY()){
+                    mVScroll.fullScroll(ScrollView.FOCUS_DOWN);
+                }
+            }
+        });
+    }
+
+    @Override
     protected float getTopFadingEdgeStrength() {   
         if (getChildCount() == 0) {   
             return 0.0f;   
@@ -236,7 +288,7 @@ public class HVScrollView extends FrameLayout {
         }   
  
         super.addView(child, index, params);   
-    }   
+    }
  
     /**
      * @return Returns true this ScrollView can be scrolled
@@ -404,7 +456,8 @@ public class HVScrollView extends FrameLayout {
     }   
  
     @Override   
-    public boolean onInterceptTouchEvent(MotionEvent ev) {   
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        Log.d("sgqTest", "HVonInterceptTouchEvent: onInterceptTouchEvent");
         /*
          * This method JUST determines whether we want to intercept the motion.
          * If we return true, onMotionEvent will be called and we do the actual
@@ -548,8 +601,8 @@ public class HVScrollView extends FrameLayout {
                 mLastMotionX = x;   
  
                 scrollBy(deltaX, deltaY);
-                mVScroll.scrollBy(0,deltaY);
-                mHScroll.scrollBy(deltaX,0);
+                //mVScroll.scrollBy(0,deltaY);
+                //mHScroll.scrollBy(deltaX,0);
             }   
             break;   
         case MotionEvent.ACTION_UP:    
@@ -566,8 +619,8 @@ public class HVScrollView extends FrameLayout {
                         }
                     }
 
-                    mVScroll.fling(-initialVelocity);
-                    mHScroll.fling(-initialVelocitx);
+                    //mVScroll.fling(-initialVelocity);
+                    //mHScroll.fling(-initialVelocitx);
                 }   
  
                 mActivePointerId = INVALID_POINTER;   

@@ -15,6 +15,7 @@ import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.beans.MyFieldBean;
 import com.android.incongress.cd.conference.fragments.me.PersonCenterFragment;
 import com.android.incongress.cd.conference.model.ConferenceDbUtils;
+import com.android.incongress.cd.conference.save.SharePreferenceUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 
@@ -41,7 +42,8 @@ public class ChooseFieldActivity extends BaseActivity {
     @OnClick(R.id.tv_confirm)
     void onConfirmClick() {
         if(mIsOKClickable) {
-            AppApplication.setSPBooleanValue(Constants.MY_FIELDS, true);
+            SharePreferenceUtils.setSPBooleanValue(Constants.MY_FIELDS,true);
+            //AppApplication.setSPBooleanValue(Constants.MY_FIELDS, true);
             if(!mIsFromMe) {
                 startActivity(new Intent(ChooseFieldActivity.this, ChooseKeShiActivity.class));
             }

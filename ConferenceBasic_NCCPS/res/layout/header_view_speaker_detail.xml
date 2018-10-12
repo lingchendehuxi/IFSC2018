@@ -1,88 +1,93 @@
-<LinearLayout
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:background="@color/white"
     android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:background="@color/white"
+    android:orientation="vertical">
+
     <LinearLayout
-        android:orientation="horizontal" android:layout_width="match_parent"
-        android:padding="36dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:layout_height="wrap_content">
+        android:orientation="horizontal"
+        android:padding="36dp">
 
         <ImageView
             android:id="@+id/iv_speaker"
-            android:src="@drawable/professor_default"
             android:layout_width="64dp"
+            android:layout_height="64dp"
             android:scaleType="centerCrop"
-            android:layout_height="64dp" />
+            android:src="@drawable/professor_default" />
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="36dp"
             android:layout_marginRight="36dp"
-            android:layout_height="wrap_content">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_speaker_name"
                 android:layout_width="match_parent"
-                android:textSize="@dimen/text_size_large"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
                 android:text="德古拉.凯奇.徐波"
                 android:textColor="@color/black"
-                android:textStyle="bold"
-                android:singleLine="true"
-                android:layout_height="wrap_content" />
+                android:textSize="@dimen/text_size_large"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_speaker_info"
                 android:layout_width="match_parent"
-                android:maxLines="2"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                android:maxLines="2"
                 android:text="@string/secretary_info"
                 android:textColor="@color/normal_gray"
-                android:textSize="@dimen/text_size_small"
-                android:layout_height="wrap_content" />
+                android:textSize="@dimen/text_size_small" />
         </LinearLayout>
     </LinearLayout>
-<LinearLayout
-    android:layout_width="match_parent"
-    android:orientation="horizontal"
-    android:gravity="center_vertical"
-    android:background="#f0EFF4"
-    android:padding="5dp"
-    android:layout_height="wrap_content">
-    <TextView
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:text="@string/secretary_title"
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#f0EFF4"
         android:gravity="center_vertical"
-        android:paddingLeft="@dimen/layout_padding"
-        android:textSize="@dimen/text_size_media"
-        android:textColor="@color/gray"
-        android:layout_height="24dp" />
-    <TextView
-        android:id="@+id/tv_speaker_detail_day"
-        android:layout_width="wrap_content"
-        android:text="@string/my_time"
-        android:gravity="center_vertical"
-        android:layout_marginRight="12dp"
-        android:textSize="@dimen/text_size_media"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:textColor="@color/white"
-        android:background="@drawable/detail_yes"
-        android:layout_height="24dp" />
-    <TextView
-        android:id="@+id/tv_speaker_detail_woke"
-        android:layout_width="wrap_content"
-        android:text="@string/my_role"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:gravity="center_vertical"
-        android:textSize="@dimen/text_size_media"
-        android:layout_marginRight="12dp"
-        android:layout_height="24dp" />
-</LinearLayout>
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="24dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/layout_padding"
+            android:text="@string/secretary_title"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/text_size_media" />
+
+        <TextView
+            android:id="@+id/tv_speaker_detail_day"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:layout_marginRight="12dp"
+            android:background="@drawable/detail_yes"
+            android:gravity="center_vertical"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="@string/my_time"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_media" />
+
+        <TextView
+            android:id="@+id/tv_speaker_detail_woke"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:layout_marginRight="12dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="@string/my_role"
+            android:textSize="@dimen/text_size_media" />
+    </LinearLayout>
 
 </LinearLayout>

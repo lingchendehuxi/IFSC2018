@@ -58,6 +58,8 @@ import cz.msebera.android.httpclient.Header;
 
 /**
  * 启动屏，进行数据更新和数据库建立
+ *
+ * 开机首页，主要功能，第一次会解压一个文件，
  */
 public class SplashActivity extends BaseActivity {
     private static final int MSG_CHECK = 0x0001;
@@ -242,6 +244,7 @@ public class SplashActivity extends BaseActivity {
     private String state = "-1";
     private String mVersion = "1.0.0";
     private boolean start = false;
+    //oncreat 中，开机显示界面后，检测数据库是否有更新
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

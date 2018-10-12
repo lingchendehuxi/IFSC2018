@@ -22,6 +22,7 @@ import com.android.incongress.cd.conference.model.Meeting;
 import com.android.incongress.cd.conference.model.Role;
 import com.android.incongress.cd.conference.model.Session;
 import com.android.incongress.cd.conference.model.Speaker;
+import com.android.incongress.cd.conference.save.SharePreferenceUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
 import com.android.incongress.cd.conference.widget.popup.BasePopupWindow;
 import com.android.incongress.cd.conference.widget.popup.ChooseRomPopupWindow;
@@ -81,16 +82,16 @@ public class NowFragment extends BaseFragment {
         mTvRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                open = AppApplication.getSPBooleanValue2("popup");
+                open = SharePreferenceUtils.getSPBooleanValueT("popup");
                 if(open){
                     if(mRoomPopupWindow == null) {
-                        AppApplication.setSPBooleanValue("popup",false);
+                        SharePreferenceUtils.setSPBooleanValue("popup",false);
                         mRoomPopupWindow = new ChooseRomPopupWindow(getActivity());
 
                         mRoomPopupWindow.setOnDismissListener(new BasePopupWindow.OnDismissListener() {
                             @Override
                             public void onDismiss() {
-                                AppApplication.setSPBooleanValue("popup",true);
+                                SharePreferenceUtils.setSPBooleanValue("popup",true);
                                if(look){
                                    mChooseClasses = mRoomPopupWindow.getCurrentClass();
                                    getSessionsAndMeetings(mChooseClasses);
@@ -98,14 +99,14 @@ public class NowFragment extends BaseFragment {
                             }
                         });
                     }else{
-                        AppApplication.setSPBooleanValue("popup",false);
+                        SharePreferenceUtils.setSPBooleanValue("popup",false);
                     }
                     mRoomPopupWindow.showPopupWindowBelowView(mLlTimeRoom);
                 }else{
                     if(mRoomPopupWindow.getCurrentClass().size()==0){
                         ToastUtils.showLongToast("请选择至少一个会议室");
                     }else{
-                        AppApplication.setSPBooleanValue("popup",true);
+                        SharePreferenceUtils.setSPBooleanValue("popup",true);
                         mRoomPopupWindow.dismiss();
                     }
                 }
@@ -352,7 +353,7 @@ private boolean look = true;
     public void onStop() {
         super.onStop();
         look = false;
-        AppApplication.setSPBooleanValue("popup",true);
+        SharePreferenceUtils.setSPBooleanValue("popup",true);
         if(mRoomPopupWindow != null){
             mRoomPopupWindow.dismiss();
         }

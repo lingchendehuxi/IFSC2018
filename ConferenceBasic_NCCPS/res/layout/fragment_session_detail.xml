@@ -22,7 +22,7 @@
         android:paddingRight="10dp"
         android:paddingTop="2dp"
         android:paddingBottom="2dp"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_marginBottom="12dp"
         android:background="@drawable/label_yy"
         android:layout_height="wrap_content">

@@ -18,6 +18,7 @@ import com.android.incongress.cd.conference.base.BaseFragment;
 import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.beans.MessageBean;
 import com.android.incongress.cd.conference.fragments.DynamicHomeFragment;
+import com.android.incongress.cd.conference.save.SharePreferenceUtils;
 import com.android.incongress.cd.conference.utils.LogUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
 import com.google.gson.Gson;
@@ -123,7 +124,7 @@ public class MessageStationActionFragment extends BaseFragment {
                 mImgGR.setVisibility(View.VISIBLE);
                 mImgXT.setVisibility(View.GONE);
                 mImgGR_TS.setVisibility(View.GONE);
-                AppApplication.setSPBooleanValue("messageToken",false);
+                SharePreferenceUtils.setSPBooleanValue("messageToken",false);
                 getUserDatas();
             }
         });

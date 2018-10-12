@@ -31,6 +31,7 @@ import android.widget.TextView;
 import com.android.incongress.cd.conference.api.CHYHttpClientUsage;
 import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.Constants;
+import com.android.incongress.cd.conference.save.SharePreferenceUtils;
 import com.android.incongress.cd.conference.utils.AlarmUtils;
 import com.android.incongress.cd.conference.utils.NetWorkUtils;
 import com.android.incongress.cd.conference.utils.ShareUtils;
@@ -56,7 +57,7 @@ import java.net.URLEncoder;
 import cz.msebera.android.httpclient.Header;
 
 /**
- * 精彩回顾
+ * 精彩回顾   //播放视频的web
  */
 @SuppressLint("NewApi") 
 public class CollegeActivity extends FragmentActivity {
@@ -343,7 +344,7 @@ public class CollegeActivity extends FragmentActivity {
 		@JavascriptInterface
 		public String getSessions(){
 
-			String liveJson = AppApplication.getSPStringValue("liveYuyue");
+			String liveJson = SharePreferenceUtils.getApp("liveYuyue");
 			if(liveJson.equals("")) {
 				liveJson = "{}";
 			}
@@ -352,17 +353,17 @@ public class CollegeActivity extends FragmentActivity {
 		@JavascriptInterface
 		public void liveYuyueV2(String sessionGroupNameAll,String startTime,String url){
 			try {
-				String liveJson = AppApplication.getSPStringValue("liveYuyue");
+				String liveJson = SharePreferenceUtils.getApp("liveYuyue");
 				JSONObject jsonObject = new JSONObject();
 				if(!liveJson.equals("")){
 					jsonObject = new JSONObject(liveJson);
 					jsonObject.accumulate(sessionGroupNameAll,1);
-					AppApplication.setSPStringValue("liveYuyue",jsonObject.toString());
+					SharePreferenceUtils.saveAppString("liveYuyue",jsonObject.toString());
 					//AppApplication.setSPStringValue(sessionGroupNameAll,url);
 					AlarmUtils.addLiveYuyue(CollegeActivity.this, sessionGroupNameAll,startTime,url);
 				}else{
 					jsonObject.accumulate(sessionGroupNameAll,1);
-					AppApplication.setSPStringValue("liveYuyue",jsonObject.toString());
+					SharePreferenceUtils.saveAppString("liveYuyue",jsonObject.toString());
 					//AppApplication.setSPStringValue(sessionGroupNameAll,url);
 					AlarmUtils.addLiveYuyue(CollegeActivity.this, sessionGroupNameAll,startTime,url);
 				}

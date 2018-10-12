@@ -59,33 +59,13 @@ public abstract class BaseActivity extends FragmentActivity {
         res.updateConfiguration(config, res.getDisplayMetrics());
         return res;
     }*/
-    protected void setSPStringValue(String key, String value) {
-        SharedPreferences.Editor editor = mBaseSP.edit();
-        editor.putString(key,value);
-        editor.commit();
-    }
-
-
-    protected String getSPStringValue(String key) {
-        return mBaseSP.getString(key, "");
-    }
-
-    protected void setSPBooleanValue(String key, boolean value) {
-        SharedPreferences.Editor editor = mBaseSP.edit();
-        editor.putBoolean(key,value);
-        editor.commit();
-    }
-
-    protected boolean getSPBooleanValue(String key) {
-        return mBaseSP.getBoolean(key, false);
-    }
-
     protected abstract void setContentView();
 
     protected abstract void initViewsAction();
 
     /**
-     * 显示一个信息对话框
+     * 使用String方式
+     * 显示一个信息对话框，包含是否可取消，默认点击外部消除
      */
     protected void showDialog(String message, DialogInterface.OnClickListener positiveListener, DialogInterface.OnClickListener negativeListener, boolean cancelable) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -95,7 +75,8 @@ public abstract class BaseActivity extends FragmentActivity {
     }
 
     /**
-     * 显示一个信息对话框
+     * 使用R.String方式
+     * 显示一个信息对话框，包含是否可取消，默认点击外部消除
      */
     protected void showDialog(int messageId, DialogInterface.OnClickListener positiveListener, DialogInterface.OnClickListener negativeListener,boolean cancelable) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -114,7 +95,7 @@ public abstract class BaseActivity extends FragmentActivity {
     }
 
 
-
+    //页面销毁时，移除所有的activity
     @Override
 	protected void onDestroy() {
 		super.onDestroy();
@@ -122,11 +103,11 @@ public abstract class BaseActivity extends FragmentActivity {
 	}
 
     protected ProgressDialog mProgressDialog;
-
+    //默认进度条显示进度条，不可消除
     protected void showProgressBar(String msg) {
         mProgressDialog = ProgressDialog.show(BaseActivity.this, null,msg);
     }
-
+    //默认进度条消失
     protected void dismissProgressBar() {
         if(mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.dismiss();
@@ -140,7 +121,7 @@ public abstract class BaseActivity extends FragmentActivity {
     TextView mTvTitle;
     ImageView mIvBack;
     /**
-     * 初始化状态栏
+     * 初始化状态栏  按返回键直接finish
      */
     protected void initTitleBar(String title) {
         mIvBack = (ImageView) findViewById(R.id.title_back);
@@ -155,7 +136,7 @@ public abstract class BaseActivity extends FragmentActivity {
             }
         });
     }
-
+    //隐藏输入法
     public void hideShurufa() {
         View v = getCurrentFocus();
         if (v != null) {
@@ -166,7 +147,7 @@ public abstract class BaseActivity extends FragmentActivity {
             }
         }
     }
-
+    //弹出键盘或取消键盘
     public boolean toggleShurufa() {
         InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         manager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);

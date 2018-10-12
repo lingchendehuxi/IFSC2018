@@ -319,6 +319,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
          });
 
          initReceiver();
+         hideSecretaryView();
         return view;
     }
     private TextView getTextViewTitle(String title) {
@@ -416,7 +417,8 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
         if(zk){
             for (int i = 1;i<mRow.getRows().size();i++) {
                 Row.RowsBean bean = mRow.getRows().get(i);
-                LinearLayout linearLayout;
+                LinearLayout linearLayout =new LinearLayout(getActivity());;
+                //linearLayout = getHorizontalLinearLayout(true);
                 if(i == mRow.getRows().size()-1){
                     linearLayout = getHorizontalLinearLayout(false);
                 }else{
@@ -435,7 +437,8 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
         }else{
             for (int i = 1;i<3;i++) {
                 Row.RowsBean bean = mRow.getRows().get(i);
-                LinearLayout linearLayout;
+                LinearLayout linearLayout =new LinearLayout(getActivity());;
+                //linearLayout = getHorizontalLinearLayout(true);
                 if(i == 2){
                     linearLayout = getHorizontalLinearLayout(false);
                 }else{
@@ -463,12 +466,12 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
             int hegit = 0;
             for (int i = 0; i < mRow.getRows().size(); i++) {
                 Row.RowsBean bean = mRow.getRows().get(i);
-                LinearLayout linearLayout;
-                if(i == 2){
+                LinearLayout linearLayout= new LinearLayout(getContext());
+                /*if(i == 2){
                     linearLayout = getHorizontalLinearLayout(false);
                 }else{
                     linearLayout = getHorizontalLinearLayout(true);
-                }
+                }*/
                 //设置首页上方广告
                 if (bean.getObj().size() == 1 && bean.getObj().get(0).getIconCode().equals(17 + "")) {
                     final Row.RowsBean.ObjBean picBean = bean.getObj().get(0);
@@ -885,6 +888,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
         searchFragment.setRightView(searchView);
         /*View titleView = CommonUtils.initView(getActivity(), R.layout.title_segment);
         searchFragment.setCenterView(titleView);*/
+        //goQuestions("提问");
         action(searchFragment, title, searchView, false, false, false);
     }
 
@@ -987,6 +991,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
         if(AppApplication.instance().NetWorkIsOpen()){
             ImageView searchView = (ImageView) CommonUtils.initView(getActivity(), R.layout.title_right_image);
             searchView.setImageResource(R.drawable.icon_share);
+            searchView.setVisibility(View.GONE);
             OnlyWebViewActionFragment fragment = OnlyWebViewActionFragment.getInstance(getActivity().getString(Constants.get_MEETING_GUIDE(), AppApplication.conId, AppApplication.getSystemLanuageCode()));
             fragment.setRightView(searchView);
             action(fragment, R.string.home_meetingguide, searchView,false, false, false);
@@ -1271,6 +1276,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
                     break;
                 case 3:
                     int mLayoutHeight = mLlConstainer.getHeight();
+                    Log.d("sgqTest", "mLayoutHeight: "+mLayoutHeight);
                     ValueAnimator valueAnimator = createDropAnimator(mLlConstainer, mLayoutHeight, mZKLayoutHeight);
                     valueAnimator.setDuration(1500);
                     valueAnimator.start();

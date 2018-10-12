@@ -22,6 +22,8 @@ import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.BaseActivity;
 import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.beans.UserInfoBean;
+import com.android.incongress.cd.conference.save.ParseUser;
+import com.android.incongress.cd.conference.save.SharePreferenceUtils;
 import com.android.incongress.cd.conference.utils.ActivityUtils;
 import com.android.incongress.cd.conference.utils.LogUtils;
 import com.android.incongress.cd.conference.utils.StringUtils;
@@ -181,19 +183,20 @@ public class ParticipantLoginActivity extends BaseActivity {
                             try {
                                 int state = response.getInt("state");
                                 if (state == 1) {
-                                    Gson gson = new Gson();
+                                    ParseUser.saveUserInfo(response.toString());
+                                    /*Gson gson = new Gson();
                                     UserInfoBean user = gson.fromJson(response.toString(), UserInfoBean.class);
 
-                                    AppApplication.setSPBooleanValue(Constants.USER_IS_LOGIN, true);
+                                    SharePreferenceUtils.saveUserString(Constants.USER_IS_LOGIN, "true");
                                     AppApplication.setSPStringValue(Constants.USER_NAME, user.getName());
                                     AppApplication.setSPStringValue(Constants.USER_IMG, user.getImg());
                                     AppApplication.setSPStringValue(Constants.USER_MOBILE, user.getMobilePhone());
                                     AppApplication.setSPIntegerValue(Constants.USER_ID, user.getUserId());
-                                    AppApplication.setSPIntegerValue(Constants.USER_TYPE, user.getUserType());
+                                    AppApplication.setSPIntegerValue(Constants.USER_TYPE, user.getUserType());*/
 
-                                    AppApplication.userId = user.getUserId();
+                                    /*AppApplication.userId = user.getUserId();
                                     AppApplication.username = user.getName();
-                                    AppApplication.userType = user.getUserType();
+                                    AppApplication.userType = user.getUserType();*/
 
                                     setResult(RESULT_OK);
                                     finish();

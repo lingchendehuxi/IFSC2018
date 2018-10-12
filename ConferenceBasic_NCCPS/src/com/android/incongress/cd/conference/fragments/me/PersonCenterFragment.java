@@ -27,10 +27,13 @@ import com.android.incongress.cd.conference.HomeActivity;
 import com.android.incongress.cd.conference.LoginActivity;
 import com.android.incongress.cd.conference.api.CHYHttpClientUsage;
 import com.android.incongress.cd.conference.base.AppApplication;
+import com.android.incongress.cd.conference.base.BaseActivity;
 import com.android.incongress.cd.conference.base.BaseFragment;
 import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.model.ConferenceDbUtils;
 import com.android.incongress.cd.conference.model.Note;
+import com.android.incongress.cd.conference.save.ParseUser;
+import com.android.incongress.cd.conference.save.SharePreferenceUtils;
 import com.android.incongress.cd.conference.utils.CacheUtils;
 import com.android.incongress.cd.conference.utils.LogUtils;
 import com.android.incongress.cd.conference.utils.ShareUtils;
@@ -125,7 +128,7 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
                     mBtNote.setText(getString(R.string.mymeeting_note));
                 }
             }else*/ if(target == UPLOAD_IMGURL_SUCCESS) {
-                AppApplication.setSPStringValue(Constants.USER_IMG, mUploadFilePath);
+                SharePreferenceUtils.saveUserString(Constants.USER_IMG, mUploadFilePath);
 
                 if(mUploadFilePath.contains("https:"))
                     mUploadFilePath = mUploadFilePath.replaceFirst("s","");
@@ -178,8 +181,8 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
                 }).setCancelable(false).show();
                 break;
             case R.id.bt_note:
-                NoteManageActionFragment noteManager = new NoteManageActionFragment();
-                action(noteManager, R.string.mymeeting_note, false, false, false);
+                /*NoteManageActionFragment noteManager = new NoteManageActionFragment();
+                action(noteManager, R.string.mymeeting_note, false, false, false);*/
                 break;
             case R.id.bt_tiezi:
                 if(AppApplication.isUserLogIn()) {
@@ -318,11 +321,11 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
             mBtLogin.setVisibility(View.GONE);
             mLlPersonInfo.setVisibility(View.VISIBLE);
 
-            username.setText(AppApplication.getSPStringValue(Constants.USER_NAME));
-            welcomeInfo.setText(getString(R.string.mymeeting_welcome_sb, AppApplication.getSPStringValue(Constants.USER_NAME)));
+            username.setText(SharePreferenceUtils.getUser(Constants.USER_NAME));
+            welcomeInfo.setText(getString(R.string.mymeeting_welcome_sb, SharePreferenceUtils.getUser(Constants.USER_NAME)));
             mBtLoginout.setVisibility(View.VISIBLE);
 
-            Glide.with(getActivity()).load(AppApplication.getSPStringValue(Constants.USER_IMG)).placeholder(R.drawable.professor_default).transform(new CircleTransform(getActivity())).into(mCivHeadIcon);
+            Glide.with(getActivity()).load(SharePreferenceUtils.getUser(Constants.USER_IMG)).placeholder(R.drawable.professor_default).transform(new CircleTransform(getActivity())).into(mCivHeadIcon);
         }
        }
 
@@ -335,20 +338,20 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
         mBtLogin.setVisibility(View.VISIBLE);
         mBtLoginout.setVisibility(View.GONE);
         mCivHeadIcon.setImageResource(R.drawable.professor_default);
-
-        AppApplication.setSPStringValue(Constants.USER_NAME, StringUtils.EMPTY_STR);
+        ParseUser.clearUserInfo(getActivity());
+        /*AppApplication.setSPStringValue(Constants.USER_NAME, StringUtils.EMPTY_STR);
         AppApplication.setSPIntegerValue(Constants.USER_ID, -1);
         AppApplication.setSPIntegerValue(Constants.USER_TYPE, Constants.TYPE_USER_VISITOR);
-        AppApplication.setSPStringValue(Constants.USER_IMG, StringUtils.EMPTY_STR);
+        AppApplication.setSPStringValue(Constants.USER_IMG, StringUtils.EMPTY_STR);*/
 
-        AppApplication.setSPBooleanValue(Constants.USER_IS_LOGIN, false);
+        /*AppApplication.setSPBooleanValue(Constants.USER_IS_LOGIN, false);
         AppApplication.userType = Constants.TYPE_USER_VISITOR;
         AppApplication.userId = -1;
-        AppApplication.username = "";
+        AppApplication.username = "";*/
 
-        Intent loginIntent = new Intent();
+        /*Intent loginIntent = new Intent();
         loginIntent.setAction(LoginActivity.LOGOUT_ACTION);
-        getActivity().sendBroadcast(loginIntent);
+        getActivity().sendBroadcast(loginIntent);*/
 
 //        queryCount();
 

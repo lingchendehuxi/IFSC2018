@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 
 import com.android.incongress.cd.conference.HomeActivity;
 import com.android.incongress.cd.conference.adapters.MeetingScheduleAdapter;
@@ -19,7 +20,9 @@ import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.model.Class;
 import com.android.incongress.cd.conference.model.ConferenceDbUtils;
 import com.android.incongress.cd.conference.model.Session;
+import com.android.incongress.cd.conference.utils.ControlScrollViewPager;
 import com.android.incongress.cd.conference.utils.ViewPagerSlide;
+import com.android.incongress.cd.conference.widget.ScrollControlViewpager;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 import com.umeng.analytics.MobclickAgent;
 
@@ -29,9 +32,10 @@ import java.util.List;
 public class MeetingScheduleDetailActivity extends FragmentActivity {
     private MeetingScheduleAdapter adapter;
     private TabLayout mTabLayout;
-    private ViewPager mViewpager;
+    private ScrollControlViewpager mViewpager;
     private CharSequence Titles[];
     private int Numboftabs;
+    private ImageView close;
 
     private List<String> mSessionDaysList = new ArrayList<>();
     private List<Class> mRoomList = new ArrayList<>();
@@ -49,14 +53,21 @@ public class MeetingScheduleDetailActivity extends FragmentActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.fragment_meeting_schedule);
+        close = (ImageView) findViewById(R.id.close);
         mTabLayout = (TabLayout) findViewById(R.id.tablayout);
-        mViewpager = (ViewPager) findViewById(R.id.pager);
+        mViewpager = (ScrollControlViewpager) findViewById(R.id.pager);
         mViewpager.setOffscreenPageLimit(3);
-        //mViewpager.setNoScroll(false);
+        mViewpager.setCanScroll(false);
 
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
         mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         new MyAsyncTask().execute();
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     class MyAsyncTask extends AsyncTask<Integer, Integer, String> {

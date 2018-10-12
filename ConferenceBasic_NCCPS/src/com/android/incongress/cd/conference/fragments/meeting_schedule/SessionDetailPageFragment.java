@@ -36,6 +36,7 @@ import com.android.incongress.cd.conference.model.Meeting;
 import com.android.incongress.cd.conference.model.Role;
 import com.android.incongress.cd.conference.model.Session;
 import com.android.incongress.cd.conference.model.Speaker;
+import com.android.incongress.cd.conference.save.SharePreferenceUtils;
 import com.android.incongress.cd.conference.utils.AlermClock;
 import com.android.incongress.cd.conference.utils.CommonUtils;
 import com.android.incongress.cd.conference.utils.DateUtil;
@@ -620,14 +621,14 @@ public class SessionDetailPageFragment extends BaseFragment {
      * 显示指示页
      */
     private void showGuideInfo() {
-        if (AppApplication.getSPIntegerValue(Constants.GUIDE_SESSION) != 1) {
+        if (!"1".equals(SharePreferenceUtils.getApp(Constants.GUIDE_SESSION))) {
             getActivity().findViewById(R.id.home_guide).setVisibility(View.VISIBLE);
             ((ImageView) getActivity().findViewById(R.id.home_guide)).setImageResource(R.drawable.session_guide);
             (getActivity().findViewById(R.id.home_guide)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     getActivity().findViewById(R.id.home_guide).setVisibility(View.GONE);
-                    AppApplication.setSPIntegerValue(Constants.GUIDE_SESSION, 1);
+                    SharePreferenceUtils.saveAppString(Constants.GUIDE_SESSION, "1");
                 }
             });
         }

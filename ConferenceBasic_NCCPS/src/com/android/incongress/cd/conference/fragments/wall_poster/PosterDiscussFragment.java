@@ -23,6 +23,7 @@ import com.android.incongress.cd.conference.beans.CommunityTopicContentBean;
 import com.android.incongress.cd.conference.beans.DZBBBean;
 import com.android.incongress.cd.conference.beans.DZBBDiscussResponseBean;
 import com.android.incongress.cd.conference.data.JsonParser;
+import com.android.incongress.cd.conference.save.SharePreferenceUtils;
 import com.android.incongress.cd.conference.widget.IncongressEditText;
 import com.android.incongress.cd.conference.widget.IncongressTextView;
 import com.android.incongress.cd.conference.widget.RefreshLayout;
@@ -172,7 +173,7 @@ public class PosterDiscussFragment extends BaseActivity implements OnClickListen
 				  //此处如果是游客需要保存游客的身份信息 也需要持久化
 					int userType= AppApplication.userType;
 					if(userType==0){
-						AppApplication.setSPBooleanValue(Constants.USER_IS_LOGIN, true);
+						SharePreferenceUtils.saveUserString(Constants.USER_IS_LOGIN, "true");
 
 						AppApplication.userId = bean.getUserId();
 						AppApplication.username = bean.getUserName();

@@ -30,6 +30,7 @@ import com.android.incongress.cd.conference.base.BaseFragment;
 import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.beans.DZBBBean;
 import com.android.incongress.cd.conference.data.JsonParser;
+import com.android.incongress.cd.conference.save.SharePreferenceUtils;
 import com.android.incongress.cd.conference.utils.LogUtils;
 import com.android.incongress.cd.conference.utils.NetWorkUtils;
 import com.android.incongress.cd.conference.widget.RefreshLayout;
@@ -180,7 +181,7 @@ public class PosterFragment extends BaseFragment {
                     @Override
                     public void onAnimationEnd(Animation animation) {
                         mTvTips.setVisibility(View.GONE);
-                        AppApplication.setSPBooleanValue(Constants.LOOK_POSTER_TIPS, true);
+                        SharePreferenceUtils.setSPBooleanValue(Constants.LOOK_POSTER_TIPS, true);
                     }
 
                     @Override
@@ -192,7 +193,7 @@ public class PosterFragment extends BaseFragment {
             }
         });
 
-        if (AppApplication.getSPBooleanValue(Constants.LOOK_POSTER_TIPS)) {
+        if (SharePreferenceUtils.getSPBooleanValueF(Constants.LOOK_POSTER_TIPS)) {
             mTvTips.setVisibility(View.GONE);
         }
 

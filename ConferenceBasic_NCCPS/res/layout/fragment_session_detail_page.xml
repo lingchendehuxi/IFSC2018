@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rl_whole_view"
-    android:background="@color/white"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/scrollview"
@@ -20,14 +20,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/layout_padding"
-                android:layout_marginRight="@dimen/layout_padding"
                 android:layout_marginTop="@dimen/layout_padding"
+                android:layout_marginRight="@dimen/layout_padding"
                 android:background="@color/theme_color"
                 android:orientation="horizontal"
                 android:paddingLeft="12dp"
+                android:paddingTop="6dp"
                 android:paddingRight="12dp"
-                android:paddingBottom="6dp"
-                android:paddingTop="6dp">
+                android:paddingBottom="6dp">
 
 
                 <RelativeLayout
@@ -66,8 +66,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="4dp"
                 android:layout_marginLeft="@dimen/layout_padding"
-                android:layout_marginRight="@dimen/layout_padding"
                 android:layout_marginTop="6dp"
+                android:layout_marginRight="@dimen/layout_padding"
                 android:background="@color/theme_color" />
 
             <LinearLayout
@@ -75,15 +75,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/layout_padding"
-                android:layout_marginRight="@dimen/layout_padding"
                 android:layout_marginTop="6dp"
+                android:layout_marginRight="@dimen/layout_padding"
                 android:background="@color/alpha_more_theme_color"
-                android:orientation="horizontal"
                 android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:paddingLeft="12dp"
+                android:paddingTop="6dp"
                 android:paddingRight="12dp"
-                android:paddingBottom="6dp"
-                android:paddingTop="6dp">
+                android:paddingBottom="6dp">
 
                 <ImageView
                     android:id="@+id/iv_session_alarm"
@@ -91,16 +91,16 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="@dimen/layout_margin"
-                    android:visibility="gone"
-                    android:src="@drawable/sessiondetail_alarmon" />
+                    android:src="@drawable/sessiondetail_alarmon"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/tv_schedule_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_media" />
+                    android:textSize="@dimen/text_size_media"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
@@ -108,10 +108,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/layout_padding"
-                android:layout_marginRight="@dimen/layout_padding"
                 android:layout_marginTop="@dimen/layout_margin"
-                android:orientation="vertical"
-                 />
+                android:layout_marginRight="@dimen/layout_padding"
+                android:orientation="vertical" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -120,7 +119,9 @@
                 android:layout_marginRight="@dimen/layout_margin"
                 android:orientation="vertical">
 
-                <View android:background="@color/dividerColor" style="@style/h_line"/>
+                <View
+                    style="@style/h_line"
+                    android:background="@color/dividerColor" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -133,24 +134,24 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@null"
-                        android:textAllCaps="false"
                         android:drawableLeft="@drawable/schedule_location_2"
-                        android:gravity="left|center_vertical"
                         android:drawablePadding="6dp"
+                        android:gravity="left|center_vertical"
                         android:text="@string/meeting_schedule_location"
+                        android:textAllCaps="false"
                         android:textColor="@color/theme_color" />
 
                     <com.android.incongress.cd.conference.widget.MyButton
                         android:id="@+id/bt_alarm"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:drawablePadding="6dp"
-                        android:textAllCaps="false"
                         android:layout_weight="1"
                         android:background="@null"
                         android:drawableLeft="@drawable/schedule_alarm"
+                        android:drawablePadding="6dp"
                         android:gravity="left|center_vertical"
                         android:text="@string/meeting_schedule_alarm"
+                        android:textAllCaps="false"
                         android:textColor="@color/theme_color" />
                 </LinearLayout>
             </LinearLayout>
@@ -178,6 +179,6 @@
     <ProgressBar
         android:id="@+id/progressbar"
         android:layout_width="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
 </RelativeLayout>

@@ -60,7 +60,7 @@ public class NewSearchScheduleActionFragment extends BaseFragment {
                     mRbSchedule.setChecked(true);
                     mCurrentSearchType = TYPE_SCHEDULE;
                 } else {
-                    mRbProfessor.setChecked(true);
+                    //mRbProfessor.setChecked(true);
                     mCurrentSearchType = TYPE_FACULTY;
                 }
             }

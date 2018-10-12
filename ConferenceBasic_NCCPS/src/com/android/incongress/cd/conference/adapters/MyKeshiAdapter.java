@@ -10,6 +10,7 @@ import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.beans.MyFieldBean;
 import com.android.incongress.cd.conference.model.ConferenceDbUtils;
+import com.android.incongress.cd.conference.save.SharePreferenceUtils;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 
 import java.util.ArrayList;
@@ -31,13 +32,13 @@ public class MyKeshiAdapter extends RecyclerView.Adapter<TextViewHolder> impleme
 
     public MyKeshiAdapter(Context context) {
         this.mContext = context;
-        mCurrentKeshi = AppApplication.getSPStringValue(Constants.MY_KESHI);
+        mCurrentKeshi = SharePreferenceUtils.getApp(Constants.MY_KESHI);
     }
 
     public void setCurrentKeshi(String keshi) {
         this.mCurrentKeshi = keshi;
         notifyDataSetChanged();
-        AppApplication.setSPStringValue(Constants.MY_KESHI, mCurrentKeshi);
+        SharePreferenceUtils.saveAppString(Constants.MY_KESHI, mCurrentKeshi);
     }
 
     @Override

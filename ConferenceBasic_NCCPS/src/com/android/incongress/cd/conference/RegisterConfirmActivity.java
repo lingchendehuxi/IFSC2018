@@ -18,6 +18,8 @@ import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.beans.UserInfoBean;
 import com.android.incongress.cd.conference.beans.UserInfoEnBean;
 import com.android.incongress.cd.conference.fragments.me.PersonCenterFragment;
+import com.android.incongress.cd.conference.save.ParseUser;
+import com.android.incongress.cd.conference.save.SharePreferenceUtils;
 import com.android.incongress.cd.conference.widget.ClearEditText;
 import com.android.incongress.cd.conference.utils.ActivityUtils;
 import com.android.incongress.cd.conference.utils.MyLogger;
@@ -235,22 +237,23 @@ public class RegisterConfirmActivity extends BaseActivity {
                         String msg = response.getString("msg");
                         showDialog(msg, null);
                     } else {
-                        Gson gson = new Gson();
+                        ParseUser.saveUserInfo(response.toString());
+                        /*Gson gson = new Gson();
                         UserInfoBean user = gson.fromJson(response.toString(), UserInfoBean.class);
 
-                        AppApplication.setSPBooleanValue(Constants.USER_IS_LOGIN, true);
+                        SharePreferenceUtils.saveUserString(Constants.USER_IS_LOGIN, "true");
                         AppApplication.setSPStringValue(Constants.USER_NAME, user.getName());
                         AppApplication.setSPStringValue(Constants.USER_FAMILY_NAME, user.getFamilyName());
                         AppApplication.setSPStringValue(Constants.USER_GIVEN_NAME, user.getGiveName());
                         AppApplication.setSPStringValue(Constants.USER_IMG, user.getImg());
                         AppApplication.setSPStringValue(Constants.USER_MOBILE, user.getMobilePhone());
                         AppApplication.setSPIntegerValue(Constants.USER_ID, user.getUserId());
-                        AppApplication.setSPIntegerValue(Constants.USER_TYPE, user.getUserType());
+                        AppApplication.setSPIntegerValue(Constants.USER_TYPE, user.getUserType());*/
 
-                        AppApplication.setSPBooleanValue(Constants.USER_IS_LOGIN, true);
-                        AppApplication.userId = user.getUserId();
+                        SharePreferenceUtils.saveUserString(Constants.USER_IS_LOGIN, "true");
+                        /*AppApplication.userId = user.getUserId();
                         AppApplication.username = user.getName();
-                        AppApplication.userType = user.getUserType();
+                        AppApplication.userType = user.getUserType();*/
 
                         Intent intent = new Intent(RegisterConfirmActivity.this, HomeActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -312,20 +315,20 @@ public class RegisterConfirmActivity extends BaseActivity {
                             String msg = response.getString("msg");
                             showDialog(msg, null);
                         } else {
-                            Gson gson = new Gson();
+                            ParseUser.saveUserInfo(response.toString());
+                            /*Gson gson = new Gson();
                             UserInfoEnBean user = gson.fromJson(response.toString(), UserInfoEnBean.class);
 
-                            AppApplication.setSPBooleanValue(Constants.USER_IS_LOGIN, true);
+                            SharePreferenceUtils.saveUserString(Constants.USER_IS_LOGIN, "true");
                             AppApplication.setSPStringValue(Constants.USER_NAME, user.getName());
                             AppApplication.setSPStringValue(Constants.USER_IMG, user.getImg());
                             AppApplication.setSPStringValue(Constants.USER_MOBILE, user.getEmail());
                             AppApplication.setSPIntegerValue(Constants.USER_ID, user.getUserId());
                             AppApplication.setSPIntegerValue(Constants.USER_TYPE, user.getUserType());
 
-                            AppApplication.setSPBooleanValue(Constants.USER_IS_LOGIN, true);
                             AppApplication.userId = user.getUserId();
                             AppApplication.username = user.getName();
-                            AppApplication.userType = user.getUserType();
+                            AppApplication.userType = user.getUserType();*/
 
                             Intent intent = new Intent(RegisterConfirmActivity.this, HomeActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

@@ -29,6 +29,8 @@ import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.beans.UserInfoBean;
 import com.android.incongress.cd.conference.beans.UserInfoEnBean;
+import com.android.incongress.cd.conference.save.ParseUser;
+import com.android.incongress.cd.conference.save.SharePreferenceUtils;
 import com.android.incongress.cd.conference.utils.MyLogger;
 import com.android.incongress.cd.conference.utils.StringUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
@@ -377,7 +379,8 @@ public class LoginActivity extends FragmentActivity {
                     try {
                         int state = response.getInt("state");
                         if (state == 1) {
-                            Gson gson = new Gson();
+                            ParseUser.saveUserInfo(response.toString());
+                            /*Gson gson = new Gson();
                             UserInfoBean user = gson.fromJson(response.toString(), UserInfoBean.class);
 
                             AppApplication.setSPStringValue(Constants.USER_NAME, user.getName());
@@ -388,13 +391,13 @@ public class LoginActivity extends FragmentActivity {
                             AppApplication.setSPIntegerValue(Constants.USER_ID, user.getUserId());
                             AppApplication.setSPIntegerValue(Constants.USER_FACULTYID, user.getFacultyId());
                             AppApplication.setSPIntegerValue(Constants.USER_TYPE, user.getUserType());
-                            AppApplication.setSPIntegerValue(Constants.USER_FACULTYID, user.getFacultyId());
+                            AppApplication.setSPIntegerValue(Constants.USER_FACULTYID, user.getFacultyId());*/
 
-                            AppApplication.setSPBooleanValue(Constants.USER_IS_LOGIN, true);
-                            AppApplication.userId = user.getUserId();
+                            SharePreferenceUtils.saveUserString(Constants.USER_IS_LOGIN, "true");
+                            /*AppApplication.userId = user.getUserId();
                             AppApplication.username = user.getName();
                             AppApplication.userType = user.getUserType();
-                            AppApplication.facultyId = user.getFacultyId();
+                            AppApplication.facultyId = user.getFacultyId();*/
 
                             setResult(RESULT_OK);
 
@@ -441,20 +444,21 @@ public class LoginActivity extends FragmentActivity {
                     try {
                         int state = response.getInt("state");
                         if (state == 1) {
-                            Gson gson = new Gson();
+                            ParseUser.saveUserInfo(response.toString());
+                            /*Gson gson = new Gson();
                             UserInfoEnBean user = gson.fromJson(response.toString(), UserInfoEnBean.class);
 
-                            AppApplication.setSPBooleanValue(Constants.USER_IS_LOGIN, true);
+                            SharePreferenceUtils.saveUserString(Constants.USER_IS_LOGIN, "true");
                             AppApplication.setSPStringValue(Constants.USER_NAME, user.getName());
                             AppApplication.setSPStringValue(Constants.USER_IMG, user.getImg());
                             AppApplication.setSPStringValue(Constants.USER_MOBILE, user.getEmail());
                             AppApplication.setSPIntegerValue(Constants.USER_ID, user.getUserId());
-                            AppApplication.setSPIntegerValue(Constants.USER_TYPE, user.getUserType());
+                            AppApplication.setSPIntegerValue(Constants.USER_TYPE, user.getUserType());*/
 
-                            AppApplication.setSPBooleanValue(Constants.USER_IS_LOGIN, true);
-                            AppApplication.userId = user.getUserId();
-                            AppApplication.username = user.getName();
-                            AppApplication.userType = user.getUserType();
+                            SharePreferenceUtils.saveUserString(Constants.USER_IS_LOGIN, "true");
+//                            AppApplication.userId = user.getUserId();
+//                            AppApplication.username = user.getName();
+//                            AppApplication.userType = user.getUserType();
                             setResult(RESULT_OK);
 
                             finish();
@@ -508,7 +512,8 @@ public class LoginActivity extends FragmentActivity {
                 try {
                     int state = response.getInt("state");
                     if (state == 1) {
-                        Gson gson = new Gson();
+                        ParseUser.saveUserInfo(response.toString());
+                        /*Gson gson = new Gson();
                         UserInfoBean user = gson.fromJson(response.toString(), UserInfoBean.class);
 
                         AppApplication.setSPStringValue(Constants.USER_NAME, user.getName());
@@ -518,12 +523,12 @@ public class LoginActivity extends FragmentActivity {
                         AppApplication.setSPStringValue(Constants.USER_MOBILE, user.getMobilePhone());
                         AppApplication.setSPIntegerValue(Constants.USER_ID, user.getUserId());
                         AppApplication.setSPIntegerValue(Constants.USER_FACULTYID, user.getFacultyId());
-                        AppApplication.setSPIntegerValue(Constants.USER_TYPE, user.getUserType());
+                        AppApplication.setSPIntegerValue(Constants.USER_TYPE, user.getUserType());*/
 
-                        AppApplication.setSPBooleanValue(Constants.USER_IS_LOGIN, true);
-                        AppApplication.userId = user.getUserId();
+                        SharePreferenceUtils.saveUserString(Constants.USER_IS_LOGIN, "true");
+                        /*AppApplication.userId = user.getUserId();
                         AppApplication.username = user.getName();
-                        AppApplication.userType = user.getUserType();
+                        AppApplication.userType = user.getUserType();*/
 
 //                        setResult(RESULT_OK);
 

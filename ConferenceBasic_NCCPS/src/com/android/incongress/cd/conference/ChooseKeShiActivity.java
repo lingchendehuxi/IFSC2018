@@ -13,6 +13,7 @@ import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.BaseActivity;
 import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.fragments.me.PersonCenterFragment;
+import com.android.incongress.cd.conference.save.SharePreferenceUtils;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 
 import butterknife.BindView;
@@ -39,7 +40,7 @@ public class ChooseKeShiActivity extends BaseActivity {
     @OnClick(R.id.tv_confirm)
     void onConfirmClick() {
         if(mIsOKClickable) {
-            AppApplication.setSPBooleanValue(Constants.MY_FIELDS, true);
+            SharePreferenceUtils.setSPBooleanValue(Constants.MY_FIELDS, true);
 
             if(!mIsFromMe) {
                 if(AppApplication.isUserLogIn()) {
@@ -92,7 +93,7 @@ public class ChooseKeShiActivity extends BaseActivity {
     }
 
     private void changeOkText() {
-        String keshi = AppApplication.getSPStringValue(Constants.MY_KESHI);
+        String keshi = SharePreferenceUtils.getApp(Constants.MY_KESHI);
         if(!TextUtils.isEmpty(keshi)) {
             mIsOKClickable = true;
             mTvConfirm.setTextColor(getResources().getColor(R.color.theme_color));

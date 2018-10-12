@@ -17,6 +17,7 @@ import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.beans.AllRooms;
 import com.android.incongress.cd.conference.model.Class;
 import com.android.incongress.cd.conference.model.ConferenceDbUtils;
+import com.android.incongress.cd.conference.save.SharePreferenceUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 
@@ -114,7 +115,7 @@ public class ChooseRomPopupWindow extends BasePopupWindow {
                    if(getCurrentClass().size()==0){
                        ToastUtils.showLongToast("请选择至少一个会议室");
                    }else{
-                       AppApplication.setSPBooleanValue("popup",true);
+                       SharePreferenceUtils.setSPBooleanValue("popup",true);
                        dismiss();
                    }
                 }

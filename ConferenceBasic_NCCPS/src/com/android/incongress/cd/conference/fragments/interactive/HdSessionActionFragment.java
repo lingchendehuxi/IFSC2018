@@ -20,6 +20,7 @@ import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.BaseFragment;
 import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.beans.HdSessionBean;
+import com.android.incongress.cd.conference.save.SharePreferenceUtils;
 import com.android.incongress.cd.conference.widget.AutoSwipeRefreshLayout;
 import com.android.incongress.cd.conference.utils.ToastUtils;
 import com.google.gson.Gson;
@@ -103,7 +104,7 @@ public class HdSessionActionFragment extends BaseFragment {
      * 显示指示页
      */
     private void showGuideInfo() {
-        if (AppApplication.getSPIntegerValue(Constants.GUIDE_INTERACTIVE) != 1) {
+        if (!"1".equals(SharePreferenceUtils.getApp(Constants.GUIDE_INTERACTIVE))) {
 
             if (getActivity() != null) {
                 getActivity().findViewById(R.id.home_guide).setVisibility(View.VISIBLE);
@@ -112,7 +113,7 @@ public class HdSessionActionFragment extends BaseFragment {
                     @Override
                     public void onClick(View v) {
                         getActivity().findViewById(R.id.home_guide).setVisibility(View.GONE);
-                        AppApplication.setSPIntegerValue(Constants.GUIDE_INTERACTIVE, 1);
+                        SharePreferenceUtils.saveAppString(Constants.GUIDE_INTERACTIVE, "1");
                     }
                 });
             }

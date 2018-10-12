@@ -13,6 +13,7 @@ import com.android.incongress.cd.conference.beans.ActivityBean;
 import com.android.incongress.cd.conference.beans.AlertBean;
 import com.android.incongress.cd.conference.model.Alert;
 import com.android.incongress.cd.conference.model.ConferenceDbUtils;
+import com.android.incongress.cd.conference.save.SharePreferenceUtils;
 import com.android.incongress.cd.conference.utils.AlarmUtils;
 import com.android.incongress.cd.conference.utils.AlermClock;
 import com.android.incongress.cd.conference.utils.DateUtil;
@@ -94,10 +95,10 @@ public class MyTaskFragmentAdapter extends RecyclerView.Adapter<MyTaskFragmentAd
         alertbean.setStart(bean.getStart_time());
         alertbean.setTitle(bean.getActivityName());
         alertbean.setType(AlertBean.TYPE_SESSTION);
-        if(!AppApplication.getSPBooleanValue(String.valueOf(bean.getIsSessionOrMeeting()))){
+        if(!SharePreferenceUtils.getSPBooleanValueF(String.valueOf(bean.getIsSessionOrMeeting()))){
             AlarmUtils.addMeetingAlarm(mContext, alertbean);
         }
-        AppApplication.setSPBooleanValue(String.valueOf(bean.getIsSessionOrMeeting()),true);
+        SharePreferenceUtils.setSPBooleanValue(String.valueOf(bean.getIsSessionOrMeeting()),true);
 
     }
 

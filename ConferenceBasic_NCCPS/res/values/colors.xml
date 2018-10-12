@@ -11,7 +11,7 @@
     <color name="alpha_black">#e0000000</color>
 
     <color name="alpha_color">#996db1f1</color>
-    <color name="theme_color">#FF6db1f1</color>
+    <color name="theme_color">#FF00b5ff</color>
     <color name="alpha_theme_color">#CC6db1f1</color>
     <color name="alpha_more_theme_color">#196db1f1</color>
     <color name="theme_icon">#406B8E</color>
@@ -67,4 +67,7 @@
     <color name="home_blue_300">#01305c</color>
     <color name="home_blue_500">#021f49</color>
     <color name="home_blue_800">#000d31</color>
+
+    <!--my use color-->
+    <color name="m_red">#FE0F90</color>
 </resources>

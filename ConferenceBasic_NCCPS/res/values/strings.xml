@@ -649,4 +649,6 @@
     <string name="secretary_no_task">您暂时没有任何会议安排</string>
 
     <string name="reminder_bus_tips">您关注的班车 “起点：%1$s；终点：%2$s” 将于稍后发车，请合理安排您的时间，避免耽误您的行程。</string>
+    <!--myUse-->
+    <string name="use">测试期待</string>
 </resources>

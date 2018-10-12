@@ -17,22 +17,33 @@
         android:textSize="@dimen/text_size_small"
         android:drawableRight="@drawable/edittext_delete"
         android:layout_height="wrap_content" />
-
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tablayout"
+    <LinearLayout
         android:layout_width="match_parent"
-        app:tabIndicatorColor="@color/theme_color"
-        android:background="@color/white"
-        app:tabSelectedTextColor="@color/theme_color"
-        style="@style/MyCustomTabTextAppearance"
         android:layout_height="wrap_content"
-        />
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+        <ImageView
+            android:id="@+id/close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:src="@drawable/edittext_delete"/>
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tablayout"
+            android:layout_width="match_parent"
+            app:tabIndicatorColor="@color/theme_color"
+            android:background="@color/white"
+            app:tabSelectedTextColor="@color/theme_color"
+            style="@style/MyCustomTabTextAppearance"
+            android:layout_height="wrap_content"
+            />
+    </LinearLayout>
 
-    <android.support.v4.view.ViewPager
+    <com.android.incongress.cd.conference.widget.ScrollControlViewpager
         android:id="@+id/pager"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:layout_weight="1">
-    </android.support.v4.view.ViewPager>
+    </com.android.incongress.cd.conference.widget.ScrollControlViewpager>
 
 </LinearLayout>

@@ -9,14 +9,14 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:text="@string/tips"
+        android:text="@string/use"
         android:background="@drawable/tips_bg"
         android:layout_margin="3dp"
         android:id="@+id/tv_tips"
         android:textColor="#7E7E7E"
         android:visibility="gone"
         android:textSize="@dimen/text_size_small"
-        android:drawableRight="@drawable/edittext_delete"
+        android:gravity="center"
         android:layout_height="wrap_content" />
 
     <android.support.design.widget.TabLayout
