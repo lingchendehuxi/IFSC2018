@@ -15,7 +15,6 @@
         android:id="@+id/tv_share"
         android:drawablePadding="8dp"
         android:text="@string/dzbb_share"
-        android:visibility="gone"
         android:layout_weight="1"/>
 
     <View

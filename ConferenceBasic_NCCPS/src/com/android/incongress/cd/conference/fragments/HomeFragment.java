@@ -141,6 +141,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         super.onResume();
         getHomeNums();
         MobclickAgent.onResume(getActivity());
+
     }
 
     @Override

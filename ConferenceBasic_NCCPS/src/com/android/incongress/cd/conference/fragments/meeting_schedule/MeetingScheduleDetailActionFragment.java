@@ -2,6 +2,7 @@ package com.android.incongress.cd.conference.fragments.meeting_schedule;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -413,6 +414,15 @@ public class MeetingScheduleDetailActionFragment extends BaseFragment {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             mDialog.dismiss();
+        }
+    }
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(hidden){
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }else {
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         }
     }
 }

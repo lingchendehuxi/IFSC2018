@@ -3,7 +3,6 @@ package com.android.incongress.cd.conference.model;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.beans.EsmoListBean;

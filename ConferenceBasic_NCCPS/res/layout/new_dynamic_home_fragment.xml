@@ -105,7 +105,7 @@
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:src="@drawable/right_arrow_clickable"
-                            android:tint="@color/alpha_theme_color" />
+                            android:tint="@color/theme_color" />
                     </LinearLayout>
 
                     <View

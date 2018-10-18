@@ -1,49 +1,57 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:background="@color/white"
+    android:id="@+id/rl_whole_view"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/rl_whole_view">
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <TextView
-        android:layout_width="match_parent"
-        android:text="Tips：日程相关模块可完全离线使用哦~~"
-        android:background="@drawable/tips_bg"
         android:id="@+id/tv_tips"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="3dp"
-        android:textColor="#7E7E7E"
-        android:visibility="gone"
-        android:textSize="@dimen/text_size_small"
+        android:background="@drawable/tips_bg"
         android:drawableRight="@drawable/edittext_delete"
-        android:layout_height="wrap_content" />
+        android:text="Tips：日程相关模块可完全离线使用哦~~"
+        android:textColor="#7E7E7E"
+        android:textSize="@dimen/text_size_small"
+        android:visibility="gone" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:background="@android:color/black"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
         <ImageView
             android:id="@+id/close"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:src="@drawable/edittext_delete"/>
+            android:src="@drawable/nav_btn_back" />
+
         <android.support.design.widget.TabLayout
-            android:id="@+id/tablayout"
+            android:id="@+id/table_layout"
             android:layout_width="match_parent"
-            app:tabIndicatorColor="@color/theme_color"
-            android:background="@color/white"
-            app:tabSelectedTextColor="@color/theme_color"
-            style="@style/MyCustomTabTextAppearance"
             android:layout_height="wrap_content"
-            />
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            app:tabBackground="@drawable/toolbar_bg_selector"
+            app:tabGravity="fill"
+            app:tabIndicatorColor="@null"
+            app:tabMode="fixed"
+            app:tabSelectedTextColor="@android:color/black"
+            app:tabTextColor="@android:color/white" />
     </LinearLayout>
 
     <com.android.incongress.cd.conference.widget.ScrollControlViewpager
         android:id="@+id/pager"
-        android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:layout_weight="1">
-    </com.android.incongress.cd.conference.widget.ScrollControlViewpager>
+        android:layout_height="match_parent"
+        android:layout_weight="1"></com.android.incongress.cd.conference.widget.ScrollControlViewpager>
 
 </LinearLayout>

@@ -262,25 +262,6 @@ public class AppApplication extends LitePalApplication {
         return flag;
     }
     /**
-     * 布尔值保存
-     * @param key
-     * @param value
-     * @return
-     */
-    /*public static boolean setSPBooleanValue(String key, boolean value) {
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
-        return sp.edit().putBoolean(key, value).commit();
-    }
-
-    public static boolean getSPBooleanValue(String key) {
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
-        return sp.getBoolean(key,false);
-    }
-    public static boolean getSPBooleanValue2(String key) {
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
-        return sp.getBoolean(key,true);
-    }*/
-    /**
      * 判断用户是否是登录状态
      * @return
      */
@@ -385,25 +366,6 @@ public class AppApplication extends LitePalApplication {
         stopService(new Intent(getApplicationContext(), AdService.class));
     }
 
-    /*public static boolean setSPStringValue(String key, String value) {
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
-        return sp.edit().putString(key, value).commit();
-    }
-
-    public static String getSPStringValue(String key) {
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
-        return sp.getString(key, "");
-    }*/
-
-    /*public static boolean setSPIntegerValue(String key, int value) {
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
-        return sp.edit().putInt(key, value).commit();
-    }
-
-    public static int getSPIntegerValue(String key) {
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
-        return sp.getInt(key, 0);
-    }*/
 
 
     @Override

@@ -43,6 +43,8 @@ import com.android.incongress.cd.conference.beans.UserInfoEnBean;
 import com.android.incongress.cd.conference.fragments.DynamicHomeFragment;
 import com.android.incongress.cd.conference.fragments.NewDynamicHomeFragment;
 import com.android.incongress.cd.conference.fragments.me.PersonCenterFragment;
+import com.android.incongress.cd.conference.fragments.meeting_schedule.MeetingScheduleDetailActionFragment;
+import com.android.incongress.cd.conference.fragments.meeting_schedule.SessionDetailViewPageFragment;
 import com.android.incongress.cd.conference.fragments.message_station.MessageStationActionFragment;
 import com.android.incongress.cd.conference.fragments.scenic_xiu.ScenicXiuFragment;
 import com.android.incongress.cd.conference.fragments.wall_poster.PosterImageFragment;
@@ -79,6 +81,7 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 import java.util.regex.Pattern;
@@ -103,6 +106,14 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
     private RelativeLayout mTitleContainer;//整个titleBar，就是上方操作栏
     private BottomNavigationBar mNavigationBar;
     private BadgeItem mBadgeItem;
+
+    public Stack<TitleEntry> getmTitleEntries() {
+        return mTitleEntries;
+    }
+
+    public void setmTitleEntries(Stack<TitleEntry> mTitleEntries) {
+        this.mTitleEntries = mTitleEntries;
+    }
 
     //当前所处位置
     private int mCurrentPosition = 0;
@@ -230,7 +241,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
 //            setTitleEntry(false, false, false, null, R.string.app_name, true, true, false, true);
 //        }
 
-        setTitleEntry(false, false, false, null, R.string.app_name, true, true, false, true);
+        setTitleEntry(true, false, false, null, R.string.app_name, true, true, false, true,null,true);
 
         //判断是否从推送跳入，需要直接打开webview
         try {
@@ -401,13 +412,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
                         if(state == 1){
                             int count = response.getInt("count")-1;
                             ParseUser.saveDataInfo(response.toString());
-                            /*AppApplication.setSPIntegerValue("dialogversion",response.getInt("version"));
-                            AppApplication.setSPIntegerValue("dialogcount",count);
-                            AppApplication.setSPStringValue("dialogimgUrl",response.getString("picUrl"));
-                            AppApplication.setSPIntegerValue("dialogtime",response.getInt("time"));
-                            AppApplication.setSPStringValue("dialoglinkUrl",response.getString("linkUrl"));
-                            AppApplication.setSPIntegerValue("dialogalertAdId",response.getInt("alertAdId"));
-                            AppApplication.setSPStringValue("dialogalertAdName",response.getString("alertAdName"));*/
                             Intent intent = new Intent(HomeActivity.this,DialogActivity.class);
                             intent.putExtra("imgUrl",response.getString("picUrl"));
                             intent.putExtra("time",response.getInt("time"));
@@ -893,6 +897,16 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
         getHomeNums();
         super.onResume();
         MobclickAgent.onResume(this);
+        Intent intent = getIntent();
+        if(intent != null&&intent.getIntExtra("detail_for",0)==11){
+            setIntent(null);
+            SessionDetailViewPageFragment detail = new SessionDetailViewPageFragment();
+            detail.setArguments(intent.getIntExtra("tartgetPosition",0),(ArrayList)intent.getSerializableExtra("mAllSessionsList"));
+            View moreView = CommonUtils.initView(this, R.layout.titlebar_session_detail_more);
+            detail.setRightListener(moreView);
+            addFragment(detail,detail);
+            setTitleEntry(true, false, true, moreView, R.string.meeting_schedule_detail_title, false, false, true, false);
+        }
     }
     /**
      * 获取数据

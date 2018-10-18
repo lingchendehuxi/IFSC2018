@@ -57,7 +57,7 @@ public class NewSearchScheduleActionFragment extends BaseFragment {
             @Override
             public void onPageSelected(int position) {
                 if (position == 0) {
-                    mRbSchedule.setChecked(true);
+                    //mRbSchedule.setChecked(true);
                     mCurrentSearchType = TYPE_SCHEDULE;
                 } else {
                     //mRbProfessor.setChecked(true);

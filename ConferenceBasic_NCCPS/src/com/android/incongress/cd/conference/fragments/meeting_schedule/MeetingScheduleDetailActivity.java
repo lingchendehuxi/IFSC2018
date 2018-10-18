@@ -1,27 +1,20 @@
 package com.android.incongress.cd.conference.fragments.meeting_schedule;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
-import com.android.incongress.cd.conference.HomeActivity;
 import com.android.incongress.cd.conference.adapters.MeetingScheduleAdapter;
+import com.android.incongress.cd.conference.base.BaseActivity;
 import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.model.Class;
 import com.android.incongress.cd.conference.model.ConferenceDbUtils;
 import com.android.incongress.cd.conference.model.Session;
-import com.android.incongress.cd.conference.utils.ControlScrollViewPager;
-import com.android.incongress.cd.conference.utils.ViewPagerSlide;
 import com.android.incongress.cd.conference.widget.ScrollControlViewpager;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 import com.umeng.analytics.MobclickAgent;
@@ -29,7 +22,7 @@ import com.umeng.analytics.MobclickAgent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MeetingScheduleDetailActivity extends FragmentActivity {
+public class MeetingScheduleDetailActivity extends BaseActivity {
     private MeetingScheduleAdapter adapter;
     private TabLayout mTabLayout;
     private ScrollControlViewpager mViewpager;
@@ -42,10 +35,7 @@ public class MeetingScheduleDetailActivity extends FragmentActivity {
     private ProgressDialog mDialog;
     //private TextView mTvTips;
 
-    public MeetingScheduleViewPageFragment getInstance() {
-        MeetingScheduleViewPageFragment meetingSchedule = new MeetingScheduleViewPageFragment();
-        return meetingSchedule;
-    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,13 +44,12 @@ public class MeetingScheduleDetailActivity extends FragmentActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.fragment_meeting_schedule);
         close = (ImageView) findViewById(R.id.close);
-        mTabLayout = (TabLayout) findViewById(R.id.tablayout);
+        mTabLayout = (TabLayout) findViewById(R.id.table_layout);
         mViewpager = (ScrollControlViewpager) findViewById(R.id.pager);
         mViewpager.setOffscreenPageLimit(3);
         mViewpager.setCanScroll(false);
 
-        mTabLayout.setTabMode(TabLayout.MODE_FIXED);
-        mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
         new MyAsyncTask().execute();
         close.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +57,16 @@ public class MeetingScheduleDetailActivity extends FragmentActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    protected void setContentView() {
+
+    }
+
+    @Override
+    protected void initViewsAction() {
+
     }
 
     class MyAsyncTask extends AsyncTask<Integer, Integer, String> {
@@ -112,6 +111,7 @@ public class MeetingScheduleDetailActivity extends FragmentActivity {
             adapter = new MeetingScheduleAdapter(getSupportFragmentManager(), Titles, Numboftabs,mSessionDaysList);
             mViewpager.setAdapter(adapter);
             mTabLayout.setupWithViewPager(mViewpager);
+            mTabLayout.setTabMode(TabLayout.MODE_FIXED);
         }
 
         @Override

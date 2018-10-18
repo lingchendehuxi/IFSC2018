@@ -69,6 +69,7 @@ import com.android.incongress.cd.conference.utils.DateUtil;
 import com.android.incongress.cd.conference.utils.DensityUtil;
 import com.android.incongress.cd.conference.utils.ImageColorChangeUtils;
 import com.android.incongress.cd.conference.utils.MyLogger;
+import com.android.incongress.cd.conference.utils.PicUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
 import com.android.incongress.cd.conference.widget.zxing.activity.CaptureActivity;
 import com.bumptech.glide.Glide;
@@ -82,6 +83,7 @@ import org.apache.http.util.EncodingUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.litepal.tablemanager.Connector;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -204,7 +206,6 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
          mTvSecretaryTask = (TextView) view.findViewById(R.id.tv_secretary_task);
          mTvSecretarySessionName = (TextView) view.findViewById(R.id.tv_secretary_session_name);
 
-
 //       mIconFilePath = AppApplication.instance().getSDPath() + Constants.FILE_CONFERENCES + "incongress" + AppApplication.conId + "/icon.txt";
         mIconFilePath = AppApplication.instance().getSDPath() + Constants.FILESDIR + "/icon.txt";
 
@@ -319,7 +320,9 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
          });
 
          initReceiver();
-         hideSecretaryView();
+         if(!AppApplication.isUserLogIn()){
+             hideSecretaryView();
+         }
         return view;
     }
     private TextView getTextViewTitle(String title) {
@@ -437,7 +440,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
         }else{
             for (int i = 1;i<3;i++) {
                 Row.RowsBean bean = mRow.getRows().get(i);
-                LinearLayout linearLayout =new LinearLayout(getActivity());;
+                LinearLayout linearLayout ;
                 //linearLayout = getHorizontalLinearLayout(true);
                 if(i == 2){
                     linearLayout = getHorizontalLinearLayout(false);
@@ -466,12 +469,12 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
             int hegit = 0;
             for (int i = 0; i < mRow.getRows().size(); i++) {
                 Row.RowsBean bean = mRow.getRows().get(i);
-                LinearLayout linearLayout= new LinearLayout(getContext());
-                /*if(i == 2){
+                LinearLayout linearLayout;
+                if(i == 2){
                     linearLayout = getHorizontalLinearLayout(false);
                 }else{
                     linearLayout = getHorizontalLinearLayout(true);
-                }*/
+                }
                 //设置首页上方广告
                 if (bean.getObj().size() == 1 && bean.getObj().get(0).getIconCode().equals(17 + "")) {
                     final Row.RowsBean.ObjBean picBean = bean.getObj().get(0);
@@ -991,7 +994,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
         if(AppApplication.instance().NetWorkIsOpen()){
             ImageView searchView = (ImageView) CommonUtils.initView(getActivity(), R.layout.title_right_image);
             searchView.setImageResource(R.drawable.icon_share);
-            searchView.setVisibility(View.GONE);
+            //searchView.setVisibility(View.GONE);
             OnlyWebViewActionFragment fragment = OnlyWebViewActionFragment.getInstance(getActivity().getString(Constants.get_MEETING_GUIDE(), AppApplication.conId, AppApplication.getSystemLanuageCode()));
             fragment.setRightView(searchView);
             action(fragment, R.string.home_meetingguide, searchView,false, false, false);
@@ -1049,9 +1052,9 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
      */
     private void goPost(String title) {
         View scane = CommonUtils.initView(this.getActivity(), R.layout.title_right_image);
-        //((ImageView) scane).setImageResource(R.drawable.scane_scane);
+        ((ImageView) scane).setImageResource(R.drawable.scane_scane);
         PosterFragment post = new PosterFragment();
-        //post.setRightView(scane);
+        post.setRightView(scane);
         action(post, title, scane, false, false, false);
     }
 

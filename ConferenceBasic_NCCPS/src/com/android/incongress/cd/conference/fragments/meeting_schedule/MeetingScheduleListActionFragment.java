@@ -15,6 +15,7 @@ import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.incongress.cd.conference.HomeActivity;
 import com.android.incongress.cd.conference.adapters.MeetingScheduleListFragmentAdapter;
 import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.BaseFragment;
@@ -146,7 +147,7 @@ public class MeetingScheduleListActionFragment extends BaseFragment {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ImageView view = (ImageView) CommonUtils.initView(getActivity(), R.layout.title_right_image);
+                /*ImageView view = (ImageView) CommonUtils.initView(getActivity(), R.layout.title_right_image);
                 if (AppApplication.systemLanguage == 1) {
                     view.setImageResource(R.drawable.schedule_switch_cn);
                 } else {
@@ -154,8 +155,11 @@ public class MeetingScheduleListActionFragment extends BaseFragment {
                 }
                 MeetingScheduleViewPageFragment scheduleFragment = new MeetingScheduleViewPageFragment();
                 scheduleFragment.setRightListener(view);
-                getActivity().startActivity(new Intent(getActivity(),MeetingScheduleDetailActivity.class));
-                //action(scheduleFragment, R.string.home_schedule, view, false, false, false);
+                //getActivity().startActivity(new Intent(getActivity(),MeetingScheduleDetailActivity.class));*/
+                MeetingScheduleViewPageFragment scheduleFragment = new MeetingScheduleViewPageFragment();
+                HomeActivity activity = (HomeActivity) getActivity();
+                activity.addFragment(MeetingScheduleListActionFragment.this, scheduleFragment);
+                activity.setTitleEntry(false, false, false, null, null, false, false, false, false);
             }
         });
     }

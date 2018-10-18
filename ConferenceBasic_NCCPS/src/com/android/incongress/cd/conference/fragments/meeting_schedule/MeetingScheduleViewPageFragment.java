@@ -1,18 +1,18 @@
 package com.android.incongress.cd.conference.fragments.meeting_schedule;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.incongress.cd.conference.HomeActivity;
@@ -20,10 +20,11 @@ import com.android.incongress.cd.conference.adapters.MeetingScheduleAdapter;
 import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.BaseFragment;
 import com.android.incongress.cd.conference.base.Constants;
-import com.android.incongress.cd.conference.fragments.NewDynamicHomeFragment;
 import com.android.incongress.cd.conference.model.Class;
 import com.android.incongress.cd.conference.model.ConferenceDbUtils;
 import com.android.incongress.cd.conference.model.Session;
+import com.android.incongress.cd.conference.save.SharePreferenceUtils;
+import com.android.incongress.cd.conference.widget.ScrollControlViewpager;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 import com.umeng.analytics.MobclickAgent;
 
@@ -40,30 +41,34 @@ public class MeetingScheduleViewPageFragment extends BaseFragment {
 
     private MeetingScheduleAdapter adapter;
     private TabLayout mTabLayout;
-    private ViewPager mViewpager;
+    private ScrollControlViewpager mViewpager;
     private CharSequence Titles[];
     private int Numboftabs;
 
     private List<String> mSessionDaysList = new ArrayList<>();
     private List<Class> mRoomList = new ArrayList<>();
     private ProgressDialog mDialog;
-    //private TextView mTvTips;
+    private TextView mTvTips;
+    private ImageView close;
 
     public MeetingScheduleViewPageFragment getInstance() {
         MeetingScheduleViewPageFragment meetingSchedule = new MeetingScheduleViewPageFragment();
         return meetingSchedule;
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_meeting_schedule, null, false);
-        mTabLayout = (TabLayout) view.findViewById(R.id.tablayout);
-        mViewpager = (ViewPager) view.findViewById(R.id.pager);
+        mTabLayout = (TabLayout) view.findViewById(R.id.table_layout);
+        mViewpager = (ScrollControlViewpager) view.findViewById(R.id.pager);
+        close = (ImageView) view.findViewById(R.id.close);
         mViewpager.setOffscreenPageLimit(3);
+        mViewpager.setCanScroll(false);
 
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
         mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-       /* mTvTips = (TextView) view.findViewById(R.id.tv_tips);
+        mTvTips = (TextView) view.findViewById(R.id.tv_tips);
         mTvTips.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,7 +83,7 @@ public class MeetingScheduleViewPageFragment extends BaseFragment {
                     @Override
                     public void onAnimationEnd(Animation animation) {
                         mTvTips.setVisibility(View.GONE);
-                        AppApplication.setSPBooleanValue(Constants.LOOK_SCHEDULE_TIPS, true);
+                        SharePreferenceUtils.setSPBooleanValue(Constants.LOOK_SCHEDULE_TIPS, true);
                     }
 
                     @Override
@@ -90,9 +95,19 @@ public class MeetingScheduleViewPageFragment extends BaseFragment {
             }
         });
 
-        if(AppApplication.getSPBooleanValue(Constants.LOOK_SCHEDULE_TIPS)) {
+        if(SharePreferenceUtils.getSPBooleanValueF(Constants.LOOK_SCHEDULE_TIPS)) {
             mTvTips.setVisibility(View.GONE);
-        }*/
+        }
+        close.setOnClickListener(new View.OnClickListener() {
+            HomeActivity activity = (HomeActivity) getActivity();
+            FragmentManager manager = activity.getSupportFragmentManager();
+            @Override
+            public void onClick(View v) {
+                manager.popBackStackImmediate();
+                activity.getmTitleEntries().pop();
+                activity.setTitleBar(activity.getmTitleEntries().peek());
+            }
+        });
 
         new MyAsyncTask().execute();
         return view;
@@ -185,12 +200,13 @@ public class MeetingScheduleViewPageFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         MobclickAgent.onPageStart(Constants.FRAGMENT_MEETINGSCHEDULECALENDAR);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        MobclickAgent.onPageEnd(Constants.FRAGMENT_MEETINGSCHEDULECALENDAR);
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 }

@@ -1,8 +1,12 @@
 package com.android.incongress.cd.conference.utils;
 
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Environment;
+import android.support.v4.graphics.drawable.DrawableCompat;
+import android.widget.ImageView;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -67,6 +71,15 @@ public class PicUtils {
             sdDir = Environment.getExternalStorageDirectory();//获取跟目录
         }
         return sdDir.toString();
+    }
+    //drawable 着色
+    public static void setImageViewColor(ImageView view, int colorResId) {
+        //mutate()
+        Drawable modeDrawable = view.getDrawable().mutate();
+        Drawable temp = DrawableCompat.wrap(modeDrawable);
+        ColorStateList colorStateList = ColorStateList.valueOf(view.getResources().getColor(colorResId));
+        DrawableCompat.setTintList(temp, colorStateList);
+        view.setImageDrawable(temp);
     }
 
 }

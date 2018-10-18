@@ -5,6 +5,8 @@ import java.util.List;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.FocusFinder;   
@@ -123,6 +125,7 @@ public class HVScrollView extends FrameLayout {
         initScrollView();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -131,7 +134,6 @@ public class HVScrollView extends FrameLayout {
         parentView2.setOnScrollChangeListener(new OnScrollChangeListener() {
             @Override
             public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                Log.d("sgqTest", "onScrollChange: X= "+scrollX+"-------Y= "+scrollY+"----oldx = "+oldScrollX+"------oldy = "+oldScrollY);
                 HorizontalScrollView sv = (HorizontalScrollView) v;
                 mHScroll.scrollTo(scrollX,0);
                 // 判断 scrollView 当前滚动位置在顶部
@@ -150,9 +152,7 @@ public class HVScrollView extends FrameLayout {
         parentView.setOnScrollChangeListener(new OnScrollChangeListener() {
             @Override
             public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                Log.d("sgqTest", "onScrollChange: X= "+scrollX+"-------Y= "+scrollY+"----oldx = "+oldScrollX+"------oldy = "+oldScrollY);
                 ScrollView sv = (ScrollView) v;
-                mHScroll.scrollTo(scrollX,0);
                 mVScroll.scrollTo(0,scrollY);
                 // 判断 scrollView 当前滚动位置在顶部
                 if(sv.getScrollY() == 0){

@@ -37,7 +37,8 @@ public class MeetingScheduleAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return Titles[position].subSequence(8,10);
+        CharSequence month = Titles[position].subSequence(5,7);
+        return Integer.valueOf(month.toString())+"月\n"+Titles[position].subSequence(8,10);
     }
 
 

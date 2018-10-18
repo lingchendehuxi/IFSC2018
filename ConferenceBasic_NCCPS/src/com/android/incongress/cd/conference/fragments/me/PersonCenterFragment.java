@@ -181,8 +181,8 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
                 }).setCancelable(false).show();
                 break;
             case R.id.bt_note:
-                /*NoteManageActionFragment noteManager = new NoteManageActionFragment();
-                action(noteManager, R.string.mymeeting_note, false, false, false);*/
+                NoteManageActionFragment noteManager = new NoteManageActionFragment();
+                action(noteManager, R.string.mymeeting_note, false, false, false);
                 break;
             case R.id.bt_tiezi:
                 if(AppApplication.isUserLogIn()) {
