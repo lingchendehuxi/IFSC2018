@@ -398,8 +398,8 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
     protected void initViewsAction() {
     }
     private void getDialog() {
-        int version = ConvertUtil.convertToInt(SharePreferenceUtils.getApp("dialogversion"),0);
-        final int count = ConvertUtil.convertToInt(SharePreferenceUtils.getApp("dialogcount"),0);
+        int version = ConvertUtil.convertToInt(SharePreferenceUtils.getAppString("dialogversion"),0);
+        final int count = ConvertUtil.convertToInt(SharePreferenceUtils.getAppString("dialogcount"),0);
 
         CHYHttpClientUsage.getInstanse().doGetAlertAd(version, new JsonHttpResponseHandler("gbk") {
             @Override
@@ -421,14 +421,14 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
                             startActivity(intent);
                         }else{
                             if(count != 0 && state != 3){
-                                int counttow = ConvertUtil.convertToInt(SharePreferenceUtils.getApp("dialogcount"),0)-1;
+                                int counttow = ConvertUtil.convertToInt(SharePreferenceUtils.getAppString("dialogcount"),0)-1;
                                 SharePreferenceUtils.saveAppString("dialogcount",counttow+"");
                                 Intent intent = new Intent(HomeActivity.this,DialogActivity.class);
-                                intent.putExtra("imgUrl",SharePreferenceUtils.getApp("dialogimgUrl"));
-                                intent.putExtra("time",SharePreferenceUtils.getApp("dialogtime"));
-                                intent.putExtra("linkUrl",SharePreferenceUtils.getApp("dialoglinkUrl"));
-                                intent.putExtra("alertAdId",SharePreferenceUtils.getApp("dialogalertAdId"));
-                                intent.putExtra("alertAdName",SharePreferenceUtils.getApp("dialogalertAdName"));
+                                intent.putExtra("imgUrl",SharePreferenceUtils.getAppString("dialogimgUrl"));
+                                intent.putExtra("time",SharePreferenceUtils.getAppString("dialogtime"));
+                                intent.putExtra("linkUrl",SharePreferenceUtils.getAppString("dialoglinkUrl"));
+                                intent.putExtra("alertAdId",SharePreferenceUtils.getAppString("dialogalertAdId"));
+                                intent.putExtra("alertAdName",SharePreferenceUtils.getAppString("dialogalertAdName"));
                                 startActivity(intent);
                             }
                         }
@@ -790,9 +790,9 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
         mTitleEntries.get(mTitleEntries.size() - 1).setShowNavigationBottom(true);
 
         //显示引导
-        if(SharePreferenceUtils.getSPBooleanValueF(Constants.SHOW_HOME_BACK_GUIDE)) {
+        if(SharePreferenceUtils.getAppBooleanF(Constants.SHOW_HOME_BACK_GUIDE)) {
             mHomeGuide.setVisibility(View.VISIBLE);
-            SharePreferenceUtils.setSPBooleanValue(Constants.SHOW_HOME_BACK_GUIDE, false);
+            SharePreferenceUtils.saveAppBoolean(Constants.SHOW_HOME_BACK_GUIDE, false);
         }
     }
 

@@ -16,6 +16,8 @@ import com.android.incongress.cd.conference.utils.DateUtil;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -37,7 +39,12 @@ public class SpeakerDetailAdapter extends BaseAdapter implements StickyListHeade
         this.mMeetings = meetings;
         this.mInflater = LayoutInflater.from(ctx);
         this.mIsFromSessionDetail = isFromSessionDetail;
-
+        Collections.sort(mMeetings, new Comparator<MeetingBean_new>() {
+            @Override
+            public int compare(MeetingBean_new o1, MeetingBean_new o2) {
+                return o1.getRoleId()-o2.getRoleId();
+            }
+        });
         mSectionIndices = getSectionIndices();
         mSectionHeaders = getSectionHeaders();
     }
@@ -127,7 +134,7 @@ public class SpeakerDetailAdapter extends BaseAdapter implements StickyListHeade
             headerText = mMeetings.get(position).getRoleNameEn();
         }
 
-        holder.tvRoleName.setText(headerText);
+        holder.tvRoleName.setText("担任"+headerText);
         return convertView;
     }
 

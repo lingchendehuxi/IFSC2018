@@ -6,9 +6,12 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -20,10 +23,12 @@ import com.android.incongress.cd.conference.adapters.MeetingScheduleAdapter;
 import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.BaseFragment;
 import com.android.incongress.cd.conference.base.Constants;
+import com.android.incongress.cd.conference.fragments.NewDynamicHomeFragment;
 import com.android.incongress.cd.conference.model.Class;
 import com.android.incongress.cd.conference.model.ConferenceDbUtils;
 import com.android.incongress.cd.conference.model.Session;
 import com.android.incongress.cd.conference.save.SharePreferenceUtils;
+import com.android.incongress.cd.conference.utils.TimeUtils;
 import com.android.incongress.cd.conference.widget.ScrollControlViewpager;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 import com.umeng.analytics.MobclickAgent;
@@ -50,6 +55,7 @@ public class MeetingScheduleViewPageFragment extends BaseFragment {
     private ProgressDialog mDialog;
     private TextView mTvTips;
     private ImageView close;
+    private int mCurrentPage = 0;
 
     public MeetingScheduleViewPageFragment getInstance() {
         MeetingScheduleViewPageFragment meetingSchedule = new MeetingScheduleViewPageFragment();
@@ -83,7 +89,7 @@ public class MeetingScheduleViewPageFragment extends BaseFragment {
                     @Override
                     public void onAnimationEnd(Animation animation) {
                         mTvTips.setVisibility(View.GONE);
-                        SharePreferenceUtils.setSPBooleanValue(Constants.LOOK_SCHEDULE_TIPS, true);
+                        SharePreferenceUtils.saveAppBoolean(Constants.LOOK_SCHEDULE_TIPS, true);
                     }
 
                     @Override
@@ -95,7 +101,7 @@ public class MeetingScheduleViewPageFragment extends BaseFragment {
             }
         });
 
-        if(SharePreferenceUtils.getSPBooleanValueF(Constants.LOOK_SCHEDULE_TIPS)) {
+        if(SharePreferenceUtils.getAppBooleanF(Constants.LOOK_SCHEDULE_TIPS)) {
             mTvTips.setVisibility(View.GONE);
         }
         close.setOnClickListener(new View.OnClickListener() {
@@ -144,6 +150,9 @@ public class MeetingScheduleViewPageFragment extends BaseFragment {
             Titles = new CharSequence[mSessionDaysList.size()];
             for (int i = 0; i < mSessionDaysList.size(); i++) {
                 Titles[i] = mSessionDaysList.get(i);
+                if(TimeUtils.getCurrentTimeMD().equals(mSessionDaysList.get(i))){
+                    mCurrentPage = i;
+                }
             }
 
             Numboftabs = mSessionDaysList.size();
@@ -162,6 +171,7 @@ public class MeetingScheduleViewPageFragment extends BaseFragment {
             adapter = new MeetingScheduleAdapter(getChildFragmentManager(), Titles, Numboftabs,mSessionDaysList);
             mViewpager.setAdapter(adapter);
             mTabLayout.setupWithViewPager(mViewpager);
+            mViewpager.setCurrentItem(mCurrentPage);
         }
 
         @Override
@@ -200,13 +210,21 @@ public class MeetingScheduleViewPageFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         MobclickAgent.onPageStart(Constants.FRAGMENT_MEETINGSCHEDULECALENDAR);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(hidden){
+            getActivity().getWindow().clearFlags(
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
     }
 }

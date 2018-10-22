@@ -104,7 +104,7 @@ public class HdSessionActionFragment extends BaseFragment {
      * 显示指示页
      */
     private void showGuideInfo() {
-        if (!"1".equals(SharePreferenceUtils.getApp(Constants.GUIDE_INTERACTIVE))) {
+        if (!"1".equals(SharePreferenceUtils.getAppString(Constants.GUIDE_INTERACTIVE))) {
 
             if (getActivity() != null) {
                 getActivity().findViewById(R.id.home_guide).setVisibility(View.VISIBLE);

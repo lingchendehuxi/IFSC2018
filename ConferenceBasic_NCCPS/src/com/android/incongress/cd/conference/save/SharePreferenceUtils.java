@@ -11,11 +11,11 @@ import java.util.Set;
 
 public class SharePreferenceUtils {
 	public static String user_msg = "user_msg";
-	public static String base_url = "base_url";
+	public static String base_app = "base_app";
 
 	/** 保存appConfig配置 */
 	public static void saveApp(Map<String, String> map) {
-		SharedPreferences share = AppApplication.getContext().getSharedPreferences(base_url, Context.MODE_PRIVATE);
+		SharedPreferences share = AppApplication.getContext().getSharedPreferences(base_app, Context.MODE_PRIVATE);
 		Editor editor = share.edit();
 		Set<String> set = map.keySet();
 		for (String string : set) {
@@ -25,20 +25,44 @@ public class SharePreferenceUtils {
 	}
 
 	/** 读取appConfig配置 */
-	public static String getApp(String key) {
-		SharedPreferences share = AppApplication.getContext().getSharedPreferences(base_url, Context.MODE_PRIVATE);
+	public static String getAppString(String key) {
+		SharedPreferences share = AppApplication.getContext().getSharedPreferences(base_app, Context.MODE_PRIVATE);
 		return share.getString(key, "");
+	}
+	public static int getAppInt(String key) {
+		SharedPreferences share = AppApplication.getContext().getSharedPreferences(base_app, Context.MODE_PRIVATE);
+		return share.getInt(key, 0);
+	}
+	public static boolean getAppBooleanF(String key) {
+		SharedPreferences share = AppApplication.getContext().getSharedPreferences(base_app, Context.MODE_PRIVATE);
+		return share.getBoolean(key, false);
+	}
+	public static boolean getAppBooleanT(String key) {
+		SharedPreferences share = AppApplication.getContext().getSharedPreferences(base_app, Context.MODE_PRIVATE);
+		return share.getBoolean(key, true);
 	}
 
 	public static void saveAppString(String key, String value) {
-		SharedPreferences share = AppApplication.getContext().getSharedPreferences(base_url, Context.MODE_PRIVATE);
+		SharedPreferences share = AppApplication.getContext().getSharedPreferences(base_app, Context.MODE_PRIVATE);
 		Editor editor = share.edit();
 		editor.putString(key, value);
 		editor.commit();
 	}
+	public static void saveAppInt(String key, int value) {
+		SharedPreferences share = AppApplication.getContext().getSharedPreferences(base_app, Context.MODE_PRIVATE);
+		Editor editor = share.edit();
+		editor.putInt(key, value);
+		editor.commit();
+	}
+	public static void saveAppBoolean(String key, boolean value) {
+		SharedPreferences share = AppApplication.getContext().getSharedPreferences(base_app, Context.MODE_PRIVATE);
+		Editor editor = share.edit();
+		editor.putBoolean(key, value);
+		editor.commit();
+	}
 
 	public static void cleanApp() {
-		SharedPreferences share = AppApplication.getContext().getSharedPreferences(base_url, Context.MODE_PRIVATE);
+		SharedPreferences share = AppApplication.getContext().getSharedPreferences(base_app, Context.MODE_PRIVATE);
 		Editor editor = share.edit();
 		editor.clear().commit();
 	}
@@ -73,21 +97,5 @@ public class SharePreferenceUtils {
 		SharedPreferences share = AppApplication.getContext().getSharedPreferences(user_msg, Context.MODE_PRIVATE);
 		Editor editor = share.edit();
 		editor.clear().commit();
-	}
-	//App配置布尔表
-	public static void setSPBooleanValue(String key, boolean value) {
-		SharedPreferences share = AppApplication.getContext().getSharedPreferences(base_url, Context.MODE_PRIVATE);
-		Editor editor = share.edit();
-		editor.putBoolean(key,value);
-		editor.commit();
-	}
-
-	public static boolean getSPBooleanValueF(String key) {
-		SharedPreferences share = AppApplication.getContext().getSharedPreferences(base_url, Context.MODE_PRIVATE);
-		return share.getBoolean(key, false);
-	}
-	public static boolean getSPBooleanValueT(String key) {
-		SharedPreferences share = AppApplication.getContext().getSharedPreferences(base_url, Context.MODE_PRIVATE);
-		return share.getBoolean(key, true);
 	}
 }

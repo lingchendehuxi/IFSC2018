@@ -23,6 +23,7 @@ import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.model.ConferenceDbUtils;
 import com.android.incongress.cd.conference.model.Session;
 import com.android.incongress.cd.conference.utils.CommonUtils;
+import com.android.incongress.cd.conference.utils.TimeUtils;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 import com.umeng.analytics.MobclickAgent;
 
@@ -41,6 +42,7 @@ public class MeetingScheduleListActionFragment extends BaseFragment {
     private MeetingScheduleListFragmentAdapter mPageAdapter;
     private List<String> mSessionDaysList = new ArrayList<>();
     private TextView mTvTips;
+    private int mCurrentPage = 0;
 
     @Override
     public void onAttach(Context context) {
@@ -91,26 +93,12 @@ public class MeetingScheduleListActionFragment extends BaseFragment {
         mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         mTabLayout.setupWithViewPager(mViewPager);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");// HH:mm:ss
-//获取当前时间
-        Date date = new Date(System.currentTimeMillis());
-        if(mSessionDaysList.contains(simpleDateFormat.format(date))){
-            for (int i = 0;i<mSessionDaysList.size();i++){
-                if(simpleDateFormat.format(date).equals(mSessionDaysList.get(i))){
-                    try {
-                        Field field = mViewPager.getClass().getField("mCurItem");
-                        field.setAccessible(true);
-                        field.setInt(mViewPager, i);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-// 通过数据修改
-                    mPageAdapter.notifyDataSetChanged();
-// 切换到指定页面
-                    mViewPager.setCurrentItem(i);
-                }
+        for(int i = 0;i<mSessionDaysList.size();i++){
+            if(TimeUtils.getCurrentTimeMD().equals(mSessionDaysList.get(i))){
+                mCurrentPage = i;
             }
         }
+        mViewPager.setCurrentItem(mCurrentPage);
         return view;
     }
 

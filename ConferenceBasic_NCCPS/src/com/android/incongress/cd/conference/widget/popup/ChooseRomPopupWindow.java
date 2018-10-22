@@ -115,7 +115,7 @@ public class ChooseRomPopupWindow extends BasePopupWindow {
                    if(getCurrentClass().size()==0){
                        ToastUtils.showLongToast("请选择至少一个会议室");
                    }else{
-                       SharePreferenceUtils.setSPBooleanValue("popup",true);
+                       SharePreferenceUtils.saveAppBoolean("popup",true);
                        dismiss();
                    }
                 }

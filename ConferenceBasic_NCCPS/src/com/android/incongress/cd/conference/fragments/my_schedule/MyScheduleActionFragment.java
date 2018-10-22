@@ -15,6 +15,7 @@ import com.android.incongress.cd.conference.base.BaseFragment;
 import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.model.ConferenceDbUtils;
 import com.android.incongress.cd.conference.model.Session;
+import com.android.incongress.cd.conference.utils.TimeUtils;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 import com.umeng.analytics.MobclickAgent;
 
@@ -37,6 +38,7 @@ public class MyScheduleActionFragment extends BaseFragment {
     public static final String BROADCAST_OPEN_CLOSE ="mode";
 
     private boolean mIsEditMode = false;
+    private int mCurrentPage = 0;
 
     @Nullable
     @Override
@@ -60,6 +62,9 @@ public class MyScheduleActionFragment extends BaseFragment {
         String[] titles = new String[mSessionDaysList.size()];
         for(int i=0; i<mSessionDaysList.size(); i++) {
             titles[i] = mSessionDaysList.get(i);
+            if(TimeUtils.getCurrentTimeMD().equals(mSessionDaysList.get(i))){
+                mCurrentPage = i;
+            }
         }
 
         mAdapter = new MyScheduleAdapter(getFragmentManager(), titles, titles.length);
@@ -67,6 +72,7 @@ public class MyScheduleActionFragment extends BaseFragment {
         mViewPager.setOffscreenPageLimit(2);
         mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         mTabLayout.setupWithViewPager(mViewPager);
+        mViewPager.setCurrentItem(mCurrentPage);
 
         return view;
     }

@@ -62,4 +62,7 @@ public class TimeUtils {
     public static String getCurrentTimeInString(SimpleDateFormat dateFormat) {
         return getTime(getCurrentTimeInLong(), dateFormat);
     }
+    public static String getCurrentTimeMD(){
+        return DATE_FORMAT_DATE.format(new Date(System.currentTimeMillis()));
+    }
 }

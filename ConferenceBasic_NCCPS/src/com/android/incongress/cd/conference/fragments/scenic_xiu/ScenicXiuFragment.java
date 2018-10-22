@@ -373,7 +373,7 @@ public class ScenicXiuFragment extends BaseFragment implements View.OnClickListe
      * 显示指示页
      */
     private void showGuideInfo() {
-        if (!"1".equals(SharePreferenceUtils.getApp(Constants.GUIDE_XIU))) {
+        if (!"1".equals(SharePreferenceUtils.getAppString(Constants.GUIDE_XIU))) {
             getActivity().findViewById(R.id.home_guide).setVisibility(View.VISIBLE);
             ((ImageView) getActivity().findViewById(R.id.home_guide)).setImageResource(R.drawable.show_guide);
             ((ImageView) getActivity().findViewById(R.id.home_guide)).setOnClickListener(new View.OnClickListener() {

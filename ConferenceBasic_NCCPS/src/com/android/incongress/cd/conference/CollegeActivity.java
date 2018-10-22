@@ -344,7 +344,7 @@ public class CollegeActivity extends FragmentActivity {
 		@JavascriptInterface
 		public String getSessions(){
 
-			String liveJson = SharePreferenceUtils.getApp("liveYuyue");
+			String liveJson = SharePreferenceUtils.getAppString("liveYuyue");
 			if(liveJson.equals("")) {
 				liveJson = "{}";
 			}
@@ -353,7 +353,7 @@ public class CollegeActivity extends FragmentActivity {
 		@JavascriptInterface
 		public void liveYuyueV2(String sessionGroupNameAll,String startTime,String url){
 			try {
-				String liveJson = SharePreferenceUtils.getApp("liveYuyue");
+				String liveJson = SharePreferenceUtils.getAppString("liveYuyue");
 				JSONObject jsonObject = new JSONObject();
 				if(!liveJson.equals("")){
 					jsonObject = new JSONObject(liveJson);

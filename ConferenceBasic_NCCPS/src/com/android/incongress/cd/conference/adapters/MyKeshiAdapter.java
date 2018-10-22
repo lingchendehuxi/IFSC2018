@@ -32,7 +32,7 @@ public class MyKeshiAdapter extends RecyclerView.Adapter<TextViewHolder> impleme
 
     public MyKeshiAdapter(Context context) {
         this.mContext = context;
-        mCurrentKeshi = SharePreferenceUtils.getApp(Constants.MY_KESHI);
+        mCurrentKeshi = SharePreferenceUtils.getAppString(Constants.MY_KESHI);
     }
 
     public void setCurrentKeshi(String keshi) {

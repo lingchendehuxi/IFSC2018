@@ -40,7 +40,7 @@ public class ChooseKeShiActivity extends BaseActivity {
     @OnClick(R.id.tv_confirm)
     void onConfirmClick() {
         if(mIsOKClickable) {
-            SharePreferenceUtils.setSPBooleanValue(Constants.MY_FIELDS, true);
+            SharePreferenceUtils.saveAppBoolean(Constants.MY_FIELDS, true);
 
             if(!mIsFromMe) {
                 if(AppApplication.isUserLogIn()) {
@@ -93,7 +93,7 @@ public class ChooseKeShiActivity extends BaseActivity {
     }
 
     private void changeOkText() {
-        String keshi = SharePreferenceUtils.getApp(Constants.MY_KESHI);
+        String keshi = SharePreferenceUtils.getAppString(Constants.MY_KESHI);
         if(!TextUtils.isEmpty(keshi)) {
             mIsOKClickable = true;
             mTvConfirm.setTextColor(getResources().getColor(R.color.theme_color));

@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.beans.EsmoListBean;
 import com.android.incongress.cd.conference.beans.EsmosBean;
+import com.android.incongress.cd.conference.save.SharePreferenceUtils;
 import com.android.incongress.cd.conference.utils.PinyinConverter;
 import com.google.gson.Gson;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
@@ -59,7 +60,6 @@ public  class ConferenceDb {
     private static final int CONFERENCE_MAP = 10;
     private static final int ROLE = 11;
     private static final int TIME = 12;
-    private static SharedPreferences sp;
 
     public static void createEsmoDB(String path) {
         DataSupport.deleteAll(EsmosBean.class);
@@ -108,9 +108,6 @@ public  class ConferenceDb {
      * @param path
      */
     public static void createDB(String path, int postion, OnUpdateInfoListener listener) {
-        sp = AppApplication.getContext().getSharedPreferences("createDB", Context.MODE_PRIVATE);
-        SharedPreferences.Editor edit = sp.edit();
-
         switch (postion) {
             case DELETE_DATA:
                 //删除数据库
@@ -133,8 +130,7 @@ public  class ConferenceDb {
                     e.printStackTrace();
                 }finally {
                     postion = CONFERENCES;
-                    edit.putInt("postion", postion);
-                    edit.commit();
+                    SharePreferenceUtils.saveAppInt("postion",postion);
                 }
 
             case CONFERENCES:
@@ -155,8 +151,7 @@ public  class ConferenceDb {
                 }
                 listener.onMeetingStart(R.string.splash_schedule);
                 postion = SESSION;
-                edit.putInt("postion", postion);
-                edit.commit();
+                SharePreferenceUtils.saveAppInt("postion", postion);
             case SESSION:
                 //sessionNew.txt 会议
                 try {
@@ -189,8 +184,7 @@ public  class ConferenceDb {
                 }
                 listener.onMeetingStart(R.string.splash_schedule);
                 postion = MEETING;
-                edit.putInt("postion", postion);
-                edit.commit();
+                SharePreferenceUtils.saveAppInt("postion", postion);
             case MEETING:
                 // meetingNew.txt 会议演讲
                 try {
@@ -221,8 +215,7 @@ public  class ConferenceDb {
                 }
                 listener.onMeetingStart(R.string.splash_schedule);
                 postion = CONFIELD;
-                edit.putInt("postion", postion);
-                edit.commit();
+                SharePreferenceUtils.saveAppInt("postion", postion);
             case CONFIELD:
                 // conField.txt 领域
                 try {
@@ -243,8 +236,7 @@ public  class ConferenceDb {
                 }
                 listener.onMeetingStart(R.string.splash_onference);
                 postion = CLASSES;
-                edit.putInt("postion", postion);
-                edit.commit();
+                SharePreferenceUtils.saveAppInt("postion", postion);
             case CLASSES:
                 // classes.txt 会议室
                 try {
@@ -276,8 +268,7 @@ public  class ConferenceDb {
                 }
                 listener.onMeetingStart(R.string.splash_onference);
                 postion = SPEAKER;
-                edit.putInt("postion", postion);
-                edit.commit();
+                SharePreferenceUtils.saveAppInt("postion", postion);
             case SPEAKER:
                 // speaker.txt 演讲者
                 try {
@@ -307,8 +298,7 @@ public  class ConferenceDb {
                 }
                 listener.onMeetingStart(R.string.splash_onference);
                 postion = EXHIBITORS;
-                edit.putInt("postion", postion);
-                edit.commit();
+                SharePreferenceUtils.saveAppInt("postion", postion);
             case EXHIBITORS:
                 //exhibitorsNew.txt 参展商
                 try {
@@ -361,8 +351,7 @@ public  class ConferenceDb {
                 }
                 listener.onMeetingStart(R.string.splash_speaker);
                 postion = TIPS;
-                edit.putInt("postion", postion);
-                edit.commit();
+                SharePreferenceUtils.saveAppInt("postion", postion);
             case TIPS:
                 //tips.txt 基本信息
                 try {
@@ -382,8 +371,7 @@ public  class ConferenceDb {
                 }
                 listener.onMeetingStart(R.string.splash_speaker);
                 postion = AD;
-                edit.putInt("postion", postion);
-                edit.commit();
+                SharePreferenceUtils.saveAppInt("postion", postion);
             case AD:
                 //ad.txt 基本信息
                 try {
@@ -403,8 +391,7 @@ public  class ConferenceDb {
                 }
                 listener.onMeetingStart(R.string.splash_speaker);
                 postion = CONFERENCE_MAP;
-                edit.putInt("postion", postion);
-                edit.commit();
+                SharePreferenceUtils.saveAppInt("postion", postion);
             case CONFERENCE_MAP:
                 //conferencesMap.txt 地图
                 try {
@@ -425,8 +412,7 @@ public  class ConferenceDb {
                 }
                 listener.onMeetingStart(R.string.splash_exhibitor);
                 postion = ROLE;
-                edit.putInt("postion", postion);
-                edit.commit();
+                SharePreferenceUtils.saveAppInt("postion", postion);
             case ROLE:
                 //TODO role.txt 身份表
                 try {
@@ -446,8 +432,7 @@ public  class ConferenceDb {
                 }
                 listener.onMeetingStart(R.string.splash_exhibitor);
                 postion = TIME;
-                edit.putInt("postion", postion);
-                edit.commit();
+                SharePreferenceUtils.saveAppInt("postion", postion);
             case TIME:
 
                 //TODO time.text 会议时间表
@@ -463,8 +448,7 @@ public  class ConferenceDb {
                     e.printStackTrace();
                 }
                 listener.onMeetingStart(R.string.splash_exhibitor);
-                edit.putInt("postion", postion);
-                edit.commit();
+                SharePreferenceUtils.saveAppInt("postion", postion);
         }
     }
 

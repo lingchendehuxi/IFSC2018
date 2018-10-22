@@ -42,7 +42,7 @@ public class ChooseFieldActivity extends BaseActivity {
     @OnClick(R.id.tv_confirm)
     void onConfirmClick() {
         if(mIsOKClickable) {
-            SharePreferenceUtils.setSPBooleanValue(Constants.MY_FIELDS,true);
+            SharePreferenceUtils.saveAppBoolean(Constants.MY_FIELDS,true);
             //AppApplication.setSPBooleanValue(Constants.MY_FIELDS, true);
             if(!mIsFromMe) {
                 startActivity(new Intent(ChooseFieldActivity.this, ChooseKeShiActivity.class));

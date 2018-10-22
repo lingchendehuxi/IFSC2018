@@ -95,10 +95,10 @@ public class MyTaskFragmentAdapter extends RecyclerView.Adapter<MyTaskFragmentAd
         alertbean.setStart(bean.getStart_time());
         alertbean.setTitle(bean.getActivityName());
         alertbean.setType(AlertBean.TYPE_SESSTION);
-        if(!SharePreferenceUtils.getSPBooleanValueF(String.valueOf(bean.getIsSessionOrMeeting()))){
+        if(!SharePreferenceUtils.getAppBooleanF(String.valueOf(bean.getIsSessionOrMeeting()))){
             AlarmUtils.addMeetingAlarm(mContext, alertbean);
         }
-        SharePreferenceUtils.setSPBooleanValue(String.valueOf(bean.getIsSessionOrMeeting()),true);
+        SharePreferenceUtils.saveAppBoolean(String.valueOf(bean.getIsSessionOrMeeting()),true);
 
     }
 

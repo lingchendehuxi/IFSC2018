@@ -124,7 +124,7 @@ public class MessageStationActionFragment extends BaseFragment {
                 mImgGR.setVisibility(View.VISIBLE);
                 mImgXT.setVisibility(View.GONE);
                 mImgGR_TS.setVisibility(View.GONE);
-                SharePreferenceUtils.setSPBooleanValue("messageToken",false);
+                SharePreferenceUtils.saveAppBoolean("messageToken",false);
                 getUserDatas();
             }
         });

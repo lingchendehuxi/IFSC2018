@@ -81,10 +81,10 @@ public class NextFragment extends BaseFragment {
         mTvRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                open = SharePreferenceUtils.getSPBooleanValueT("popup");
+                open = SharePreferenceUtils.getAppBooleanT("popup");
                 if(open){
                     if(mRoomPopupWindow == null) {
-                        SharePreferenceUtils.setSPBooleanValue("popup",false);
+                        SharePreferenceUtils.saveAppBoolean("popup",false);
                         mRoomPopupWindow = new ChooseRomPopupWindow(getActivity());
 
                         mRoomPopupWindow.setOnDismissListener(new BasePopupWindow.OnDismissListener() {
@@ -97,14 +97,14 @@ public class NextFragment extends BaseFragment {
                             }
                         });
                     }else{
-                        SharePreferenceUtils.setSPBooleanValue("popup",false);
+                        SharePreferenceUtils.saveAppBoolean("popup",false);
                     }
                     mRoomPopupWindow.showPopupWindowBelowView(mLlTimeRoom);
                 }else{
                     if(mRoomPopupWindow.getCurrentClass().size()==0){
                         ToastUtils.showLongToast("请选择至少一个会议室");
                     }else{
-                        SharePreferenceUtils.setSPBooleanValue("popup",true);
+                        SharePreferenceUtils.saveAppBoolean("popup",true);
                         mRoomPopupWindow.dismiss();
                     }
                 }
@@ -121,7 +121,7 @@ public class NextFragment extends BaseFragment {
     public void onStop() {
         super.onStop();
         look = false;
-        SharePreferenceUtils.setSPBooleanValue("popup",true);
+        SharePreferenceUtils.saveAppBoolean("popup",true);
         if(mRoomPopupWindow != null){
             mRoomPopupWindow.dismiss();
         }

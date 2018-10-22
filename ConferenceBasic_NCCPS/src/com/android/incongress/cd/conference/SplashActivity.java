@@ -29,7 +29,9 @@ import com.android.incongress.cd.conference.model.Class;
 import com.android.incongress.cd.conference.model.ConferenceDb;
 import com.android.incongress.cd.conference.model.ConferenceDbUtils;
 import com.android.incongress.cd.conference.model.Speaker;
+import com.android.incongress.cd.conference.save.SharePreferenceUtils;
 import com.android.incongress.cd.conference.services.DownloadService;
+import com.android.incongress.cd.conference.utils.JSONCatch;
 import com.android.incongress.cd.conference.widget.jumpbeans.JumpingBeans;
 import com.android.incongress.cd.conference.utils.BaseAsyncTask;
 import com.android.incongress.cd.conference.utils.FileUtils;
@@ -58,7 +60,7 @@ import cz.msebera.android.httpclient.Header;
 
 /**
  * 启动屏，进行数据更新和数据库建立
- *
+ * <p>
  * 开机首页，主要功能，第一次会解压一个文件，
  */
 public class SplashActivity extends BaseActivity {
@@ -72,7 +74,7 @@ public class SplashActivity extends BaseActivity {
     private static final int MSG_UPDATE_FOUND = 0x0008;
     private static final int MSG_DOWNLOADING_ZIP = 0x0009;
     protected static final int MSG_ERROR = 0x1002;
-    private static final int MSG_QUERY_SHENHE_END = 0X0010;
+
 
     private static final int CREATEDB_TRUE = 0;
     private static final int CREATEDB_FALSE = 1;
@@ -97,7 +99,6 @@ public class SplashActivity extends BaseActivity {
     private String filespath = null;// zip包解析的地址
     private List<VersionBean> zipList = null;// 数据包下载地址列表
 
-    private SharedPreferences preferences;
     private boolean updateing;
 
     private String appversion = AppApplication.instance().getVersionName();
@@ -129,12 +130,14 @@ public class SplashActivity extends BaseActivity {
                     mTv.setText(getString(R.string.splash_downloading, downloadPercent + "") + "%");
                     mPbh.setProgress(downloadPercent);
                     mPbh.setMax(100);
-                    if (curent < totalsize -1) {
+                    if (curent < totalsize - 1) {
                         UpdateZip(++curent);
                     } else {
                         handler.sendEmptyMessage(MSG_DOWNLOADED);
                         updateing = false;
-                        new Thread(new Runnable() {;
+                        new Thread(new Runnable() {
+                            ;
+
                             @Override
                             public void run() {
                                 ConferenceDb.createDB(filespath, CREATEDB_TRUE, mUpdateListener);
@@ -174,7 +177,7 @@ public class SplashActivity extends BaseActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             updateing = false;
-                            ConferenceDb.createDB(filespath, CREATEDB_FALSE,mUpdateListener);
+                            ConferenceDb.createDB(filespath, CREATEDB_FALSE, mUpdateListener);
                             handler.sendEmptyMessage(MSG_FINISH);
                         }
                     }, false);
@@ -198,7 +201,7 @@ public class SplashActivity extends BaseActivity {
                         public void onClick(DialogInterface dialog, int which) {
                             ToastUtils.showShorToast("新包正在后台下载，您可继续使用应用，稍后将自动安装...");
                             String strUrl = AppApplication.conBean.getUrl().replace("\n", "");
-                            Intent intent = new Intent(SplashActivity.this,DownloadService.class);
+                            Intent intent = new Intent(SplashActivity.this, DownloadService.class);
                             intent.putExtra("url", strUrl);
                             startService(intent);
 
@@ -241,15 +244,14 @@ public class SplashActivity extends BaseActivity {
         }
     };
     //根据网络情况检测更新
-    private String state = "-1";
-    private String mVersion = "1.0.0";
+    //private String state = "-1";
+    //private String mVersion = "1.0.0";
     private boolean start = false;
+
     //oncreat 中，开机显示界面后，检测数据库是否有更新
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        preferences = PreferenceManager.getDefaultSharedPreferences(this);
-
         path = AppApplication.instance().getSDPath() + Constants.DOWNLOADDIR;
         filespath = AppApplication.instance().getSDPath() + Constants.FILESDIR;
         mJumpBeans = JumpingBeans.with(mTvDots).appendJumpingDots().build();
@@ -265,59 +267,50 @@ public class SplashActivity extends BaseActivity {
             }
         };
 
-        final boolean  firstlocal= preferences.getBoolean(Constants.DB_frist, true);
-            if (AppApplication.instance().NetWorkIsOpen()) {
-                CHYHttpClientUsage.getInstanse().doQueryShenHe(AppApplication.conId + "", new JsonHttpResponseHandler() {
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                        super.onSuccess(statusCode, headers, response);
-                        try {
-                            start = true;
-                            state = response.getString("state");
-                            mVersion = response.getString("bbVersion");
-                            String homeFacultyState = response.getString("homeFacultyState");
-                            if (homeFacultyState.equals("1")) {
-                                Constants.IS_SECRETARY_SHOW = true;
-                            } else {
-                                Constants.IS_SECRETARY_SHOW = false;
-                            }
-                            mTv.setText(R.string.splash_checking);
-                            if (state.equals("1")) {
-                                if (appversion.equals(mVersion) && firstlocal) {
-                                    Editor editor = preferences.edit();
-                                    editor.putInt(Constants.PREFERENCE_DB_VERSION, 0);
-                                    editor.putBoolean(Constants.DB_frist, false);
-                                    editor.commit();
-                                }
-                                firstUpdateAndCheckNewInfo();
-                            } else {
-                                finishsplash();
-                            }
-                            handler.sendEmptyMessage(MSG_QUERY_SHENHE_END);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                        super.onFailure(statusCode, headers, responseString, throwable);
-                        if (statusCode != 200) {
-                            finishsplash();
+        final boolean firstlocal = SharePreferenceUtils.getAppBooleanT(Constants.DB_frist);
+        if (AppApplication.instance().NetWorkIsOpen()) {
+            //最开始先上传会议ID,返回会议状态
+            CHYHttpClientUsage.getInstanse().doQueryShenHe(AppApplication.conId + "", new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    super.onSuccess(statusCode, headers, response);
+                        start = true;
+                        if ("1".equals(JSONCatch.parseString("homeFacultyState",response))) {
+                            Constants.IS_SECRETARY_SHOW = true;
                         } else {
-                            if (!start) {
-                                finishsplash();
+                            Constants.IS_SECRETARY_SHOW = false;
+                        }
+                        mTv.setText(R.string.splash_checking);
+                        if ("1".equals(JSONCatch.parseString("state",response))) {
+                            if (appversion.equals(JSONCatch.parseString("bbVersion",response)) && firstlocal) {
+                                SharePreferenceUtils.saveAppInt(Constants.PREFERENCE_DB_VERSION,0);
+                                SharePreferenceUtils.saveAppBoolean(Constants.DB_frist,false);
                             }
+                            firstUpdateAndCheckNewInfo();
+                        } else {
+                            finishsplash();
+                        }
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    super.onFailure(statusCode, headers, responseString, throwable);
+                    if (statusCode != 200) {
+                        finishsplash();
+                    } else {
+                        if (!start) {
+                            finishsplash();
                         }
                     }
-                });
-            } else {
-                Toast.makeText(SplashActivity.this, R.string.nowifi, Toast.LENGTH_LONG).show();
-                Intent intent = new Intent();
-                intent.setClass(SplashActivity.this, HomeActivity.class);
-                startActivity(intent);
-                finish();
-            }
+                }
+            });
+        } else {
+            Toast.makeText(SplashActivity.this, R.string.nowifi, Toast.LENGTH_LONG).show();
+            Intent intent = new Intent();
+            intent.setClass(SplashActivity.this, HomeActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     private void data(int resId) {
@@ -361,16 +354,16 @@ public class SplashActivity extends BaseActivity {
         getWindow().setAttributes(attr);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
-        if(isNeedGuide == 0  || isNeedGuide == 1) {
-            startActivity(new Intent(SplashActivity.this,GuideAcitivity.class));
-        }else {
+        if (isNeedGuide == 0 || isNeedGuide == 1) {
+            startActivity(new Intent(SplashActivity.this, GuideAcitivity.class));
+        } else {
             Intent intent = new Intent();
             intent.setClass(SplashActivity.this, AdvertisesActivity.class);
             startActivity(intent);
         }
 
         finish();
-}
+    }
 
     private void UpdateZip(final int index) {
         String strUrl;
@@ -406,17 +399,15 @@ public class SplashActivity extends BaseActivity {
             }
 
             @Override
-            public void onSuccess(int statusCode, Header[] headers,final File file) {
-                new BaseAsyncTask(SplashActivity.this){
+            public void onSuccess(int statusCode, Header[] headers, final File file) {
+                new BaseAsyncTask(SplashActivity.this) {
                     @Override
                     protected void backgroundWork() {
                         FileInputStream zis;
                         try {
                             zis = new FileInputStream(file);
                             FileUtils.unZip(zis, filespath);
-                            Editor editor = preferences.edit();
-                            editor.putInt(Constants.PREFERENCE_DB_VERSION,response.getVersion());
-                            editor.commit();
+                            SharePreferenceUtils.saveAppInt(Constants.PREFERENCE_DB_VERSION, response.getVersion());
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();
                         }
@@ -431,7 +422,7 @@ public class SplashActivity extends BaseActivity {
                         if (zipList.size() > 1) {
                             handler.sendMessage(Message.obtain(handler, MSG_DOWNLOADING_ZIP, index, zipList.size()));
                         } else {
-                            new BaseAsyncTask(SplashActivity.this){
+                            new BaseAsyncTask(SplashActivity.this) {
 
                                 @Override
                                 protected void backgroundWork() {
@@ -471,9 +462,9 @@ public class SplashActivity extends BaseActivity {
      */
     public void firstUpdateAndCheckNewInfo() {
 
-        mDbVersion = preferences.getInt(Constants.PREFERENCE_DB_VERSION, 0);
+        mDbVersion = SharePreferenceUtils.getAppInt(Constants.PREFERENCE_DB_VERSION);
 
-        new BaseAsyncTask(SplashActivity.this){
+        new BaseAsyncTask(SplashActivity.this) {
             @Override
             protected void backgroundWork() {
                 if (mDbVersion == 0) {
@@ -481,15 +472,13 @@ public class SplashActivity extends BaseActivity {
                     InputStream zipIn = getResources().openRawResource(R.raw.data1);
                     FileUtils.unZip(zipIn, filespath);
                     ConferenceDb.createDB(filespath, 0, mUpdateListener);
-                    Editor editor = preferences.edit();
-                    editor.putInt(Constants.PREFERENCE_DB_VERSION, DATABASE_VERSION);
-                    editor.commit();
+                    SharePreferenceUtils.saveAppInt(Constants.PREFERENCE_DB_VERSION, DATABASE_VERSION);
                     mDbVersion = DATABASE_VERSION;
                 }
             }
 
             @Override
-                protected void preWork() {
+            protected void preWork() {
 
             }
 
@@ -497,10 +486,7 @@ public class SplashActivity extends BaseActivity {
             protected void postWork() {
                 int conId = AppApplication.conId;
                 int type = AppApplication.conType;
-
-
-                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(SplashActivity.this);
-                    String token = sp.getString("incongress_token", null);
+                String token = SharePreferenceUtils.getAppString("incongress_token");
 
                 //检查更新数据
                 CHYHttpClientUsage.getInstanse().doGetInitData(conId, mDbVersion, type, appversion, token, new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
@@ -518,12 +504,12 @@ public class SplashActivity extends BaseActivity {
                                 //有更新包
                                 handler.sendEmptyMessage(MSG_UPDATE_FOUND);
                             } else {
-                                int postion = getSharedPreferences("createDB", Context.MODE_PRIVATE).getInt("postion",-1);
-                                if( 12 != postion){
+                                int postion = getSharedPreferences("base_app", Context.MODE_PRIVATE).getInt("postion",-1);
+                                if (12 != postion) {
                                     //上次数据未解析完成
                                     ConferenceDb.createDB(filespath, postion, mUpdateListener);
                                     handler.sendEmptyMessage(MSG_FINISH);
-                                }else{
+                                } else {
                                     //既没有新的安装包也没有新的数据包并且上次内容解析完成，则进入首页
                                     handler.sendEmptyMessage(MSG_FINISH);
                                 }
@@ -548,6 +534,7 @@ public class SplashActivity extends BaseActivity {
                     }
                 });
             }
+
             @Override
             protected void cancelWork() {
             }

@@ -181,7 +181,7 @@ public class PosterFragment extends BaseFragment {
                     @Override
                     public void onAnimationEnd(Animation animation) {
                         mTvTips.setVisibility(View.GONE);
-                        SharePreferenceUtils.setSPBooleanValue(Constants.LOOK_POSTER_TIPS, true);
+                        SharePreferenceUtils.saveAppBoolean(Constants.LOOK_POSTER_TIPS, true);
                     }
 
                     @Override
@@ -193,7 +193,7 @@ public class PosterFragment extends BaseFragment {
             }
         });
 
-        if (SharePreferenceUtils.getSPBooleanValueF(Constants.LOOK_POSTER_TIPS)) {
+        if (SharePreferenceUtils.getAppBooleanF(Constants.LOOK_POSTER_TIPS)) {
             mTvTips.setVisibility(View.GONE);
         }
 
