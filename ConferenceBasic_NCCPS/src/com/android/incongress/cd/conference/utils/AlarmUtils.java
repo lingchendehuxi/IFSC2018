@@ -6,7 +6,10 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.SystemClock;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.android.incongress.cd.conference.AlarmActivity;
@@ -22,6 +25,7 @@ import org.litepal.crud.DataSupport;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -64,7 +68,7 @@ public class AlarmUtils {
             long time15 = 15*60*1000;
             if (System.currentTimeMillis() < date.getTime()) {
 
-                int isStartOrBack = 0;
+                int isStartOrBack ;
                 if(bean.getIsStartOrBack() == 1) {
                     isStartOrBack = 1;
                 }else {
@@ -75,11 +79,11 @@ public class AlarmUtils {
                 PendingIntent pi15 = PendingIntent.getActivity(context, bean.getBusInfoId() + 15 + isStartOrBack, intent, 0);
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                    alarmManager.setExact(AlarmManager.RTC, date.getTime() - time30, pi30);
-                    alarmManager.setExact(AlarmManager.RTC, date.getTime() - time15, pi15);
+                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, date.getTime() - time30, pi30);
+                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, date.getTime() - time15, pi15);
                 } else {
-                    alarmManager.set(AlarmManager.RTC,date.getTime() - time30, pi30);
-                    alarmManager.set(AlarmManager.RTC,date.getTime() - time15, pi15);
+                    alarmManager.set(AlarmManager.RTC_WAKEUP,date.getTime() - time30, pi30);
+                    alarmManager.set(AlarmManager.RTC_WAKEUP,date.getTime() - time15, pi15);
                 }
                 bean.save();
             }
@@ -229,5 +233,32 @@ public class AlarmUtils {
             }
         }
     }
+    /*private static void enableAlert(Context context, final Alert alarm,
+                                    final long atTimeInMillis) {
+        long time15 = 15*60*1000;
+        boolean enable = PreferenceManager.getDefaultSharedPreferences(context).getBoolean(KEY_ENABLE, true);
+        if (!enable) {
+            return;
+        }
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Service.ALARM_SERVICE);
 
+        Intent intent = new Intent(context, AlarmActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("object", alarm);
+        intent.putExtras(bundle);
+        PendingIntent sender = PendingIntent.getActivity(
+                AppApplication.getContext(), 0, intent, 0);
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, atTimeInMillis, sender);
+        } else {
+            alarmManager.set(AlarmManager.RTC_WAKEUP, atTimeInMillis, sender);
+        }
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(atTimeInMillis);
+        String timeString = CommonUtils.fortmatDate(c.getTime());
+        Log.d("cccc", "enableAlert is " + timeString);
+
+    }*/
 }

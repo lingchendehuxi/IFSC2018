@@ -10,6 +10,7 @@ import android.widget.ImageView;
 
 import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.BaseActivity;
+import com.android.incongress.cd.conference.utils.PicUtils;
 import com.bumptech.glide.Glide;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 
@@ -41,8 +42,7 @@ public class DialogActivity extends BaseActivity {
         lp.width= (int)(wm.getDefaultDisplay().getWidth()*0.6);
         lp.height = (int)(wm.getDefaultDisplay().getWidth()*0.6/3*4);
         imageView.setLayoutParams(lp);
-
-        Glide.with(DialogActivity.this).load(imgUrl).into(imageView);
+        PicUtils.loadImageUrl(DialogActivity.this,imgUrl,imageView);
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override

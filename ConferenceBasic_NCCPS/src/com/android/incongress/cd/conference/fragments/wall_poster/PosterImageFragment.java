@@ -16,6 +16,7 @@ import com.android.incongress.cd.conference.base.BaseActivity;
 import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.beans.DZBBBean;
 import com.android.incongress.cd.conference.model.ConferenceDbUtils;
+import com.android.incongress.cd.conference.utils.PicUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
 import com.android.incongress.cd.conference.widget.IncongressTextView;
 import com.bumptech.glide.Glide;
@@ -150,6 +151,7 @@ public class PosterImageFragment extends BaseActivity {
                 }
             }
         });
+        PicUtils.loadImageUrl(this,mPicUrl,mIvSmallPic);
 
         Glide.with(this).load(mPicUrl).placeholder(R.drawable.dzbb_defaultimage).into(mIvSmallPic);
         ivback.setOnClickListener(new OnClickListener() {

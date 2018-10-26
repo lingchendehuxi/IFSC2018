@@ -45,6 +45,7 @@ import com.android.incongress.cd.conference.fragments.search_speaker.SpeakerSear
 import com.android.incongress.cd.conference.fragments.wall_poster.PosterFragment;
 import com.android.incongress.cd.conference.model.Ad;
 import com.android.incongress.cd.conference.model.ConferenceDbUtils;
+import com.android.incongress.cd.conference.utils.PicUtils;
 import com.android.incongress.cd.conference.widget.zxing.activity.CaptureActivity;
 import com.android.incongress.cd.conference.utils.ArrayUtils;
 import com.android.incongress.cd.conference.utils.CommonUtils;
@@ -128,7 +129,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
         File fileTop = new File(pathTop);
         if (fileTop.exists()) {
-            Glide.with(getActivity()).load(new File(fileTop.getAbsolutePath())).into(mIvADTop);
+            PicUtils.loadImageFile(getContext(),new File(fileTop.getAbsolutePath()),mIvADTop);
         }
     }
 

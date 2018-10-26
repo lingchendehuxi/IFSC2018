@@ -1,16 +1,19 @@
 package com.android.incongress.cd.conference.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.litepal.crud.DataSupport;
 
 import java.io.Serializable;
 
 /**
  * Created by Jacky on 2016/7/25.
+ * 声明： Alert主要用于闹钟，idenId是闹钟唯一标识，relativeid是meeting和session的关联标识
+ * meeting 使用meetID,session使用classID 为唯一标识
  */
-public class Alert extends DataSupport implements Serializable{
-    private static final long serialVersionUID = -1572348995870574183L;
-
-    private String id;//提醒id
+public class Alert extends DataSupport {
+    private int id;//提醒id
     private String date;//提醒时间
     private String repeatdistance;//提醒间隔
     private String repeattimes;//提醒次数
@@ -22,12 +25,21 @@ public class Alert extends DataSupport implements Serializable{
     private String end;
     private String room;
     private long time;
+    private int idenId;
 
-    public String getId() {
+    public int getIdenId() {
+        return idenId;
+    }
+
+    public void setIdenId(int idenId) {
+        this.idenId = idenId;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

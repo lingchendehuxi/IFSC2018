@@ -41,6 +41,7 @@ import com.android.incongress.cd.conference.fragments.DynamicHomeFragment;
 import com.android.incongress.cd.conference.fragments.me.PersonCenterFragment;
 import com.android.incongress.cd.conference.save.SharePreferenceUtils;
 import com.android.incongress.cd.conference.utils.MyLogger;
+import com.android.incongress.cd.conference.utils.PicUtils;
 import com.android.incongress.cd.conference.utils.StringUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
 import com.bumptech.glide.Glide;
@@ -498,8 +499,8 @@ public class ScenicXiuFragment extends BaseFragment implements View.OnClickListe
                         if(urlSecond.contains("https:"))
                             urlSecond = urlSecond.replaceFirst("s","");
 
-                        Glide.with(getActivity()).load(urlFirst).placeholder(R.drawable.default_load_bg).into(mIvFirst);
-                        Glide.with(getActivity()).load(urlSecond).placeholder(R.drawable.default_load_bg).into(mIvSecond);
+                        PicUtils.loadImageUrl(getContext(),urlFirst,mIvFirst);
+                        PicUtils.loadImageUrl(getContext(),urlSecond,mIvSecond);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

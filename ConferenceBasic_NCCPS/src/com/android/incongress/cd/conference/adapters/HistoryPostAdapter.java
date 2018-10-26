@@ -24,6 +24,7 @@ import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.beans.ScenicXiuBean;
 import com.android.incongress.cd.conference.fragments.scenic_xiu.ScenicXiuFragment;
+import com.android.incongress.cd.conference.utils.PicUtils;
 import com.android.incongress.cd.conference.widget.ListViewForScrollView;
 import com.android.incongress.cd.conference.widget.NoScrollGridView;
 import com.android.incongress.cd.conference.utils.CommentUtils;
@@ -143,7 +144,7 @@ public class HistoryPostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
             if (!bean.getImgUrls().equals(((ViewHolder1News) holder).ivShow.getTag())) {
                 ((ViewHolder1News) holder).ivShow.setTag(bean.getImgUrls());
-                Glide.with(mContext).load(bean.getImgUrls()).into(((ViewHolder1News)holder).ivShow);
+                PicUtils.loadImageUrl(mContext,bean.getImgUrls(),((ViewHolder1News)holder).ivShow);
             }
 
             ((ViewHolder1News) holder).tvContent.setText(bean.getTitle());
@@ -155,7 +156,7 @@ public class HistoryPostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             ((ViewHolder2Notifacation) holder).tvPublishTime.setText(bean.getTimeShow());
             if (!bean.getImgUrls().equals(((ViewHolder2Notifacation) holder).ivShow.getTag())) {
                 ((ViewHolder2Notifacation) holder).ivShow.setTag(bean.getImgUrls());
-                Glide.with(mContext).load(bean.getImgUrls()).into(((ViewHolder2Notifacation)holder).ivShow);
+                PicUtils.loadImageUrl(mContext,bean.getImgUrls(),((ViewHolder2Notifacation)holder).ivShow);
             }
             ((ViewHolder2Notifacation) holder).tvContent.setText(bean.getTitle());
         }
@@ -179,7 +180,7 @@ public class HistoryPostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             if (StringUtils.isEmpty(bean.getAuthorImg())) {
                 ((ViewHolder4MakePost) holder).civPublisherIcon.setImageResource(R.drawable.professor_default);
             } else {
-                Glide.with(mContext).load(bean.getImgUrls()).into(((ViewHolder4MakePost)holder).civPublisherIcon);
+                PicUtils.loadImageUrl(mContext,bean.getImgUrls(),((ViewHolder4MakePost)holder).civPublisherIcon);
             }
 
             String content = "";

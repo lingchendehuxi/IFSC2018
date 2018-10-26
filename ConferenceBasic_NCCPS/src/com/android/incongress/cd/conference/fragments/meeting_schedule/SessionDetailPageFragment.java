@@ -8,6 +8,7 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ import com.android.incongress.cd.conference.fragments.question.MakeQuestionFragm
 import com.android.incongress.cd.conference.fragments.search_speaker.SpeakerDetailFragment;
 import com.android.incongress.cd.conference.model.Alert;
 import com.android.incongress.cd.conference.model.Class;
+import com.android.incongress.cd.conference.model.ConferenceDb;
 import com.android.incongress.cd.conference.model.ConferenceDbUtils;
 import com.android.incongress.cd.conference.model.Meeting;
 import com.android.incongress.cd.conference.model.Role;
@@ -210,10 +212,8 @@ public class SessionDetailPageFragment extends BaseFragment {
 
                         //取消Session的关注,如果有闹钟则移除闹钟
                         ConferenceDbUtils.addAttentionToSession(mSessionBean.getSessionGroupId(), Constants.NOATTENTION);
-                        Alert alertForSession = ConferenceDbUtils.getAlertByAlertId(mSessionBean.getSessionGroupId());
-                        if (alertForSession != null) {
-                            ConferenceDbUtils.deleteAlert(alertForSession);
-                        }
+                        unEnableSessionClick();
+                        Log.d("sgqTest", "onClick: 删除session闹钟");
 
                         //取消meeting的关注
                         for (int i = 0; i < mMeetingWithSpeakerAdapter.getMeetingBeanList().size(); i++) {
@@ -235,23 +235,8 @@ public class SessionDetailPageFragment extends BaseFragment {
                         //关注该session，包括下属所有Meeting,添加闹钟
                         ConferenceDbUtils.addAttentionToSession(mSessionBean.getSessionGroupId(), Constants.ATTENTION);
 
-                        Alert alertbean = new Alert();
-                        alertbean.setDate(mSessionBean.getSessionDay());
-                        alertbean.setEnable(1);
-                        alertbean.setEnd(mSessionBean.getEndTime());
-                        alertbean.setRelativeid(String.valueOf(mSessionBean.getSessionGroupId()));
-                        alertbean.setRepeatdistance("5");
-                        alertbean.setRepeattimes("0");
-                        alertbean.setRoom(mClassBean.getClassesCode());
-                        alertbean.setStart(mSessionBean.getStartTime());
-                        alertbean.setTitle(mSessionBean.getSessionName() + "#@#" + mSessionBean.getSessionNameEN());
-                        alertbean.setType(AlertBean.TYPE_SESSTION);
-
-                        ConferenceDbUtils.addAlert(alertbean);
-
-                        Alert bean = ConferenceDbUtils.getAlertByAlertId(mSessionBean.getSessionGroupId());
-                        if (bean != null)
-                            AlermClock.addClock(bean);
+                        enableSessionClick();
+                        Log.d("sgqTest", "onClick: 添加session闹钟");
 
                         //设置meeting的关注
                         for (int i = 0; i < mMeetingWithSpeakerAdapter.getMeetingBeanList().size(); i++) {
@@ -407,7 +392,7 @@ public class SessionDetailPageFragment extends BaseFragment {
 
 
 
-            mMeetingWithSpeakerAdapter = new MeetingWithSpeakerAdapter(getActivity(), mMeetingBeanList, mAllSpeakers, new MeetingWithSpeakerAdapter.OnTagListener() {
+            mMeetingWithSpeakerAdapter = new MeetingWithSpeakerAdapter(getActivity(),mClassBean.getClassesCode(), mMeetingBeanList, mAllSpeakers, new MeetingWithSpeakerAdapter.OnTagListener() {
                 @Override
                 public void tagListener(Speaker bean) {
                     if (!mIsAlarmMode) {
@@ -424,9 +409,19 @@ public class SessionDetailPageFragment extends BaseFragment {
                     if (sessionAlarmToggle) {
                         mIvSessionAlarm.setImageResource(R.drawable.sessiondetail_alarmon);
                         mSessionBean.setAttention(Constants.ATTENTION);
+                        ConferenceDbUtils.deleteAllMeetAlert(mSessionBean.getSessionGroupId());
+                        Log.d("sgqTest", "doWhenMeetingAlarmClicked: 删除和session有关的meeting闹钟");
+                        enableSessionClick();
+                        Log.d("sgqTest", "doWhenMeetingAlarmClicked: 添加session闹钟");
+
                     } else {
                         mIvSessionAlarm.setImageResource(R.drawable.sessiondetail_alarmoff);
                         mSessionBean.setAttention(Constants.NOATTENTION);
+                        Alert alert = ConferenceDbUtils.getAlertByAlertId(mSessionBean.getClassesId());
+                        if(alert!= null){
+                            Log.d("sgqTest", "doWhenMeetingAlarmClicked: 删除session闹钟");
+                            ConferenceDbUtils.deleteAlert(alert);
+                        }
                     }
                 }
             }, new MeetingWithSpeakerAdapter.MeetingQuestionListener() {
@@ -631,6 +626,34 @@ public class SessionDetailPageFragment extends BaseFragment {
                     SharePreferenceUtils.saveAppString(Constants.GUIDE_SESSION, "1");
                 }
             });
+        }
+    }
+    //调用session订闹钟
+    private void enableSessionClick(){
+        Alert alertbean = new Alert();
+        alertbean.setDate(mSessionBean.getSessionDay());
+        alertbean.setEnable(1);
+        alertbean.setEnd(mSessionBean.getEndTime());
+        alertbean.setRelativeid(String.valueOf(mSessionBean.getSessionGroupId()));
+        alertbean.setRepeatdistance("5");
+        alertbean.setRepeattimes("0");
+        alertbean.setIdenId(mSessionBean.getClassesId());
+        alertbean.setRoom(mClassBean.getClassesCode());
+        alertbean.setStart(mSessionBean.getStartTime());
+        alertbean.setTitle(mSessionBean.getSessionName() + "#@#" + mSessionBean.getSessionNameEN());
+        alertbean.setType(AlertBean.TYPE_SESSTION);
+
+        ConferenceDbUtils.addAlert(alertbean);
+
+        Alert bean = ConferenceDbUtils.getAlertByAlertId(mSessionBean.getClassesId());
+        if (bean != null)
+            AlermClock.addClock(bean);
+    }
+    //取消用session订闹钟
+    private void unEnableSessionClick(){
+        Alert alertForSession = ConferenceDbUtils.getAlertByAlertId(mSessionBean.getClassesId());
+        if (alertForSession != null) {
+            ConferenceDbUtils.deleteAlert(alertForSession);
         }
     }
 }

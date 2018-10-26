@@ -233,6 +233,38 @@ public class ConferenceDbUtils {
         }
         return sessions;
     }
+    //根据标题查找对应的Session和meeting 并返回Alert对象
+    public static void getAlertByTitle(Alert alertBean) {
+        Log.d("sgqTest", "getAlertByTitle: 更新会议闹钟");
+        List<Session> sessions;
+        List<Meeting> meetings;
+        sessions = DataSupport.where("sessionName = ?", alertBean.getTitle()).find(Session.class);
+        meetings = DataSupport.where("topic = ?", alertBean.getTitle()).find(Meeting.class);
+        if(sessions!=null && sessions.size()>0){
+            Session session = sessions.get(0);
+            alertBean.setDate(session.getSessionDay());
+            alertBean.setEnd(session.getEndTime());
+            alertBean.setRelativeid(String.valueOf(session.getSessionGroupId()));
+            alertBean.setIdenId(session.getClassesId());
+            alertBean.setStart(session.getStartTime());
+            alertBean.setTitle(session.getSessionName() + "#@#" + session.getSessionNameEN());
+            alertBean.setType(AlertBean.TYPE_SESSTION);
+            alertBean.save();
+        } else if(meetings!=null && meetings.size()>0){
+            Meeting meeting = meetings.get(0);
+            alertBean.setDate(meeting.getMeetingDay());
+            alertBean.setEnd(meeting.getEndTime());
+            alertBean.setRelativeid(String.valueOf(meeting.getSessionGroupId()));
+            alertBean.setIdenId(meeting.getMeetingId());
+            alertBean.setStart(meeting.getStartTime());
+            alertBean.setTitle(meeting.getTopic() + "#@#" + meeting.getTopicEn());
+            alertBean.setType(AlertBean.TYPE_MEETING);
+            alertBean.save();
+        }else {
+            //如果更新去掉了，就删除这个对象
+            alertBean.delete();
+        }
+    }
 
     /**
      * 获取所有的session数据
@@ -726,15 +758,27 @@ public class ConferenceDbUtils {
     public static List<Alert> getAllAlert() {
         return DataSupport.findAll(Alert.class);
     }
+    /**
+     * 删除所有和session有关的meeting的闹铃 alert
+     * @return
+     */
+    public static void deleteAllMeetAlert(int relativeid) {
+        List<Alert> alerts = DataSupport.where("relativeid = ?", relativeid + "").find(Alert.class);
+        if(alerts!=null){
+            for(Alert alert:alerts){
+                alert.delete();
+            }
+        }
+    }
 
     /**
-     * 根据sessionId获取闹铃
+     * 根据sessionId获取闹铃  这里统一定义Alert
      * @return
      */
     public static Alert getAlertByAlertId(int alertId) {
         List<Alert> alerts = null;
         try {
-            alerts = DataSupport.where("relativeid = ?", alertId + "").find(Alert.class);
+            alerts = DataSupport.where("idenId = ?", alertId + "").find(Alert.class);
         }catch (Exception e) {
             e.printStackTrace();
             alerts = new ArrayList<>();
@@ -754,7 +798,6 @@ public class ConferenceDbUtils {
     public static int deleteAlert(Alert alert) {
         return alert.delete();
     }
-
 
     /**
      * 添加点赞壁报

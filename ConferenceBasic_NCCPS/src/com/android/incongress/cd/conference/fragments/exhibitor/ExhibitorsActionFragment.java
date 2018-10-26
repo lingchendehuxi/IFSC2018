@@ -24,6 +24,8 @@ import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.beans.PhotoTypeBean;
 import com.android.incongress.cd.conference.fragments.meeting_guide.MeetingGuideRoomMapFragment;
 import com.android.incongress.cd.conference.model.Exhibitor;
+import com.android.incongress.cd.conference.utils.JSONCatch;
+import com.android.incongress.cd.conference.utils.PicUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
 import com.android.incongress.cd.conference.utils.transformer.CircleTransform;
 import com.bumptech.glide.Glide;
@@ -47,10 +49,10 @@ public class ExhibitorsActionFragment extends BaseFragment {
     private ListView mListView;
     private ExhibitorListAdapter mAdapter;
     private TextView mNoDataView;
-    private LinearLayout mLayout,mSessionLayout,mZWTLayout,mSFLayout;
-    private TextView mSessioncn ,mSessionen ,mZWTcn,mZWTen;
-    private ImageView mSessionimg ,mZWTimg;
-    private String sessionUrl,zwtUrls,sessionCn;
+    private LinearLayout mLayout, mSessionLayout, mZWTLayout, mSFLayout;
+    private TextView mSessioncn, mSessionen, mZWTcn, mZWTen;
+    private ImageView mSessionimg, mZWTimg;
+    private String sessionUrl, zwtUrls, sessionCn;
 
     public ExhibitorsActionFragment() {
     }
@@ -97,7 +99,7 @@ public class ExhibitorsActionFragment extends BaseFragment {
                 Exhibitor mBean = (Exhibitor) mAdapter.getItem(position);
                 ExhibitorDetailActionFragment fragment = new ExhibitorDetailActionFragment();
                 fragment.setExhibitor(mBean);
-                action(fragment, R.string.exhibitor_detail_title, false, false,false);
+                action(fragment, R.string.exhibitor_detail_title, false, false, false);
             }
 
         });
@@ -105,7 +107,7 @@ public class ExhibitorsActionFragment extends BaseFragment {
         mSessionLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WebViewContainerActivity.startWebViewContainerActivity(getActivity(), sessionUrl + "&userId=" + AppApplication.userId + "&lan=" + AppApplication.getSystemLanuageCode(),sessionCn);
+                WebViewContainerActivity.startWebViewContainerActivity(getActivity(), sessionUrl + "&userId=" + AppApplication.userId + "&lan=" + AppApplication.getSystemLanuageCode(), sessionCn);
             }
         });
         mZWTLayout.setOnClickListener(new View.OnClickListener() {
@@ -119,34 +121,29 @@ public class ExhibitorsActionFragment extends BaseFragment {
     }
 
     private void getData() {
-        CHYHttpClientUsage.getInstanse().doGetCzs(AppApplication.conId+"", new JsonHttpResponseHandler("gbk"){
+        CHYHttpClientUsage.getInstanse().doGetCzs(AppApplication.conId + "", new JsonHttpResponseHandler("gbk") {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 Log.i("photoAlbum", response.toString());
-                try {
-                    sessionUrl = response.getString("sessionUrl");
-                    if(sessionUrl.equals("")){
-                        mSFLayout.setVisibility(View.GONE);
-                    }else{
-                        mSFLayout.setVisibility(View.VISIBLE);
-                        mNoDataView.setVisibility(View.GONE);
-                        zwtUrls = response.getString("zwtUrls");
-                        if(zwtUrls.equals("")){
-                            mZWTLayout.setVisibility(View.GONE);
-                        }else{
-                            mZWTLayout.setVisibility(View.VISIBLE);
-                        }
-                        sessionCn = response.getString("sessionCn");
-                        Glide.with(getActivity()).load(response.getString("sessionLogoUrl")).into(mSessionimg);
-                        Glide.with(getActivity()).load(response.getString("zwtLogoUrl")).into(mZWTimg);
-                        mSessioncn.setText(sessionCn);
-                        mSessionen.setText(response.getString("sessionEn"));
-                        mZWTcn.setText( response.getString("zwtCn"));
-                        mZWTen.setText(response.getString("zwtEn"));
+                sessionUrl = JSONCatch.parseString("sessionUrl", response);
+                if (sessionUrl.equals("")) {
+                    mSFLayout.setVisibility(View.GONE);
+                } else {
+                    mSFLayout.setVisibility(View.VISIBLE);
+                    mNoDataView.setVisibility(View.GONE);
+                    zwtUrls = JSONCatch.parseString("zwtUrls", response);
+                    if (zwtUrls.equals("")) {
+                        mZWTLayout.setVisibility(View.GONE);
+                    } else {
+                        mZWTLayout.setVisibility(View.VISIBLE);
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    sessionCn = JSONCatch.parseString("sessionCn", response);
+                    PicUtils.loadImageUrl(getContext(), JSONCatch.parseString("zwtLogoUrl", response), mZWTimg);
+                    mSessioncn.setText(sessionCn);
+                    mSessionen.setText(JSONCatch.parseString("sessionEn", response));
+                    mZWTcn.setText(JSONCatch.parseString("zwtCn", response));
+                    mZWTen.setText(JSONCatch.parseString("zwtEn", response));
                 }
             }
         });

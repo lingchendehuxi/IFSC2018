@@ -142,18 +142,16 @@
                 <action android:name="android.intent.action.LOCALE_CHANGED" />
             </intent-filter>
         </receiver>
-        <receiver android:name="com.android.incongress.cd.conference.utils.AlarmReceiver">
+        <receiver android:name="com.android.incongress.cd.conference.utils.AlarmReceiver"
+            android:process=":remote">
             <intent-filter>
                 <action android:name="com.android.incongress.cd.conference.alarm_start" />
                 <action android:name="alarm_killed" />
                 <action android:name="cancel_snooze" />
             </intent-filter>
-        </receiver>
+        </receiver >
 
         <service android:name="com.android.incongress.cd.conference.utils.AlarmKlaxon">
-            <intent-filter>
-                <action android:name="com.android.incongress.cd.conference.alarm_start" />
-            </intent-filter>
         </service>
         <service android:name="com.android.incongress.cd.conference.services.AdService" />
 

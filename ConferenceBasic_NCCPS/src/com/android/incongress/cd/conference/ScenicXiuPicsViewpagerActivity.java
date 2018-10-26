@@ -105,7 +105,7 @@ public class ScenicXiuPicsViewpagerActivity extends Activity {
             if(url.contains("https:")) {
                 url = url.replaceFirst("s","");
             }
-            Glide.with(ScenicXiuPicsViewpagerActivity.this).load(url).listener(new RequestListener<String, GlideDrawable>() {
+            Glide.with(ScenicXiuPicsViewpagerActivity.this).load(url).error(R.drawable.img_error).fallback(R.drawable.default_load_bg).listener(new RequestListener<String, GlideDrawable>() {
                 @Override
                 public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
                     return false;

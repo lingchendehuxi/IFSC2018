@@ -16,20 +16,42 @@
 
 package com.android.incongress.cd.conference.utils;
 
+import com.android.incongress.cd.conference.AlarmActivity;
+import com.android.incongress.cd.conference.HomeActivity;
+import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.beans.AlertBean;
+import com.android.incongress.cd.conference.model.Alert;
+import com.mobile.incongress.cd.conference.basic.csccm.R;
 
+import android.app.AlertDialog;
 import android.app.KeyguardManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.BroadcastReceiver;
+import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.PixelFormat;
 import android.os.Parcel;
 import android.os.PowerManager;
+import android.os.Vibrator;
+import android.preference.PreferenceManager;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import java.util.Locale;
 
 /**
  * Glue class: connects AlarmAlert IntentReceiver to AlarmAlert
@@ -37,59 +59,44 @@ import android.util.Log;
  */
 public class AlarmReceiver extends BroadcastReceiver {
 
-    /** If the alarm is older than STALE_WINDOW, ignore.  It
-        is probably the result of a time or timezone change */
-    private final static int STALE_WINDOW = 30 * 60 * 1000;
-    private static PowerManager.WakeLock sCpuWakeLock;
+    private Vibrator vibrator;
 
     @Override
-    public void onReceive(Context context, Intent intent) {
-        AlertBean alarm = null;
-        alarm = (AlertBean) intent.getSerializableExtra("object");
-        if (alarm == null) {
-            return;
-        }
+    public void onReceive(final Context context, Intent intent) {
+        Log.d("sgqTest", "onReceive: 收到了");
+        vibrator = (Vibrator) AppApplication.getContext().getSystemService(Context.VIBRATOR_SERVICE);
+        long[] pattern = {100, 400, 100, 400};   // 停止 开启 停止 开启
+        vibrator.vibrate(pattern, 1);           //重复两次上面的pattern 如果只想震动一次，index设为-1
+        int type = intent.getIntExtra("type", 1);
+        Log.d("sgqTest", "onReceive: type"+type);
+        switch (type) {
+            case 5:
+                String date = intent.getStringExtra("date");
+                String newString = intent.getStringExtra("title");
+                if (newString.contains("#@#")) {
+                    newString = newString.replace("#@#", "");
+                }
+                String start = intent.getStringExtra("start");
+                String end = intent.getStringExtra("end");
+                String room = intent.getStringExtra("room");
+                new AlertDialog.Builder(AppApplication.getContext()).setCancelable(false).setTitle("议程提醒")
+                        .setMessage(AppApplication.getContext().getResources().getString(R.string.reminder_meet_tips,date,newString, start, end, room))
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
 
-        // Disable the snooze alert if this alarm is the snooze.
-        long now = System.currentTimeMillis();
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
 
-        // Always verbose to track down time change problems.
-        if (now > alarm.getTime() + STALE_WINDOW) {
-            return;
-        }
-
-        // Maintain a cpu wake lock until the AlarmAlert and AlarmKlaxon can
-        // pick it up.
-       acquireCpuWakeLock(context);
-
-        /* Close dialogs and window shade */
-        Intent closeDialogs = new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
-        context.sendBroadcast(closeDialogs);
-
-        // Play the alarm alert and vibrate the device.
-        Intent playAlarm = new Intent(AlermClock.INTENT_ALERT);
-        playAlarm.setPackage(context.getPackageName());//这里你需要设置你应用的包名
-        playAlarm.putExtra("object", alarm);
-        context.startService(playAlarm);
-    }
-    static void acquireCpuWakeLock(Context context) {
-        if (sCpuWakeLock != null) {
-            return;
-        }
-
-        PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-
-        sCpuWakeLock = pm.newWakeLock(
-                PowerManager.PARTIAL_WAKE_LOCK |
-                PowerManager.ACQUIRE_CAUSES_WAKEUP |
-                PowerManager.ON_AFTER_RELEASE, "AlarmClock");
-        sCpuWakeLock.acquire();
-    }
-
-    static void releaseCpuLock() {
-        if (sCpuWakeLock != null) {
-            sCpuWakeLock.release();
-            sCpuWakeLock = null;
+                                //停止音乐
+                                //alarmMusic.stop();
+                                vibrator.cancel();
+                                dialog.dismiss();
+                                Intent intent = new Intent();
+                                intent.setClass(context, HomeActivity.class);
+                                context.startActivity(intent);
+                            }
+                        }).show();
+                break;
         }
     }
+
 }

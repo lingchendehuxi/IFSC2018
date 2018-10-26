@@ -20,6 +20,7 @@ import com.android.incongress.cd.conference.newf.ChooseConferenceFragment;
 import com.android.incongress.cd.conference.utils.BaseAsyncTask;
 import com.android.incongress.cd.conference.utils.FileUtils;
 import com.android.incongress.cd.conference.utils.LogUtils;
+import com.android.incongress.cd.conference.utils.PicUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -201,9 +202,9 @@ public class ConferencedDownloadDetailActivity extends BaseActivity {
             ConferenceDbUtils.addConferenceDataVersion(mConferenceId, 0);
             mCurrentDataVersion = 0;
         }
+        PicUtils.loadImageUrl(this,mEsmoBean.getBackgroundUrl(),mIvTopLogo);
+        PicUtils.loadImageUrl(this,mEsmoBean.getIconUrl(),mIvLogo);
 
-        Glide.with(ConferencedDownloadDetailActivity.this).load(mEsmoBean.getBackgroundUrl()).placeholder(R.drawable.default_load_bg).into(mIvTopLogo);
-        Glide.with(ConferencedDownloadDetailActivity.this).load(mEsmoBean.getIconUrl()).placeholder(R.drawable.default_load_bg).into(mIvLogo);
         mTvTime.setText(mEsmoBean.getConferencesDays());
         mTvLocation.setText(mEsmoBean.getConferencesAddress());
 

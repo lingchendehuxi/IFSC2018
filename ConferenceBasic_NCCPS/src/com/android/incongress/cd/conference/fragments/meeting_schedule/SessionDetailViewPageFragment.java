@@ -64,7 +64,7 @@ public class SessionDetailViewPageFragment extends BaseFragment {
     public SessionDetailViewPageFragment() {
     }
 
-    private List<Session> mSessionBeanList;
+    private List<Session> mSessionBeanList = new ArrayList<>();
 
     //分享记笔记弹窗
     private PopupWindow mShareNotePopup;

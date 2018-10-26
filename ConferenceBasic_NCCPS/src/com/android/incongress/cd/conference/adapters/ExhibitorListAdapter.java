@@ -12,6 +12,7 @@ import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.model.ConferenceDbUtils;
 import com.android.incongress.cd.conference.model.Exhibitor;
+import com.android.incongress.cd.conference.utils.PicUtils;
 import com.bumptech.glide.Glide;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 
@@ -63,7 +64,7 @@ public class ExhibitorListAdapter extends BaseAdapter {
         if (bean.getLogo() == null || bean.getLogo().equals("")) {
             holder.logoView.setImageResource(R.drawable.default_load_bg);
         } else {
-            Glide.with(mContext).load(Constants.getPreUrl() + bean.getLogo()).into(holder.logoView);
+            PicUtils.loadImageUrl(mContext,Constants.getPreUrl()+bean.getLogo(),holder.logoView);
         }
 
         if (AppApplication.systemLanguage == 1) {

@@ -154,6 +154,7 @@ public class MeetingAndSessionAttentionPopupWindow extends PopupWindow {
         alertbean.setEnable(1);
         alertbean.setEnd(bean.getEndTime());
         alertbean.setRelativeid(String.valueOf(bean.getSessionGroupId()));
+        alertbean.setIdenId(bean.getClassesId());
         alertbean.setRepeatdistance("5");
         alertbean.setRepeattimes("0");
         alertbean.setRoom(mClassBean.getClassesCode());
@@ -162,7 +163,7 @@ public class MeetingAndSessionAttentionPopupWindow extends PopupWindow {
         alertbean.setType(AlertBean.TYPE_SESSTION);
 
         ConferenceDbUtils.addAlert(alertbean);
-        Alert alertBean = ConferenceDbUtils.getAlertByAlertId(bean.getSessionGroupId());
+        Alert alertBean = ConferenceDbUtils.getAlertByAlertId(bean.getClassesId());
 
         if (bean != null)
             AlermClock.addClock(alertBean);
@@ -170,7 +171,7 @@ public class MeetingAndSessionAttentionPopupWindow extends PopupWindow {
 
     private void deleteSessionAlert(SessionBean bean) {
         ConferenceDbUtils.addAttentionToSession(bean.getSessionGroupId(), Constants.NOATTENTION);
-        Alert alertBean = ConferenceDbUtils.getAlertByAlertId(bean.getSessionGroupId());
+        Alert alertBean = ConferenceDbUtils.getAlertByAlertId(bean.getClassesId());
         if(bean!=null) {
             AlermClock.disableClock(alertBean);
 //            AlarmUtils.

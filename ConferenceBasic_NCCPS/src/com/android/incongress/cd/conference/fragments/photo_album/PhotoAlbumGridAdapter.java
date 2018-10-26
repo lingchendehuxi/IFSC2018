@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.android.incongress.cd.conference.LoginActivity;
 import com.android.incongress.cd.conference.api.CHYHttpClientUsage;
 import com.android.incongress.cd.conference.base.AppApplication;
+import com.android.incongress.cd.conference.utils.PicUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -77,7 +78,7 @@ public class PhotoAlbumGridAdapter extends BaseAdapter {
         if(url.contains("https:")) {
             url = url.replaceFirst("s","");
         }
-        Glide.with(mContext).load(url).placeholder(R.drawable.default_load_bg).into(holder.ivPhoto);
+        PicUtils.loadImageUrl(mContext,url,holder.ivPhoto);
         holder.tvLaudCount.setText(photoWallArrayBean.getLaudCount()+"");
 
         if(photoWallArrayBean.getIsLaud() == 1) {

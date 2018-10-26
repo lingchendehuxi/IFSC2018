@@ -1,12 +1,18 @@
 package com.android.incongress.cd.conference.utils;
 
+import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.support.v4.graphics.drawable.DrawableCompat;
+import android.view.View;
 import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
+import com.mobile.incongress.cd.conference.basic.csccm.R;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -80,6 +86,14 @@ public class PicUtils {
         ColorStateList colorStateList = ColorStateList.valueOf(view.getResources().getColor(colorResId));
         DrawableCompat.setTintList(temp, colorStateList);
         view.setImageDrawable(temp);
+    }
+    //使用glide简单加载url图片
+    public static void loadImageUrl(Context context, String url, ImageView view){
+        Glide.with(context).load(url).error(R.drawable.img_error).placeholder(R.drawable.default_load_bg).into(view);
+    }
+    //使用glide简单加载file图片
+    public static void loadImageFile(Context context, File file, ImageView view){
+        Glide.with(context).load(file).error(R.drawable.img_error).placeholder(R.drawable.default_load_bg).into(view);
     }
 
 }

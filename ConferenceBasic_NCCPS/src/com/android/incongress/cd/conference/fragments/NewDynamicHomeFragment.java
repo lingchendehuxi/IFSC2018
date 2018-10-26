@@ -90,7 +90,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -120,6 +122,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
     //我的专家秘书
     private TextView mTvSecretaryTime, mTvSecretaryRoom, mTvSecretaryTask, mTvSecretarySessionName;
     private LinearLayout mSecretaryView,courseware_text;
+    private Map<String,String> textUrlMap = new HashMap<>();
 
     private static final int PROGRAM = 1; //看日程
     private static final int SEARCH = 2;    //查日程
@@ -148,8 +151,6 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
     private static final int HANDLER_NUMS = 0x0001;
 
 
-
-
     private class AdReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -175,7 +176,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
     private void setAdImageView(String filepath, ImageView imageview) {
         File file = new File(filepath);
         if (file != null) {
-            Glide.with(getActivity()).load(file).into(imageview);
+            PicUtils.loadImageFile(getActivity(),file,imageview);
             int width = getActivity().getWindowManager().getDefaultDisplay().getWidth();
             ViewGroup.LayoutParams lp=imageview.getLayoutParams();
             lp.height= (int) (width*0.17);
@@ -223,7 +224,12 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
                  try {
                      if(response.length()>0){
                          for(int i = 0 ; i<response.length();i++){
+                             String s = response.getJSONObject(i).toString();
                              String text = response.getJSONObject(i).getString("title");
+                             if(s.contains("link")){
+                                 String textUrl = response.getJSONObject(i).getString("link");
+                                 textUrlMap.put(text,textUrl);
+                             }
                              textList.add(text);
                              mMarqueeView.addView(getTextViewTitle(text));
                          }
@@ -299,7 +305,16 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
          mMarqueeView.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
-                 Log.e("GYW",mMarqueeView.getDisplayedChild()+"");
+                 String title =  textList.get(mMarqueeView.getDisplayedChild());
+                 String url = textUrlMap.get(title);
+                 if(url != null){
+                     if(url.contains("?")) {
+                         url = url + "&userId=" + AppApplication.userId + "&userType=" + AppApplication.userType + "&lan=" + AppApplication.getSystemLanuageCode()+"&fromWhere="+ Constants.PROJECT_NAME;
+                     }else {
+                         url = url + "?userId=" + AppApplication.userId + "&userType=" + AppApplication.userType + "&lan=" + AppApplication.getSystemLanuageCode()+"&fromWhere="+ Constants.PROJECT_NAME;
+                     }
+                     CollegeActivity.startCitCollegeActivity(getActivity(), title, url);
+                 }
              }
          });
          mCourSewareAdapter = new CourSewareAdapter(coursewareBeanList,getActivity(),getActivity().getWindowManager().getDefaultDisplay().getWidth()/2);
@@ -478,7 +493,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
                 //设置首页上方广告
                 if (bean.getObj().size() == 1 && bean.getObj().get(0).getIconCode().equals(17 + "")) {
                     final Row.RowsBean.ObjBean picBean = bean.getObj().get(0);
-                    Glide.with(getActivity()).load(picBean.getIconUrl()).placeholder(R.drawable.default_load_bg).into(mTopADImg);
+                    PicUtils.loadImageUrl(getActivity(),picBean.getIconUrl(),mTopADImg);
                     mTopADImg.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -589,7 +604,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
                     ivLogo.setImageResource(iconDefaultId);
                     //ivLogo.setImageDrawable(ImageColorChangeUtils.changeIconColor(getActivity(), iconDefaultId, Color.parseColor(bean.getIconFontColor())));
                 } else {
-                    Glide.with(getActivity()).load(bean.getIconUrl()).placeholder(R.drawable.default_load_bg).into(ivLogo);
+                    PicUtils.loadImageUrl(getActivity(),bean.getIconUrl(),ivLogo);
                 }
                 return view;
             } else {
@@ -613,7 +628,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
                 if (TextUtils.isEmpty(bean.getIconUrl())) {
                     ivLogo.setImageResource(iconDefaultId);
                 } else {
-                    Glide.with(getActivity()).load(bean.getIconUrl()).placeholder(R.drawable.default_load_bg).into(ivLogo);
+                    PicUtils.loadImageUrl(getActivity(),bean.getIconUrl(),ivLogo);
                 }
                 return view;
             }
@@ -839,6 +854,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
                             goBus(rowBean.getIconEnName());
                         }
                         break;
+                        //照片墙
                     case PHOTOWALL:
                         if(AppApplication.systemLanguage == 1){
                             goPhotoAlbum(rowBean.getIconName());

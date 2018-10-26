@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.android.incongress.cd.conference.utils.PicUtils;
 import com.bumptech.glide.Glide;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 
@@ -40,7 +41,7 @@ public class NoScrollGridViewLocalPathAdapter extends RecyclerView.Adapter<Recyc
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         holder.itemView.setTag(position + "");
-        Glide.with(mContext).load(new File(mDatas.get(position))).into((((ViewHolder) holder).imageView));
+        PicUtils.loadImageFile(mContext,new File(mDatas.get(position)),((ViewHolder)holder).imageView);
     }
 
     public void addData( String path) {

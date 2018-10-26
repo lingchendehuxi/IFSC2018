@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.BaseFragment;
 import com.android.incongress.cd.conference.base.Constants;
+import com.android.incongress.cd.conference.utils.PicUtils;
 import com.bumptech.glide.Glide;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 
@@ -47,7 +48,7 @@ public class CardFragment extends BaseFragment {
 
         mCardView.setMaxCardElevation(mCardView.getCardElevation()
                 * CardAdapter.MAX_ELEVATION_FACTOR);
-        Glide.with(getActivity()).load(mMapUrl).placeholder(R.drawable.default_load_bg).into(mMapImg);
+        PicUtils.loadImageUrl(getContext(),mMapUrl,mMapImg);
         mMapOnclick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

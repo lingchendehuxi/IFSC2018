@@ -21,6 +21,7 @@ import com.android.incongress.cd.conference.fragments.meeting_schedule.SessionDe
 import com.android.incongress.cd.conference.model.ConferenceDbUtils;
 import com.android.incongress.cd.conference.model.Role;
 import com.android.incongress.cd.conference.model.Session;
+import com.android.incongress.cd.conference.utils.PicUtils;
 import com.android.incongress.cd.conference.utils.StringUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
 import com.android.incongress.cd.conference.widget.stick_header.StickyListHeadersListView;
@@ -108,7 +109,7 @@ public class SpeakerDetailFragment extends BaseFragment {
 
 
         if(!StringUtils.isEmpty(mImg))
-            Glide.with(getActivity()).load(mImg).into(mIvSpeaker);
+            PicUtils.loadImageUrl(getContext(),mImg,mIvSpeaker);
 
         if(!Constants.SPEAKER_TIP_OPEN) {
             mTvSpeakerInfo.setVisibility(View.GONE);

@@ -23,6 +23,7 @@ import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.beans.CommentArrayBean;
 import com.android.incongress.cd.conference.beans.ScenicXiuBean;
 import com.android.incongress.cd.conference.fragments.scenic_xiu.ScenicXiuFragment;
+import com.android.incongress.cd.conference.utils.PicUtils;
 import com.android.incongress.cd.conference.widget.ListViewForScrollView;
 import com.android.incongress.cd.conference.widget.NoScrollGridView;
 import com.android.incongress.cd.conference.utils.CommentUtils;
@@ -128,7 +129,7 @@ public class ScenicXiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 String url = bean.getLogoUrl();
                 if(url.contains("https:"))
                     url = url.replaceFirst("s","");
-                Glide.with(mContext).load(url).into((((ViewHolder1News) holder).ivShow));
+                PicUtils.loadImageUrl(mContext,url,((ViewHolder1News) holder).ivShow);
             }
 
             ((ViewHolder1News) holder).tvContent.setText(bean.getTitle());
@@ -163,7 +164,7 @@ public class ScenicXiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 String url = bean.getLogoUrl();
                 if(url.contains("https:"))
                     url = url.replaceFirst("s","");
-                Glide.with(mContext).load(url).into((((ViewHolder2Notifacation) holder).ivShow));
+                PicUtils.loadImageUrl(mContext,url,((ViewHolder2Notifacation) holder).ivShow);
             }
 
             ((ViewHolder2Notifacation) holder).tvContent.setText(bean.getTitle());

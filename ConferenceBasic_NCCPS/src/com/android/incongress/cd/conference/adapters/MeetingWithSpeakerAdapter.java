@@ -13,10 +13,13 @@ import android.widget.TextView;
 
 import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.Constants;
+import com.android.incongress.cd.conference.beans.AlertBean;
+import com.android.incongress.cd.conference.model.Alert;
 import com.android.incongress.cd.conference.model.ConferenceDbUtils;
 import com.android.incongress.cd.conference.model.Meeting;
 import com.android.incongress.cd.conference.model.Role;
 import com.android.incongress.cd.conference.model.Speaker;
+import com.android.incongress.cd.conference.utils.AlermClock;
 import com.android.incongress.cd.conference.widget.flow_layout.FlowLayout;
 import com.android.incongress.cd.conference.widget.flow_layout.TagFlowLayout;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
@@ -38,9 +41,11 @@ public class MeetingWithSpeakerAdapter extends BaseAdapter {
 
     private SessionAlarmListener mSessionAlarmListener;
     private MeetingQuestionListener mMeetingQuestionListener;
+    private String room;
 
-    public MeetingWithSpeakerAdapter(Context ctx, List<Meeting> meetings, List<List<Speaker>> speakers, OnTagListener listener, SessionAlarmListener sessionListener, MeetingQuestionListener questionListener) {
+    public MeetingWithSpeakerAdapter(Context ctx, String room, List<Meeting> meetings, List<List<Speaker>> speakers, OnTagListener listener, SessionAlarmListener sessionListener, MeetingQuestionListener questionListener) {
         this.mContext = ctx;
+        this.room = room;
         this.mMeetings = meetings;
         this.mSpeakers = speakers;
         this.mOnTagListner = listener;
@@ -167,14 +172,14 @@ public class MeetingWithSpeakerAdapter extends BaseAdapter {
                     mMeetings.get(position).setAttention(1);
                     holder.ivAlarm.setImageResource(R.drawable.sessiondetail_alarmon);
 
-                    //设置该meeting的关注，脑中不用理会
+                    //设置该meeting的关注，闹钟不用理会
                     ConferenceDbUtils.addAttentionToMeeting(bean.getMeetingId(), Constants.ATTENTION);
+
                 } else {
                     mMeetings.get(position).setAttention(0);
                     holder.ivAlarm.setImageResource(R.drawable.sessiondetail_alarmoff);
                     ConferenceDbUtils.addAttentionToMeeting(bean.getMeetingId(), Constants.NOATTENTION);
                 }
-
                 //一个都没有关注
                 boolean isAllAttetion = true;
                 for (int i = 0; i < mMeetings.size(); i++) {
@@ -189,6 +194,32 @@ public class MeetingWithSpeakerAdapter extends BaseAdapter {
                 } else {
                     mSessionAlarmListener.doWhenMeetingAlarmClicked(false);
                 }
+                //添加闹钟
+                if(mMeetings.get(position).getAttention() == 1){
+                    if(!isAllAttetion){
+                        Alert alertbean = new Alert();
+                        alertbean.setDate(bean.getMeetingDay());
+                        alertbean.setEnable(1);
+                        alertbean.setEnd(bean.getEndTime());
+                        alertbean.setRelativeid(String.valueOf(bean.getSessionGroupId()));
+                        alertbean.setRepeatdistance("5");
+                        alertbean.setRepeattimes("0");
+                        alertbean.setRoom(room);
+                        alertbean.setIdenId(bean.getMeetingId());
+                        alertbean.setStart(bean.getStartTime());
+                        alertbean.setTitle(bean.getTopic() + "#@#" + bean.getTopicEn());
+                        alertbean.setType(AlertBean.TYPE_MEETING);
+
+                        alertbean.save();
+                        AlermClock.addClock(alertbean);
+                    }
+                }else {
+                    Alert alert = ConferenceDbUtils.getAlertByAlertId(bean.getMeetingId());
+                    if(alert!=null){
+                        ConferenceDbUtils.deleteAlert(alert);
+                    }
+                }
+
             }
         });
 

@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.android.incongress.cd.conference.beans.EsmosBean;
 import com.android.incongress.cd.conference.model.CompasBean;
+import com.android.incongress.cd.conference.utils.PicUtils;
 import com.bumptech.glide.Glide;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 
@@ -62,7 +63,7 @@ public class ChooseConferenceAdapter extends RecyclerView.Adapter<ChooseConferen
         viewHolder.itemView.setTag(position);
         viewHolder.appName.setText(bean.getConferencesName());
         viewHolder.appTimeAndLocation.setText(bean.getConferencesDays() +" " + bean.getConferencesAddress());
-        Glide.with(mContext).load(bean.getIconUrl()).placeholder(R.drawable.default_load_bg).into(viewHolder.appIcon);
+        PicUtils.loadImageUrl(mContext,bean.getIconUrl(),viewHolder.appIcon);
 
         if(bean.getType() == 2 || bean.getIsExist() == 1) {
             viewHolder.ivDownload.setVisibility(View.GONE);

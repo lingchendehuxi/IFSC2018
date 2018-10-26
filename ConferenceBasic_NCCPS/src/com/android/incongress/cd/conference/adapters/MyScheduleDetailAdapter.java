@@ -121,7 +121,7 @@ public class MyScheduleDetailAdapter extends BaseAdapter {
                 mSesionBeans.remove(position);
                 //移除闹铃
 
-                Alert tempAlert = ConferenceDbUtils.getAlertByAlertId(temp.getSessionGroupId());
+                Alert tempAlert = ConferenceDbUtils.getAlertByAlertId(temp.getClassesId());
                 if (tempAlert != null) {
                     ConferenceDbUtils.deleteAlert(tempAlert);
                 }

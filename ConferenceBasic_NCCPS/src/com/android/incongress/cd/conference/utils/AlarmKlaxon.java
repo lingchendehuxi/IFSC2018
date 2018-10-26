@@ -147,14 +147,14 @@ public class AlarmKlaxon extends Service {
         mAudioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
         mTelephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         mTelephonyManager.listen(mPhoneStateListener, PhoneStateListener.LISTEN_CALL_STATE);
-        AlarmReceiver.acquireCpuWakeLock(this);
+        //AlarmReceiver.acquireCpuWakeLock(this);
     }
 
     @Override
     public void onDestroy() {
         stop();
         mTelephonyManager.listen(mPhoneStateListener, 0);
-        AlarmReceiver.releaseCpuLock();
+       // AlarmReceiver.releaseCpuLock();
         mAudioManager.abandonAudioFocus(mAudioFocusListener);
     }
 
@@ -170,7 +170,7 @@ public class AlarmKlaxon extends Service {
             return START_NOT_STICKY;
         }
 
-        final Alert alarm = (Alert) intent.getSerializableExtra("object");
+        final Alert alarm = (Alert) intent.getParcelableExtra("object");
         if (alarm == null) {
             stopSelf();
             return START_NOT_STICKY;

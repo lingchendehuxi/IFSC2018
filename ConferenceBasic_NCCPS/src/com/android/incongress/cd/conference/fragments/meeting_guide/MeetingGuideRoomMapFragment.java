@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import com.android.incongress.cd.conference.base.BaseFragment;
 import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.utils.BitMapOption;
+import com.android.incongress.cd.conference.utils.PicUtils;
 import com.bm.library.PhotoView;
 import com.bumptech.glide.Glide;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
@@ -36,7 +37,7 @@ public class MeetingGuideRoomMapFragment extends BaseFragment {
             Bitmap mBitmap = mBitMapOption.getBitmapFromFile(file, options.outWidth, options.outHeight);
             mImageView.setImageBitmap(mBitmap);
         }else{
-            Glide.with(getActivity()).load(imgpath).into(mImageView);
+            PicUtils.loadImageUrl(getContext(),imgpath,mImageView);
         }
         return view;
     }

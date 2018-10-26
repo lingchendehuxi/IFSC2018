@@ -449,6 +449,16 @@ public  class ConferenceDb {
                 }
                 listener.onMeetingStart(R.string.splash_exhibitor);
                 SharePreferenceUtils.saveAppInt("postion", postion);
+                //此处更新闹钟
+                updateClock();
+        }
+    }
+    public static void updateClock(){
+        List<Alert> list = ConferenceDbUtils.getAllAlert();
+        for(Alert alert:list){
+            if(alert.getRelativeid().length()!=0){
+                ConferenceDbUtils.getAlertByTitle(alert);
+            }
         }
     }
 

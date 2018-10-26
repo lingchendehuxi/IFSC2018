@@ -54,6 +54,7 @@ import com.android.incongress.cd.conference.save.ParseUser;
 import com.android.incongress.cd.conference.save.SharePreferenceUtils;
 import com.android.incongress.cd.conference.services.AdService;
 import com.android.incongress.cd.conference.utils.ConvertUtil;
+import com.android.incongress.cd.conference.utils.JSONCatch;
 import com.android.incongress.cd.conference.widget.zxing.activity.CodeUtils;
 import com.android.incongress.cd.conference.utils.CommonUtils;
 import com.android.incongress.cd.conference.utils.ExampleUtil;
@@ -119,8 +120,8 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
     private int mCurrentPosition = 0;
     private int mCurrentFirstPosition = 1; //0--ChooseConferenceFragmetn，1--DynamicHomeActionFragment
 
-//  private ChooseConferenceFragment mChooseConferenceFragment;
-  public NewDynamicHomeFragment mDynamicHomeFragment;
+    //  private ChooseConferenceFragment mChooseConferenceFragment;
+    public NewDynamicHomeFragment mDynamicHomeFragment;
     private ScenicXiuFragment mShowFragment;
     private PersonCenterFragment mMeFragment;
     private MessageStationActionFragment mMessageStationFragment;
@@ -194,14 +195,14 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
         }
 
         EventBus.getDefault().register(this);
-        Uri uri=getIntent().getData();
-        if(uri!=null){
+        Uri uri = getIntent().getData();
+        if (uri != null) {
             try {
                 String url = uri.getQueryParameter("url");
                 String title = URLDecoder.decode(uri.getQueryParameter("title"), "UTF-8");
                 int type = Integer.parseInt(uri.getQueryParameter("isShare"));
-                CollegeActivity.startCitCollegeActivity(HomeActivity.this, title,url,type);
-                Log.e("GYW",url+"---"+title+"---"+type);
+                CollegeActivity.startCitCollegeActivity(HomeActivity.this, title, url, type);
+                Log.e("GYW", url + "---" + title + "---" + type);
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
@@ -218,16 +219,16 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
         //检测本地是否有动态布局的包，有的话加载动态首页，没有则加载本地页面
         mIconFilePath = AppApplication.instance().getSDPath() + Constants.FILESDIR + "/icon.txt";
 
-        if(FileUtils.isFileExist(mIconFilePath)) {
+        if (FileUtils.isFileExist(mIconFilePath)) {
             mDynamicHomeFragment = new NewDynamicHomeFragment();
             mCurrentFragment = mDynamicHomeFragment;
-            addFragment(mDynamicHomeFragment,true);
+            addFragment(mDynamicHomeFragment, true);
             mCurrentHomePosition = DYNAMIC_POSITION;
-        }else {
+        } else {
             SharedPreferences.Editor editor = preferences.edit();
             editor.putInt(Constants.PREFERENCE_DB_VERSION, 0);
             editor.commit();
-            startActivity(new Intent(this,SplashActivity.class));
+            startActivity(new Intent(this, SplashActivity.class));
             finish();
         }
 
@@ -241,7 +242,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
 //            setTitleEntry(false, false, false, null, R.string.app_name, true, true, false, true);
 //        }
 
-        setTitleEntry(true, false, false, null, R.string.app_name, true, true, false, true,null,true);
+        setTitleEntry(true, false, false, null, R.string.app_name, true, true, false, true, null, true);
 
         //判断是否从推送跳入，需要直接打开webview
         try {
@@ -326,17 +327,15 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
             e.printStackTrace();
         }
         String lan = "";
-        if(AppApplication.systemLanguage == 1){
+        if (AppApplication.systemLanguage == 1) {
             lan = "cn";
-            if(!mobile.equals("")){
-                CHYHttpClientUsage.getInstanse().doGetMobileUserInfoByMobile(mobile,trueName,lan,AppApplication.conId+"",Constants.PROJECT_NAME, new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
+            if (!mobile.equals("")) {
+                CHYHttpClientUsage.getInstanse().doGetMobileUserInfoByMobile(mobile, trueName, lan, AppApplication.conId + "", Constants.PROJECT_NAME, new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                         super.onSuccess(statusCode, headers, response);
-                        try {
-                            int state = response.getInt("state");
-                            if (state == 1) {
-                                ParseUser.saveUserInfo(response.toString());
+                        if (JSONCatch.parseInt("state", response) == 1) {
+                            ParseUser.saveUserInfo(response.toString());
                                 /*Gson gson = new Gson();
                                 UserInfoBean user = gson.fromJson(response.toString(), UserInfoBean.class);
                                 AppApplication.setSPStringValue(Constants.USER_NAME, user.getName());
@@ -350,37 +349,29 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
                                 AppApplication.username = user.getName();
                                 AppApplication.userType = user.getUserType();
                                 AppApplication.facultyId = user.getFacultyId();*/
-                                if(mMeFragment!=null){
-                                    mMeFragment.showLoginResult();
-                                }
-                            } else {
-                                startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+                            if (mMeFragment != null) {
+                                mMeFragment.showLoginResult();
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                        } else {
+                            startActivity(new Intent(HomeActivity.this, LoginActivity.class));
                         }
                     }
                 });
             }
-        }else{
+        } else {
             lan = "en";
-            if(!mobile.equals("")){
-                CHYHttpClientUsage.getInstanse().doGetEmailUserInfoByMobile(mobile,trueName,lan,AppApplication.conId+"",Constants.PROJECT_NAME, new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
+            if (!mobile.equals("")) {
+                CHYHttpClientUsage.getInstanse().doGetEmailUserInfoByMobile(mobile, trueName, lan, AppApplication.conId + "", Constants.PROJECT_NAME, new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                         super.onSuccess(statusCode, headers, response);
-                        try {
-                            int state = response.getInt("state");
-                            if (state == 1) {
-                                ParseUser.saveUserInfo(response.toString());
-                                if(mMeFragment!=null){
-                                    mMeFragment.showLoginResult();
-                                }
-                            } else {
-                                startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+                        if (JSONCatch.parseInt("state", response) == 1) {
+                            ParseUser.saveUserInfo(response.toString());
+                            if (mMeFragment != null) {
+                                mMeFragment.showLoginResult();
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                        } else {
+                            startActivity(new Intent(HomeActivity.this, LoginActivity.class));
                         }
                     }
                 });
@@ -397,55 +388,52 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
     @Override
     protected void initViewsAction() {
     }
+
     private void getDialog() {
-        int version = ConvertUtil.convertToInt(SharePreferenceUtils.getAppString("dialogversion"),0);
-        final int count = ConvertUtil.convertToInt(SharePreferenceUtils.getAppString("dialogcount"),0);
+        int version = ConvertUtil.convertToInt(SharePreferenceUtils.getAppString("dialogversion"), 0);
+        final int count = ConvertUtil.convertToInt(SharePreferenceUtils.getAppString("dialogcount"), 0);
 
         CHYHttpClientUsage.getInstanse().doGetAlertAd(version, new JsonHttpResponseHandler("gbk") {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-                try {
-                    int state = response.getInt("state");
-                    int openState = response.getInt("openState");
-                    if(openState == 1){
-                        if(state == 1){
-                            int count = response.getInt("count")-1;
-                            ParseUser.saveDataInfo(response.toString());
-                            Intent intent = new Intent(HomeActivity.this,DialogActivity.class);
-                            intent.putExtra("imgUrl",response.getString("picUrl"));
-                            intent.putExtra("time",response.getInt("time"));
-                            intent.putExtra("linkUrl",response.getString("linkUrl"));
-                            intent.putExtra("alertAdId",response.getInt("alertAdId"));
-                            intent.putExtra("alertAdName",response.getString("alertAdName"));
+                int state = JSONCatch.parseInt("state", response);
+                int openState = JSONCatch.parseInt("openState", response);
+                if (openState == 1) {
+                    if (state == 1) {
+                        int count = JSONCatch.parseInt("count", response) - 1;
+                        ParseUser.saveDataInfo(response.toString());
+                        Intent intent = new Intent(HomeActivity.this, DialogActivity.class);
+                        intent.putExtra("imgUrl", JSONCatch.parseString("picUrl", response));
+                        intent.putExtra("time", JSONCatch.parseInt("time", response));
+                        intent.putExtra("linkUrl", JSONCatch.parseString("linkUrl", response));
+                        intent.putExtra("alertAdId", JSONCatch.parseString("alertAdId", response));
+                        intent.putExtra("alertAdName", JSONCatch.parseString("alertAdName", response));
+                        startActivity(intent);
+                    } else {
+                        if (count != 0 && state != 3) {
+                            int counttow = ConvertUtil.convertToInt(SharePreferenceUtils.getAppString("dialogcount"), 0) - 1;
+                            SharePreferenceUtils.saveAppString("dialogcount", counttow + "");
+                            Intent intent = new Intent(HomeActivity.this, DialogActivity.class);
+                            intent.putExtra("imgUrl", SharePreferenceUtils.getAppString("dialogimgUrl"));
+                            intent.putExtra("time", SharePreferenceUtils.getAppString("dialogtime"));
+                            intent.putExtra("linkUrl", SharePreferenceUtils.getAppString("dialoglinkUrl"));
+                            intent.putExtra("alertAdId", SharePreferenceUtils.getAppString("dialogalertAdId"));
+                            intent.putExtra("alertAdName", SharePreferenceUtils.getAppString("dialogalertAdName"));
                             startActivity(intent);
-                        }else{
-                            if(count != 0 && state != 3){
-                                int counttow = ConvertUtil.convertToInt(SharePreferenceUtils.getAppString("dialogcount"),0)-1;
-                                SharePreferenceUtils.saveAppString("dialogcount",counttow+"");
-                                Intent intent = new Intent(HomeActivity.this,DialogActivity.class);
-                                intent.putExtra("imgUrl",SharePreferenceUtils.getAppString("dialogimgUrl"));
-                                intent.putExtra("time",SharePreferenceUtils.getAppString("dialogtime"));
-                                intent.putExtra("linkUrl",SharePreferenceUtils.getAppString("dialoglinkUrl"));
-                                intent.putExtra("alertAdId",SharePreferenceUtils.getAppString("dialogalertAdId"));
-                                intent.putExtra("alertAdName",SharePreferenceUtils.getAppString("dialogalertAdName"));
-                                startActivity(intent);
-                            }
                         }
                     }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
             }
         });
     }
+
     /**
      * 将JPush的registerId发送给服务端，方便服务端进行推送
      */
     private void initJpush() {
         final String registrationID = JPushInterface.getRegistrationID(this);
-        CHYHttpClientUsage.getInstanse().doSendToken(AppApplication.conId + "", Constants.TYPE_ANDROID, registrationID,AppApplication.userId+"", new JsonHttpResponseHandler("gbk") {
+        CHYHttpClientUsage.getInstanse().doSendToken(AppApplication.conId + "", Constants.TYPE_ANDROID, registrationID, AppApplication.userId + "", new JsonHttpResponseHandler("gbk") {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
@@ -544,7 +532,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
                         case 2:
                             mBadgeItem.hide();
                             mHomeGuide.setVisibility(View.GONE);
-                            if(mMessageStationFragment == null) {
+                            if (mMessageStationFragment == null) {
                                 mMessageStationFragment = new MessageStationActionFragment();
                             }
                             switchContent(mMessageStationFragment);
@@ -577,7 +565,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
 //                }
             }
         });
-        if(!AppApplication.instance().NetWorkIsOpen()){
+        if (!AppApplication.instance().NetWorkIsOpen()) {
             mBadgeItem.hide();
         }
         mHomeGuide.setOnClickListener(new OnClickListener() {
@@ -765,7 +753,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
     }
 
 
-
     @Override
     public void onClick(View v) {
         FragmentManager manager = getSupportFragmentManager();
@@ -790,7 +777,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
         mTitleEntries.get(mTitleEntries.size() - 1).setShowNavigationBottom(true);
 
         //显示引导
-        if(SharePreferenceUtils.getAppBooleanF(Constants.SHOW_HOME_BACK_GUIDE)) {
+        if (SharePreferenceUtils.getAppBooleanF(Constants.SHOW_HOME_BACK_GUIDE)) {
             mHomeGuide.setVisibility(View.VISIBLE);
             SharePreferenceUtils.saveAppBoolean(Constants.SHOW_HOME_BACK_GUIDE, false);
         }
@@ -846,6 +833,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
 //            mPreFragment.setUserVisibleHint(true);
 //        }
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -891,23 +879,24 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
     @Override
     protected void onResume() {
         isForeground = true;
-        if(AppApplication.isUserLogIn()){
+        if (AppApplication.isUserLogIn()) {
             initRefreshUser();
         }
         getHomeNums();
         super.onResume();
         MobclickAgent.onResume(this);
         Intent intent = getIntent();
-        if(intent != null&&intent.getIntExtra("detail_for",0)==11){
+        if (intent != null && intent.getIntExtra("detail_for", 0) == 11) {
             setIntent(null);
             SessionDetailViewPageFragment detail = new SessionDetailViewPageFragment();
-            detail.setArguments(intent.getIntExtra("tartgetPosition",0),(ArrayList)intent.getSerializableExtra("mAllSessionsList"));
+            detail.setArguments(intent.getIntExtra("tartgetPosition", 0), (ArrayList) intent.getSerializableExtra("mAllSessionsList"));
             View moreView = CommonUtils.initView(this, R.layout.titlebar_session_detail_more);
             detail.setRightListener(moreView);
-            addFragment(detail,detail);
+            addFragment(detail, detail);
             setTitleEntry(true, false, true, moreView, R.string.meeting_schedule_detail_title, false, false, true, false);
         }
     }
+
     /**
      * 获取数据
      */
@@ -918,9 +907,9 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
                 super.onSuccess(statusCode, headers, response);
                 try {
                     int type = response.getInt("tokenMessageCount");
-                    if(type != 0){
+                    if (type != 0) {
                         mBadgeItem.show();
-                    }else{
+                    } else {
                         mBadgeItem.hide();
                     }
                 } catch (Exception e) {
@@ -929,6 +918,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
             }
         });
     }
+
     @Override
     public void onPause() {
         isForeground = false;
@@ -981,12 +971,12 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
                     } else {
                         type = 3;
                     }
-                    CollegeActivity.startCitCollegeActivity(HomeActivity.this, title, url,type);
+                    CollegeActivity.startCitCollegeActivity(HomeActivity.this, title, url, type);
                 }
                 JPushInterface.removeLocalNotification(HomeActivity.this, notificationId);
             }
         } catch (Exception e) {
-            e.printStackTrace(); 
+            e.printStackTrace();
         }
     }
 
@@ -1014,35 +1004,35 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
                 String trueShareJson = null;
                 String trueTitleJson = null;
                 try {
-                    if(!StringUtils.isEmpty(urlJson)){
+                    if (!StringUtils.isEmpty(urlJson)) {
                         url = new JSONObject(urlJson);
-                        if(urlJson.indexOf("H5URL")!=-1){
+                        if (urlJson.indexOf("H5URL") != -1) {
                             trueUrlJson = url.getString("H5URL").replace("\\\\", "");
                         }
-                        if(urlJson.indexOf("H5SHARE")!=-1){
+                        if (urlJson.indexOf("H5SHARE") != -1) {
                             trueShareJson = url.getString("H5SHARE");
                         }
-                        if(urlJson.indexOf("H5TITLE")!=-1){
+                        if (urlJson.indexOf("H5TITLE") != -1) {
                             trueTitleJson = url.getString("H5TITLE");
                         }
                     }
                     if (trueUrlJson == null) {
-                        showPushInfo(HomeActivity.this, content,"", "","");
+                        showPushInfo(HomeActivity.this, content, "", "", "");
                     } else {
-                        showPushInfo(HomeActivity.this,content ,trueTitleJson, trueUrlJson,trueShareJson);
+                        showPushInfo(HomeActivity.this, content, trueTitleJson, trueUrlJson, trueShareJson);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }else if(action.equals(LoginActivity.LOGIN_ACTION)) {
+            } else if (action.equals(LoginActivity.LOGIN_ACTION)) {
                 //登录成功
-                if(mDynamicHomeFragment != null && Constants.IS_SECRETARY_SHOW) {
+                if (mDynamicHomeFragment != null && Constants.IS_SECRETARY_SHOW) {
                     //显示专家秘书
                     mDynamicHomeFragment.showSecretaryView();
                 }
-            }else if(action.equals(LoginActivity.LOGOUT_ACTION)) {
+            } else if (action.equals(LoginActivity.LOGOUT_ACTION)) {
                 //退出登录
-                if(mDynamicHomeFragment != null) {
+                if (mDynamicHomeFragment != null) {
                     //隐藏专家秘书
                     mDynamicHomeFragment.hideSecretaryView();
                 }
@@ -1053,28 +1043,28 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
     /**
      * 弹出退出框
      */
-    private void showPushInfo(final Context context,final String message, final String title, final String url,final String share) {
+    private void showPushInfo(final Context context, final String message, final String title, final String url, final String share) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(getString(R.string.push_tips)).setMessage(message).setPositiveButton(R.string.positive_button, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 JPushInterface.clearAllNotifications(AppApplication.getContext());
                 String webUrl = url;
-                if (!StringUtils.isEmpty(webUrl)){
-                    if(webUrl.contains("?")) {
+                if (!StringUtils.isEmpty(webUrl)) {
+                    if (webUrl.contains("?")) {
                         webUrl = url + "&userId=" + AppApplication.userId + "&userType=" + AppApplication.userType + "&lan=" + AppApplication.getSystemLanuageCode();
-                    }else {
+                    } else {
                         webUrl = url + "?userId=" + AppApplication.userId + "&userType=" + AppApplication.userType + "&lan=" + AppApplication.getSystemLanuageCode();
                     }
                     int type = 3;
-                    if(share != null){
-                        if(!share.equals("1")){
+                    if (share != null) {
+                        if (!share.equals("1")) {
                             type = 3;
-                        }else{
+                        } else {
                             type = 1;
                         }
                     }
-                    CollegeActivity.startCitCollegeActivity(HomeActivity.this, title, webUrl,type);
+                    CollegeActivity.startCitCollegeActivity(HomeActivity.this, title, webUrl, type);
                 }
             }
         }).setNegativeButton(R.string.negative_button, new DialogInterface.OnClickListener() {
@@ -1086,6 +1076,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
     }
 
     private AlertDialog dialog;
+
     public void switchContent(Fragment to) {
         if (mCurrentFragment != to) {
             FragmentTransaction transaction = mFragmentManager.beginTransaction();
@@ -1130,19 +1121,19 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK) {
-            if(requestCode == REQUEST_SCANE) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQUEST_SCANE) {
                 Bundle extras = data.getExtras();
-                if(extras != null) {
+                if (extras != null) {
                     String posterJson = extras.getString(CodeUtils.RESULT_STRING);
 
                     //壁报类型
-                    if(posterJson.contains("{\"posterId\":")) {
+                    if (posterJson.contains("{\"posterId\":")) {
                         try {
                             JSONObject obj = new JSONObject(posterJson);
                             String posterId = obj.getString("posterId");
 
-                            CHYHttpClientUsage.getInstanse().doGetPosterByID(AppApplication.conId, posterId, AppApplication.getSystemLanuageCode(), new JsonHttpResponseHandler("gbk"){
+                            CHYHttpClientUsage.getInstanse().doGetPosterByID(AppApplication.conId, posterId, AppApplication.getSystemLanuageCode(), new JsonHttpResponseHandler("gbk") {
                                 @Override
                                 public void onStart() {
                                     super.onStart();
@@ -1168,52 +1159,52 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
                                     Gson gson = new Gson();
                                     PosterBean posterBean = gson.fromJson(response.toString(), PosterBean.class);
 
-                                    if(posterBean.getState() == 1) {
-                                        DZBBBean dzbb = new DZBBBean(posterBean.getPosterId(),posterBean.getPosterCode(), posterBean.getConField(), posterBean.getTitle(), posterBean.getAuthor(), posterBean.getPosterPicUrl(),posterBean.getMaxCount(),posterBean.getDisCount(),posterBean.getIsJingxuan());
+                                    if (posterBean.getState() == 1) {
+                                        DZBBBean dzbb = new DZBBBean(posterBean.getPosterId(), posterBean.getPosterCode(), posterBean.getConField(), posterBean.getTitle(), posterBean.getAuthor(), posterBean.getPosterPicUrl(), posterBean.getMaxCount(), posterBean.getDisCount(), posterBean.getIsJingxuan());
                                         Intent intent = new Intent();
                                         intent.setClass(HomeActivity.this, PosterImageFragment.class);
                                         Bundle bundle = new Bundle();
-                                        bundle.putSerializable("bean",dzbb);
+                                        bundle.putSerializable("bean", dzbb);
                                         intent.putExtras(bundle);
                                         startActivity(intent);
-                                    }else {
+                                    } else {
                                         ToastUtils.showShorToast("未找到该电子壁报，可能已被删除");
                                     }
                                 }
                             });
 
-                        }catch (Exception e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
-                    }else if(posterJson.contains("http://") || posterJson.contains("https://")){
+                    } else if (posterJson.contains("http://") || posterJson.contains("https://")) {
 
-                        if(posterJson.contains("?")) {
+                        if (posterJson.contains("?")) {
                             posterJson = posterJson + "&userId=" + AppApplication.userId + "&userType=" + AppApplication.userType + "&lan=" + AppApplication.getSystemLanuageCode();
-                        }else {
+                        } else {
                             posterJson = posterJson + "?userId=" + AppApplication.userId + "&userType=" + AppApplication.userType + "&lan=" + AppApplication.getSystemLanuageCode();
                         }
                         CollegeActivity.startCitCollegeActivity(HomeActivity.this, "", posterJson);
-                    }else {
-                        showDialog(posterJson,null,null, false);
+                    } else {
+                        showDialog(posterJson, null, null, false);
                     }
                 }
-            }else if(requestCode == PersonCenterFragment.REQUEST_LOGIN){
+            } else if (requestCode == PersonCenterFragment.REQUEST_LOGIN) {
                 mMeFragment.showLoginResult();
-            } else{
+            } else {
                 Bundle extras = data.getExtras();
-                if(extras != null) {
+                if (extras != null) {
                     String result = extras.getString(CodeUtils.RESULT_STRING);
 
                     Pattern pattern = Pattern
                             .compile("^([hH][tT]{2}[pP]://|[hH][tT]{2}[pP][sS]://)(([A-Za-z0-9-~]+).)+([A-Za-z0-9-~\\/])+$");
 
-                    if(pattern.matcher(result).matches()) {
+                    if (pattern.matcher(result).matches()) {
                         Intent intent = new Intent();
                         intent.setAction("android.intent.action.VIEW");
                         Uri url = Uri.parse(result);
                         intent.setData(url);
                         startActivity(intent);
-                    }else {
+                    } else {
                         ToastUtils.showShorToast(result);
                     }
 

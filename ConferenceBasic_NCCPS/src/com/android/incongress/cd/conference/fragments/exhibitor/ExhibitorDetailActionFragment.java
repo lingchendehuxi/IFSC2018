@@ -15,6 +15,7 @@ import com.android.incongress.cd.conference.base.BaseFragment;
 import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.fragments.meeting_schedule.MeetingScheduleRoomLocationActionFragment;
 import com.android.incongress.cd.conference.model.Exhibitor;
+import com.android.incongress.cd.conference.utils.PicUtils;
 import com.android.incongress.cd.conference.utils.StringUtils;
 import com.bumptech.glide.Glide;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
@@ -36,7 +37,7 @@ public class ExhibitorDetailActionFragment extends BaseFragment {
         initViews(view);
 
         if(!StringUtils.isEmpty(mBean.getLogo())) {
-            Glide.with(getActivity()).load(Constants.getPreUrl() + mBean.getLogo()).placeholder(R.drawable.default_load_bg).into(logo);
+            PicUtils.loadImageUrl(getContext(),Constants.getPreUrl()+mBean.getLogo(),logo);
         }else{
             logo.setImageResource(R.drawable.default_load_bg);
         }

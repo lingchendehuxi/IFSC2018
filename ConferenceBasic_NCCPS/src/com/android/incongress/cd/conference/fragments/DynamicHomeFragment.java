@@ -56,6 +56,7 @@ import com.android.incongress.cd.conference.fragments.wall_poster.PosterFragment
 import com.android.incongress.cd.conference.model.Ad;
 import com.android.incongress.cd.conference.model.ConferenceDbUtils;
 import com.android.incongress.cd.conference.utils.ImageColorChangeUtils;
+import com.android.incongress.cd.conference.utils.PicUtils;
 import com.android.incongress.cd.conference.widget.zxing.activity.CaptureActivity;
 import com.android.incongress.cd.conference.utils.ArrayUtils;
 import com.android.incongress.cd.conference.utils.CommonUtils;
@@ -122,7 +123,7 @@ public class DynamicHomeFragment extends BaseFragment implements View.OnClickLis
     private void setAdImageView(String filepath, ImageView imageview) {
         File file = new File(filepath);
         if (file != null) {
-            Glide.with(getActivity()).load(file).into(imageview);
+            PicUtils.loadImageFile(getContext(),file,imageview);
             int width = getActivity().getWindowManager().getDefaultDisplay().getWidth();
             ViewGroup.LayoutParams lp=imageview.getLayoutParams();
             lp.height= (int) (width*0.17);
@@ -394,7 +395,7 @@ public class DynamicHomeFragment extends BaseFragment implements View.OnClickLis
                     LinearLayout.LayoutParams picLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
                     picLp.setMargins(spMargin, 0, spMargin, 0);
                     imageView.setLayoutParams(picLp);
-                    Glide.with(getActivity()).load(picBean.getIconUrl()).placeholder(R.drawable.default_load_bg).into(imageView);
+                    PicUtils.loadImageUrl(getContext(),picBean.getIconUrl(),imageView);
                     imageView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -590,7 +591,7 @@ public class DynamicHomeFragment extends BaseFragment implements View.OnClickLis
                 if (TextUtils.isEmpty(bean.getIconUrl())) {
                     ivLogo.setImageDrawable(ImageColorChangeUtils.changeIconColor(getActivity(), iconDefaultId, Color.parseColor(bean.getIconFontColor())));
                 } else {
-                    Glide.with(getActivity()).load(bean.getIconUrl()).placeholder(R.drawable.default_load_bg).into(ivLogo);
+                    PicUtils.loadImageUrl(getContext(),bean.getIconUrl(),ivLogo);
                 }
 
                 setCountNum(bean, tvMsgNum, ivInteractive);
@@ -614,7 +615,7 @@ public class DynamicHomeFragment extends BaseFragment implements View.OnClickLis
                 if (TextUtils.isEmpty(bean.getIconUrl())) {
                     ivLogo.setImageResource(iconDefaultId);
                 } else {
-                    Glide.with(getActivity()).load(bean.getIconUrl()).placeholder(R.drawable.default_load_bg).into(ivLogo);
+                    PicUtils.loadImageUrl(getContext(),bean.getIconUrl(),ivLogo);
                 }
                 setCountNum(bean, tvMsgNum, ivInteractive);
                 return view;

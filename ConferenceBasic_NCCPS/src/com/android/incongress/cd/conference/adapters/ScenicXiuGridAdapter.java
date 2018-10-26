@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import com.android.incongress.cd.conference.utils.PicUtils;
 import com.bm.library.PhotoView;
 import com.bumptech.glide.Glide;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
@@ -45,7 +46,7 @@ public class ScenicXiuGridAdapter extends BaseAdapter {
         String url = mPics[position];
         if(url.contains("https:"))
             url = url.replaceFirst("s","");
-        Glide.with(mContext).load(url).placeholder(R.drawable.default_load_bg).into(photoView);
+        PicUtils.loadImageUrl(mContext,url,photoView);
         photoView.disenable();
         return view;
     }
