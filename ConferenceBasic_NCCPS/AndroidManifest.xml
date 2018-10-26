@@ -291,7 +291,8 @@
             android:screenOrientation="portrait"
             android:theme="@style/myTransparent"
             android:windowSoftInputMode="adjustNothing" />
-        <activity android:name="com.android.incongress.cd.conference.AlarmActivity" />
+        <activity android:name="com.android.incongress.cd.conference.AlarmActivity"
+            android:theme="@style/NoTitleDialog"/>
         <activity android:name="com.android.incongress.cd.conference.fragments.wall_poster.PosterImageFragment" />
         <activity android:name="com.android.incongress.cd.conference.fragments.wall_poster.PosterDiscussFragment" />
         <activity android:name="com.android.incongress.cd.conference.MakeQuestionActivity" />
