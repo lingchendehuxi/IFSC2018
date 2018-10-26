@@ -31,6 +31,7 @@ import com.android.incongress.cd.conference.model.Session;
 import com.android.incongress.cd.conference.utils.CommonUtils;
 import com.android.incongress.cd.conference.utils.DensityUtil;
 import com.android.incongress.cd.conference.utils.ShareUtils;
+import com.android.incongress.cd.conference.utils.ToastUtils;
 import com.android.incongress.cd.conference.widget.ScrollControlViewpager;
 import com.android.incongress.cd.conference.widget.popup.NewIconChoosePopupWindow;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -187,7 +188,7 @@ public class SessionDetailViewPageFragment extends BaseFragment {
                                 @Override
                                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                                     super.onSuccess(statusCode, headers, response);
-                                    Log.e("GYW",response.toString());
+                                    ToastUtils.showRoundRectToast(getActivity(),R.layout.view_toast_custom);
                                 }
 
                                 @Override
