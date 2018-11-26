@@ -29,17 +29,13 @@ public class SharePreferenceUtils {
 		SharedPreferences share = AppApplication.getContext().getSharedPreferences(base_app, Context.MODE_PRIVATE);
 		return share.getString(key, "");
 	}
-	public static int getAppInt(String key) {
+	public static int getAppInt(String key,int value) {
 		SharedPreferences share = AppApplication.getContext().getSharedPreferences(base_app, Context.MODE_PRIVATE);
-		return share.getInt(key, 0);
+		return share.getInt(key, value);
 	}
-	public static boolean getAppBooleanF(String key) {
+	public static boolean getAppBoolean(String key,Boolean value) {
 		SharedPreferences share = AppApplication.getContext().getSharedPreferences(base_app, Context.MODE_PRIVATE);
-		return share.getBoolean(key, false);
-	}
-	public static boolean getAppBooleanT(String key) {
-		SharedPreferences share = AppApplication.getContext().getSharedPreferences(base_app, Context.MODE_PRIVATE);
-		return share.getBoolean(key, true);
+		return share.getBoolean(key, value);
 	}
 
 	public static void saveAppString(String key, String value) {
@@ -76,6 +72,26 @@ public class SharePreferenceUtils {
 			editor.putString(key, map.get(key));
 		}
 		editor.commit();
+	}
+	public static void saveUserBoolean(String key, boolean value) {
+		SharedPreferences share = AppApplication.getContext().getSharedPreferences(user_msg, Context.MODE_PRIVATE);
+		Editor editor = share.edit();
+		editor.putBoolean(key, value);
+		editor.commit();
+	}
+	public static boolean getUserBoolean(String key, boolean value) {
+		SharedPreferences share = AppApplication.getContext().getSharedPreferences(user_msg, Context.MODE_PRIVATE);
+		return share.getBoolean(key,value);
+	}
+	public static void saveUserInt(String key, int value) {
+		SharedPreferences share = AppApplication.getContext().getSharedPreferences(user_msg, Context.MODE_PRIVATE);
+		Editor editor = share.edit();
+		editor.putInt(key, value);
+		editor.commit();
+	}
+	public static int getUserInt(String key, int value) {
+		SharedPreferences share = AppApplication.getContext().getSharedPreferences(user_msg, Context.MODE_PRIVATE);
+		return share.getInt(key,value);
 	}
 
 	/** 开发测试用 */

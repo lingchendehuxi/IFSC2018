@@ -50,6 +50,7 @@ import com.android.incongress.cd.conference.fragments.me.PersonCenterFragment;
 import com.android.incongress.cd.conference.fragments.meeting_guide.MeetingGuideFragment;
 import com.android.incongress.cd.conference.fragments.meeting_guide.NewMeetingInfoFragment;
 import com.android.incongress.cd.conference.fragments.meeting_schedule.MeetingScheduleListActionFragment;
+import com.android.incongress.cd.conference.fragments.meeting_schedule.MeetingScheduleViewPageFragment;
 import com.android.incongress.cd.conference.fragments.message_station.MessageStationActionFragment;
 import com.android.incongress.cd.conference.fragments.my_schedule.MyScheduleActionFragment;
 import com.android.incongress.cd.conference.fragments.now_next.NextFragment;
@@ -63,14 +64,17 @@ import com.android.incongress.cd.conference.fragments.search_speaker.SpeakerSear
 import com.android.incongress.cd.conference.fragments.wall_poster.PosterFragment;
 import com.android.incongress.cd.conference.model.Ad;
 import com.android.incongress.cd.conference.model.ConferenceDbUtils;
+import com.android.incongress.cd.conference.utils.ActivityUtils;
 import com.android.incongress.cd.conference.utils.ArrayUtils;
 import com.android.incongress.cd.conference.utils.CommonUtils;
 import com.android.incongress.cd.conference.utils.DateUtil;
 import com.android.incongress.cd.conference.utils.DensityUtil;
 import com.android.incongress.cd.conference.utils.ImageColorChangeUtils;
+import com.android.incongress.cd.conference.utils.JSONCatch;
 import com.android.incongress.cd.conference.utils.MyLogger;
 import com.android.incongress.cd.conference.utils.PicUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
+import com.android.incongress.cd.conference.widget.StatusBarUtil;
 import com.android.incongress.cd.conference.widget.zxing.activity.CaptureActivity;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -100,17 +104,16 @@ import cz.msebera.android.httpclient.Header;
  * Created by GG on 2018/1/3.
  */
 
-public class NewDynamicHomeFragment extends BaseFragment implements View.OnClickListener{
-    private LinearLayout mLlConstainer,marquee_layout,zk_layout;
+public class NewDynamicHomeFragment extends BaseFragment implements View.OnClickListener {
+    private LinearLayout mLlConstainer, marquee_layout;
     private ViewFlipper mMarqueeView;
     private Row mRow;
     private RecyclerView mRecyclerView;
-    private RelativeLayout mRelativeLayout;
     //广告轮播
     protected List<Ad> mAdList;
-    private AdReceiver mAdReceiver ;
+    private AdReceiver mAdReceiver;
     //上方广告抽取
-    private ImageView mIvADTop,mTopADImg;
+    private ImageView mIvADTop, mTopADImg;
     private String mIconFilePath;
 
     private ImageView zk;
@@ -121,8 +124,8 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
     private int mTaskNum, mQuestionNum;
     //我的专家秘书
     private TextView mTvSecretaryTime, mTvSecretaryRoom, mTvSecretaryTask, mTvSecretarySessionName;
-    private LinearLayout mSecretaryView,courseware_text;
-    private Map<String,String> textUrlMap = new HashMap<>();
+    private LinearLayout mSecretaryView, courseware_text;
+    private Map<String, String> textUrlMap = new HashMap<>();
 
     private static final int PROGRAM = 1; //看日程
     private static final int SEARCH = 2;    //查日程
@@ -148,8 +151,159 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
     private static final int BUS = 22; //班车提醒
     private static final int PHOTOWALL = 23; //照片墙
     private static final int VENUEPICTURE = 24; //场馆图
+    private static final int SCHEDULE_PREVIEW = 25; //日程预览
     private static final int HANDLER_NUMS = 0x0001;
+    private int currentSize, priSize, fixedSize = 50;
 
+    private List<CoursewareBean> coursewareBeanList = new ArrayList<>();
+    private CourSewareAdapter mCourSewareAdapter;
+    private List<String> textList = new ArrayList<>();
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
+        View view = inflater.inflate(R.layout.new_dynamic_home_fragment, null);
+        mLlConstainer = (LinearLayout) view.findViewById(R.id.ll_container);
+        mIvADTop = (ImageView) view.findViewById(R.id.ad_top);
+        mTopADImg = (ImageView) view.findViewById(R.id.layout_ad_top);
+        zk = (ImageView) view.findViewById(R.id.zk_button);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.courseware_recycler);
+        marquee_layout = (LinearLayout) view.findViewById(R.id.marquee_layout);
+        courseware_text = (LinearLayout) view.findViewById(R.id.courseware_layout);
+        mMarqueeView = (ViewFlipper) view.findViewById(R.id.viewflipper);
+
+        mSecretaryView = (LinearLayout) view.findViewById(R.id.ll_secretary);
+        mTvSecretaryTime = (TextView) view.findViewById(R.id.tv_secretary_time);
+        mTvSecretaryRoom = (TextView) view.findViewById(R.id.tv_secretary_room);
+        mTvSecretaryTask = (TextView) view.findViewById(R.id.tv_secretary_task);
+        mTvSecretarySessionName = (TextView) view.findViewById(R.id.tv_secretary_session_name);
+
+//       mIconFilePath = AppApplication.instance().getSDPath() + Constants.FILE_CONFERENCES + "incongress" + AppApplication.conId + "/icon.txt";
+        mIconFilePath = AppApplication.instance().getSDPath() + Constants.FILESDIR + "/icon.txt";
+
+        mAdList = AppApplication.adList;
+        ScaleAnimation sa = (ScaleAnimation) AnimationUtils.loadAnimation(getActivity(), R.anim.scale);
+        LayoutAnimationController lac = new LayoutAnimationController(sa, 0);
+        mLlConstainer.setLayoutAnimation(lac);
+        mRecyclerView.setNestedScrollingEnabled(false);
+        mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        CHYHttpClientUsage.getInstanse().doGetContentStream(new JsonHttpResponseHandler("gbk") {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                super.onSuccess(statusCode, headers, response);
+                try {
+                    if (response.length() > 0) {
+                        for (int i = 0; i < response.length(); i++) {
+                            String s = response.getJSONObject(i).toString();
+                            String text = response.getJSONObject(i).getString("title");
+                            if (s.contains("link")) {
+                                String textUrl = response.getJSONObject(i).getString("link");
+                                textUrlMap.put(text, textUrl);
+                            }
+                            textList.add(text);
+                            mMarqueeView.addView(getTextViewTitle(text));
+                        }
+                        marquee_layout.setVisibility(View.VISIBLE);
+                    } else {
+                        marquee_layout.setVisibility(View.GONE);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        CHYHttpClientUsage.getInstanse().doGetCoursewareStream(new JsonHttpResponseHandler("gbk") {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                super.onSuccess(statusCode, headers, response);
+                try {
+                    for (int i = 0; i < response.length(); i++) {
+                        CoursewareBean bean = new CoursewareBean();
+                        bean.setAuthor(response.getJSONObject(i).getString("author"));
+                        bean.setDataId(response.getJSONObject(i).getInt("dataId"));
+                        bean.setFirstPic(response.getJSONObject(i).getString("firstPic"));
+                        bean.setTitle(response.getJSONObject(i).getString("title"));
+                        bean.setUrl(response.getJSONObject(i).getString("url"));
+                        coursewareBeanList.add(bean);
+                    }
+                    if (coursewareBeanList.size() > 0) {
+                        courseware_text.setVisibility(View.VISIBLE);
+                        mCourSewareAdapter.notifyDataSetChanged();
+                    } else {
+                        courseware_text.setVisibility(View.GONE);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+        getHomeIconInfo();
+
+        getHomeAssistant();
+
+        mIvADTop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int top = AppApplication.topNum;
+                if (top >= 0) {
+                    Ad bean = AppApplication.adList.get(top);
+                    String link = bean.getAdLink().trim();
+                    if (link != null && !link.equals("")) {
+                        CollegeActivity.startCitCollegeActivity(getActivity(), "", link);
+                    }
+                }
+            }
+        });
+        zk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (currentSize < priSize) {
+                    setHeightAnimator(priSize);
+                    zk.setImageResource(R.drawable.sq);
+                } else {
+                    setHeightAnimator(fixedSize);
+                    zk.setImageResource(R.drawable.zk);
+                }
+            }
+        });
+        mMarqueeView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String title = textList.get(mMarqueeView.getDisplayedChild());
+                String url = textUrlMap.get(title);
+                if (url != null) {
+                    if (url.contains("?")) {
+                        url = url + "&userId=" + AppApplication.userId + "&userType=" + AppApplication.userType + "&lan=" + AppApplication.getSystemLanuageCode() + "&fromWhere=" + Constants.PROJECT_NAME;
+                    } else {
+                        url = url + "?userId=" + AppApplication.userId + "&userType=" + AppApplication.userType + "&lan=" + AppApplication.getSystemLanuageCode() + "&fromWhere=" + Constants.PROJECT_NAME;
+                    }
+                    CollegeActivity.startCitCollegeActivity(getActivity(), title, url);
+                }
+            }
+        });
+        mCourSewareAdapter = new CourSewareAdapter(coursewareBeanList, getActivity(), getActivity().getWindowManager().getDefaultDisplay().getWidth() / 2);
+        mRecyclerView.setAdapter(mCourSewareAdapter);
+
+        mCourSewareAdapter.SetOnItemClickListener(new CourSewareAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                CoursewareBean bean = coursewareBeanList.get(position);
+                String url = bean.getUrl();
+                if (url.contains("?")) {
+                    url = url + "&userId=" + AppApplication.userId + "&userType=" + AppApplication.userType + "&lan=" + AppApplication.getSystemLanuageCode() + "&fromWhere=" + Constants.PROJECT_NAME;
+                } else {
+                    url = url + "?userId=" + AppApplication.userId + "&userType=" + AppApplication.userType + "&lan=" + AppApplication.getSystemLanuageCode() + "&fromWhere=" + Constants.PROJECT_NAME;
+                }
+                CollegeActivity.startCitCollegeActivity(getActivity(), bean.getTitle(), url);
+            }
+        });
+
+        initReceiver();
+        return view;
+    }
 
     private class AdReceiver extends BroadcastReceiver {
         @Override
@@ -173,186 +327,33 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
             }
         }
     }
+
     private void setAdImageView(String filepath, ImageView imageview) {
         File file = new File(filepath);
         if (file != null) {
-            PicUtils.loadImageFile(getActivity(),file,imageview);
+            PicUtils.loadImageFile(getActivity(), file, imageview);
             int width = getActivity().getWindowManager().getDefaultDisplay().getWidth();
-            ViewGroup.LayoutParams lp=imageview.getLayoutParams();
-            lp.height= (int) (width*0.17);
+            ViewGroup.LayoutParams lp = imageview.getLayoutParams();
+            lp.height = (int) (width * 0.17);
             imageview.setLayoutParams(lp);
         }
     }
 
-    private List<CoursewareBean> coursewareBeanList = new ArrayList<>();
-    private CourSewareAdapter mCourSewareAdapter;
-    private List<String> textList = new ArrayList<>();
-     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.new_dynamic_home_fragment, null);
-         mRelativeLayout = (RelativeLayout) view.findViewById(R.id.animatorlayout);
-        mLlConstainer = (LinearLayout) view.findViewById(R.id.ll_container);
-        mIvADTop = (ImageView) view.findViewById(R.id.ad_top);
-        mTopADImg = (ImageView) view.findViewById(R.id.layout_ad_top);
-        zk = (ImageView) view.findViewById(R.id.zk_button);
-         zk_layout = (LinearLayout) view.findViewById(R.id.zk_layout);
-         mRecyclerView = (RecyclerView) view.findViewById(R.id.courseware_recycler);
-         marquee_layout = (LinearLayout) view.findViewById(R.id.marquee_layout);
-         courseware_text = (LinearLayout) view.findViewById(R.id.courseware_layout);
-        mMarqueeView = (ViewFlipper) view.findViewById(R.id.viewflipper);
-
-         mSecretaryView = (LinearLayout) view.findViewById(R.id.ll_secretary);
-         mTvSecretaryTime = (TextView) view.findViewById(R.id.tv_secretary_time);
-         mTvSecretaryRoom = (TextView) view.findViewById(R.id.tv_secretary_room);
-         mTvSecretaryTask = (TextView) view.findViewById(R.id.tv_secretary_task);
-         mTvSecretarySessionName = (TextView) view.findViewById(R.id.tv_secretary_session_name);
-
-//       mIconFilePath = AppApplication.instance().getSDPath() + Constants.FILE_CONFERENCES + "incongress" + AppApplication.conId + "/icon.txt";
-        mIconFilePath = AppApplication.instance().getSDPath() + Constants.FILESDIR + "/icon.txt";
-
-        mAdList = AppApplication.adList;
-        ScaleAnimation sa = (ScaleAnimation) AnimationUtils.loadAnimation(getActivity(), R.anim.scale);
-        LayoutAnimationController lac = new LayoutAnimationController(sa, 0);
-        mLlConstainer.setLayoutAnimation(lac);
-         mRecyclerView.setNestedScrollingEnabled(false);
-         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-         CHYHttpClientUsage.getInstanse().doGetContentStream(new JsonHttpResponseHandler("gbk") {
-             @Override
-             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                 super.onSuccess(statusCode, headers, response);
-                 try {
-                     if(response.length()>0){
-                         for(int i = 0 ; i<response.length();i++){
-                             String s = response.getJSONObject(i).toString();
-                             String text = response.getJSONObject(i).getString("title");
-                             if(s.contains("link")){
-                                 String textUrl = response.getJSONObject(i).getString("link");
-                                 textUrlMap.put(text,textUrl);
-                             }
-                             textList.add(text);
-                             mMarqueeView.addView(getTextViewTitle(text));
-                         }
-                         marquee_layout.setVisibility(View.VISIBLE);
-                     }else{
-                         marquee_layout.setVisibility(View.GONE);
-                     }
-
-                 } catch (JSONException e) {
-                     e.printStackTrace();
-                 }
-             }
-         });
-         CHYHttpClientUsage.getInstanse().doGetCoursewareStream(new JsonHttpResponseHandler("gbk") {
-             @Override
-             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                 super.onSuccess(statusCode, headers, response);
-                 try {
-                     for(int i = 0 ; i<response.length();i++){
-                         CoursewareBean bean = new CoursewareBean();
-                         bean.setAuthor(response.getJSONObject(i).getString("author"));
-                         bean.setDataId(response.getJSONObject(i).getInt("dataId"));
-                         bean.setFirstPic(response.getJSONObject(i).getString("firstPic"));
-                         bean.setTitle(response.getJSONObject(i).getString("title"));
-                         bean.setUrl(response.getJSONObject(i).getString("url"));
-                         coursewareBeanList.add(bean);
-                     }
-                     if(coursewareBeanList.size()>0){
-                         courseware_text.setVisibility(View.VISIBLE);
-                         mCourSewareAdapter.notifyDataSetChanged();
-                     }else{
-                         courseware_text.setVisibility(View.GONE);
-                     }
-                 } catch (JSONException e) {
-                     e.printStackTrace();
-                 }
-
-             }
-         });
-        getHomeIconInfo();
-
-        getHomeAssistant();
-
-         mIvADTop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int top = AppApplication.topNum;
-                if (top >= 0) {
-                    Ad bean = AppApplication.adList.get(top);
-                    String link = bean.getAdLink().trim();
-                    if (link != null && !link.equals("")) {
-                        CollegeActivity.startCitCollegeActivity(getActivity(), "", link);
-                    }
-                }
-            }
-        });
-         zk_layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(z){
-                    z=!z;
-                    getAgainHomeIcon(z);
-                    zk.setImageResource(R.drawable.zk);
-                }else{
-                    RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                    mLlConstainer.setLayoutParams(lp);
-                    z=!z;
-                    getAgainHomeIcon(z);
-                    zk.setImageResource(R.drawable.sq);
-                }
-            }
-        });
-         mMarqueeView.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View v) {
-                 String title =  textList.get(mMarqueeView.getDisplayedChild());
-                 String url = textUrlMap.get(title);
-                 if(url != null){
-                     if(url.contains("?")) {
-                         url = url + "&userId=" + AppApplication.userId + "&userType=" + AppApplication.userType + "&lan=" + AppApplication.getSystemLanuageCode()+"&fromWhere="+ Constants.PROJECT_NAME;
-                     }else {
-                         url = url + "?userId=" + AppApplication.userId + "&userType=" + AppApplication.userType + "&lan=" + AppApplication.getSystemLanuageCode()+"&fromWhere="+ Constants.PROJECT_NAME;
-                     }
-                     CollegeActivity.startCitCollegeActivity(getActivity(), title, url);
-                 }
-             }
-         });
-         mCourSewareAdapter = new CourSewareAdapter(coursewareBeanList,getActivity(),getActivity().getWindowManager().getDefaultDisplay().getWidth()/2);
-         mRecyclerView.setAdapter(mCourSewareAdapter);
-
-         mCourSewareAdapter.SetOnItemClickListener(new CourSewareAdapter.OnItemClickListener() {
-             @Override
-             public void onItemClick(View view, int position) {
-                 CoursewareBean bean = coursewareBeanList.get(position);
-                 String url = bean.getUrl();
-                 if(url.contains("?")) {
-                     url = url + "&userId=" + AppApplication.userId + "&userType=" + AppApplication.userType + "&lan=" + AppApplication.getSystemLanuageCode()+"&fromWhere="+ Constants.PROJECT_NAME;
-                 }else {
-                     url = url + "?userId=" + AppApplication.userId + "&userType=" + AppApplication.userType + "&lan=" + AppApplication.getSystemLanuageCode()+"&fromWhere="+ Constants.PROJECT_NAME;
-                 }
-                 CollegeActivity.startCitCollegeActivity(getActivity(), bean.getTitle(), url);
-             }
-         });
-
-         initReceiver();
-         if(!AppApplication.isUserLogIn()){
-             hideSecretaryView();
-         }
-        return view;
-    }
     private TextView getTextViewTitle(String title) {
         TextView textView = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.home_xxview, null);
         textView.setText(title);
         return textView;
     }
+
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if(hidden){
+        if (hidden) {
             mMarqueeView.stopFlipping();
             mMarqueeView.removeAllViews();
-        }else{
-            for (int i = 0;i<textList.size();i++){
+        } else {
+            StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
+            for (int i = 0; i < textList.size(); i++) {
                 mMarqueeView.addView(getTextViewTitle(textList.get(i)));
             }
             mMarqueeView.startFlipping();
@@ -362,12 +363,75 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
     mMarqueeView.setDisplayedChild(index);*/
     }
 
+    private void getHomeIconInfo() {
+        try {
+            JSONObject obj = new JSONObject(readFileSdcardFile(mIconFilePath));
+
+            Gson gson = new Gson();
+            String iconSort = JSONCatch.parseString("iconSort", obj);
+            mRow = gson.fromJson(iconSort, Row.class);
+            for (int i = 0; i < mRow.getRows().size(); i++) {
+                Row.RowsBean bean = mRow.getRows().get(i);
+                LinearLayout linearLayout;
+                if (i == 2) {
+                    linearLayout = getHorizontalLinearLayout(false);
+                } else {
+                    linearLayout = getHorizontalLinearLayout(true);
+                }
+                //设置首页上方广告
+                if (bean.getObj().size() == 1 && bean.getObj().get(0).getIconCode().equals(17 + "")) {
+                    final Row.RowsBean.ObjBean picBean = bean.getObj().get(0);
+                    PicUtils.loadImageUrl(getActivity(), picBean.getIconUrl(), mTopADImg);
+                    mTopADImg.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (!TextUtils.isEmpty(picBean.getNewUrl())) {
+                                if (AppApplication.systemLanguage == 1) {
+                                    CollegeActivity.startCitCollegeActivity(getActivity(), picBean.getIconName(), picBean.getNewUrl());
+                                } else {
+                                    CollegeActivity.startCitCollegeActivity(getActivity(), picBean.getIconEnName(), picBean.getNewUrl());
+                                }
+                            }
+                        }
+                    });
+                    String imgSize = picBean.getImgSize();
+                    String[] wh = imgSize.split(",");
+                    int width = Integer.parseInt(wh[0]);
+                    double height = Double.parseDouble(wh[1]);
+                    double bl = width / height;
+                    int widthMax = getActivity().getWindowManager().getDefaultDisplay().getWidth();
+                    ViewGroup.LayoutParams lp = mTopADImg.getLayoutParams();
+                    lp.height = (int) (widthMax / bl);
+                    mTopADImg.setLayoutParams(lp);
+                } else {
+                    if (i != 0) {
+
+                        for (int j = 0; j < bean.getObj().size(); j++) {
+                            Row.RowsBean.ObjBean rowBean = bean.getObj().get(j);
+                            LinearLayout innerLinearLayout = getInnerLinearLayout(Float.parseFloat(rowBean.getWidth().replace("%", "")));
+                            innerLinearLayout.addView(addTextAndImage(rowBean, Float.parseFloat(rowBean.getWidth().replace("%", "")), innerLinearLayout));
+                            innerLinearLayout.setTag(rowBean);
+                            innerLinearLayout.setOnClickListener(this);
+                            linearLayout.addView(innerLinearLayout);
+                        }
+                        fixedSize = ((int) (ActivityUtils.getViewHeight(linearLayout) * 0.9)) * 2;
+                        mLlConstainer.addView(linearLayout);
+                    }
+                }
+            }
+            priSize = ActivityUtils.getViewHeight(mLlConstainer);
+            setHeightAnimator(priSize);
+            mHandler.sendEmptyMessageDelayed(1, 2000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     private void getHomeAssistant() {
         mAllActivitys = ConferenceDbUtils.getSessionAndMeetingBySpeakerId(AppApplication.facultyId);
         // 处理过期时间下的活动
         int size = mAllActivitys.size();
-        Date date = new Date();
+        Date date;
         String current_day = DateUtil.getNowDate(DateUtil.DEFAULT);
         String currentTime = current_day + " 00:00:00";
         Date currentDate = DateUtil.getDate(currentTime, DateUtil.DEFAULT_SECOND);
@@ -422,126 +486,23 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
                 goSecretary();
             }
         });
-        if (AppApplication.facultyId != -1 && Constants.IS_SECRETARY_SHOW) {
+        updateSecretaryView();
+    }
+
+    //更新专家秘书状态
+    public void updateSecretaryView() {
+        if (AppApplication.facultyId != -1 && Constants.IS_SECRETARY_SHOW && AppApplication.isUserLogIn()) {
             mSecretaryView.setVisibility(View.VISIBLE);
         } else {
-            mSecretaryView.setVisibility(View.VISIBLE);
+            mSecretaryView.setVisibility(View.GONE);
         }
     }
 
-    private boolean z = false;
-    private void getAgainHomeIcon(boolean zk) {
-         mLlConstainer.removeAllViews();
-        if(zk){
-            for (int i = 1;i<mRow.getRows().size();i++) {
-                Row.RowsBean bean = mRow.getRows().get(i);
-                LinearLayout linearLayout =new LinearLayout(getActivity());;
-                //linearLayout = getHorizontalLinearLayout(true);
-                if(i == mRow.getRows().size()-1){
-                    linearLayout = getHorizontalLinearLayout(false);
-                }else{
-                    linearLayout = getHorizontalLinearLayout(true);
-                }
-                for (int j = 0; j < bean.getObj().size(); j++) {
-                    Row.RowsBean.ObjBean rowBean = bean.getObj().get(j);
-                    LinearLayout innerLinearLayout = getInnerLinearLayout(Float.parseFloat(rowBean.getWidth().replace("%", "")));
-                    innerLinearLayout.addView(addTextAndImage(rowBean, Float.parseFloat(rowBean.getWidth().replace("%", "")), innerLinearLayout));
-                    innerLinearLayout.setTag(rowBean);
-                    innerLinearLayout.setOnClickListener(this);
-                    linearLayout.addView(innerLinearLayout);
-                }
-                mLlConstainer.addView(linearLayout);
-            }
-        }else{
-            for (int i = 1;i<3;i++) {
-                Row.RowsBean bean = mRow.getRows().get(i);
-                LinearLayout linearLayout ;
-                //linearLayout = getHorizontalLinearLayout(true);
-                if(i == 2){
-                    linearLayout = getHorizontalLinearLayout(false);
-                }else{
-                    linearLayout = getHorizontalLinearLayout(true);
-                }
-                for (int j = 0; j < bean.getObj().size(); j++) {
-                    Row.RowsBean.ObjBean rowBean = bean.getObj().get(j);
-                    LinearLayout innerLinearLayout = getInnerLinearLayout(Float.parseFloat(rowBean.getWidth().replace("%", "")));
-                    innerLinearLayout.addView(addTextAndImage(rowBean, Float.parseFloat(rowBean.getWidth().replace("%", "")), innerLinearLayout));
-                    innerLinearLayout.setTag(rowBean);
-                    innerLinearLayout.setOnClickListener(this);
-                    linearLayout.addView(innerLinearLayout);
-                }
-                mLlConstainer.addView(linearLayout);
-            }
-        }
-    }
-    private void getHomeIconInfo() {
-        try {
-            JSONObject obj = new JSONObject(readFileSdcardFile(mIconFilePath));
-
-            Gson gson = new Gson();
-            String iconSort = obj.getString("iconSort");
-            mRow = gson.fromJson(iconSort, Row.class);
-            int hegit = 0;
-            for (int i = 0; i < mRow.getRows().size(); i++) {
-                Row.RowsBean bean = mRow.getRows().get(i);
-                LinearLayout linearLayout;
-                if(i == 2){
-                    linearLayout = getHorizontalLinearLayout(false);
-                }else{
-                    linearLayout = getHorizontalLinearLayout(true);
-                }
-                //设置首页上方广告
-                if (bean.getObj().size() == 1 && bean.getObj().get(0).getIconCode().equals(17 + "")) {
-                    final Row.RowsBean.ObjBean picBean = bean.getObj().get(0);
-                    PicUtils.loadImageUrl(getActivity(),picBean.getIconUrl(),mTopADImg);
-                    mTopADImg.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (!TextUtils.isEmpty(picBean.getNewUrl())) {
-                                if (AppApplication.systemLanguage == 1) {
-                                    CollegeActivity.startCitCollegeActivity(getActivity(), picBean.getIconName(), picBean.getNewUrl());
-                                } else {
-                                    CollegeActivity.startCitCollegeActivity(getActivity(), picBean.getIconEnName(), picBean.getNewUrl());
-                                }
-                            }
-                        }
-                    });
-                    String imgSize = picBean.getImgSize();
-                    String[] wh = imgSize.split(",");
-                    int width =  Integer.parseInt(wh[0]);
-                    double height =  Double.parseDouble(wh[1]);
-                    double bl = width/height;
-                    int widthMax = getActivity().getWindowManager().getDefaultDisplay().getWidth();
-                    ViewGroup.LayoutParams lp=mTopADImg.getLayoutParams();
-                    lp.height= (int) (widthMax/bl);
-                    mTopADImg.setLayoutParams(lp);
-                } else {
-                    if(i!= 0){
-                        if(i==3){
-                            break;
-                        }
-                        for (int j = 0; j < bean.getObj().size(); j++) {
-                            Row.RowsBean.ObjBean rowBean = bean.getObj().get(j);
-                            LinearLayout innerLinearLayout = getInnerLinearLayout(Float.parseFloat(rowBean.getWidth().replace("%", "")));
-                            innerLinearLayout.addView(addTextAndImage(rowBean, Float.parseFloat(rowBean.getWidth().replace("%", "")), innerLinearLayout));
-                            innerLinearLayout.setTag(rowBean);
-                            innerLinearLayout.setOnClickListener(this);
-                            linearLayout.addView(innerLinearLayout);
-                        }
-                        mLlConstainer.addView(linearLayout);
-                    }
-                }
-            }
-            mHandler.sendEmptyMessageDelayed(1,1000);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
     private LinearLayout getInnerLinearLayout(float weight) {
         LinearLayout linearLayout = new LinearLayout(getActivity());
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT);
-        if(weight == 50) {
-            weight = (float)(weight + 2.4);
+        if (weight == 50) {
+            weight = (float) (weight + 2.4);
         }
         lp.weight = weight;
         int spMarginBottom = DensityUtil.dip2px(getActivity(), 3.5f);
@@ -552,6 +513,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
 
         return linearLayout;
     }
+
     /**
      * @return
      */
@@ -563,7 +525,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
         int spPadding = DensityUtil.dip2px(getActivity(), 5);
 
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, spWidth);
-        if(have){
+        if (have) {
             lp.setMargins(0, 0, 0, spMarginBottom);
         }
         linearLayout.setLayoutParams(lp);
@@ -573,6 +535,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
 
         return linearLayout;
     }
+
     private View addTextAndImage(Row.RowsBean.ObjBean bean, float weight, ViewGroup parentView) {
         int iconCode = 0;
         try {
@@ -582,7 +545,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
             iconCode = 0;
         }
 
-       int iconDefaultId = getDefaultIconId(iconCode);
+        int iconDefaultId = getDefaultIconId(iconCode);
         if (iconCode != 0) {
             if (weight >= 50) {
                 //横向布局
@@ -592,7 +555,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
                 ImageView ivLogo = (ImageView) view.findViewById(R.id.iv_logo);
                 TextView tvMsgNum = (TextView) view.findViewById(R.id.tv_msg_nums);
                 ImageView ivInteractive = (ImageView) view.findViewById(R.id.iv_hd_session_on);
-               view.setBackgroundColor(Color.parseColor(bean.getIconColor()));
+                view.setBackgroundColor(Color.parseColor(bean.getIconColor()));
                 //AppApplication.applyFont(getActivity(), view, "fonts/cg.TTF");
                 if (AppApplication.systemLanguage == 1) {
                     tvName.setText(bean.getIconName());
@@ -604,17 +567,17 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
                     ivLogo.setImageResource(iconDefaultId);
                     //ivLogo.setImageDrawable(ImageColorChangeUtils.changeIconColor(getActivity(), iconDefaultId, Color.parseColor(bean.getIconFontColor())));
                 } else {
-                    PicUtils.loadImageUrl(getActivity(),bean.getIconUrl(),ivLogo);
+                    PicUtils.loadImageUrl(getActivity(), bean.getIconUrl(), ivLogo);
                 }
                 return view;
             } else {
                 //纵向布局
                 View view = LayoutInflater.from(getActivity()).inflate(R.layout.merge_vertical_text_image, parentView, false);
+                LinearLayout ll_item = (LinearLayout) view.findViewById(R.id.ll_item);
                 TextView tvName = (TextView) view.findViewById(R.id.tv_name);
                 ImageView ivLogo = (ImageView) view.findViewById(R.id.iv_logo);
                 TextView tvMsgNum = (TextView) view.findViewById(R.id.tv_msg_nums);
                 ImageView ivInteractive = (ImageView) view.findViewById(R.id.iv_hd_session_on);
-
                 //AppApplication.applyFont(getActivity(), view, "fonts/cg.TTF");
                 if (AppApplication.systemLanguage == 1) {
                     tvName.setText(bean.getIconName());
@@ -628,7 +591,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
                 if (TextUtils.isEmpty(bean.getIconUrl())) {
                     ivLogo.setImageResource(iconDefaultId);
                 } else {
-                    PicUtils.loadImageUrl(getActivity(),bean.getIconUrl(),ivLogo);
+                    PicUtils.loadImageUrl(getActivity(), bean.getIconUrl(), ivLogo);
                 }
                 return view;
             }
@@ -637,6 +600,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
             return null;
         }
     }
+
     /**
      * 根据iconId去查默认的图片
      *
@@ -690,10 +654,13 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
                 return R.drawable.home_icon_photowall;
             case VENUEPICTURE:
                 return R.drawable.home_icon_venuepic;
+            case SCHEDULE_PREVIEW:
+                return R.drawable.home_icon_venuepic;
 
         }
         return 0;
     }
+
     @Override
     public void onClick(View v) {
         Row.RowsBean.ObjBean rowBean = (Row.RowsBean.ObjBean) v.getTag();
@@ -706,10 +673,10 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
 //                }else{
 //                }
                 String url = rowBean.getNewModel();
-                if(url.contains("?")) {
-                    url = url + "&userId=" + AppApplication.userId + "&userType=" + AppApplication.userType + "&lan=" + AppApplication.getSystemLanuageCode()+"&fromWhere="+ Constants.PROJECT_NAME+"&conId="+ AppApplication.conId;
-                }else {
-                    url = url + "?userId=" + AppApplication.userId + "&userType=" + AppApplication.userType + "&lan=" + AppApplication.getSystemLanuageCode()+"&fromWhere="+ Constants.PROJECT_NAME+"&conId="+ AppApplication.conId;
+                if (url.contains("?")) {
+                    url = url + "&userId=" + AppApplication.userId + "&userType=" + AppApplication.userType + "&lan=" + AppApplication.getSystemLanuageCode() + "&fromWhere=" + Constants.PROJECT_NAME + "&conId=" + Constants.conId;
+                } else {
+                    url = url + "?userId=" + AppApplication.userId + "&userType=" + AppApplication.userType + "&lan=" + AppApplication.getSystemLanuageCode() + "&fromWhere=" + Constants.PROJECT_NAME + "&conId=" + Constants.conId;
                 }
                 if (AppApplication.systemLanguage == 1) {
                     CollegeActivity.startCitCollegeActivity(getActivity(), rowBean.getIconName(), url);
@@ -721,25 +688,25 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
                 switch (Integer.parseInt(rowBean.getIconCode())) {
                     case PROGRAM:
                         //看日程
-                        if(AppApplication.systemLanguage == 1){
+                        if (AppApplication.systemLanguage == 1) {
                             goLookSchedule(rowBean.getIconName());
-                        }else{
+                        } else {
                             goLookSchedule(rowBean.getIconEnName());
                         }
                         break;
                     case SEARCH:
                         //差日程
-                        if(AppApplication.systemLanguage == 1){
+                        if (AppApplication.systemLanguage == 1) {
                             goSearchSchedule(rowBean.getIconName());
-                        }else{
+                        } else {
                             goSearchSchedule(rowBean.getIconEnName());
                         }
                         break;
                     case MY_AGENDA:
                         //我的日程
-                        if(AppApplication.systemLanguage == 1){
+                        if (AppApplication.systemLanguage == 1) {
                             goMySchedule(rowBean.getIconName());
-                        }else{
+                        } else {
                             goMySchedule(rowBean.getIconEnName());
                         }
                         break;
@@ -747,9 +714,9 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
 //                        Intent social = new Intent(getActivity(), SocialActivity.class);
 //                        startActivity(social);
                         //现场秀
-                        if(AppApplication.systemLanguage == 1){
+                        if (AppApplication.systemLanguage == 1) {
                             goScenicXiu(rowBean.getIconName());
-                        }else{
+                        } else {
                             goScenicXiu(rowBean.getIconEnName());
                         }
                         break;
@@ -763,9 +730,9 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
                         break;
                     case INFOMATION:
                         //参会指南
-                        if(AppApplication.systemLanguage == 1){
+                        if (AppApplication.systemLanguage == 1) {
                             goGuide(rowBean.getIconName());
-                        }else{
+                        } else {
                             goGuide(rowBean.getIconEnName());
                         }
                         break;
@@ -779,9 +746,9 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
                         break;
                     case EXHIBITORS:
                         //参展商
-                        if(AppApplication.systemLanguage == 1){
+                        if (AppApplication.systemLanguage == 1) {
                             goExhibitor(rowBean.getIconName());
-                        }else{
+                        } else {
                             goExhibitor(rowBean.getIconEnName());
                         }
                         break;
@@ -791,23 +758,23 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
                         break;
                     case FACULTY_INDEX:
                         //讲者检索
-                        if(AppApplication.systemLanguage == 1){
+                        if (AppApplication.systemLanguage == 1) {
                             goSpeakerSearch(rowBean.getIconName());
-                        }else{
+                        } else {
                             goSpeakerSearch(rowBean.getIconEnName());
                         }
                         break;
                     case INTERACTIVE:
-                        if(AppApplication.systemLanguage == 1){
+                        if (AppApplication.systemLanguage == 1) {
                             goQuestionAndA(rowBean.getIconName());
-                        }else{
+                        } else {
                             goQuestionAndA(rowBean.getIconEnName());
                         }
                         break;
                     case POSTER:
-                        if(AppApplication.systemLanguage == 1){
+                        if (AppApplication.systemLanguage == 1) {
                             goPost(rowBean.getIconName());
-                        }else{
+                        } else {
                             goPost(rowBean.getIconEnName());
                         }
                         break;
@@ -817,16 +784,16 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
                     case PICTURE:
                         if (!TextUtils.isEmpty(rowBean.getNewUrl())) {
                             if (AppApplication.systemLanguage == 1) {
-                                CollegeActivity.startCitCollegeActivity(getActivity(),  rowBean.getIconName(), rowBean.getNewUrl());
+                                CollegeActivity.startCitCollegeActivity(getActivity(), rowBean.getIconName(), rowBean.getNewUrl());
                             } else {
                                 CollegeActivity.startCitCollegeActivity(getActivity(), rowBean.getIconEnName(), rowBean.getNewUrl());
                             }
                         }
                         break;
                     case QUESTION:
-                        if(AppApplication.systemLanguage == 1){
+                        if (AppApplication.systemLanguage == 1) {
                             goQuestions(rowBean.getIconName());
-                        }else{
+                        } else {
                             goQuestions(rowBean.getIconEnName());
                         }
                         break;
@@ -834,40 +801,43 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
                         goScane();
                         break;
                     case NOW:
-                        if(AppApplication.systemLanguage == 1){
+                        if (AppApplication.systemLanguage == 1) {
                             goNow(rowBean.getIconName());
-                        }else{
+                        } else {
                             goNow(rowBean.getIconEnName());
                         }
                         break;
                     case NEXT:
-                        if(AppApplication.systemLanguage == 1){
+                        if (AppApplication.systemLanguage == 1) {
                             goNext(rowBean.getIconName());
-                        }else{
+                        } else {
                             goNext(rowBean.getIconEnName());
                         }
                         break;
                     case BUS:
-                        if(AppApplication.systemLanguage == 1){
+                        if (AppApplication.systemLanguage == 1) {
                             goBus(rowBean.getIconName());
-                        }else{
+                        } else {
                             goBus(rowBean.getIconEnName());
                         }
                         break;
-                        //照片墙
+                    //照片墙
                     case PHOTOWALL:
-                        if(AppApplication.systemLanguage == 1){
+                        if (AppApplication.systemLanguage == 1) {
                             goPhotoAlbum(rowBean.getIconName());
-                        }else{
+                        } else {
                             goPhotoAlbum(rowBean.getIconEnName());
                         }
                         break;
                     case VENUEPICTURE:
-                        if(AppApplication.systemLanguage == 1){
+                        if (AppApplication.systemLanguage == 1) {
                             goVenuepicture(rowBean.getIconName());
-                        }else{
+                        } else {
                             goVenuepicture(rowBean.getIconEnName());
                         }
+                        break;
+                    case SCHEDULE_PREVIEW:
+                        goSchedulePreview();
                         break;
                     default:
                         ToastUtils.showShorToast("未找到该模块，请尝试更新数据包");
@@ -962,11 +932,12 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
         NextFragment next = new NextFragment();
         action(next, title, false, false, false);
     }
+
     /**
      * 专家秘书
      */
     private void goSecretary() {
-        CHYHttpClientUsage.getInstanse().doGetSceneShowQuestions(AppApplication.conId + "", AppApplication.userId + "", "-1", AppApplication.getSystemLanuageCode(), new JsonHttpResponseHandler("gbk") {
+        CHYHttpClientUsage.getInstanse().doGetSceneShowQuestions(Constants.conId + "", AppApplication.userId + "", "-1", AppApplication.getSystemLanuageCode(), new JsonHttpResponseHandler("gbk") {
             @Override
             public void onStart() {
                 super.onStart();
@@ -1007,31 +978,39 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
      * 参会指南
      */
     private void goGuide(String title) {
-        if(AppApplication.instance().NetWorkIsOpen()){
+        if (AppApplication.instance().NetWorkIsOpen()) {
             ImageView searchView = (ImageView) CommonUtils.initView(getActivity(), R.layout.title_right_image);
             searchView.setImageResource(R.drawable.icon_share);
-            //searchView.setVisibility(View.GONE);
-            OnlyWebViewActionFragment fragment = OnlyWebViewActionFragment.getInstance(getActivity().getString(Constants.get_MEETING_GUIDE(), AppApplication.conId, AppApplication.getSystemLanuageCode()));
+            searchView.setVisibility(Constants.PARTY_GUIDE_SHARE ? View.VISIBLE : View.GONE);
+            OnlyWebViewActionFragment fragment = OnlyWebViewActionFragment.getInstance(getActivity().getString(Constants.get_MEETING_GUIDE(), Constants.conId, AppApplication.getSystemLanuageCode()));
             fragment.setRightView(searchView);
-            action(fragment, R.string.home_meetingguide, searchView,false, false, false);
-        }else{
-            Toast.makeText(getActivity(),R.string.nowifi,Toast.LENGTH_SHORT).show();
+            action(fragment, R.string.home_meetingguide, searchView, false, false, false);
+        } else {
+            Toast.makeText(getActivity(), R.string.nowifi, Toast.LENGTH_SHORT).show();
         }
     }
-    private void goVenuepicture(String title){
-        action(new NewMeetingInfoFragment(), title , false, false, false);
+
+    private void goVenuepicture(String title) {
+        action(new NewMeetingInfoFragment(), title, false, false, false);
+    }
+    //日程预览图
+    private void goSchedulePreview(){
+        MeetingScheduleViewPageFragment scheduleFragment = new MeetingScheduleViewPageFragment();
+        HomeActivity activity = (HomeActivity) getActivity();
+        activity.addFragment(NewDynamicHomeFragment.this, scheduleFragment);
+        activity.setTitleEntry(false, false, false, null, null, false, false, false, false);
     }
 
     /**
      * 现场互动
      */
     private void goQuestionAndA(String title) {
-        if(AppApplication.isUserLogIn()){
+        if (AppApplication.isUserLogIn()) {
             HdSessionActionFragment hdFragment = new HdSessionActionFragment();
             View hdTtile = CommonUtils.initView(this.getActivity(), R.layout.title_hdsession);
             hdFragment.setRightListener(hdTtile);
             action(hdFragment, title, hdTtile, false, false, false);
-        }else{
+        } else {
             LoginActivity.startLoginActivity(getActivity(), LoginActivity.TYPE_NORMAL, "", "", "", "");
         }
     }
@@ -1040,9 +1019,9 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
      * 提问模块
      */
     private void goQuestions(String title) {
-        if(AppApplication.isUserLogIn()) {
+        if (AppApplication.isUserLogIn()) {
             action(new MeetingQuestionFragment(), title, false, false, false);
-        }else {
+        } else {
             LoginActivity.startLoginActivity(getActivity(), LoginActivity.TYPE_NORMAL, "", "", "", "");
         }
         // action(new QuestionsFragment(), R.string.question, false, false, false);
@@ -1059,7 +1038,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
             lan2 = "en";
         }
         CollegeActivity.startCitCollegeActivity(getActivity(), getString(R.string.home_hands_on),
-                getString(Constants.get_HANDS_ON_SITE(), AppApplication.conId, lan2, AppApplication.userId, AppApplication.userType));
+                getString(Constants.get_HANDS_ON_SITE(), Constants.conId, lan2, AppApplication.userId, AppApplication.userType));
 
     }
 
@@ -1080,18 +1059,21 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
     private void goExhibitor(String title) {
         action(new ExhibitorsActionFragment(), title, false, false, false);
     }
+
     /**
-     *照片墙
+     * 照片墙
      */
     private void goPhotoAlbum(String title) {
-        action(new PhotoAlbumFragment(), title, false,false, false);
+        action(new PhotoAlbumFragment(), title, false, false, false);
     }
+
     /**
      * 班车
      */
     private void goBus(String title) {
-        action(new MeetingBusRemindAllFragment(),  title, false, false, false);
+        action(new MeetingBusRemindAllFragment(), title, false, false, false);
     }
+
     /**
      * 我(个人中心)
      */
@@ -1103,7 +1085,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
      * 学院
      */
     private void goCollege() {
-        CollegeActivity.startCitCollegeActivity(getActivity(), getString(R.string.home_cit_college), getString(Constants.get_CIT_COLLEGE(), AppApplication.conId, AppApplication.getSystemLanuageCode(), AppApplication.userId, AppApplication.userType));
+        CollegeActivity.startCitCollegeActivity(getActivity(), getString(R.string.home_cit_college), getString(Constants.get_CIT_COLLEGE(), Constants.conId, AppApplication.getSystemLanuageCode(), AppApplication.userId, AppApplication.userType));
     }
 
     /**
@@ -1132,6 +1114,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
 
         getActivity().registerReceiver(mAdReceiver, filter);
     }
+
     //读SD中的文件
     public String readFileSdcardFile(String fileName) throws IOException {
         String res = "";
@@ -1149,74 +1132,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
         }
         return res;
     }
-    //显示专家秘书
-    public void showSecretaryView() {
-        if (mSecretaryView != null && AppApplication.facultyId != -1) {
-            mSecretaryView.setVisibility(View.VISIBLE);
 
-            mAllActivitys = ConferenceDbUtils.getSessionAndMeetingBySpeakerId(AppApplication.facultyId);
-            // 处理过期时间下的活动
-            int size = mAllActivitys.size();
-            Date date = new Date();
-            String current_day = DateUtil.getNowDate(DateUtil.DEFAULT);
-            String currentTime = current_day + " 00:00:00";
-            Date currentDate = DateUtil.getDate(currentTime, DateUtil.DEFAULT_SECOND);
-            long currentSecond = currentDate.getTime();
-
-            for (int i = 0; i < size; i++) {
-                String time = mAllActivitys.get(i).getTime() + ":00";
-                date = DateUtil.getDate(time, DateUtil.DEFAULT_SECOND);
-                long second = date.getTime();
-                if (second > currentSecond) {
-                    mValidActivitys.add(mAllActivitys.get(i));
-                }
-            }
-
-            //按照时间排序。
-            ArrayUtils.quickSort(mValidActivitys);
-
-            if (mValidActivitys != null && mValidActivitys.size() > 0) {
-                //获取距离当前时间最近的
-                ActivityBean activityBean = null;
-                for (int k = 0; k < mValidActivitys.size(); k++) {
-                    Date date1 = DateUtil.getDate(mValidActivitys.get(k).getTime(), DateUtil.DEFAULT_ENGLISH2);
-                    if (date1.getTime() > System.currentTimeMillis()) {
-                        activityBean = mValidActivitys.get(k);
-                        break;
-                    }
-                }
-
-                if (activityBean != null) {
-                    mTvSecretaryTime.setVisibility(View.VISIBLE);
-                    mTvSecretaryRoom.setVisibility(View.VISIBLE);
-                    mTvSecretaryTask.setVisibility(View.VISIBLE);
-                    if (AppApplication.systemLanguage == 1) {
-                        mTvSecretaryTime.setText(activityBean.getDate() + " " + activityBean.getStart_time() + "-" + activityBean.getEnd_time());
-                        mTvSecretaryRoom.setText(activityBean.getLocation());
-                        mTvSecretaryTask.setText("任务：" + activityBean.getTypeName());
-                        mTvSecretarySessionName.setText(activityBean.getActivityName());
-                    } else {
-                        mTvSecretaryTime.setText(activityBean.getDate() + " " + activityBean.getStart_time() + "-" + activityBean.getEnd_time());
-                        mTvSecretaryRoom.setText(activityBean.getLocationEn());
-                        mTvSecretaryTask.setText("Task:" + activityBean.getTypeEnName());
-                        mTvSecretarySessionName.setText(activityBean.getActivityNameEN());
-                    }
-                }
-            } else {
-                //没有任务
-                mTvSecretaryTime.setVisibility(View.GONE);
-                mTvSecretaryRoom.setVisibility(View.GONE);
-                mTvSecretaryTask.setVisibility(View.GONE);
-                mTvSecretarySessionName.setText(R.string.secretary_no_task);
-            }
-        }
-    }
-
-    //隐藏专家秘书
-    public void hideSecretaryView() {
-        if (mSecretaryView != null)
-            mSecretaryView.setVisibility(View.GONE);
-    }
     class TaskAsyncTask extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
@@ -1273,36 +1189,21 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
             return null;
         }
     }
+
     private int mSPLayoutHeight = 0;
     private int mZKLayoutHeight = 0;
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            switch (msg.what){
+            switch (msg.what) {
                 case 1:
-                        z=!z;
-                        getAgainHomeIcon(z);
-                        zk.setImageResource(R.drawable.sq);
-                    mZKLayoutHeight = mLlConstainer.getHeight();
-                    mHandler.sendEmptyMessageDelayed(3,1500);
-                    mHandler.sendEmptyMessageDelayed(2,3000);
-                    break;
-                case 2:
-                        z=!z;
-                        getAgainHomeIcon(z);
-                        zk.setImageResource(R.drawable.zk);
-                    break;
-                case 3:
-                    int mLayoutHeight = mLlConstainer.getHeight();
-                    Log.d("sgqTest", "mLayoutHeight: "+mLayoutHeight);
-                    ValueAnimator valueAnimator = createDropAnimator(mLlConstainer, mLayoutHeight, mZKLayoutHeight);
-                    valueAnimator.setDuration(1500);
-                    valueAnimator.start();
+                    zk.performClick();
                     break;
             }
         }
     };
+
     private ValueAnimator createDropAnimator(final View v, int start, int end) {
         ValueAnimator animator = ValueAnimator.ofInt(start, end);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -1328,5 +1229,13 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
     public void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd(Constants.FRAGMENT_DYNAMICHOME);
+    }
+
+    private void setHeightAnimator(int height) {
+        int mLayoutHeight = mLlConstainer.getHeight();
+        ValueAnimator valueAnimator = createDropAnimator(mLlConstainer, mLayoutHeight, height);
+        valueAnimator.setDuration(1500);
+        valueAnimator.start();
+        currentSize = height;
     }
 }

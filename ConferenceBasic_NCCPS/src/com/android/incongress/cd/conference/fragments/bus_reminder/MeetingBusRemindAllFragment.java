@@ -53,7 +53,7 @@ public class MeetingBusRemindAllFragment extends BaseFragment {
     }
 
     private void initData() {
-        CHYHttpClientUsage.getInstanse().doGetBusInfo(AppApplication.conId,new JsonHttpResponseHandler(Constants.ENCODING_GBK){
+        CHYHttpClientUsage.getInstanse().doGetBusInfo(Constants.conId,new JsonHttpResponseHandler(Constants.ENCODING_GBK){
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {

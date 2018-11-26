@@ -133,7 +133,7 @@ public class MakeQuestionFragment extends BaseFragment {
             meetingName = URLEncoder.encode(mMeetingName, Constants.ENCODING_UTF8);
 
             if (!StringUtils.isEmpty(content)) {
-                CHYHttpClientUsage.getInstanse().doCreateSceneShowQuestionNew(AppApplication.conId + "", AppApplication.userId + "", AppApplication.userType + "", content, mSpeakerId + "",
+                CHYHttpClientUsage.getInstanse().doCreateSceneShowQuestionNew(Constants.conId + "", AppApplication.userId + "", AppApplication.userType + "", content, mSpeakerId + "",
                         mMeetingId, meetingName, new JsonHttpResponseHandler() {
                             @Override
                             public void onStart() {
@@ -200,7 +200,7 @@ public class MakeQuestionFragment extends BaseFragment {
                 if(StringUtils.isEmpty(email)) {
                     ToastUtils.showShorToast("请输入您的email地址");
                 }else{
-                    CHYHttpClientUsage.getInstanse().doCreatePosterQuestion(AppApplication.conId, AppApplication.userId, AppApplication.userType, posterTitle, content,
+                    CHYHttpClientUsage.getInstanse().doCreatePosterQuestion(Constants.conId, AppApplication.userId, AppApplication.userType, posterTitle, content,
                             mPosterId, authorName, email, new JsonHttpResponseHandler() {
                                 @Override
                                 public void onStart() {

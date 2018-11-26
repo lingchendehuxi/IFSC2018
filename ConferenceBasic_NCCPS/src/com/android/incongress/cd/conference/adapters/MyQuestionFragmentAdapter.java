@@ -88,7 +88,7 @@ public class MyQuestionFragmentAdapter extends RecyclerView.Adapter<MyQuestionFr
             holder.tvAnswer.setBackgroundResource(R.drawable.bg_button_gray);
             holder.tvAnswer.setText("已回答");
         }else {
-            holder.tvAnswer.setBackgroundResource(R.drawable.bg_button);
+            holder.tvAnswer.setBackgroundResource(R.drawable.bg_button_ed);
             holder.tvAnswer.setText("去回答");
         }
     }

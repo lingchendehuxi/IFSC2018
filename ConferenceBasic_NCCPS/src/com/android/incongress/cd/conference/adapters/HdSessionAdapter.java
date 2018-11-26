@@ -121,7 +121,7 @@ public class HdSessionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     if(position < mSessionNowBeans.size()) {
                         int userType = AppApplication.userType;
                         int userId =AppApplication.userId;
-                        int conId =AppApplication.conId;
+                        int conId =Constants.conId;
 
                         if (userType < 2) {
 //                            if(AppApplication.userType == Constants.TYPE_USER_VISITOR) {
@@ -149,7 +149,7 @@ public class HdSessionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     if(position < mSessionNowBeans.size()) {
                         int userType = AppApplication.userType;
                         int userId =AppApplication.userId;
-                        int conId =AppApplication.conId;
+                        int conId =Constants.conId;
 
                         if (userType < 2) {
                             LoginActivity.startLoginActivity(mContext,LoginActivity.TYPE_NORMAL,"","","","");

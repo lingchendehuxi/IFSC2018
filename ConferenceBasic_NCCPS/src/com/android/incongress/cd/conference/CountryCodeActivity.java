@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.incongress.cd.conference.adapters.CountryCodeAdapter;
+import com.android.incongress.cd.conference.base.BaseActivity;
 import com.android.incongress.cd.conference.beans.CountryCodeBean;
 import com.android.incongress.cd.conference.data.CountryDb;
 import com.android.incongress.cd.conference.widget.stick_header.StickyListHeadersListView;
@@ -21,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class CountryCodeActivity extends FragmentActivity {
+public class CountryCodeActivity extends BaseActivity {
 
     private StickyListHeadersListView mStickCountrys;
     private CountryCodeAdapter mAdapter;
@@ -29,22 +30,21 @@ public class CountryCodeActivity extends FragmentActivity {
     private List<CountryCodeBean> mCountrys;
     private static final String ALL_CHARACTER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ#";
     private String[] sections = {"", "A", "B", "C", "D", "E", "F", "G", "H",
-            "I", "J", "K", "L", "M", "N", "O", "P",  "Q", "R", "S", "T", "U",
+            "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U",
             "V", "W", "X", "Y", "Z", "#"};
     private MySectionIndexer mIndexer;
     private int[] counts;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void setContentView() {
         setContentView(R.layout.activity_country_code);
 
         mStickCountrys = (StickyListHeadersListView) findViewById(R.id.slv_countrys);
         mBladeView = (BladeView) findViewById(R.id.bv_firstcode);
 
         counts = new int[sections.length];
-        ((TextView)findViewById(R.id.title_text)).setText(getString(R.string.country_code));
-        ((ImageView)findViewById(R.id.title_back)).setOnClickListener(new View.OnClickListener() {
+        ((TextView) findViewById(R.id.title_text)).setText(getString(R.string.country_code));
+        ((ImageView) findViewById(R.id.title_back)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setResult(RESULT_CANCELED);
@@ -64,6 +64,10 @@ public class CountryCodeActivity extends FragmentActivity {
         });
     }
 
+    @Override
+    protected void initViewsAction() {
+
+    }
 
     //获取国家码信息
     private void getCountryDatas() {

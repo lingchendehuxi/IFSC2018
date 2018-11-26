@@ -1,8 +1,6 @@
 package com.android.incongress.cd.conference.fragments.me;
 
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -22,6 +20,7 @@ import com.android.incongress.cd.conference.base.BaseFragment;
 import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.beans.VersionBean;
 import com.android.incongress.cd.conference.model.ConferenceDb;
+import com.android.incongress.cd.conference.save.SharePreferenceUtils;
 import com.android.incongress.cd.conference.utils.FileUtils;
 import com.android.incongress.cd.conference.utils.StringUtils;
 import com.loopj.android.http.AsyncHttpClient;
@@ -63,7 +62,6 @@ public class SettingsDatabaseActionFragment extends BaseFragment {
     ProgressBar mPb;
     ProgressBar mPbh;
     TextView mTv;
-    SharedPreferences preferences;
     int new_dbVersion = 0;
     private boolean isNeedShowUpdateInfo = false;
     private String mUpdateMsg = "";
@@ -79,10 +77,9 @@ public class SettingsDatabaseActionFragment extends BaseFragment {
         mPb = (ProgressBar) view.findViewById(R.id.splash_pb);
         mPbh = (ProgressBar) view.findViewById(R.id.splash_pbh);
         mTv = (TextView) view.findViewById(R.id.splash_text);
-        preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         path = AppApplication.instance().getSDPath() + Constants.DOWNLOADDIR;
         filespath = AppApplication.instance().getSDPath() + Constants.FILESDIR;
-        final int current_dbVersion = preferences.getInt(Constants.PREFERENCE_DB_VERSION, 1);
+        final int current_dbVersion = SharePreferenceUtils.getAppInt(Constants.PREFERENCE_DB_VERSION, 1);
         new_dbVersion = 0;
         final List<VersionBean> versionlist = AppApplication.conBean.getVersionList();
         if (versionlist != null && versionlist.size() > 0) {
@@ -184,11 +181,8 @@ public class SettingsDatabaseActionFragment extends BaseFragment {
                             try {
                                 zis = new FileInputStream(file);
                                 FileUtils.unZip(zis, filespath);
-                                Editor editor = preferences.edit();
-                                editor.putInt(
-                                        Constants.PREFERENCE_DB_VERSION,
+                                SharePreferenceUtils.saveAppInt(Constants.PREFERENCE_DB_VERSION,
                                         response.getVersion());
-                                editor.commit();
                             } catch (FileNotFoundException e) {
                                 e.printStackTrace();
                             }
@@ -271,7 +265,7 @@ public class SettingsDatabaseActionFragment extends BaseFragment {
                     mPbh.setVisibility(View.GONE);
 
                     if (isNeedShowUpdateInfo) {
-                        CHYHttpClientUsage.getInstanse().doUpdateInfo(AppApplication.conId + "", new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
+                        CHYHttpClientUsage.getInstanse().doUpdateInfo(Constants.conId + "", new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
                             @Override
                             public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
                                 super.onSuccess(statusCode, headers, response);

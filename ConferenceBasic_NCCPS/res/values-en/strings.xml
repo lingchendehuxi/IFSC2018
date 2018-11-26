@@ -275,6 +275,7 @@ For any changes of reminder time,please go to "My IFSC > My reminder".]]>
     <string name="settings_share_sms">SMS</string>
     <string name="settings_share_mail">Email</string>
     <string name="settings_share_content">Come and join me with ‘iConference’ APP! Download now at: http://m.incongress.cn/ifsc2018/app</string>
+    <string name="settings_share_wxtitle">Come and join me with ‘iConference’ APP! Download try !</string>
     <string name="settings_share_hint">Share to</string>
     <string name="settings_help_way1">You can：</string>
     <string name="settings_help_way2">Or：</string>
@@ -522,6 +523,18 @@ Before first use, you’ll need to download the latest conference data. Afterwar
     <string name="dzbb_discuss">Discuss</string>
     <string name="question_list">Question</string>
     <string name="no_bus">No Data \n Recapture Again</string>
+    <!--登录界面-->
+    <string name="welcome">Hello, welcome to use the conference easy</string>
+    <string name="mobile_text">mobile phone</string>
+    <string name="login_tip">The phone number that the user signs in for the first time will automatically generate an account</string>
+    <string name="code_hasgot">The verification code has been sent</string>
+    <string name="get_again">regain</string>
+    <string name="other_type_login">Third party account login</string>
 
-
+    <!--包名修改的部分-->
+    <string name="share_info">IFSC Infomation</string>
+    <string name="party_guide">Meeting Guide</string>
+    <!--首页-->
+    <string name="system_notify">SYSTEM NOTIFY</string>
+    <string name="person_notify">PERSON NOTIFY</string>
 </resources>

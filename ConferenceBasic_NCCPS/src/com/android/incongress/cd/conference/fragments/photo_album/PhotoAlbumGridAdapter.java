@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.android.incongress.cd.conference.LoginActivity;
 import com.android.incongress.cd.conference.api.CHYHttpClientUsage;
 import com.android.incongress.cd.conference.base.AppApplication;
+import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.utils.PicUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
 import com.bumptech.glide.Glide;
@@ -100,7 +101,7 @@ public class PhotoAlbumGridAdapter extends BaseAdapter {
                     return;
                 }
 
-                CHYHttpClientUsage.getInstanse().doPhotoWallLaud(AppApplication.userId, AppApplication.userType,photoWallArrayBean.getPhotoWallId(), AppApplication.conId + "", AppApplication.getSystemLanuageCode(), new JsonHttpResponseHandler(){
+                CHYHttpClientUsage.getInstanse().doPhotoWallLaud(AppApplication.userId, AppApplication.userType,photoWallArrayBean.getPhotoWallId(), Constants.conId + "", AppApplication.getSystemLanuageCode(), new JsonHttpResponseHandler(){
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                         super.onSuccess(statusCode, headers, response);

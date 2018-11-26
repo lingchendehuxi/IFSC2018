@@ -38,7 +38,7 @@ import java.util.List;
  */
 public class SpeakerDetailFragment extends BaseFragment {
     private StickyListHeadersListView mStickLVSpeaker;
-    private TextView mTvSpeakerName, mTvSpeakerInfo,mTvSpeakerWoke,mTvSpeakerDay;
+    private TextView mTvSpeakerName, mTvSpeakerInfo, mTvSpeakerWoke, mTvSpeakerDay;
     private SpeakerDetailAdapter mSpeakerAdapter;
     private SpeakerDetailDayAdapter mSpeakerDayAdapter;
     private List<MeetingBean_new> mMeetings;
@@ -52,9 +52,10 @@ public class SpeakerDetailFragment extends BaseFragment {
     private View mHeaderView;
     private View mEmptyView;
 
-    public SpeakerDetailFragment() {}
+    public SpeakerDetailFragment() {
+    }
 
-    public void setArguments(int speakerId, String speakerName, String speakerEnName, String speakerRoles, String img , List<MeetingBean_new> meetings, boolean isFromSessionDetai) {
+    public void setArguments(int speakerId, String speakerName, String speakerEnName, String speakerRoles, String img, List<MeetingBean_new> meetings, boolean isFromSessionDetai) {
         this.mSpeakerId = speakerId;
         this.mSpeakerName = speakerName;
         this.mSpeakerRoles = speakerRoles;
@@ -75,8 +76,8 @@ public class SpeakerDetailFragment extends BaseFragment {
         mStickLVSpeaker.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(!mIsFromSessionDetai && position != 0) {
-                    int sessionGroupId = mMeetings.get(position-1).getSessionGroupId();
+                if (!mIsFromSessionDetai && position != 0) {
+                    int sessionGroupId = mMeetings.get(position - 1).getSessionGroupId();
 
                     SessionDetailViewPageFragment detail = new SessionDetailViewPageFragment();
                     detail.setArguments(getSessionPosition(sessionGroupId), mSessionList);
@@ -89,6 +90,7 @@ public class SpeakerDetailFragment extends BaseFragment {
         mStickLVSpeaker.addHeaderView(mHeaderView);
         mTvSpeakerName = (TextView) mHeaderView.findViewById(R.id.tv_speaker_name);
         mTvSpeakerInfo = (TextView) mHeaderView.findViewById(R.id.tv_speaker_info);
+        mTvSpeakerInfo.setVisibility(Constants.SCHEDULE_SPEAKER_INFO ? View.VISIBLE : View.GONE);
         mTvSpeakerDay = (TextView) mHeaderView.findViewById(R.id.tv_speaker_detail_day);
         mTvSpeakerWoke = (TextView) mHeaderView.findViewById(R.id.tv_speaker_detail_woke);
         mIvSpeaker = (ImageView) mHeaderView.findViewById(R.id.iv_speaker);
@@ -103,19 +105,12 @@ public class SpeakerDetailFragment extends BaseFragment {
         mTvSpeakerInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WebViewContainerActivity.startWebViewContainerActivity(getActivity(), getString(R.string.secretary_info_url, AppApplication.conId +"", mSpeakerId + "", AppApplication.getSystemLanuageCode()), mSpeakerName);
+                WebViewContainerActivity.startWebViewContainerActivity(getActivity(), getString(R.string.secretary_info_url, Constants.conId + "", mSpeakerId + "", AppApplication.getSystemLanuageCode()), mSpeakerName);
             }
         });
 
-
-        if(!StringUtils.isEmpty(mImg))
-            PicUtils.loadImageUrl(getContext(),mImg,mIvSpeaker);
-
-        if(!Constants.SPEAKER_TIP_OPEN) {
-            mTvSpeakerInfo.setVisibility(View.GONE);
-        }else{
-            mTvSpeakerInfo.setVisibility(View.VISIBLE);
-        }
+        if (!StringUtils.isEmpty(mImg))
+            PicUtils.loadImageUrl(getContext(), mImg, mIvSpeaker);
 
         return view;
     }
@@ -130,9 +125,9 @@ public class SpeakerDetailFragment extends BaseFragment {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            if(AppApplication.systemLanguage == 1) {
+            if (AppApplication.systemLanguage == 1) {
                 mTvSpeakerName.setText(mSpeakerName);
-            }else {
+            } else {
                 mTvSpeakerName.setText(mSpeakerNameEn);
             }
 
@@ -206,6 +201,7 @@ public class SpeakerDetailFragment extends BaseFragment {
 
     /**
      * 获取Meeting在session中的位置
+     *
      * @param sessionGroupId
      * @return
      */

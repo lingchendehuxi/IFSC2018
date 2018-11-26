@@ -57,10 +57,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/tablayout"
-        android:textColor="@color/theme_color"
-        android:textStyle="bold"
-        android:paddingBottom="4dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:text="@string/question" />
+        android:paddingBottom="4dp"
+        android:text="@string/question"
+        android:textColor="@color/theme_color"
+        android:textStyle="bold" />
 </RelativeLayout>

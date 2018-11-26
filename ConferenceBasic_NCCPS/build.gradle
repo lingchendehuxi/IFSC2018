@@ -38,7 +38,7 @@ android {
         Conference_Key {
             keyAlias 'china'
             keyPassword 'wwl100'
-           storeFile file('D:/myKeystore/appkey/chy_key/Key_Incongress')
+           storeFile file('D:/appkey/chy_key/Key_Incongress')
 //            storeFile file('D:/A-Workspace_New/Keys/chy/Key_Incongress')
 //            storeFile file('F:/C-Keys/参会易Android_key/Key_Incongress')
 //            storeFile file('E:/A-Company_Project_Keys/chy_key/Key_Incongress')
@@ -64,10 +64,11 @@ android {
 
 dependencies {
     compile fileTree(include: '*.jar', dir: 'libs')
-    compile 'com.android.support:appcompat-v7:25.2.0'
-    compile 'com.android.support:support-v4:25.2.0'
-    compile 'com.android.support:design:25.2.0'
-    compile 'com.android.support:cardview-v7:25.2.0'
+    compile 'com.android.support:appcompat-v7:27.1.1'
+    compile 'com.android.support:support-v4:27.1.1'
+    compile 'com.android.support:design:27.1.1'
+    compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
+    compile 'com.android.support:cardview-v7:27.1.1'
     compile 'com.bm.photoview:library:1.3.6'
     compile 'com.google.code.gson:gson:2.5'
     compile 'com.yqritc:recyclerview-flexibledivider:1.2.8'
@@ -89,4 +90,6 @@ dependencies {
     compile project(':bottom-navigation-bar')
     compile 'com.sunfusheng:marqueeview:1.3.1'
     compile 'com.google.android.gms:play-services-appindexing:8.4.0'
+    compile 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
+    compile files('libs/jcore-android-1.2.6.jar')
 }

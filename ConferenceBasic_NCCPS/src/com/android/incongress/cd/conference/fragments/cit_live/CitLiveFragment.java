@@ -182,7 +182,7 @@ public class CitLiveFragment extends FragmentActivity {
 		}else {
 			lan = "en";
 		}
-		String url = getString(Constants.get_CIT_LIVE_URL(),  AppApplication.conId, lan, AppApplication.userId, AppApplication.userType);
+		String url = getString(Constants.get_CIT_LIVE_URL(),  Constants.conId, lan, AppApplication.userId, AppApplication.userType);
 
 		IsNetWorkOpen = AppApplication.instance().NetWorkIsOpen();
 		

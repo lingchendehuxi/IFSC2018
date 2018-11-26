@@ -74,7 +74,7 @@ public class PhotoAlbumFragment extends BaseFragment implements PhotoTypesAdapte
     private void getDatas() {
         mPhotoWallTypeArrayList.clear();
         mPhotoTypeAdapter.notifyDataSetChanged();
-        CHYHttpClientUsage.getInstanse().doGetPhotoWallTypes(AppApplication.conId+"", AppApplication.getSystemLanuageCode(), new JsonHttpResponseHandler("gbk"){
+        CHYHttpClientUsage.getInstanse().doGetPhotoWallTypes(Constants.conId+"", AppApplication.getSystemLanuageCode(), new JsonHttpResponseHandler("gbk"){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);

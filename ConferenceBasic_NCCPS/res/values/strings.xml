@@ -294,6 +294,7 @@
     <string name="settings_share_sms">短信推荐</string>
     <string name="settings_share_mail">邮件推荐</string>
     <string name="settings_share_content">我正在使用“参会易”,完全不同的参会体验。建议你下载试试！http://app.incongress.cn/ifsc2018/app</string>
+    <string name="settings_share_wxtitle">我正在使用“参会易”,完全不同的参会体验。建议你下载试试！</string>
     <string name="settings_share_hint">推荐使用参会易</string>
     <string name="settings_help_way1">方式1：</string>
     <string name="settings_help_way2">方式2：</string>
@@ -496,14 +497,14 @@
     <string name="register_success">注册成功</string>
     <string name="first_author">第一作者:</string>
     <string name="send">发送</string>
-    <string name="telephone_number">手机号</string>
+    <string name="telephone_number">请输入手机号</string>
     <string name="verification_code">验证码</string>
     <string name="login_name">姓名</string>
     <string name="get_code">获取验证码</string>
     <string name="verify_attendance">核实参会代表身份</string>
     <string name="sign_up">没有账号，去注册></string>
     <string name="phone_can_not_empty">手机号码不能为空</string>
-    <string name="login_info_empty">姓名、手机号或验证码不能为空</string>
+    <string name="login_info_empty">手机号不能为空</string>
     <string name="register_next">下一步</string>
     <string name="country_code">国家</string>
     <string name="success_send_regist_code">验证码已发送成功，注意查收</string>
@@ -649,8 +650,23 @@
     <string name="secretary_module_not_available">您不是主席团成员，无法使用该模块</string>
     <string name="secretary_no_task">您暂时没有任何会议安排</string>
 
-    <string name="reminder_bus_tips">您关注的班车 “起点：%1$s；终点：%2$s” 将于稍后发车，请合理安排您的时间，避免耽误您的行程。</string>
-    <string name="reminder_meet_tips">您关注 %1$s 的日程：%2$s 开始时间：%3$s；结束时间：%4$s 将于稍后开始，请到尽快到：%5$s 参加，避免耽误您的日程。</string>
+    <string name="reminder_bus_tips">您关注的班车 “起点：%1$s；终点：%2$s” 将于 %3$s后发车，请合理安排您的时间，避免耽误您的行程。</string>
+    <string name="reminder_meet_tips">您关注 %1$s 的日程：%2$s 开始时间：%3$s；结束时间：%4$s 将于稍后开始，请尽快到：%5$s 参加，避免耽误您的日程。</string>
     <!--myUse-->
     <string name="use">测试期待</string>
+
+    <!--登录界面-->
+    <string name="welcome">您好，欢迎使用参会易</string>
+    <string name="mobile_text">手机号码</string>
+    <string name="login_tip">用户首次登录所填写的手机号将自动生成一个账号</string>
+    <string name="code_hasgot">验证码已发送</string>
+    <string name="get_again">重新获取</string>
+    <string name="other_type_login">第三方账号登录</string>
+    <!--极光推送修改-->
+    <!--包名修改的部分-->
+    <string name="share_info">IFSC基本信息</string>
+    <string name="party_guide">参会指南</string>
+    <!--首页-->
+    <string name="system_notify">系统通知</string>
+    <string name="person_notify">个人通知</string>
 </resources>

@@ -74,8 +74,9 @@ public class AlarmUtils {
                 }else {
                     isStartOrBack = 2;
                 }
-
+                intent.putExtra("time", "30分钟");
                 PendingIntent pi30 = PendingIntent.getActivity(context, bean.getBusInfoId() + 30 + isStartOrBack, intent, 0);
+                intent.putExtra("time", "15分钟");
                 PendingIntent pi15 = PendingIntent.getActivity(context, bean.getBusInfoId() + 15 + isStartOrBack, intent, 0);
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {

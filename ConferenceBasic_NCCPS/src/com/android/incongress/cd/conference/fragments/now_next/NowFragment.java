@@ -82,7 +82,7 @@ public class NowFragment extends BaseFragment {
         mTvRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                open = SharePreferenceUtils.getAppBooleanT("popup");
+                open = SharePreferenceUtils.getAppBoolean("popup",true);
                 if(open){
                     if(mRoomPopupWindow == null) {
                         SharePreferenceUtils.saveAppBoolean("popup",false);

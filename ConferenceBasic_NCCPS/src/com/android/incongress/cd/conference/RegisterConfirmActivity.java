@@ -161,7 +161,7 @@ public class RegisterConfirmActivity extends BaseActivity {
     }
 
     private void doGetSms(String mobile, String lan) {
-        CHYHttpClientUsage.getInstanse().doGetSmsMobile(AppApplication.conId, mobile, Constants.ConfirmTypeRegister,lan ,new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
+        CHYHttpClientUsage.getInstanse().doGetSmsMobile(Constants.conId, mobile, Constants.ConfirmTypeRegister,lan ,new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
             @Override
             public void onStart() {
                 super.onStart();

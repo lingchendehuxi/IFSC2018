@@ -121,7 +121,7 @@ public class HdSessionActionFragment extends BaseFragment {
     }
 
     private void initDatas() {
-        CHYHttpClientUsage.getInstanse().doGetHdSession(AppApplication.conId + "", AppApplication.getSystemLanuageCode(), new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
+        CHYHttpClientUsage.getInstanse().doGetHdSession(Constants.conId + "", AppApplication.getSystemLanuageCode(), new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
                     @Override
                     public void onStart() {
                         super.onStart();
@@ -170,7 +170,7 @@ public class HdSessionActionFragment extends BaseFragment {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WebViewContainerActivity.startWebViewContainerActivity(getActivity(), getActivity().getString(Constants.get_HD_QUESTION_LIST(), AppApplication.conId, AppApplication.getSystemLanuageCode()), getString(R.string.question_list));
+                WebViewContainerActivity.startWebViewContainerActivity(getActivity(), getActivity().getString(Constants.get_HD_QUESTION_LIST(), Constants.conId, AppApplication.getSystemLanuageCode()), getString(R.string.question_list));
             }
         });
     }

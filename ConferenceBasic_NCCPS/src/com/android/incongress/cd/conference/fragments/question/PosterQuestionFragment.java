@@ -63,7 +63,7 @@ public class PosterQuestionFragment extends BaseFragment {
         mQuestionAdapter.setPosterClickListener(new MyPosterQuestionsAdapter.OnPosterClickListener() {
             @Override
             public void onPosterClick(PosterQuestionBean.SceneShowArrayBean bean) {
-                CHYHttpClientUsage.getInstanse().doGetPosterByID(AppApplication.conId, bean.getPosterId() +"", AppApplication.getSystemLanuageCode(), new JsonHttpResponseHandler(Constants.ENCODING_GBK){
+                CHYHttpClientUsage.getInstanse().doGetPosterByID(Constants.conId, bean.getPosterId() +"", AppApplication.getSystemLanuageCode(), new JsonHttpResponseHandler(Constants.ENCODING_GBK){
                     @Override
                     public void onStart() {
                         super.onStart();
@@ -115,7 +115,7 @@ public class PosterQuestionFragment extends BaseFragment {
     }
 
     private void refreshQuestionData(final int lastQuestionId) {
-        CHYHttpClientUsage.getInstanse().doGetQuestionByPoster(AppApplication.conId, lastQuestionId, AppApplication.userId, AppApplication.userType, AppApplication.getSystemLanuageCode(), new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
+        CHYHttpClientUsage.getInstanse().doGetQuestionByPoster(Constants.conId, lastQuestionId, AppApplication.userId, AppApplication.userType, AppApplication.getSystemLanuageCode(), new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);

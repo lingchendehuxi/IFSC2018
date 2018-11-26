@@ -154,7 +154,7 @@ public class HistoryPostActionFragment extends BaseFragment {
     }
 
     private void getDownData(final String lastSceneShowId) {
-        CHYHttpClientUsage.getInstanse().doGetSceneShowByUser(AppApplication.conId + "", lastSceneShowId + "", AppApplication.userId + "", AppApplication.userType + "", new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
+        CHYHttpClientUsage.getInstanse().doGetSceneShowByUser(Constants.conId + "", lastSceneShowId + "", AppApplication.userId + "", AppApplication.userType + "", new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
             @Override
             public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);

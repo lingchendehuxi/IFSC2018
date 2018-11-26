@@ -57,13 +57,13 @@ public class MeetingGuideFragment extends BaseFragment {
                 String filepath = AppApplication.instance().getSDPath() + Constants.FILESDIR + bean.getMapUrl();
                 fragment.setFilePath(filepath);
                 String mapName = "";
-                if(bean.getMapRemark().contains("#@#")){
+                if (bean.getMapRemark().contains("#@#")) {
                     if (AppApplication.systemLanguage == 1) {
                         mapName = bean.getMapRemark().split("#@#")[0];
-                    }else{
+                    } else {
                         mapName = bean.getMapRemark().split("#@#")[1];
                     }
-                }else{
+                } else {
                     mapName = bean.getMapRemark();
                 }
                 action(fragment, mapName, false, false, false);
@@ -83,9 +83,9 @@ public class MeetingGuideFragment extends BaseFragment {
             @Override
             public void onPageSelected(int position) {
                 // 把当前显示的position传递出去
-                if(position == 0){
+                if (position == 0) {
                     mShareView.setVisibility(View.GONE);
-                }else{
+                } else {
                     mShareView.setVisibility(View.GONE
                     );
                 }
@@ -107,8 +107,8 @@ public class MeetingGuideFragment extends BaseFragment {
         @Override
         public Fragment getItem(int position) {
             if (position == 0)
-                return OnlyWebViewActionFragment.getInstance(getActivity().getString(Constants.get_MEETING_GUIDE(), AppApplication.conId, AppApplication.getSystemLanuageCode()));
-             else
+                return OnlyWebViewActionFragment.getInstance(getActivity().getString(Constants.get_MEETING_GUIDE(), Constants.conId, AppApplication.getSystemLanuageCode()));
+            else
                 return mInfoFragment;
         }
 
@@ -125,18 +125,16 @@ public class MeetingGuideFragment extends BaseFragment {
 
     /**
      * 分享
+     *
      * @param view
      */
     public void setRightView(View view) {
-        if(view != null) {
+        if (view != null) {
             mShareView = view;
             mShareView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(AppApplication.systemLanguage == 1)
-                        ShareUtils.shareTextWithUrl(getActivity(),"IFSC基本信息","参会指南", getActivity().getString(Constants.get_MEETING_GUIDE(), AppApplication.conId, AppApplication.getSystemLanuageCode()),null);
-                    else
-                        ShareUtils.shareTextWithUrl(getActivity(),"IFSC Infomation","Meeting Guide", getActivity().getString(Constants.get_MEETING_GUIDE(), AppApplication.conId, AppApplication.getSystemLanuageCode()),null);
+                    ShareUtils.shareTextWithUrl(getActivity(), getString(R.string.share_info), getString(R.string.party_guide), getActivity().getString(Constants.get_MEETING_GUIDE(), Constants.conId, AppApplication.getSystemLanuageCode()), null);
                 }
             });
         }

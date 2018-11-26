@@ -193,7 +193,7 @@ public class PosterFragment extends BaseFragment {
             }
         });
 
-        if (SharePreferenceUtils.getAppBooleanF(Constants.LOOK_POSTER_TIPS)) {
+        if (SharePreferenceUtils.getAppBoolean(Constants.LOOK_POSTER_TIPS,false)) {
             mTvTips.setVisibility(View.GONE);
         }
 
@@ -375,7 +375,7 @@ public class PosterFragment extends BaseFragment {
      * 获取电子壁报数据
      */
     private void getDZBBList() {
-        CHYHttpClientUsage.getInstanse().doGetWallPoster(AppApplication.conId, currentPage++, mSearchString, orderBy, new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
+        CHYHttpClientUsage.getInstanse().doGetWallPoster(Constants.conId, currentPage++, mSearchString, orderBy, new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);

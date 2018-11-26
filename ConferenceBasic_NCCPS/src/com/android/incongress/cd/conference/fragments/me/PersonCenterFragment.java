@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +40,7 @@ import com.android.incongress.cd.conference.utils.LogUtils;
 import com.android.incongress.cd.conference.utils.ShareUtils;
 import com.android.incongress.cd.conference.widget.IconChoosePopupWindow;
 import com.android.incongress.cd.conference.widget.MyButton;
+import com.android.incongress.cd.conference.widget.StatusBarUtil;
 import com.android.incongress.cd.conference.widget.zxing.activity.CaptureActivity;
 import com.android.incongress.cd.conference.utils.CommonUtils;
 import com.android.incongress.cd.conference.utils.MyLogger;
@@ -69,10 +71,10 @@ import cn.finalteam.galleryfinal.model.PhotoInfo;
  * 模块：我
  * Jacky Chen
  */
-public class PersonCenterFragment extends BaseFragment implements View.OnClickListener ,GalleryFinal.OnHanlderResultCallback {
+public class PersonCenterFragment extends BaseFragment implements View.OnClickListener, GalleryFinal.OnHanlderResultCallback {
 
     public static final int REQUEST_LOGIN = 0x0001;
-    private RelativeLayout mMeetingAlertPanel, mContackPanel, mSharePanel, mHelpPanel, mRlMyField, mRlMyKeshi,mRlSettingsCache;
+    private RelativeLayout mMeetingAlertPanel, mContackPanel, mSharePanel, mHelpPanel, mRlMyField, mRlMyKeshi, mRlSettingsCache;
     private TextView mTvCacheSize;
     private Button mBtLogin, mBtLoginout;
     private TextView username, welcomeInfo;
@@ -80,6 +82,7 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
     private int mNoteCount, mTieZiCount;
     private RelativeLayout mBtNote, mBtTieZi;
     private ImageView mCivHeadIcon, mIvScane;
+    private boolean currentState = false;
 
     private static final int HANDLE_TIEZI_COUNT = 0x0001;
     private static final int HANDLE_NOTE_COUNT = 0x0002;
@@ -87,7 +90,9 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
     //缓存文件
     private String mCacheFilePath = "";
 
-    /** 页面是否处于打开状态 **/
+    /**
+     * 页面是否处于打开状态
+     **/
     private boolean mIsOpen = true;
 
     private final int REQUEST_CODE_CAMERA = 1000;
@@ -100,9 +105,11 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
     public static final int MEDIA_TYPE_IMAGE = 1;
     public static final int MEDIA_TYPE_VIDEO = 2;
     private static final int UPLOAD_IMGURL_SUCCESS = 3;
-    public static final String EXTRA_FROM_ME ="fromMe";
+    public static final String EXTRA_FROM_ME = "fromMe";
 
-    /** 头像上传后的地址 **/
+    /**
+     * 头像上传后的地址
+     **/
     private String mUploadFilePath = "";
     private IconChoosePopupWindow mIconChoosePopupWindow;
 
@@ -110,7 +117,7 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            if(mIsOpen == false) {
+            if (mIsOpen == false) {
                 return;
             }
 
@@ -127,11 +134,12 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
                 }else {
                     mBtNote.setText(getString(R.string.mymeeting_note));
                 }
-            }else*/ if(target == UPLOAD_IMGURL_SUCCESS) {
+            }else*/
+            if (target == UPLOAD_IMGURL_SUCCESS) {
                 SharePreferenceUtils.saveUserString(Constants.USER_IMG, mUploadFilePath);
 
-                if(mUploadFilePath.contains("https:"))
-                    mUploadFilePath = mUploadFilePath.replaceFirst("s","");
+                if (mUploadFilePath.contains("https:"))
+                    mUploadFilePath = mUploadFilePath.replaceFirst("s", "");
                 Glide.with(getActivity()).load(mUploadFilePath).transform(new CircleTransform(getActivity())).into(mCivHeadIcon);
             }
         }
@@ -148,7 +156,7 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
                 action(contact, R.string.settings_contact, false, false, false);
                 break;
             case R.id.settings_share_panel:
-                ShareUtils.shareTextWithUrl(getActivity(), "IFSC", "我正在使用“参会易”,完全不同的参会体验。建议你下载试试！", "http://app.incongress.cn/ifsc2018/app/", null);
+                ShareUtils.shareTextWithUrl(getActivity(), Constants.APPNAME, getString(R.string.settings_share_wxtitle), Constants.APP_DOWNLOAD_SITE, null);
                 /*SettingsShare share = new SettingsShare();
                 action(share, R.string.settings_share_title, false, false, false);*/
                 break;
@@ -159,9 +167,9 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
                 help.setView(mText);
                 action(help, R.string.settings_help_title, view, false, false, false);*/
                 String url = "http://weixin.incongress.cn/xhy/xhyHtml5/html/feedback.html";
-                url = url + "?userId=" + AppApplication.userId  +"&project=" + Constants.PROJECT_NAME + "&lan=" + AppApplication.getSystemLanuageCode();
+                url = url + "?userId=" + AppApplication.userId + "&project=" + Constants.PROJECT_NAME + "&lan=" + AppApplication.getSystemLanuageCode();
 
-                CollegeActivity.startCitCollegeActivity(getContext(),getActivity().getResources().getString(R.string.settings_help_title), url);
+                CollegeActivity.startCitCollegeActivity(getContext(), getActivity().getResources().getString(R.string.settings_help_title), url);
                 break;
             case R.id.bt_login:
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
@@ -185,20 +193,20 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
                 action(noteManager, R.string.mymeeting_note, false, false, false);
                 break;
             case R.id.bt_tiezi:
-                if(AppApplication.isUserLogIn()) {
-                    action(HistoryPostActionFragment.getInstance(),R.string.mymeeting_tiezi,false,false, false);
-                }else {
-                  LoginActivity.startLoginActivity(getActivity(), LoginActivity.TYPE_NORMAL, "" , "", "" , "");
+                if (AppApplication.isUserLogIn()) {
+                    action(HistoryPostActionFragment.getInstance(), R.string.mymeeting_tiezi, false, false, false);
+                } else {
+                    LoginActivity.startLoginActivity(getActivity(), LoginActivity.TYPE_NORMAL, "", "", "", "");
 //                    ChooseIdentityActivity.startChooseIdentityActivity(getActivity());
                 }
                 break;
             case R.id.civ_me:
-                if(AppApplication.isUserLogIn()) {
+                if (AppApplication.isUserLogIn()) {
                     initPopupWindow();
                     mIconChoosePopupWindow.showAtLocation(mLlPersonInfo, Gravity.BOTTOM, 0, 0);
                     lightOff();
-                }else {
-                    LoginActivity.startLoginActivity(getActivity(), LoginActivity.TYPE_NORMAL, "" , "", "" , "");
+                } else {
+                    LoginActivity.startLoginActivity(getActivity(), LoginActivity.TYPE_NORMAL, "", "", "", "");
 //                    ChooseIdentityActivity.startChooseIdentityActivity(getActivity());
                 }
                 break;
@@ -261,11 +269,12 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        StatusBarUtil.setStatusBarDarkTheme(getActivity(),false);
         View view = inflater.inflate(R.layout.fragment_me, container, false);
 
-       // mRlMyField = (RelativeLayout) view.findViewById(R.id.rl_my_field);
+        // mRlMyField = (RelativeLayout) view.findViewById(R.id.rl_my_field);
         //mRlMyKeshi = (RelativeLayout) view.findViewById(R.id.rl_my_keshi);
-        mCivHeadIcon  = (ImageView) view.findViewById(R.id.civ_me);
+        mCivHeadIcon = (ImageView) view.findViewById(R.id.civ_me);
         mMeetingAlertPanel = (RelativeLayout) view.findViewById(R.id.mycenter_warmning_panel);
         mBtLogin = (Button) view.findViewById(R.id.bt_login);
         mContackPanel = (RelativeLayout) view.findViewById(R.id.settings_contact_panel);
@@ -293,51 +302,16 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
 //        mTvCacheSize.setText(cacheSize);
 
         initEvents();
-
-        //判断是否登录
-        if (AppApplication.isUserLogIn()) {
-            showLoginInfo();
-        }
+        refreshInfo();
         return view;
     }
 
-    public void showLoginResult() {
-        if (AppApplication.isUserLogIn()) {
-            showLoginInfo();
-        }
-    }
-
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        showLoginResult();
-    }
-
-    /**
-     * 显示登录信息
-     */
-    private void showLoginInfo() {
-        if(mBtLogin!= null){
-            mBtLogin.setVisibility(View.GONE);
-            mLlPersonInfo.setVisibility(View.VISIBLE);
-
-            username.setText(SharePreferenceUtils.getUser(Constants.USER_NAME));
-            welcomeInfo.setText(getString(R.string.mymeeting_welcome_sb, SharePreferenceUtils.getUser(Constants.USER_NAME)));
-            mBtLoginout.setVisibility(View.VISIBLE);
-
-            Glide.with(getActivity()).load(SharePreferenceUtils.getUser(Constants.USER_IMG)).placeholder(R.drawable.professor_default).transform(new CircleTransform(getActivity())).into(mCivHeadIcon);
-        }
-       }
 
     /**
      * 退出登录
      */
     private void loginOut() {
-//        AppApplication.clearSPValues();
-        mLlPersonInfo.setVisibility(View.GONE);
-        mBtLogin.setVisibility(View.VISIBLE);
-        mBtLoginout.setVisibility(View.GONE);
-        mCivHeadIcon.setImageResource(R.drawable.professor_default);
+        refreshInfo();
         ParseUser.clearUserInfo(getActivity());
         /*AppApplication.setSPStringValue(Constants.USER_NAME, StringUtils.EMPTY_STR);
         AppApplication.setSPIntegerValue(Constants.USER_ID, -1);
@@ -362,10 +336,9 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
     }
 
 
-
     private void queryCount() {
         //查询我的发帖
-        CHYHttpClientUsage.getInstanse().doGetSceneShowByUser(AppApplication.conId + "", "-1", AppApplication.userId + "", AppApplication.userType + "", new JsonHttpResponseHandler() {
+        CHYHttpClientUsage.getInstanse().doGetSceneShowByUser(Constants.conId + "", "-1", AppApplication.userId + "", AppApplication.userType + "", new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
@@ -380,8 +353,6 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
 
         getNoteCount();
     }
-
-
 
 
     private void initPopupWindow() {
@@ -424,11 +395,11 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
     private void doUploadFile(String userId, String userType, File uploadFile) {
 
         try {
-            CHYHttpClientUsage.getInstanse().doCreateUserImg(userId, userType, uploadFile,  new JsonHttpResponseHandler() {
+            CHYHttpClientUsage.getInstanse().doCreateUserImg(userId, userType, uploadFile, new JsonHttpResponseHandler() {
                 @Override
                 public void onStart() {
                     super.onStart();
-                    mProgressDialog = ProgressDialog.show(getActivity(),null,"loading...");
+                    mProgressDialog = ProgressDialog.show(getActivity(), null, "loading...");
                 }
 
                 @Override
@@ -461,7 +432,7 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
 
     @Override
     public void onHanlderSuccess(int reqeustCode, List<PhotoInfo> resultList) {
-        if(mIconChoosePopupWindow!= null && mIconChoosePopupWindow.isShowing())
+        if (mIconChoosePopupWindow != null && mIconChoosePopupWindow.isShowing())
             mIconChoosePopupWindow.dismiss();
 
         String photoPath = "";
@@ -479,7 +450,7 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
         }
 
         //上传
-        doUploadFile(AppApplication.userId+"",AppApplication.userType+"", new File(mUploadFilePath));
+        doUploadFile(AppApplication.userId + "", AppApplication.userType + "", new File(mUploadFilePath));
     }
 
     @Override
@@ -502,5 +473,30 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
         mIsOpen = false;
 
         MobclickAgent.onPageEnd(Constants.FRAGMENT_PERSONCENTER);
+    }
+
+    //刷新用户信息
+    public void refreshInfo() {
+        if (SharePreferenceUtils.getUserBoolean(Constants.USER_IS_LOGIN, false)) {
+            mBtLogin.setVisibility(View.GONE);
+            mLlPersonInfo.setVisibility(View.VISIBLE);
+            username.setText(SharePreferenceUtils.getUser(Constants.USER_NAME));
+            welcomeInfo.setText(getString(R.string.mymeeting_welcome_sb, SharePreferenceUtils.getUser(Constants.USER_NAME)));
+            mBtLoginout.setVisibility(View.VISIBLE);
+            Glide.with(getActivity()).load(SharePreferenceUtils.getUser(Constants.USER_IMG)).placeholder(R.drawable.professor_default).transform(new CircleTransform(getActivity())).into(mCivHeadIcon);
+        }else {
+            mLlPersonInfo.setVisibility(View.GONE);
+            mBtLogin.setVisibility(View.VISIBLE);
+            mBtLoginout.setVisibility(View.GONE);
+            mCivHeadIcon.setImageResource(R.drawable.professor_default);
+        }
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(!hidden){
+            StatusBarUtil.setStatusBarDarkTheme(getActivity(),false);
+        }
     }
 }

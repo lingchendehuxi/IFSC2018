@@ -43,10 +43,11 @@ public class OnlyWebViewActionFragment extends BaseFragment {
 
     private static final String BUNDLE_URL = "url";
 
-    public OnlyWebViewActionFragment(){}
+    public OnlyWebViewActionFragment() {
+    }
 
     public static final OnlyWebViewActionFragment getInstance(String url) {
-        OnlyWebViewActionFragment fragment  = new OnlyWebViewActionFragment();
+        OnlyWebViewActionFragment fragment = new OnlyWebViewActionFragment();
         Bundle bundle = new Bundle();
         bundle.putString(BUNDLE_URL, url);
         fragment.setArguments(bundle);
@@ -62,7 +63,7 @@ public class OnlyWebViewActionFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_onlywebview,null);
+        View view = inflater.inflate(R.layout.fragment_onlywebview, null);
         mOnlyWebview = (ProgressWebView) view.findViewById(R.id.wv_only);
         mPhotoView = (PhotoView) view.findViewById(R.id.photoview);
 
@@ -90,30 +91,30 @@ public class OnlyWebViewActionFragment extends BaseFragment {
     private void loadUrl(String url) {
         mOnlyWebview.loadUrl(url);
     }
+
     /**
      * 分享
+     *
      * @param view
      */
     public void setRightView(View view) {
-        if(view != null) {
+        if (view != null) {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(AppApplication.systemLanguage == 1)
-                        ShareUtils.shareTextWithUrl(getActivity(),"IFSC基本信息","参会指南", getActivity().getString(Constants.get_MEETING_GUIDE(), AppApplication.conId, AppApplication.getSystemLanuageCode()),null);
-                    else
-                        ShareUtils.shareTextWithUrl(getActivity(),"IFSC Infomation","Meeting Guide", getActivity().getString(Constants.get_MEETING_GUIDE(), AppApplication.conId, AppApplication.getSystemLanuageCode()),null);
+                    ShareUtils.shareTextWithUrl(getActivity(), getString(R.string.share_info), getString(R.string.party_guide), getActivity().getString(Constants.get_MEETING_GUIDE(), Constants.conId, AppApplication.getSystemLanuageCode()), null);
                 }
             });
         }
     }
+
     /**
      * webview配置
      */
     private void initWebViewSetting() {
         mOnlyWebview.getSettings().setJavaScriptEnabled(true);//允许webview进行js调用
         //只有在系统版本号低于18的情况下才调用该方法
-        if(android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2) {
+        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2) {
             mOnlyWebview.getSettings().setPluginState(WebSettings.PluginState.ON);
         }
         mOnlyWebview.getSettings().setAllowFileAccess(true);
@@ -136,7 +137,7 @@ public class OnlyWebViewActionFragment extends BaseFragment {
         mOnlyWebview.getSettings().setAppCacheEnabled(true);
         mOnlyWebview.getSettings().setJavaScriptEnabled(true);
 
-        mOnlyWebview.setWebViewClient(new WebViewClient(){
+        mOnlyWebview.setWebViewClient(new WebViewClient() {
             //支持SSL验证，handler.proceed 通过所有的ssl验证，super.onReceiveSslErro这个方法要忽略掉
             @Override
             public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
@@ -184,26 +185,28 @@ public class OnlyWebViewActionFragment extends BaseFragment {
         });
     }
 
-    public class GetImgUrl{
+    public class GetImgUrl {
         @JavascriptInterface
-        public void getUrl(String Imgurl){
+        public void getUrl(String Imgurl) {
             mImgUrl = Imgurl;
             hand.sendEmptyMessage(1);
         }
     }
 
     private String mImgUrl;
+
     @Override
     public void onPause() {
         super.onPause();
         clearCache();
         mOnlyWebview.reload();
     }
-    Handler hand = new Handler(){
+
+    Handler hand = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            switch (msg.what){
+            switch (msg.what) {
                 case 1:
                     mPhotoView.setVisibility(View.VISIBLE);
                     Glide.with(getActivity()).load(mImgUrl).placeholder(R.drawable.default_load_bg).into(new SimpleTarget<GlideDrawable>() {

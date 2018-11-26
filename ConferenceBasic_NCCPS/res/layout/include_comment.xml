@@ -35,7 +35,7 @@
             android:id="@+id/bt_send_comment"
             android:layout_weight="2"
             android:layout_width="0dp"
-            android:background="@drawable/bg_button"
+            android:background="@drawable/bg_button_ed"
             android:textColor="@color/white"
             android:text="@string/send"
             android:layout_height="38dp" />

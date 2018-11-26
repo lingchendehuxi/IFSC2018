@@ -44,6 +44,7 @@ import com.android.incongress.cd.conference.utils.MyLogger;
 import com.android.incongress.cd.conference.utils.PicUtils;
 import com.android.incongress.cd.conference.utils.StringUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
+import com.android.incongress.cd.conference.widget.StatusBarUtil;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -104,6 +105,7 @@ public class ScenicXiuFragment extends BaseFragment implements View.OnClickListe
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
+        StatusBarUtil.setStatusBarDarkTheme(getActivity(),false);
         View view = inflater.inflate(R.layout.fragment_scenic_xiu, null);
         mRecyclerView = (XRecyclerView) view.findViewById(R.id.recyclerview);
 
@@ -209,7 +211,7 @@ public class ScenicXiuFragment extends BaseFragment implements View.OnClickListe
         mIvFirst.setOnClickListener(this);
         mIvSecond.setOnClickListener(this);
 
-        mRecyclerView.addHeaderView(header);
+        //mRecyclerView.addHeaderView(header);
 
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
@@ -434,7 +436,7 @@ public class ScenicXiuFragment extends BaseFragment implements View.OnClickListe
      * @param lastSceneShowId
      */
     private void getDownData(final String lastSceneShowId) {
-        CHYHttpClientUsage.getInstanse().doGetSceneShowDown(AppApplication.conId + "", lastSceneShowId, AppApplication.userId + "", AppApplication.userType + "", new JsonHttpResponseHandler("gbk") {
+        CHYHttpClientUsage.getInstanse().doGetSceneShowDown(Constants.conId + "", lastSceneShowId, AppApplication.userId + "", AppApplication.userType + "", new JsonHttpResponseHandler("gbk") {
             @Override
             public void onFinish() {
                 super.onFinish();
@@ -600,5 +602,13 @@ public class ScenicXiuFragment extends BaseFragment implements View.OnClickListe
     public void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd(Constants.FRAGMENT_SCENICXIU);
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(!hidden){
+            StatusBarUtil.setStatusBarDarkTheme(getActivity(),false);
+        }
     }
 }

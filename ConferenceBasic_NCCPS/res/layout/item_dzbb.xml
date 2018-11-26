@@ -53,14 +53,15 @@
             android:layout_height="wrap_content"
             android:textSize="15sp" />
     </RelativeLayout>
-<TextView
-    android:id="@+id/jingxuan"
-    android:layout_marginTop="3dp"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textSize="8dp"
-    android:padding="3dp"
-    android:textColor="@color/theme_color"
-    android:text="精选"
-    android:background="@drawable/bg_login_selected"/>
+
+    <TextView
+        android:id="@+id/jingxuan"
+        android:layout_width="156dp"
+        android:layout_height="345dp"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/bg_login_selected"
+        android:padding="3dp"
+        android:text="精选"
+        android:textColor="@color/theme_color"
+        android:textSize="8dp" />
 </LinearLayout>

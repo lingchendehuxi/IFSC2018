@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.incongress.cd.conference.base.BaseFragment;
+import com.android.incongress.cd.conference.save.SharePreferenceUtils;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 import com.android.incongress.cd.conference.utils.AlermClock;
 import com.android.incongress.cd.conference.utils.OnWheelChangedListener;
@@ -84,15 +85,14 @@ public class MyMeetingWarmning extends BaseFragment implements OnClickListener {
 		mrepeateTimesPanel.setOnClickListener(this);
 		currentStrings = repeateDis;
 		currentValue = repeateDisValue;
-		SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(getActivity());
-		index_dis = shared.getInt(key_dis, 3);
-		index_times = shared.getInt(key_times, 3);
-		index_timesDis = shared.getInt(key_timesDis, 2);
+		index_dis = SharePreferenceUtils.getAppInt(key_dis, 3);
+		index_times = SharePreferenceUtils.getAppInt(key_times, 3);
+		index_timesDis = SharePreferenceUtils.getAppInt(key_timesDis, 2);
 		
 		mDis.setText(repeateDis[index_dis]);
 		mTimesDis.setText(repeateTimes[index_times]);
 		mTimes.setText(repeateTimesDis[index_timesDis]);
-		mCheckBox.setChecked(shared.getBoolean(AlermClock.KEY_ENABLE, true));
+		mCheckBox.setChecked(SharePreferenceUtils.getAppBoolean(AlermClock.KEY_ENABLE, true));
 		mWheelView.addChangingListener(new OnWheelChangedListener() {
 			
 			@Override
@@ -113,10 +113,9 @@ public class MyMeetingWarmning extends BaseFragment implements OnClickListener {
 					index_key = key_times;
 					mTextView = mTimesDis;
 				}
-				SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
-				sp.edit().putInt(key, Integer.parseInt(currentValue[newValue])).commit();
+				SharePreferenceUtils.saveAppInt(key, Integer.parseInt(currentValue[newValue]));
 				mTextView.setText(currentStrings[newValue]);
-				sp.edit().putInt(index_key, newValue).commit();
+				SharePreferenceUtils.saveAppInt(index_key, newValue);
 				System.out.println("currentStrings[newValue]===" + currentStrings[newValue]);
 			}
 		});
@@ -124,8 +123,7 @@ public class MyMeetingWarmning extends BaseFragment implements OnClickListener {
 			
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
-				sp.edit().putBoolean(AlermClock.KEY_ENABLE, isChecked).commit();
+				SharePreferenceUtils.saveAppBoolean(AlermClock.KEY_ENABLE, isChecked);
 				if(isChecked){
 					AlermClock.calculateNextAlert(getActivity());
 				}else {
@@ -143,10 +141,9 @@ public class MyMeetingWarmning extends BaseFragment implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(getActivity());
-		index_dis = shared.getInt(key_dis, 5);
-		index_times = shared.getInt(key_times, 3);
-		index_timesDis = shared.getInt(key_timesDis, 2);
+		index_dis = SharePreferenceUtils.getAppInt(key_dis, 5);
+		index_times = SharePreferenceUtils.getAppInt(key_times, 3);
+		index_timesDis = SharePreferenceUtils.getAppInt(key_timesDis, 2);
 		int item = 0;
 		switch (v.getId()) {
 		case R.id.mycenter_w_timem_panel:

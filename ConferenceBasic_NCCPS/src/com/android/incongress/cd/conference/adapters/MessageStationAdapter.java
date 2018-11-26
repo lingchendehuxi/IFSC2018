@@ -3,14 +3,19 @@ package com.android.incongress.cd.conference.adapters;
 import android.content.Context;
 import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextPaint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.beans.MessageBean;
+import com.android.incongress.cd.conference.utils.transformer.CircleTransform;
+import com.android.incongress.cd.conference.widget.CircleImageView;
+import com.bumptech.glide.Glide;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 import com.yqritc.recyclerviewflexibledivider.FlexibleDividerDecoration;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
@@ -39,8 +44,9 @@ public class MessageStationAdapter extends RecyclerView.Adapter<MessageStationAd
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ViewHolder holder = null;
         View view;
+        viewType = TYPE_HAVE_URL;
         if (viewType == TYPE_HAVE_URL) {
-            view = mInflater.inflate(R.layout.item_messagestation_with_url, parent, false);
+            view = mInflater.inflate(R.layout.item_messagestation_with_url,parent, false);
             view.setOnClickListener(this);
             holder = new ViewHolder(view);
         } else {
@@ -48,7 +54,7 @@ public class MessageStationAdapter extends RecyclerView.Adapter<MessageStationAd
             view.setOnClickListener(this);
             holder = new ViewHolder(view);
         }
-        AppApplication.applyFont(mContext,view,"fonts/zd.TTF");
+        //AppApplication.applyFont(mContext,view,"fonts/SourceHanSans_Light.otf");
         return holder;
     }
 
@@ -86,15 +92,16 @@ public class MessageStationAdapter extends RecyclerView.Adapter<MessageStationAd
 
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvMessage;
+        TextView tvMessage,tv_title;
         TextView tvTime;
-        View rootView;
+        CircleImageView iv_left;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            rootView = itemView.findViewById(R.id.ll_item);
-            tvMessage = (TextView) itemView.findViewById(R.id.tv_message);
-            tvTime = (TextView) itemView.findViewById(R.id.tv_time);
+            tv_title = itemView.findViewById(R.id.tv_title);
+            iv_left = itemView.findViewById(R.id.iv_left);
+            tvMessage = itemView.findViewById(R.id.tv_message);
+            tvTime = itemView.findViewById(R.id.tv_time);
         }
     }
 

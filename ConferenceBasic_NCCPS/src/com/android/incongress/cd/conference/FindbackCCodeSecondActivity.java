@@ -56,7 +56,7 @@ public class FindbackCCodeSecondActivity extends BaseActivity {
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-            CHYHttpClientUsage.getInstanse().doFindbackCCode(name,mobile, AppApplication.getSystemLanuageCode(), Constants.PROJECT_NAME, AppApplication.conId + "",new JsonHttpResponseHandler(Constants.ENCODING_GBK){
+            CHYHttpClientUsage.getInstanse().doFindbackCCode(name,mobile, AppApplication.getSystemLanuageCode(), Constants.PROJECT_NAME, Constants.conId + "",new JsonHttpResponseHandler(Constants.ENCODING_GBK){
                 @Override
                 public void onStart() {
                     super.onStart();

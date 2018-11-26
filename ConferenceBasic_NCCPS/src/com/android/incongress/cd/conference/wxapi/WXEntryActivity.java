@@ -1,8 +1,0 @@
-package com.android.incongress.cd.conference.wxapi;
-
-
-import com.umeng.weixin.callback.WXCallbackActivity;
-
-public class WXEntryActivity extends WXCallbackActivity {
-
-}

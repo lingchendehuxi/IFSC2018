@@ -48,6 +48,7 @@ import android.widget.TextView;
 import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.model.Alert;
 import com.android.incongress.cd.conference.model.ConferenceDbUtils;
+import com.android.incongress.cd.conference.save.SharePreferenceUtils;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 
 import java.util.List;
@@ -86,8 +87,7 @@ public class AlarmKlaxon extends Service {
                     Alert bean = (Alert) msg.obj;
                     stop();
                     stopSelf();
-                    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(AlarmKlaxon.this);
-                    int times = sp.getInt(AlermClock.KEY_TIMES, 2);
+                    int times = SharePreferenceUtils.getAppInt(AlermClock.KEY_TIMES, 2);
                     if (bean != null) {
                         int currentTimes = Integer.parseInt(bean.getRepeattimes());
                         if (times - currentTimes > 0) {
@@ -188,11 +188,10 @@ public class AlarmKlaxon extends Service {
             stopSelf();
             return START_NOT_STICKY;
         }
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean enable = sp.getBoolean(AlermClock.KEY_ENABLE, true);
+        boolean enable = SharePreferenceUtils.getAppBoolean(AlermClock.KEY_ENABLE, true);
 
         if (!enable) {
-            int times = sp.getInt(AlermClock.KEY_TIMES, 2);
+            int times = SharePreferenceUtils.getAppInt(AlermClock.KEY_TIMES, 2);
             int currentTimes = Integer.parseInt(alarm.getRepeattimes());
             if (times - currentTimes > 0) {
                 alarm.setRepeattimes(String.valueOf(++currentTimes));
@@ -247,8 +246,6 @@ public class AlarmKlaxon extends Service {
         if (!language.endsWith("zh") && !titles[1].equals("null")) {
             title = titles[1];
         }
-        SharedPreferences spPreferences = PreferenceManager.getDefaultSharedPreferences(AppApplication.getContext());
-        int before = spPreferences.getInt(AlermClock.KEY_BEFORE, 5);
         String classroom = "";
         classroom = note.getRoom();
         System.out.println("ClassRoom===" + classroom);
@@ -272,8 +269,7 @@ public class AlarmKlaxon extends Service {
                 stop();
                 disableKiller();
                 stopSelf();
-                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(AlarmKlaxon.this);
-                int times = sp.getInt(AlermClock.KEY_TIMES, 2);
+                int times = SharePreferenceUtils.getAppInt(AlermClock.KEY_TIMES, 2);
                 int currentTimes = Integer.parseInt(note.getRepeattimes());
                 if (times - currentTimes > 0) {
                     note.setRepeattimes(String.valueOf(++currentTimes));

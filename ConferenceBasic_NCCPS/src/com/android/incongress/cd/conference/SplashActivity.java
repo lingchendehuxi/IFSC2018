@@ -267,10 +267,10 @@ public class SplashActivity extends BaseActivity {
             }
         };
 
-        final boolean firstlocal = SharePreferenceUtils.getAppBooleanT(Constants.DB_frist);
+        final boolean firstlocal = SharePreferenceUtils.getAppBoolean(Constants.DB_frist,true);
         if (AppApplication.instance().NetWorkIsOpen()) {
             //最开始先上传会议ID,返回会议状态
-            CHYHttpClientUsage.getInstanse().doQueryShenHe(AppApplication.conId + "", new JsonHttpResponseHandler() {
+            CHYHttpClientUsage.getInstanse().doQueryShenHe(Constants.conId + "", new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     super.onSuccess(statusCode, headers, response);
@@ -462,7 +462,7 @@ public class SplashActivity extends BaseActivity {
      */
     public void firstUpdateAndCheckNewInfo() {
 
-        mDbVersion = SharePreferenceUtils.getAppInt(Constants.PREFERENCE_DB_VERSION);
+        mDbVersion = SharePreferenceUtils.getAppInt(Constants.PREFERENCE_DB_VERSION,0);
 
         new BaseAsyncTask(SplashActivity.this) {
             @Override
@@ -484,7 +484,7 @@ public class SplashActivity extends BaseActivity {
 
             @Override
             protected void postWork() {
-                int conId = AppApplication.conId;
+                int conId = Constants.conId;
                 int type = AppApplication.conType;
                 String token = SharePreferenceUtils.getAppString("incongress_token");
 

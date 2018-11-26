@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <include layout="@layout/activity_home_titlebar" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="@string/welcome"
+            android:textColor="@color/login_gray" />
+    </LinearLayout>
+
+    <include
+        android:id="@+id/ll_login"
+        layout="@layout/activity_login"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/ll_getcode"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="@dimen/margin_40"
+        android:layout_marginRight="@dimen/margin_40"
+        android:layout_weight="3"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mobile_text" />
+
+        <com.android.incongress.cd.conference.widget.ClearEditText
+            android:id="@+id/et_mobile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_20"
+            android:background="@null"
+            android:drawableRight="@drawable/edittext_delete"
+            android:hint="@string/telephone_number"
+            android:inputType="number"
+            android:maxLength="13"
+            android:paddingBottom="6dp"
+            android:textColor="@color/theme_color"
+            android:textColorHint="@color/grap_color"
+            android:textSize="@dimen/text_20" />
+
+        <View
+            android:id="@+id/view_background"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/login_gray" />
+
+        <Button
+            android:id="@+id/bt_getcode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_60"
+            android:background="@drawable/bg_button_ed"
+            android:text="@string/get_code"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_30"
+            android:gravity="center_horizontal"
+            android:text="@string/login_tip"
+            android:textColor="@color/theme_color"
+            android:visibility="gone"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_bottom_wx"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_marginRight="@dimen/margin_40"
+        android:layout_marginLeft="@dimen/margin_40">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0.3dp"
+            android:layout_weight="1"
+            android:background="@color/login_gray" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:text="@string/other_type_login" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0.3dp"
+            android:layout_weight="1"
+            android:background="@color/login_gray" />
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/we_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="@dimen/margin_20"
+        android:scaleType="center"
+        android:src="@drawable/weixin_login" />
+
+
+</LinearLayout>

@@ -329,7 +329,7 @@ public class DynamicHomeFragment extends BaseFragment implements View.OnClickLis
         mLlConstainer.setLayoutAnimation(lac);
         getHomeIconInfo();
 
-        CHYHttpClientUsage.getInstanse().doGetLookCount(AppApplication.conId + "", AppApplication.userId + "", AppApplication.userType + "", AppApplication.TOKEN_IMEI, new JsonHttpResponseHandler() {
+        CHYHttpClientUsage.getInstanse().doGetLookCount(Constants.conId + "", AppApplication.userId + "", AppApplication.userType + "", AppApplication.TOKEN_IMEI, new JsonHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
@@ -892,7 +892,7 @@ public class DynamicHomeFragment extends BaseFragment implements View.OnClickLis
      * 专家秘书
      */
     private void goSecretary() {
-        CHYHttpClientUsage.getInstanse().doGetSceneShowQuestions(AppApplication.conId + "", AppApplication.userId + "", "-1", AppApplication.getSystemLanuageCode(), new JsonHttpResponseHandler("gbk") {
+        CHYHttpClientUsage.getInstanse().doGetSceneShowQuestions(Constants.conId + "", AppApplication.userId + "", "-1", AppApplication.getSystemLanuageCode(), new JsonHttpResponseHandler("gbk") {
             @Override
             public void onStart() {
                 super.onStart();
@@ -973,7 +973,7 @@ public class DynamicHomeFragment extends BaseFragment implements View.OnClickLis
             lan2 = "en";
         }
         CollegeActivity.startCitCollegeActivity(getActivity(), getString(R.string.home_hands_on),
-                getString(Constants.get_HANDS_ON_SITE(), AppApplication.conId, lan2, AppApplication.userId, AppApplication.userType));
+                getString(Constants.get_HANDS_ON_SITE(), Constants.conId, lan2, AppApplication.userId, AppApplication.userType));
 
     }
 
@@ -1017,7 +1017,7 @@ public class DynamicHomeFragment extends BaseFragment implements View.OnClickLis
      * 学院
      */
     private void goCollege() {
-        CollegeActivity.startCitCollegeActivity(getActivity(), getString(R.string.home_cit_college), getString(Constants.get_CIT_COLLEGE(), AppApplication.conId, AppApplication.getSystemLanuageCode(), AppApplication.userId, AppApplication.userType));
+        CollegeActivity.startCitCollegeActivity(getActivity(), getString(R.string.home_cit_college), getString(Constants.get_CIT_COLLEGE(), Constants.conId, AppApplication.getSystemLanuageCode(), AppApplication.userId, AppApplication.userType));
     }
 
     /**
@@ -1151,7 +1151,7 @@ public class DynamicHomeFragment extends BaseFragment implements View.OnClickLis
      * 获取数据
      */
     private void getHomeNums() {
-        CHYHttpClientUsage.getInstanse().doGetLookCount(AppApplication.conId + "", AppApplication.userId + "", AppApplication.userType + "", AppApplication.TOKEN_IMEI, new JsonHttpResponseHandler() {
+        CHYHttpClientUsage.getInstanse().doGetLookCount(Constants.conId + "", AppApplication.userId + "", AppApplication.userType + "", AppApplication.TOKEN_IMEI, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);

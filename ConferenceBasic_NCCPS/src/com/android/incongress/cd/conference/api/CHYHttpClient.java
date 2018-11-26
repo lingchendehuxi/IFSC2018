@@ -20,7 +20,7 @@ public class CHYHttpClient {
 //    private static final String BASE_URL2 = "http://incongress.cn/conferences.do";
 //    private static final String BASE_URL2 = "http://incongress.cn/Conferences/conferences.do";
 //  private static final String BASE_URL2= "http://incongress.cn/Conferences/conferences.do";//部分接口在另外一个地址中
-    public static final String BASE_URL2 = "http://app.incongress.cn/Conferences/conferencesHttps.do";
+    public static final String BASE_URL2 = "http://app.incongress.cn/Conferences/conferencesHttps.do?loginV6";
 
 
     //本地调试地址

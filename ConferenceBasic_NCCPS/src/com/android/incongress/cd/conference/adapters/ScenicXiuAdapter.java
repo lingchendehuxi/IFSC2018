@@ -595,6 +595,7 @@ public class ScenicXiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             tvPraiseNum = (TextView) itemView.findViewById(R.id.tv_praise_num);
             llMoreOperationContainer = (LinearLayout) itemView.findViewById(R.id.ll_more_operate_container);
             ivMoreOperationClick = (ImageView) itemView.findViewById(R.id.iv_operate_more);
+            ivMoreOperationClick.setVisibility(Constants.SCENICXIU_PRISE_COMMENT ? View.VISIBLE : View.GONE);
             tvPraise = (TextView) itemView.findViewById(R.id.tv_praise);
         }
     }

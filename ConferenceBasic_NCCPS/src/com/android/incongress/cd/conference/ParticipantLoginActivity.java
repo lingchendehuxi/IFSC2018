@@ -160,8 +160,8 @@ public class ParticipantLoginActivity extends BaseActivity {
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-            CHYHttpClientUsage.getInstanse().doLoginByCode(Constants.LOGIN_TYPE_PATICIPATER, name, code, mobile,"",
-                    AppApplication.getSystemLanuageCode(), Constants.PROJECT_NAME, AppApplication.conId,
+            /*CHYHttpClientUsage.getInstanse().doLoginByCode(Constants.LOGIN_TYPE_PATICIPATER, name, code, mobile,"",
+                    AppApplication.getSystemLanuageCode(), Constants.PROJECT_NAME, Constants.conId,
                     new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
                         @Override
                         public void onStart() {
@@ -184,7 +184,7 @@ public class ParticipantLoginActivity extends BaseActivity {
                                 int state = response.getInt("state");
                                 if (state == 1) {
                                     ParseUser.saveUserInfo(response.toString());
-                                    /*Gson gson = new Gson();
+                                    *//*Gson gson = new Gson();
                                     UserInfoBean user = gson.fromJson(response.toString(), UserInfoBean.class);
 
                                     SharePreferenceUtils.saveUserString(Constants.USER_IS_LOGIN, "true");
@@ -192,11 +192,11 @@ public class ParticipantLoginActivity extends BaseActivity {
                                     AppApplication.setSPStringValue(Constants.USER_IMG, user.getImg());
                                     AppApplication.setSPStringValue(Constants.USER_MOBILE, user.getMobilePhone());
                                     AppApplication.setSPIntegerValue(Constants.USER_ID, user.getUserId());
-                                    AppApplication.setSPIntegerValue(Constants.USER_TYPE, user.getUserType());*/
+                                    AppApplication.setSPIntegerValue(Constants.USER_TYPE, user.getUserType());*//*
 
-                                    /*AppApplication.userId = user.getUserId();
+                                    *//*AppApplication.userId = user.getUserId();
                                     AppApplication.username = user.getName();
-                                    AppApplication.userType = user.getUserType();*/
+                                    AppApplication.userType = user.getUserType();*//*
 
                                     setResult(RESULT_OK);
                                     finish();
@@ -212,7 +212,7 @@ public class ParticipantLoginActivity extends BaseActivity {
                             }
 
                         }
-                    });
+                    });*/
         } else {
             ToastUtils.showShorToast(R.string.login_empty_tips);
         }

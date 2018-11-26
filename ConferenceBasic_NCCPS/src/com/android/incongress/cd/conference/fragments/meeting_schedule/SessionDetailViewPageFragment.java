@@ -1,5 +1,6 @@
 package com.android.incongress.cd.conference.fragments.meeting_schedule;
 
+import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.AudioManager;
 import android.media.SoundPool;
@@ -90,9 +91,9 @@ public class SessionDetailViewPageFragment extends BaseFragment {
         mSessionDetail = (RelativeLayout) view.findViewById(R.id.session_detail_layout);
         mViewPager = (ScrollControlViewpager) view.findViewById(R.id.session_pager);
         mTvPageInfo = (TextView) view.findViewById(R.id.tv_page_info);
-
         mMeetingYY = (TextView) view.findViewById(R.id.meeting_yy);
         mMeetingLayout = (LinearLayout) view.findViewById(R.id.meeting_layout);
+        mMeetingLayout.setVisibility(Constants.SCHEDULE_BOOK ? View.VISIBLE : View.GONE);
         mNumTabs = mSessionBeanList.size();
         Titles = new CharSequence[mSessionBeanList.size()];
 
@@ -107,8 +108,8 @@ public class SessionDetailViewPageFragment extends BaseFragment {
             fragment.setViewPager(mViewPager);
             mSessionDetailFragments.add(fragment);
         }
-        sPool =new SoundPool(10, AudioManager.STREAM_SYSTEM, 5);//第一个参数为同时播放数据流的最大个数，第二数据流类型，第三为声音质量
-        final int music=sPool.load(getActivity(), R.raw.fy, 1);
+        sPool = new SoundPool(10, AudioManager.STREAM_SYSTEM, 5);//第一个参数为同时播放数据流的最大个数，第二数据流类型，第三为声音质量
+        final int music = sPool.load(getActivity(), R.raw.fy, 1);
         mAdapter = new SessionDetailViewPagerAdapter(getChildFragmentManager(), mSessionDetailFragments);
         mViewPager.setAdapter(mAdapter);
         mViewPager.setCurrentItem(mPosition);
@@ -130,9 +131,9 @@ public class SessionDetailViewPageFragment extends BaseFragment {
 
             @Override
             public void onPageScrollStateChanged(int state) {
-                if(state == 1){
+                if (state == 1) {
                     mMeetingLayout.setVisibility(View.GONE);
-                }else{
+                } else {
                     mMeetingLayout.setVisibility(View.GONE);
                 }
             }
@@ -141,21 +142,22 @@ public class SessionDetailViewPageFragment extends BaseFragment {
         mMeetingYY.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(AppApplication.isUserLogIn()){
+                if (AppApplication.isUserLogIn()) {
                     newInitPopupWindow();
                     mIconChoosePopupWindow.showAtLocation(mSessionDetail, Gravity.BOTTOM, 0, 0);
                     lightOff();
-                }else{
-                    LoginActivity.startLoginActivity(getActivity(), LoginActivity.TYPE_NORMAL, "" , "", "" , "");
+                } else {
+                    LoginActivity.startLoginActivity(getActivity(), LoginActivity.TYPE_NORMAL, "", "", "", "");
                 }
             }
         });
         return view;
     }
+
     private void newInitPopupWindow() {
-        final List<Meeting> meetings = ConferenceDbUtils.getMeetingBySessionGroupId(mSessionBeanList.get(mPosition).getSessionGroupId()+"");
+        final List<Meeting> meetings = ConferenceDbUtils.getMeetingBySessionGroupId(mSessionBeanList.get(mPosition).getSessionGroupId() + "");
         final List<String> meetingTitles = new ArrayList<>();
-        mIconChoosePopupWindow = new NewIconChoosePopupWindow(getActivity(),meetings);
+        mIconChoosePopupWindow = new NewIconChoosePopupWindow(getActivity(), meetings);
         mIconChoosePopupWindow.setAnimationStyle(R.style.icon_popup_window);
         mIconChoosePopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
@@ -168,11 +170,11 @@ public class SessionDetailViewPageFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 MeetingYYAdapter.MeetingViewHolder viewHolder = (MeetingYYAdapter.MeetingViewHolder) view.getTag();
-                if(viewHolder.cb.isChecked()){
-                    meetingTitles.remove(meetings.get(position).getTopic()+"#@#"+meetings.get(position).getTopicEn());
+                if (viewHolder.cb.isChecked()) {
+                    meetingTitles.remove(meetings.get(position).getTopic() + "#@#" + meetings.get(position).getTopicEn());
                     viewHolder.cb.setChecked(false);
-                }else{
-                    meetingTitles.add(meetings.get(position).getTopic()+"#@#"+meetings.get(position).getTopicEn());
+                } else {
+                    meetingTitles.add(meetings.get(position).getTopic() + "#@#" + meetings.get(position).getTopicEn());
                     viewHolder.cb.setChecked(true);
                 }
             }
@@ -180,15 +182,15 @@ public class SessionDetailViewPageFragment extends BaseFragment {
         mIconChoosePopupWindow.getContentView().findViewById(R.id.meeting_yy_yes).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(meetingTitles.size()>0){
-                    for (int i = 0;i<meetingTitles.size();i++){
+                if (meetingTitles.size() > 0) {
+                    for (int i = 0; i < meetingTitles.size(); i++) {
                         try {
-                            String title = URLEncoder.encode(meetingTitles.get(i),"UTF-8");
-                            CHYHttpClientUsage.getInstanse().doCoursewareReservation(title , new JsonHttpResponseHandler() {
+                            String title = URLEncoder.encode(meetingTitles.get(i), "UTF-8");
+                            CHYHttpClientUsage.getInstanse().doCoursewareReservation(title, new JsonHttpResponseHandler() {
                                 @Override
                                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                                     super.onSuccess(statusCode, headers, response);
-                                    ToastUtils.showRoundRectToast(getActivity(),R.layout.view_toast_custom);
+                                    ToastUtils.showRoundRectToast(getActivity(), R.layout.view_toast_custom);
                                 }
 
                                 @Override
@@ -211,6 +213,7 @@ public class SessionDetailViewPageFragment extends BaseFragment {
             }
         });
     }
+
     private void initPopupWindow() {
         final View pview = getActivity().getLayoutInflater().inflate(R.layout.share_note_background, null, false);
 
@@ -219,6 +222,7 @@ public class SessionDetailViewPageFragment extends BaseFragment {
         mShareNotePopup.setBackgroundDrawable(new BitmapDrawable());
 
         final TextView shareView = (TextView) pview.findViewById(R.id.tv_share);
+        shareView.setVisibility(Constants.SCHEDULE_SHARE ? View.VISIBLE : View.GONE);
         TextView noteView = (TextView) pview.findViewById(R.id.tv_make_note);
 
         shareView.setOnClickListener(new View.OnClickListener() {
@@ -236,8 +240,8 @@ public class SessionDetailViewPageFragment extends BaseFragment {
 
                 //ShareUtils.shareTextWithUrl(getActivity(), shareTitle, "", Constants.APP_DOWNLOAD_SITE, null);
                 ShareUtils.shareTextWithUrl(getActivity(), shareTitle, "会议日程",
-                       "http://app.incongress.cn/chyWebApp/assetsCsc/session_detail.jsp?sessionId=" + mSessionBeanList.get(mPosition).getSessionGroupId() + "&conId=" + AppApplication.conId + "&isShare=1", null);
-       //252
+                        "http://app.incongress.cn/chyWebApp/assetsCsc/session_detail.jsp?sessionId=" + mSessionBeanList.get(mPosition).getSessionGroupId() + "&conId=" + Constants.conId + "&isShare=1", null);
+                //252
             }
         });
 

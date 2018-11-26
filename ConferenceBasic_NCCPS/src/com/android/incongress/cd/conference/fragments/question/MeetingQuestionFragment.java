@@ -72,7 +72,7 @@ public class MeetingQuestionFragment extends BaseFragment implements View.OnClic
      * 只有下拉刷新
      */
     private void refreshQuestionData() {
-        CHYHttpClientUsage.getInstanse().doGetQuestionsBySessionV2(AppApplication.conId, AppApplication.userId, AppApplication.userType, AppApplication.getSystemLanuageCode(), new JsonHttpResponseHandler(Constants.ENCODING_GBK){
+        CHYHttpClientUsage.getInstanse().doGetQuestionsBySessionV2(Constants.conId, AppApplication.userId, AppApplication.userType, AppApplication.getSystemLanuageCode(), new JsonHttpResponseHandler(Constants.ENCODING_GBK){
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {

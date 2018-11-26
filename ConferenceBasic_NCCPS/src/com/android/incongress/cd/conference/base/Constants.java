@@ -12,8 +12,6 @@ import com.mobile.incongress.cd.conference.basic.csccm.R;
  *
  */
 public class Constants {
-    /** 讲者介绍是否开启 **/
-    public static final boolean SPEAKER_TIP_OPEN = true;
 
     /** 是否处于调试状态，调试状态都是测试地址；非调试状态都是正是地址 **/
     public static final boolean isDebug = false;
@@ -24,7 +22,9 @@ public class Constants {
 
     public static final String CONFERENCE_ID = "conferenceId";
 
-    public static boolean IS_SECRETARY_SHOW = false;
+    //微信ID
+    public static final String WX_APPID = "wxfa838da1dfcf007b";
+    public static final String APP_SECRET = "bc7eeb1ad55b3ee478c1acede4d9e98f";
 
     public static final String EVENT_ID_MEETING_SCHEDULE = "meeting_schedule";
     public static final String EVENT_ID_SEARCH_SCHEDULE = "search_schedule";
@@ -109,10 +109,6 @@ public class Constants {
     public static final String USER_TYPE = "userType";
     public static final String USER_FACULTYID = "facultyId";
 
-    /** 项目名称 一定要修改**/
-    public static final String PROJECT_NAME = "ifsc2018";
-
-
     /** 会议日程 提醒开关**/
     public static final String LOOK_SCHEDULE_TIPS = "lookScheduleTips";
 
@@ -178,14 +174,6 @@ public class Constants {
     /** sharepreference中使用 用于获取用户类别(0表明是用户，1表明是游客) **/
     public static final String PREFERENCE_USER_TYPE="db_user_type";
 
-    /** 广告广播 **/
-    public static final String ACTION_CHANGE_AD = "android.intent.action.change_ad.basic.nccps";
-
-    /** 下载地址 **/
-    public static final String DOWNLOADDIR="/cd_incongress_ifsc/download/";
-    /** 解压地址 **/
-    public static final String FILESDIR="/cd_incongress_ifsc/files/";
-
     /** 会议下载位置 后面还要跟上会议id:/conference194/**/
     public static final String FILE_CONFERENCES = "/cd_incongress/";
 
@@ -201,14 +189,8 @@ public class Constants {
     public static final int NOATTENTION=0;
     public static final int ATTENTION=1;
 
-    /**　微分享信key **/
-    public static final String WXKey = "wx959030923745168b" ;
-
     /**　中英文内容的特殊分割符　**/
     public static final String ENCHINASPLIT="#@#";
-
-    /** 参会易下载地址(根据产品不同地址不同) **/
-    public static final String APP_DOWNLOAD_SITE = "http://app.incongress.cn/ifsc2018/app";
 
     /**
      * 说明：
@@ -222,7 +204,7 @@ public class Constants {
     private static final String HOST_TEST = "http://www.incongress.cn/Conferences/proxy.do";;/** 服务器地址 **/
     private static final String NEWSPREFIX_TEST="http://114.80.201.49/"; /** 会议之声的下载地址 **/
     private static final String DZBB_TEST = "http://www.incongress.cn/posterAction.do"; /** 电子壁报**/
-    private static final String E_CASE_WEBSITE_TEST = "http://incongress.cn/webapp/discussion/CIT2016H5/casesList.html?conId=" + AppApplication.conId; //电子病历
+    private static final String E_CASE_WEBSITE_TEST = "http://incongress.cn/webapp/discussion/CIT2016H5/casesList.html?conId=" + Constants.conId; //电子病历
 
     private static final int CIT_WEBSITE_TEST = R.string.cit_live_url_test; /** CIT 加载地址 **/
     private static final int HD_SESSION_QUESTION_TEST = R.string.hd_question_site_test; /** 现场互动提问地址 **/
@@ -237,7 +219,7 @@ public class Constants {
     private static final String HOST_OFFICIAL = "http://app.incongress.cn/Conferences/proxy.do";/** 服务器地址 **/
     private static final String NEWSPREFIX_OFFICIAL ="http://app.incongress.cn/Conferences"; /** 会议之声的下载地址 **/
     private static final String DZBB_OFFICIAL = "http://m.incongress.cn/posterAction.do"; /** 电子壁报**/
-    private static final String E_CASE_WEBSITE_OFFICIAL = "http://m.incongress.cn/webapp/discussion/CIT2016H5/casesList.html?conId=" + AppApplication.conId; /** 电子病例 **/
+    private static final String E_CASE_WEBSITE_OFFICIAL = "http://m.incongress.cn/webapp/discussion/CIT2016H5/casesList.html?conId=" + Constants.conId; /** 电子病例 **/
 
     private static final int CIT_WEBSITE_OFFICIAL = R.string.cit_live_url_official;  /** CIT 加载地址 **/
     private static final int HD_SESSION_QUESTION_OFFICIAL = R.string.hd_question_site_official; /** 现场互动提问地址 **/
@@ -336,4 +318,40 @@ public class Constants {
         else
             return "http://app.incongress.cn/";
     }
+    /*所有功能的开关*/
+    /** 广告广播 **/
+    public static final String ACTION_CHANGE_AD = "android.intent.action.change_ad.basic.nccps";
+    /**　微分享信key **/
+    public static final String WXKey = "wx959030923745168b" ;
+    /** 项目名称 一定要修改**/
+    public static final String PROJECT_NAME = "ifsc2018";
+    public static final String APPNAME = "IFSC";
+    /** 参会易下载地址(根据产品不同地址不同) **/
+    public static final String APP_DOWNLOAD_SITE = "http://app.incongress.cn/ifsc2018/app";
+    /** 下载地址 **/
+    public static final String DOWNLOADDIR="/cd_incongress_ifsc/download/";
+    /** 解压地址 **/
+    public static final String FILESDIR="/cd_incongress_ifsc/files/";
+    //conference id
+    public static int conId = 348;
+    //看日程
+   //日程分享      //默认为true
+   public static final boolean SCHEDULE_SHARE = true;
+   //课件预约
+   public static final boolean SCHEDULE_BOOK = true;
+   //日程提问
+    public static final boolean SCHEDULE_ASK = true;
+    //讲者信息介绍
+    public static final boolean SCHEDULE_SPEAKER_INFO = true;
+    //参会指南     分享
+    public static final boolean PARTY_GUIDE_SHARE = true;
+    //壁报集
+    public static final boolean POSTER_LIST_ASK = false;
+    //照片墙
+    //专家秘书
+    public static boolean IS_SECRETARY_SHOW = false;
+    //播客   点赞   评论
+    public static boolean SCENICXIU_PRISE_COMMENT = true;
+    //首页消息和视频如果没有数据，就不会显示
+
 }

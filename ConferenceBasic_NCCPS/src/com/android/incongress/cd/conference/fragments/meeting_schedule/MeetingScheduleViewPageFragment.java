@@ -101,7 +101,7 @@ public class MeetingScheduleViewPageFragment extends BaseFragment {
             }
         });
 
-        if(SharePreferenceUtils.getAppBooleanF(Constants.LOOK_SCHEDULE_TIPS)) {
+        if(SharePreferenceUtils.getAppBoolean(Constants.LOOK_SCHEDULE_TIPS,false)) {
             mTvTips.setVisibility(View.GONE);
         }
         close.setOnClickListener(new View.OnClickListener() {

@@ -17,6 +17,7 @@ import com.android.incongress.cd.conference.beans.AlertBean;
 import com.android.incongress.cd.conference.model.Alert;
 import com.android.incongress.cd.conference.model.ConferenceDbUtils;
 import com.android.incongress.cd.conference.model.Meeting;
+import com.android.incongress.cd.conference.save.SharePreferenceUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -105,9 +106,10 @@ public class AlermClock {
         c.setTimeInMillis(alertBean.getTime());
         String timeString = CommonUtils.fortmatDate(c.getTime());
         //Toast.makeText(AppApplication.getContext(), timeString, Toast.LENGTH_LONG).show();
-        Log.d("sgqTest", "calculateNextAlert " + timeString);
+        Log.d("test", "calculateNextAlert " + timeString);
         if (alertBean.getTime() < now) {
-            Log.d("sgqTest", "calculateNextAlert: 删除闹钟"+alertBean.getTime());
+            ToastUtils.showShorToast("日程时间已过");
+            Log.d("test", "calculateNextAlert: 删除闹钟"+alertBean.getTime());
             System.out.println("-----delete delete delete -----");
             deleteClock(alertBean);
             return;
@@ -132,8 +134,8 @@ public class AlermClock {
 
         Calendar c = Calendar.getInstance();
         c.setTimeInMillis(System.currentTimeMillis());
-        SharedPreferences spPreferences = PreferenceManager.getDefaultSharedPreferences(AppApplication.getContext());
-        int before = spPreferences.getInt(AlermClock.KEY_DISTANCE, 5);
+
+        int before = SharePreferenceUtils.getAppInt(AlermClock.KEY_DISTANCE,5);
         c.add(Calendar.MINUTE, before);
         return c;
     }
@@ -162,8 +164,7 @@ public class AlermClock {
             c.set(Calendar.MILLISECOND, 0);
             c.set(Calendar.MONTH, monthAndDate.getMonth());
             c.set(Calendar.DAY_OF_MONTH, monthAndDate.getDate());
-            SharedPreferences spPreferences = PreferenceManager.getDefaultSharedPreferences(AppApplication.getContext());
-            int before = spPreferences.getInt(AlermClock.KEY_BEFORE, 5);
+            int before = SharePreferenceUtils.getAppInt(AlermClock.KEY_BEFORE, 5);
             c.add(Calendar.MINUTE, -before);
             return c;
         } catch (ParseException e) {
@@ -175,7 +176,7 @@ public class AlermClock {
     //使能session
     private static void enableAlert(Context context, final Alert alarm,
                                     final long atTimeInMillis) {
-        boolean enable = PreferenceManager.getDefaultSharedPreferences(context).getBoolean(KEY_ENABLE, true);
+        boolean enable = SharePreferenceUtils.getAppBoolean(KEY_ENABLE, true);
         if (!enable) {
             return;
         }
@@ -199,7 +200,7 @@ public class AlermClock {
         Calendar c = Calendar.getInstance();
         c.setTimeInMillis(atTimeInMillis);
         String timeString = CommonUtils.fortmatDate(c.getTime());
-        Log.d("sgqTest", "enableAlert is " + timeString);
+        Log.d("test", "enableAlert is " + timeString);
     }
 
     /**

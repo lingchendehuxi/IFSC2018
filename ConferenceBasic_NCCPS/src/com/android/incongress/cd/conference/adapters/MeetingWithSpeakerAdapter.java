@@ -87,7 +87,7 @@ public class MeetingWithSpeakerAdapter extends BaseAdapter {
             holder.tvMeetingTime = (TextView) convertView.findViewById(R.id.tv_session_time);
             holder.tvMeetingName = (TextView) convertView.findViewById(R.id.tv_session_name);
             holder.tvAsk = (TextView) convertView.findViewById(R.id.tv_ask);
-
+            holder.tvAsk.setVisibility(Constants.SCHEDULE_ASK?View.VISIBLE:View.GONE);
             holder.tflNames = (TagFlowLayout) convertView.findViewById(R.id.tfl_names);
             holder.ivAlarm = (ImageView) convertView.findViewById(R.id.iv_alarm);
             convertView.setTag(holder);

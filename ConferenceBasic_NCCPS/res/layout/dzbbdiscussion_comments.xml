@@ -162,7 +162,7 @@
                     android:layout_weight="2"
                     android:layout_gravity="right|center_vertical"
                     android:layout_width="0dp"
-                    android:background="@drawable/bg_button"
+                    android:background="@drawable/bg_button_ed"
                     android:textColor="@color/white"
                     android:text="@string/send"
                     android:layout_height="38dp" />

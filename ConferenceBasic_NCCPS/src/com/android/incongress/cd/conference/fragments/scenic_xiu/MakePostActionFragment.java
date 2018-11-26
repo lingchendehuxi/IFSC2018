@@ -200,7 +200,7 @@ public class MakePostActionFragment extends BaseFragment implements GalleryFinal
                 e.printStackTrace();
             }
 
-            CHYHttpClientUsage.getInstanse().doCreateSceneShowImg(AppApplication.conId + "", AppApplication.userId + "", AppApplication.userType + "",mPostScenicShowId, new File(filePhth), new JsonHttpResponseHandler() {
+            CHYHttpClientUsage.getInstanse().doCreateSceneShowImg(Constants.conId + "", AppApplication.userId + "", AppApplication.userType + "",mPostScenicShowId, new File(filePhth), new JsonHttpResponseHandler() {
                 @Override
                 public void onStart() {
                     super.onStart();
@@ -245,7 +245,7 @@ public class MakePostActionFragment extends BaseFragment implements GalleryFinal
      */
     private void doCreateContent()   {
         String content = mEtPostContent.getText().toString().trim();
-        int conId = AppApplication.conId;
+        int conId = Constants.conId;
         int userId = AppApplication.userId;
         int userType = AppApplication.userType;
         try {

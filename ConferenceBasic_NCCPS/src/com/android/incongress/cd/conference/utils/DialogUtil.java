@@ -3,6 +3,8 @@ package com.android.incongress.cd.conference.utils;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
+import android.support.v7.app.AlertDialog;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
@@ -77,5 +79,4 @@ public class DialogUtil {
 		this.dialogHeightProportion = height;
 		this.dialogWidthProportion = width;
 	}
-
 }

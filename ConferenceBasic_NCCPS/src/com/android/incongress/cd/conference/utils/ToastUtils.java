@@ -34,7 +34,7 @@ public class ToastUtils {
     }
 
     //通知框中间
-    public static void showRoundRectToast(Context context, @LayoutRes int layout) {
+    public static void showRoundRectToast(Context context, int layout) {
         if (layout == 0) {
             return;
         }

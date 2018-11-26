@@ -121,7 +121,7 @@ public class ExhibitorsActionFragment extends BaseFragment {
     }
 
     private void getData() {
-        CHYHttpClientUsage.getInstanse().doGetCzs(AppApplication.conId + "", new JsonHttpResponseHandler("gbk") {
+        CHYHttpClientUsage.getInstanse().doGetCzs(Constants.conId + "", new JsonHttpResponseHandler("gbk") {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);

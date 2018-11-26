@@ -90,7 +90,7 @@ public class SettingsHelper extends HandlerFragement {
 			return;
 		}
 		mView.setClickable(false);
-		int conId = AppApplication.conId;
+		int conId = Constants.conId;
 
 		CHYHttpClientUsage.getInstanse().doSendFeedbackV2(conId,phonenumber, emailvalue,contentvalue,new JsonHttpResponseHandler(Constants.ENCODING_GBK){
 			@Override

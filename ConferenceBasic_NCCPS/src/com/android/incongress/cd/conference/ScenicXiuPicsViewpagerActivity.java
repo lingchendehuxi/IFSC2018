@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.android.incongress.cd.conference.base.BaseActivity;
 import com.bm.library.PhotoView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
@@ -22,7 +23,7 @@ import com.mobile.incongress.cd.conference.basic.csccm.R;
 /**
  * Created by liuheng on 2015/8/19.
  */
-public class ScenicXiuPicsViewpagerActivity extends Activity {
+public class ScenicXiuPicsViewpagerActivity extends BaseActivity {
     private static final String BUNDLE_PICS = "bundle_pics";
     private static final String BUNDLE_POSITION = "bundle_position";
 
@@ -40,11 +41,8 @@ public class ScenicXiuPicsViewpagerActivity extends Activity {
         ctx.startActivity(intent);
     }
 
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
+    protected void setContentView() {
         mPics = getIntent().getStringArrayExtra(BUNDLE_PICS);
         mPosition = getIntent().getIntExtra(BUNDLE_POSITION, 0);
 
@@ -58,21 +56,27 @@ public class ScenicXiuPicsViewpagerActivity extends Activity {
         mPager.setAdapter(mAdapter);
 
         mPager.setCurrentItem(mPosition);
-        mTvPageInfo.setText((mPosition+1)+"/" +mPics.length);
+        mTvPageInfo.setText((mPosition + 1) + "/" + mPics.length);
 
         mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                mTvPageInfo.setText((position+1)+"/" +mPics.length);
+                mTvPageInfo.setText((position + 1) + "/" + mPics.length);
             }
 
             @Override
-            public void onPageSelected(int position) {}
+            public void onPageSelected(int position) {
+            }
 
             @Override
             public void onPageScrollStateChanged(int state) {
             }
         });
+    }
+
+    @Override
+    protected void initViewsAction() {
+
     }
 
     private class ImageViewPagerAdapter extends PagerAdapter {
@@ -102,8 +106,8 @@ public class ScenicXiuPicsViewpagerActivity extends Activity {
 
             final ProgressBar pb = (ProgressBar) view.findViewById(R.id.progress);
             String url = mPics[position];
-            if(url.contains("https:")) {
-                url = url.replaceFirst("s","");
+            if (url.contains("https:")) {
+                url = url.replaceFirst("s", "");
             }
             Glide.with(ScenicXiuPicsViewpagerActivity.this).load(url).error(R.drawable.img_error).fallback(R.drawable.default_load_bg).listener(new RequestListener<String, GlideDrawable>() {
                 @Override

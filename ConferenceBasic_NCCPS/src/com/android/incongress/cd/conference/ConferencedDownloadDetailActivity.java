@@ -175,7 +175,7 @@ public class ConferencedDownloadDetailActivity extends BaseActivity {
 
         if (mEsmoBean == null)
             goErrorAndFinish();
-        AppApplication.conId = mConferenceId;
+        Constants.conId = mConferenceId;
 
         mFilePath = AppApplication.instance().getSDPath() + "/cd_incongress/incongress" + mConferenceId + "/";
 

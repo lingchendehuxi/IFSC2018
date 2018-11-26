@@ -1,5 +1,6 @@
 package com.android.incongress.cd.conference.base;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,6 +18,7 @@ import android.preference.PreferenceManager;
 import android.support.multidex.MultiDex;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -26,6 +28,7 @@ import com.android.incongress.cd.conference.model.Ad;
 import com.android.incongress.cd.conference.save.ParseUser;
 import com.android.incongress.cd.conference.save.SharePreferenceUtils;
 import com.android.incongress.cd.conference.services.AdService;
+import com.android.incongress.cd.conference.utils.LanguageUtil;
 import com.android.incongress.cd.conference.utils.LogUtils;
 import com.android.incongress.cd.conference.widget.zxing.activity.ZXingLibrary;
 import com.android.incongress.cd.conference.utils.CrashHandler;
@@ -37,12 +40,14 @@ import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.PlatformConfig;
 
 import org.litepal.LitePalApplication;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -62,9 +67,6 @@ public class AppApplication extends LitePalApplication {
     //EsmoId
     public static String COMPAS_ID = "1";
 
-    //conference id
-    public static int conId = 348;
-
     //表明类型 在初始化数据时会用
     public static int conType = 2;
 
@@ -82,7 +84,7 @@ public class AppApplication extends LitePalApplication {
     //初始化数据的Bean
     public static IncongressBean conBean = new IncongressBean();
 
-    //1代表 中文  2代表英文
+    //1代表 中文  2代表英文 其他值  代表随系统变化
     public static int systemLanguage = 1;
 
     public static Typeface mTypeface = null;
@@ -115,6 +117,7 @@ public class AppApplication extends LitePalApplication {
     public static Context getContext() {
         return mContext;
     }
+    public static IWXAPI wxApi;
 
     public static AsyncHttpClient mHttpClient;
 
@@ -132,6 +135,9 @@ public class AppApplication extends LitePalApplication {
 
         /**新浪分享初始化**/
         PlatformConfig.setSinaWeibo("4015025148", "458be4e8e2dbce03700b155aef9c8123","https://api.weibo.com/oauth2/default.html");
+
+        wxApi = WXAPIFactory.createWXAPI(this, Constants.WX_APPID, false);
+        wxApi.registerApp(Constants.WX_APPID);
 
         mHttpClient = new AsyncHttpClient();
         mHttpClient.setMaxConnections(10);
@@ -209,6 +215,12 @@ public class AppApplication extends LitePalApplication {
         //不默认统计Activity
         MobclickAgent.openActivityDurationTrack(false);
     }
+    public static AppApplication getInstance(){
+        if(instance == null){
+            instance = new AppApplication();
+        }
+        return instance;
+    }
 
     /**
      *
@@ -266,7 +278,7 @@ public class AppApplication extends LitePalApplication {
      * @return
      */
     public static boolean isUserLogIn() {
-        return "true".equals(SharePreferenceUtils.getUser(Constants.USER_IS_LOGIN));
+        return SharePreferenceUtils.getUserBoolean(Constants.USER_IS_LOGIN,false) == true;
     }
 
     public void setDisPlayMetrics(DisplayMetrics mDisplayMetrics) {

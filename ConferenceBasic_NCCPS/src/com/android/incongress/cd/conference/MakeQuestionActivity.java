@@ -90,7 +90,7 @@ public class MakeQuestionActivity extends BaseActivity {
                         ToastUtils.showShorToast("Please enter your email");
                     }
                 }else{
-                    CHYHttpClientUsage.getInstanse().doCreatePosterQuestion(AppApplication.conId, AppApplication.userId, AppApplication.userType, posterTitle, content,
+                    CHYHttpClientUsage.getInstanse().doCreatePosterQuestion(Constants.conId, AppApplication.userId, AppApplication.userType, posterTitle, content,
                             mPosterId, authorName, email, new JsonHttpResponseHandler("gbk") {
                                 @Override
                                 public void onStart() {

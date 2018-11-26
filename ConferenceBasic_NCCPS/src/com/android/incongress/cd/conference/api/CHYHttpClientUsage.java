@@ -105,7 +105,7 @@ public class CHYHttpClientUsage {
     }
     public void doGetAlertAd(int version, JsonHttpResponseHandler responseHandler) {
         RequestParams params = new RequestParams();
-        params.put("conId", AppApplication.conId);
+        params.put("conId", Constants.conId);
         params.put("version", version);
         CHYHttpClient.get("getAlertAd", params, responseHandler);
     }
@@ -147,7 +147,7 @@ public class CHYHttpClientUsage {
         RequestParams params = new RequestParams();
 
         params.put("method", "getCoursewareStream");
-        params.put("conId", AppApplication.conId);
+        params.put("conId", Constants.conId);
 
         CHYHttpClient.post(params, responseHandler);
     }
@@ -156,7 +156,7 @@ public class CHYHttpClientUsage {
         RequestParams params = new RequestParams();
 
         params.put("method", "getContentStream");
-        params.put("conId",  AppApplication.conId);
+        params.put("conId",  Constants.conId);
 
         CHYHttpClient.post(params, responseHandler);
     }
@@ -165,7 +165,7 @@ public class CHYHttpClientUsage {
 
         params.put("method", "chyModuleTongji");
         params.put("moduleName",  moduleName);
-        params.put("conId",  AppApplication.conId);
+        params.put("conId",  Constants.conId);
         params.put("fromWhere", Constants.PROJECT_NAME);
         params.put("type",  1);
         params.put("phoneType",  2);
@@ -215,7 +215,7 @@ public class CHYHttpClientUsage {
 
         params.put("userId",userId);
         params.put("userType",userType);
-        params.put("conferencesId", AppApplication.conId+"");
+        params.put("conferencesId", Constants.conId+"");
 
 
         CHYHttpClient.post("getUserMessageReminderByUserIdAndUserType",params, responseHandler);
@@ -240,7 +240,7 @@ public class CHYHttpClientUsage {
         params.put("password", password);
         params.put("fromWhere", fromWhere);
         params.put("lan", lan);
-        params.put("conId", AppApplication.conId);
+        params.put("conId", Constants.conId);
 
         CHYHttpClient.post2(params, responseHandler);
     }
@@ -319,7 +319,7 @@ public class CHYHttpClientUsage {
         params.put("password", password);
         params.put("lan", lan);
         params.put("fromWhere", Constants.PROJECT_NAME);
-        params.put("conId", AppApplication.conId);
+        params.put("conId", Constants.conId);
 
 
         CHYHttpClient.post2(params, responseHandler);
@@ -335,10 +335,14 @@ public class CHYHttpClientUsage {
      * @param conId
      * @param responseHandler
      */
-    public void doLoginByCode(int type, String name, String ccode, String mobile, String sms,String lan, String fromWhere, int conId, JsonHttpResponseHandler responseHandler) {
+    public void doLoginByCode(String mobile, String sms,String lan, String fromWhere, int conId, JsonHttpResponseHandler responseHandler) {
         RequestParams params = new RequestParams();
-
-        params.put("loginByCode","");
+        params.put("mobile", mobile);
+        params.put("lan", lan);
+        params.put("fromWhere", fromWhere);
+        params.put("sms", sms);
+        params.put("conId", conId +"");
+        /*params.put("loginByCode","");
         params.put("name", name);
         params.put("familyName", "");
         params.put("giveName", "");
@@ -350,7 +354,7 @@ public class CHYHttpClientUsage {
 //        params.put("conId", -1);
         params.put("fromWhere", Constants.PROJECT_NAME);
         params.put("code", ccode);
-        params.put("type",type+"");
+        params.put("type",type+"");*/
 
         CHYHttpClient.post2(params, responseHandler);
     }
@@ -526,7 +530,7 @@ public class CHYHttpClientUsage {
         RequestParams params = new RequestParams();
 
         params.put("method","coursewareReservation");
-        params.put("conId", AppApplication.conId);
+        params.put("conId", Constants.conId);
         params.put("topic", topic);
         params.put("userId", AppApplication.userId);
 
@@ -754,7 +758,7 @@ public class CHYHttpClientUsage {
         RequestParams params = new RequestParams();
         params.put("method","getTokenByUserId");
         params.put("userId", userId + "");
-        params.put("conId", AppApplication.conId + "");
+        params.put("conId", Constants.conId + "");
         params.put("fromWhere", Constants.PROJECT_NAME);
 
 //        CHYHttpClient.post(params, responseHandler);
