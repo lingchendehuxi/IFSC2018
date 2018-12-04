@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:state_selected="false" >
+        <bitmap android:src="@drawable/title_unselect" android:tileMode="disabled" android:gravity="top" />
+    </item>
+    <item android:state_selected="true">
+        <bitmap android:src="@drawable/title_select" android:tileMode="disabled" android:gravity="top" />
+    </item>
+</selector>

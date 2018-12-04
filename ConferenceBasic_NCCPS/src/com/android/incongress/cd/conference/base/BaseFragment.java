@@ -106,6 +106,18 @@ public class BaseFragment extends Fragment {
 
         activity.setTitleEntry(true, false, true, view, title, adTop, adBottom, true, isNavShow);
     }
+    /**
+     * 只显示自定义标题
+     *
+     * @param fragment
+     * @param view
+     */
+    public void action(BaseFragment fragment, View view) {
+        HomeActivity activity = (HomeActivity) getActivity();
+        activity.addFragment(this, fragment);
+
+        activity.setTitleEntry(true, false, true, view, null, false, false, false, false);
+    }
 
     /**
      * id标题 + 自定义右上角
@@ -198,6 +210,21 @@ public class BaseFragment extends Fragment {
         WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
         lp.alpha = 0.3f;
         getActivity().getWindow().setAttributes(lp);
+    }
+    /**
+     * 内容区域变量
+     */
+    protected void lightOn(View view) {
+        view.setAlpha(1.0f);
+        view.setFocusable(true);
+    }
+
+    /**
+     * 内容区域变暗
+     */
+    protected void lightOff(View view) {
+        view.setAlpha(0.3f);
+        view.setFocusable(false);
     }
 
 }

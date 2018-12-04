@@ -60,6 +60,7 @@ import com.android.incongress.cd.conference.fragments.professor_secretary.Secret
 import com.android.incongress.cd.conference.fragments.question.MeetingQuestionFragment;
 import com.android.incongress.cd.conference.fragments.scenic_xiu.ScenicXiuFragment;
 import com.android.incongress.cd.conference.fragments.search_schedule.NewSearchScheduleActionFragment;
+import com.android.incongress.cd.conference.fragments.search_schedule.SegmentScheduleActionFragment;
 import com.android.incongress.cd.conference.fragments.search_speaker.SpeakerSearchFragment;
 import com.android.incongress.cd.conference.fragments.wall_poster.PosterFragment;
 import com.android.incongress.cd.conference.model.Ad;
@@ -862,7 +863,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
         }
 
         listFragment.setRightListener(view);
-        action(listFragment, title, view, false, false, false);
+        action(listFragment, view);
 
 
     }
@@ -878,7 +879,10 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
         /*View titleView = CommonUtils.initView(getActivity(), R.layout.title_segment);
         searchFragment.setCenterView(titleView);*/
         //goQuestions("提问");
-        action(searchFragment, title, searchView, false, false, false);
+        //只有日程搜索
+        SegmentScheduleActionFragment fragment = new SegmentScheduleActionFragment();
+        action(fragment, null);
+        //action(searchFragment, title, searchView, false, false, false);
     }
 
     /**
@@ -993,8 +997,9 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
     private void goVenuepicture(String title) {
         action(new NewMeetingInfoFragment(), title, false, false, false);
     }
+
     //日程预览图
-    private void goSchedulePreview(){
+    private void goSchedulePreview() {
         MeetingScheduleViewPageFragment scheduleFragment = new MeetingScheduleViewPageFragment();
         HomeActivity activity = (HomeActivity) getActivity();
         activity.addFragment(NewDynamicHomeFragment.this, scheduleFragment);

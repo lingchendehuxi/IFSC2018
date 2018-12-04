@@ -1,55 +1,44 @@
 package com.android.incongress.cd.conference.fragments.me;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
+import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.android.incongress.cd.conference.ChooseFieldActivity;
-import com.android.incongress.cd.conference.ChooseKeShiActivity;
 import com.android.incongress.cd.conference.CollegeActivity;
-import com.android.incongress.cd.conference.HomeActivity;
 import com.android.incongress.cd.conference.LoginActivity;
 import com.android.incongress.cd.conference.api.CHYHttpClientUsage;
 import com.android.incongress.cd.conference.base.AppApplication;
-import com.android.incongress.cd.conference.base.BaseActivity;
 import com.android.incongress.cd.conference.base.BaseFragment;
 import com.android.incongress.cd.conference.base.Constants;
+import com.android.incongress.cd.conference.beans.MeGridListBean;
 import com.android.incongress.cd.conference.model.ConferenceDbUtils;
 import com.android.incongress.cd.conference.model.Note;
 import com.android.incongress.cd.conference.save.ParseUser;
 import com.android.incongress.cd.conference.save.SharePreferenceUtils;
 import com.android.incongress.cd.conference.utils.CacheUtils;
-import com.android.incongress.cd.conference.utils.LogUtils;
-import com.android.incongress.cd.conference.utils.ShareUtils;
-import com.android.incongress.cd.conference.widget.IconChoosePopupWindow;
-import com.android.incongress.cd.conference.widget.MyButton;
-import com.android.incongress.cd.conference.widget.StatusBarUtil;
-import com.android.incongress.cd.conference.widget.zxing.activity.CaptureActivity;
-import com.android.incongress.cd.conference.utils.CommonUtils;
 import com.android.incongress.cd.conference.utils.MyLogger;
 import com.android.incongress.cd.conference.utils.PicUtils;
-import com.android.incongress.cd.conference.utils.StringUtils;
+import com.android.incongress.cd.conference.utils.ShareUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
 import com.android.incongress.cd.conference.utils.transformer.CircleTransform;
+import com.android.incongress.cd.conference.widget.CircleImageView;
+import com.android.incongress.cd.conference.widget.IconChoosePopupWindow;
+import com.android.incongress.cd.conference.widget.NoScrollGridView;
+import com.android.incongress.cd.conference.widget.StatusBarUtil;
 import com.bumptech.glide.Glide;
-import com.hp.hpl.sparta.Sparta;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 import com.umeng.analytics.MobclickAgent;
@@ -60,6 +49,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.finalteam.galleryfinal.FunctionConfig;
@@ -76,13 +66,15 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
     public static final int REQUEST_LOGIN = 0x0001;
     private RelativeLayout mMeetingAlertPanel, mContackPanel, mSharePanel, mHelpPanel, mRlMyField, mRlMyKeshi, mRlSettingsCache;
     private TextView mTvCacheSize;
-    private Button mBtLogin, mBtLoginout;
     private TextView username, welcomeInfo;
-    private LinearLayout mLlPersonInfo;
     private int mNoteCount, mTieZiCount;
-    private RelativeLayout mBtNote, mBtTieZi;
-    private ImageView mCivHeadIcon, mIvScane;
+    private CircleImageView mCivHeadIcon;
+    private NoScrollGridView mGridView;
+    private ArrayList<MeGridListBean> meGridListBeans;
     private boolean currentState = false;
+    //中间图片和文字
+    private Drawable[] imgList;
+    private String[] strList;
 
     private static final int HANDLE_TIEZI_COUNT = 0x0001;
     private static final int HANDLE_NOTE_COUNT = 0x0002;
@@ -171,11 +163,11 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
 
                 CollegeActivity.startCitCollegeActivity(getContext(), getActivity().getResources().getString(R.string.settings_help_title), url);
                 break;
-            case R.id.bt_login:
+            /*case R.id.bt_login:
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 getActivity().startActivityForResult(intent, REQUEST_LOGIN);
-                break;
-            case R.id.bt_login_out:
+                break;*/
+            /*case R.id.bt_login_out:
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setTitle(R.string.dialog_tips).setMessage(R.string.login_out_tips).setPositiveButton(R.string.positive_button, new DialogInterface.OnClickListener() {
                     @Override
@@ -187,32 +179,20 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
                     public void onClick(DialogInterface dialog, int which) {
                     }
                 }).setCancelable(false).show();
-                break;
-            case R.id.bt_note:
-                NoteManageActionFragment noteManager = new NoteManageActionFragment();
-                action(noteManager, R.string.mymeeting_note, false, false, false);
-                break;
-            case R.id.bt_tiezi:
-                if (AppApplication.isUserLogIn()) {
-                    action(HistoryPostActionFragment.getInstance(), R.string.mymeeting_tiezi, false, false, false);
-                } else {
-                    LoginActivity.startLoginActivity(getActivity(), LoginActivity.TYPE_NORMAL, "", "", "", "");
-//                    ChooseIdentityActivity.startChooseIdentityActivity(getActivity());
-                }
-                break;
+                break;*/
             case R.id.civ_me:
                 if (AppApplication.isUserLogIn()) {
                     initPopupWindow();
-                    mIconChoosePopupWindow.showAtLocation(mLlPersonInfo, Gravity.BOTTOM, 0, 0);
+                    //mIconChoosePopupWindow.showAtLocation(mLlPersonInfo, Gravity.BOTTOM, 0, 0);
                     lightOff();
                 } else {
                     LoginActivity.startLoginActivity(getActivity(), LoginActivity.TYPE_NORMAL, "", "", "", "");
 //                    ChooseIdentityActivity.startChooseIdentityActivity(getActivity());
                 }
                 break;
-            case R.id.iv_scane:
+            /*case R.id.iv_scane:
                 getActivity().startActivityForResult(new Intent(getActivity(), CaptureActivity.class), HomeActivity.REQUEST_SCANE);
-                break;
+                break;*/
             /*case R.id.rl_my_field:
                 Intent fieldIntent = new Intent(getActivity(), ChooseFieldActivity.class);
                 fieldIntent.putExtra(EXTRA_FROM_ME, true);
@@ -242,15 +222,10 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
 
     private void initEvents() {
         mMeetingAlertPanel.setOnClickListener(this);
-        mBtLogin.setOnClickListener(this);
         mContackPanel.setOnClickListener(this);
         mSharePanel.setOnClickListener(this);
         mHelpPanel.setOnClickListener(this);
-        mBtLoginout.setOnClickListener(this);
-        mBtNote.setOnClickListener(this);
-        mBtTieZi.setOnClickListener(this);
         mCivHeadIcon.setOnClickListener(this);
-        mIvScane.setOnClickListener(this);
         /*mRlMyField.setOnClickListener(this);
         mRlMyKeshi.setOnClickListener(this);
         mRlSettingsCache.setOnClickListener(this);*/
@@ -274,21 +249,47 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
 
         // mRlMyField = (RelativeLayout) view.findViewById(R.id.rl_my_field);
         //mRlMyKeshi = (RelativeLayout) view.findViewById(R.id.rl_my_keshi);
-        mCivHeadIcon = (ImageView) view.findViewById(R.id.civ_me);
-        mMeetingAlertPanel = (RelativeLayout) view.findViewById(R.id.mycenter_warmning_panel);
-        mBtLogin = (Button) view.findViewById(R.id.bt_login);
+        mCivHeadIcon =  view.findViewById(R.id.civ_me);
+        mMeetingAlertPanel =  view.findViewById(R.id.mycenter_warmning_panel);
         mContackPanel = (RelativeLayout) view.findViewById(R.id.settings_contact_panel);
         mSharePanel = (RelativeLayout) view.findViewById(R.id.settings_share_panel);
         mHelpPanel = (RelativeLayout) view.findViewById(R.id.settings_help_panel);
         username = (TextView) view.findViewById(R.id.tv_name);
         welcomeInfo = (TextView) view.findViewById(R.id.tv_welcome);
-        mLlPersonInfo = (LinearLayout) view.findViewById(R.id.ll_person_info);
-        mBtLoginout = (Button) view.findViewById(R.id.bt_login_out);
-        mBtNote = (RelativeLayout) view.findViewById(R.id.bt_note);
-        mBtTieZi = (RelativeLayout) view.findViewById(R.id.bt_tiezi);
-        mIvScane = (ImageView) view.findViewById(R.id.iv_scane);
-        /*mRlSettingsCache = (RelativeLayout) view.findViewById(R.id.settings_cache);
-        mTvCacheSize = (TextView) view.findViewById(R.id.tv_cache_size);*/
+        mGridView = view.findViewById(R.id.gv_list);
+        meGridListBeans = new ArrayList<>();
+        imgList = new Drawable[]{getResources().getDrawable(R.drawable.remind),getResources().getDrawable(R.drawable.quiz),getResources().getDrawable(R.drawable.post),getResources().getDrawable(R.drawable.note)};
+        strList = new String[]{getString(R.string.me_remind),getString(R.string.me_quiz),getString(R.string.me_post),getString(R.string.me_note)};
+        for(int i = 0;i<4;i++){
+            MeGridListBean bean = new MeGridListBean();
+            bean.setTestImg("");
+            bean.setTestTiltle("测试"+i);
+            meGridListBeans.add(bean);
+        }
+        mGridView.setAdapter(new GridListAdapter(getActivity(),meGridListBeans));
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                switch (i){
+                    case 0:
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        if (AppApplication.isUserLogIn()) {
+                            action(HistoryPostActionFragment.getInstance(), R.string.mymeeting_tiezi, false, false, false);
+                        } else {
+                            LoginActivity.startLoginActivity(getActivity(), LoginActivity.TYPE_NORMAL, "", "", "", "");
+//                    ChooseIdentityActivity.startChooseIdentityActivity(getActivity());
+                        }
+                        break;
+                    case 3:
+                        NoteManageActionFragment noteManager = new NoteManageActionFragment();
+                        action(noteManager, R.string.mymeeting_note, false, false, false);
+                        break;
+                }
+            }
+        });
 
         String cacheSize = "";
         mCacheFilePath = AppApplication.instance().getSDPath() + Constants.DOWNLOADDIR;
@@ -478,16 +479,10 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
     //刷新用户信息
     public void refreshInfo() {
         if (SharePreferenceUtils.getUserBoolean(Constants.USER_IS_LOGIN, false)) {
-            mBtLogin.setVisibility(View.GONE);
-            mLlPersonInfo.setVisibility(View.VISIBLE);
             username.setText(SharePreferenceUtils.getUser(Constants.USER_NAME));
             welcomeInfo.setText(getString(R.string.mymeeting_welcome_sb, SharePreferenceUtils.getUser(Constants.USER_NAME)));
-            mBtLoginout.setVisibility(View.VISIBLE);
             Glide.with(getActivity()).load(SharePreferenceUtils.getUser(Constants.USER_IMG)).placeholder(R.drawable.professor_default).transform(new CircleTransform(getActivity())).into(mCivHeadIcon);
         }else {
-            mLlPersonInfo.setVisibility(View.GONE);
-            mBtLogin.setVisibility(View.VISIBLE);
-            mBtLoginout.setVisibility(View.GONE);
             mCivHeadIcon.setImageResource(R.drawable.professor_default);
         }
     }
@@ -499,4 +494,58 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
             StatusBarUtil.setStatusBarDarkTheme(getActivity(),false);
         }
     }
+    class GridListAdapter extends BaseAdapter{
+        ArrayList<MeGridListBean> listBeans;
+        public Context context;
+        public LayoutInflater layoutInflater;
+        public GridListAdapter (Context context,ArrayList<MeGridListBean> listBeans){
+            this.context = context;
+            this.listBeans = listBeans;
+            layoutInflater = LayoutInflater.from(context);
+        }
+        @Override
+        public int getCount() {
+            return listBeans.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return listBeans.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View view;
+            MyHold myHold;
+            if(convertView == null){
+                view = layoutInflater.inflate(R.layout.fragment_me_gv_list,null);
+                myHold = new MyHold();
+                myHold.iv_gv_list = view.findViewById(R.id.iv_gv_list);
+                myHold.tv_gv_list = view.findViewById(R.id.tv_gv_list);
+                myHold.remind_red = view.findViewById(R.id.remind_red);
+                view.setTag(myHold);
+            }else {
+                view = convertView;
+                myHold = (MyHold) view.getTag();
+            }
+            myHold.iv_gv_list.setImageDrawable(imgList[position]);
+            myHold.tv_gv_list.setText(strList[position]);
+            if(position == 0){
+                myHold.remind_red.setVisibility(View.VISIBLE);
+            }
+            //PicUtils.loadImageUrl(context,listBeans.get(position).testImg,myHold.iv_gv_list);
+            //myHold.tv_gv_list.setText(listBeans.get(position).getTestTiltle());
+            return view;
+        }
+        class MyHold {
+            ImageView iv_gv_list;
+            TextView tv_gv_list,remind_red;
+        }
+    }
+
 }

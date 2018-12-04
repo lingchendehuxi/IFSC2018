@@ -430,7 +430,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
         mHomeButtonPanel = (LinearLayout) findViewById(R.id.title_home_panel);
 
         mTitleView = (TextView) findViewById(R.id.title_text);
-        mTitleView.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/zd.TTF"));
+        //mTitleView.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/zd.TTF"));
         mCoustomRightView = (LinearLayout) findViewById(R.id.title_right_custom_view);
         mCustomTitleView = (LinearLayout) findViewById(R.id.title_center_custom_view);
         mTitleContainer = (RelativeLayout) findViewById(R.id.title_container);

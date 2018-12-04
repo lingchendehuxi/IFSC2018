@@ -114,10 +114,16 @@ public class MeetingScheduleListAdapter extends BaseAdapter implements StickyLis
         if(convertView == null) {
             holder = new HeaderViewHolder();
             convertView = mInflater.inflate(R.layout.item_headerview_schedule_list, parent, false);
-            holder.tvClassRoom = (TextView) convertView.findViewById(R.id.tv_schedule_list_location);
+            holder.tvClassRoom = convertView.findViewById(R.id.tv_schedule_list_location);
+            holder.view_begin = convertView.findViewById(R.id.view_begin);
             convertView.setTag(holder);
         }else {
             holder = (HeaderViewHolder) convertView.getTag();
+        }
+        if(position == 0){
+            holder.view_begin.setVisibility(View.GONE);
+        }else {
+            holder.view_begin.setVisibility(View.VISIBLE);
         }
 
         for(int i=0; i<mClassBean.size(); i++) {
@@ -160,8 +166,8 @@ public class MeetingScheduleListAdapter extends BaseAdapter implements StickyLis
         if(convertView == null) {
             holder = new ViewHolder();
             convertView = mInflater.inflate(R.layout.item_single_schedule_list, parent, false);
-            holder.tvMeetingName = (TextView) convertView.findViewById(R.id.schedule_list_title);
-            holder.tvMeetingTime = (TextView) convertView.findViewById(R.id.schedule_list_time);
+            holder.tvMeetingName = convertView.findViewById(R.id.schedule_list_title);
+            holder.tvMeetingTime = convertView.findViewById(R.id.schedule_list_time);
             convertView.setTag(holder);
         }else {
             holder = (ViewHolder) convertView.getTag();
@@ -181,6 +187,7 @@ public class MeetingScheduleListAdapter extends BaseAdapter implements StickyLis
 
     class HeaderViewHolder {
         TextView tvClassRoom;
+        View view_begin;
     }
 
     class ViewHolder {
