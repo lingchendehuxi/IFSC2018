@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="action_bar_bg">#06161f</color>
+    <color name="action_bar_bg">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="black_login_text">#343434</color>
     <color name="white">#FFFFFF</color>
@@ -74,8 +74,17 @@
     <color name="grap_color">#a9a9a9</color>
     <color name="login_gray">#A3A3A3</color>
     <color name="gray_99">#999999</color>
+    <color name="search_cancel_color">#FFD1EAEC</color>
+    <color name="business_color">#FF1B1B1B</color>
+    <color name="business_text_color">#FF242424</color>
     <!--stander-->
+    <color name="back_color">#292929</color>
     <color name="line_color">#eeeeee</color>
     <color name="unselect_color">#858585</color>
     <color name="text_gray_color">#2C2C2C</color>
+    <color name="time_chose_title_color">#FF4A4A4A</color>
+    <color name="remind_cycle_color">#F24D4D</color>
+    <color name="shadow_color">#12000000</color>
+    <color name="shadow_end_color">#01000000</color>
+    <color name="bg_normal_color">#f2f2f2</color>
 </resources>

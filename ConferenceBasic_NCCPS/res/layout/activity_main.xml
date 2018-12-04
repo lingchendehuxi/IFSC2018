@@ -19,9 +19,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
         <include
-            layout="@layout/title"
-            android:layout_width="match_parent"
-            android:layout_height="50dp" />
+            layout="@layout/title" />
         <FrameLayout
             android:id="@+id/maincontainer"
             android:layout_width="match_parent"

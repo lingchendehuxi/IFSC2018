@@ -2,12 +2,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+    <include
+        android:id="@+id/search_title"
+        layout="@layout/seach_schedule_title"/>
     <RelativeLayout
         android:id="@+id/rl_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@id/search_title"
+        android:layout_marginTop="10dp"
         android:background="@color/white"
         android:gravity="center_vertical"
         android:paddingBottom="@dimen/layout_padding"
@@ -75,7 +78,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/theme_color"
+            android:background="@color/white"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -86,6 +89,7 @@
                 android:layout_weight="2"
                 android:adjustViewBounds="true"
                 android:scaleType="centerInside"
+                android:background="@drawable/seach_bottom_reset_border"
                 android:src="@drawable/search_reset" />
 
             <View
@@ -98,6 +102,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="9"
+                android:background="@drawable/seach_bottom_content_border"
                 android:gravity="center"
                 android:text="@string/searc_start_search"
                 android:textColor="@color/white"

@@ -6,11 +6,25 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.1'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        classpath 'com.novoda:bintray-release:0.8.0'
     }
+}
+//统一声明配置
+ext {
+    userOrg = 'hnszyp'
+    artifactId = 'cardview'
+    groupId = 'com.zyp.cardview'
+    uploadName = 'cardview'
+    publishVersion = '1.0.1'
+    desc = 'CardView change shadow color'
+    website = 'https://github.com/zzyyppqq/CardViewShadowColor'
+    licences = ['Apache-2.0']
 }
 allprojects {
     repositories {
         jcenter()
-        maven { url "https://maven.google.com" }
+        maven {
+            url "https://maven.google.com"
+        }
     }
 }

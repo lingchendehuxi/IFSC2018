@@ -271,7 +271,8 @@ For any changes of reminder time,please go to "My IFSC > My reminder".]]>
 </string>
     <string name="setting_tel">Tel:021-52981008</string>
     <string name="settings_contact_text_fax">Fax: 021–52981008 ext 808 </string>
-    <string name="settings_contact_text_mail">Email:service@incongress.net\nWeChat:incongress</string>
+    <string name="settings_contact_text_mail">Email:service@incongress.net</string>
+    <string name="settings_contact_text_wx">WeChat:incongress</string>
     <string name="settings_share_sms">SMS</string>
     <string name="settings_share_mail">Email</string>
     <string name="settings_share_content">Come and join me with ‘iConference’ APP! Download now at: http://m.incongress.cn/ifsc2018/app</string>
@@ -530,6 +531,16 @@ Before first use, you’ll need to download the latest conference data. Afterwar
     <string name="code_hasgot">The verification code has been sent</string>
     <string name="get_again">regain</string>
     <string name="other_type_login">Third party account login</string>
+    <!--个人中心界面-->
+    <string name="me_remind">remind</string>
+    <string name="me_quiz">quiz</string>
+    <string name="me_post">post</string>
+    <string name="me_note">note</string>
+    <string name="settings_mark">APP mark</string>
+    <string name="business_cooperation">Business Cooperation</string>
+    <string name="tel_number">tel: 021-52981008</string>
+    <!--会议部分-->
+    <string name="seach_title_hint">Enter the meeting keyword and start searching quickly！</string>
 
     <!--包名修改的部分-->
     <string name="share_info">IFSC Infomation</string>

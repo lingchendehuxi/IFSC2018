@@ -30,30 +30,29 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
+                android:textStyle="bold"
                 android:text="标题"
                 android:textColor="@color/black_login_text"
                 android:textSize="@dimen/text_16" />
 
-            <com.android.incongress.cd.conference.widget.LightTextView
+            <TextView
                 android:id="@+id/tv_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="8dp"
                 android:lineSpacingExtra="3dp"
-                android:lineSpacingMultiplier="1.2"
-                android:layout_marginBottom="-10dp"
                 android:fontFamily="sans-serif-light"
                 android:text="测试测试"
                 android:textColor="@color/text_gray_color"
                 android:textSize="14sp" />
 
-            <com.android.incongress.cd.conference.widget.LightTextView
+            <TextView
                 android:id="@+id/tv_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="-10dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="14dp"
                 android:text="2016-06-20 17:47"
-                android:layout_marginBottom="-2dp"
                 android:textColor="@color/unselect_color"
                 android:textSize="@dimen/text_size_small" />
         </LinearLayout>

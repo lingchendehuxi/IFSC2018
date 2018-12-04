@@ -1,19 +1,19 @@
 ext {
     android = [
-            compileSdkVersion       :   25,
-            buildToolsVersion       :   "25.0.1",
-            minSdkVersion           :   15,
+            compileSdkVersion       :   27,
+            buildToolsVersion       :   "27.0.1",
+            minSdkVersion           :   19,
             targetSdkVersion        :   22,
-            applicationId           :   "cn.incongress.test",
+            applicationId           :   "cn.incongress.ifsc",
             versionCode             :    1,
             versionName             :    "1.0.0"
     ]
 
     dependencies = [
-            "support"            :   'com.android.support:support-v4:25.2.0',
-            "appcompat"          :   'com.android.support:appcompat-v7:25.2.0',
-            "recyclerView"          :   'com.android.support:recyclerview-v7:25.2.0',
-            "design"                :   'com.android.support:design:25.2.0',
+            "support"            :   'com.android.support:support-v4:27.1.1',
+            "appcompat"          :   'com.android.support:appcompat-v7:27.1.1',
+            "recyclerView"          :   'com.android.support:recyclerview-v7:27.1.1',
+            "design"                :   'com.android.support:design:27.1.1',
             "guava"                 :   'com.google.guava:guava:18.0',
             "okHttp"                :   'com.squareup.okhttp:okhttp:3.3.1',
             "okHttpUtils"           :   'com.zhy:okhttputils:2.6.1',

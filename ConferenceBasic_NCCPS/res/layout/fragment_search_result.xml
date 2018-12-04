@@ -1,73 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:background="@color/white"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/line_color">
+
     <LinearLayout
         android:id="@+id/search_condition_layou"
         android:layout_width="match_parent"
-        android:padding="5dp"
-        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
         android:gravity="center_vertical"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/session_day"
+        android:orientation="horizontal"
+        android:paddingLeft="19dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
+
+        <android.support.v7.widget.CardView
             android:layout_width="wrap_content"
-            android:drawableRight="@drawable/search_delet"
-            android:drawablePadding="5dp"
-            android:padding="5dp"
-            android:textColor="@color/white"
-            android:background="@color/theme_color"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="5dp">
+
+            <TextView
+                android:id="@+id/session_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/theme_color"
+                android:paddingLeft="19dp"
+                android:paddingTop="8dp"
+                android:paddingRight="21dp"
+                android:paddingBottom="8dp"
+                android:textColor="@color/white" />
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="top|right"
+                android:scaleType="centerCrop"
+                android:src="@drawable/seach_bg_1"
+                android:tint="@color/theme_color" />
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="top|right"
+                android:scaleType="centerCrop"
+                android:src="@drawable/seach_delete"
+                android:tint="@color/theme_color" />
+
+        </android.support.v7.widget.CardView>
 
         <TextView
-            android:layout_marginLeft="10dp"
             android:id="@+id/session_time"
             android:layout_width="wrap_content"
-            android:drawableRight="@drawable/search_delet"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@color/theme_color"
+            android:drawableRight="@drawable/seach_delete"
             android:drawablePadding="5dp"
             android:padding="5dp"
-            android:textColor="@color/white"
-            android:background="@color/theme_color"
-            android:layout_height="wrap_content" />
+            android:textColor="@color/white" />
 
         <TextView
-            android:layout_marginLeft="10dp"
             android:id="@+id/session_room"
-            android:singleLine="true"
-            android:ellipsize="end"
             android:layout_width="wrap_content"
-            android:drawableRight="@drawable/search_delet"
-            android:drawablePadding="5dp"
-            android:padding="5dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:background="@color/theme_color"
-            android:textColor="@color/white"
-            android:layout_height="wrap_content" />
+            android:drawableRight="@drawable/seach_delete"
+            android:drawablePadding="5dp"
+            android:ellipsize="end"
+            android:padding="5dp"
+            android:singleLine="true"
+            android:textColor="@color/white" />
     </LinearLayout>
-    <TextView
-        android:id="@+id/tips_results"
-        android:layout_below="@id/search_condition_layou"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="14dp"
-        android:textColor="@color/normal_gray"
-        android:text="@string/retrieval_results"
-        android:padding="5dp"/>
-    <ListView
-        android:layout_marginTop="-6dp"
-        android:id="@+id/lv_search_result"
-        android:layout_width="match_parent"
-        android:background="@color/white"
-        android:layout_height="match_parent"
-        android:divider="@null"
-        android:layout_below="@id/tips_results" />
 
     <TextView
-        android:layout_centerInParent="true"
+        android:id="@+id/tips_results"
+        android:layout_width="match_parent"
+        android:layout_height="37dp"
+        android:layout_below="@id/search_condition_layou"
+        android:gravity="center_vertical"
+        android:paddingLeft="21dp"
+        android:text="@string/retrieval_results"
+        android:textColor="@color/normal_gray"
+        android:textSize="15sp" />
+
+    <ListView
+        android:id="@+id/lv_search_result"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tips_results"
+        android:divider="@null" />
+
+    <TextView
         android:id="@+id/tv_tips"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@id/title"
-        android:visibility="gone"
+        android:layout_centerInParent="true"
         android:text="@string/dzbb_no_data"
-        android:layout_height="wrap_content" />
+        android:visibility="gone" />
 </RelativeLayout>

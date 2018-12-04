@@ -105,7 +105,7 @@
     <string name="dzbb_no_data">无结果</string>
     <string name="home_icon_hyzs">新闻中心</string>
     <string name="home_icon_presidium">Faculty\nExclusive</string>
-    <string name="retrieval_results">已为您检索到以下结果：</string>
+    <string name="retrieval_results">为您查找到1个结果：</string>
     <string name="search_time">结束时间必须迟于开始时间，请重新选择</string>
 
 
@@ -256,8 +256,8 @@
     <string name="settings_version">版本更新</string>
     <string name="settings_about">关于参会易</string>
     <string name="settings_contact">联系我们</string>
-    <string name="settings_share">向朋友或同道推荐此应用</string>
-    <string name="settings_help">帮助我们改进参会易</string>
+    <string name="settings_share">向同道分享应用</string>
+    <string name="settings_help">意见反馈</string>
     <string name="settings_nologin">您还未登录</string>
     <string name="settings_login">点击登录</string>
     <string name="settings_logout">点击退出</string>
@@ -289,8 +289,9 @@
 \n关于“参会易®”
 \n&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;“参会易”是国内会议App中唯一的智能互动社交性的平台级产品， 其理念、用户体验已在国内遥遥领先。不少功能在全球范围也属首创和独创。如果您的组织需要我们的软件和会议服务，请联系我们: service@incongress.net</string>
     <string name="settings_contact_test">亲爱的用户您好！如果您在使用参会易的过程中有问题或发现bug，请与我们联系。谢谢！\n我们的联系方式：\n电话：021-52981008</string>
-    <string name="settings_contact_text_fax">传真：021-52981008*808</string>
-    <string name="settings_contact_text_mail">邮箱：service@incongress.net\n微信公众平台服务号：incongress</string>
+    <string name="settings_contact_text_fax">传真： 021-52981008*808</string>
+    <string name="settings_contact_text_mail">邮箱： service@incongress.net</string>
+    <string name="settings_contact_text_wx">微信公众平台服务号：incongress</string>
     <string name="settings_share_sms">短信推荐</string>
     <string name="settings_share_mail">邮件推荐</string>
     <string name="settings_share_content">我正在使用“参会易”,完全不同的参会体验。建议你下载试试！http://app.incongress.cn/ifsc2018/app</string>
@@ -662,6 +663,16 @@
     <string name="code_hasgot">验证码已发送</string>
     <string name="get_again">重新获取</string>
     <string name="other_type_login">第三方账号登录</string>
+    <!--个人中心界面-->
+    <string name="me_remind">预约提醒</string>
+    <string name="me_quiz">问答</string>
+    <string name="me_post">帖子</string>
+    <string name="me_note">笔记</string>
+    <string name="settings_mark">APP 评分</string>
+    <string name="business_cooperation">商务合作</string>
+    <string name="tel_number">电话： 021-52981008</string>
+    <!--会议部分-->
+    <string name="seach_title_hint">输入会议关键字,开始快速查找</string>
     <!--极光推送修改-->
     <!--包名修改的部分-->
     <string name="share_info">IFSC基本信息</string>
