@@ -105,7 +105,7 @@ public class SpeakerDetailFragment extends BaseFragment {
         mTvSpeakerInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WebViewContainerActivity.startWebViewContainerActivity(getActivity(), getString(R.string.secretary_info_url, Constants.conId + "", mSpeakerId + "", AppApplication.getSystemLanuageCode()), mSpeakerName);
+                WebViewContainerActivity.startWebViewContainerActivity(getActivity(), getString(R.string.secretary_info_url, Constants.getConId() + "", mSpeakerId + "", AppApplication.getSystemLanuageCode()), mSpeakerName);
             }
         });
 

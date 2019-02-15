@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="Gradle: com.yqritc:recyclerview-flexibledivider-1.2.8">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.android/build-cache/c75b4f20b658d8ff41dcfc3a0e19096bae299863/output/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.android/build-cache/c75b4f20b658d8ff41dcfc3a0e19096bae299863/output/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/recyclerview-flexibledivider-1.2.8.aar/695ba4cf5b7ff3fcc72d4407da70181e/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/recyclerview-flexibledivider-1.2.8.aar/695ba4cf5b7ff3fcc72d4407da70181e/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

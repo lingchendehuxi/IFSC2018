@@ -16,6 +16,7 @@ import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.model.ConferenceDbUtils;
 import com.android.incongress.cd.conference.model.Session;
 import com.android.incongress.cd.conference.utils.TimeUtils;
+import com.android.incongress.cd.conference.widget.StatusBarUtil;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 import com.umeng.analytics.MobclickAgent;
 
@@ -39,13 +40,16 @@ public class MyScheduleActionFragment extends BaseFragment {
 
     private boolean mIsEditMode = false;
     private int mCurrentPage = 0;
+    //参数为了在切换到activity返回后，fragment重新设置导航栏字体颜色
+    private boolean isBackView = true;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        StatusBarUtil.setStatusBarDarkTheme(getActivity(),true);
         View view = inflater.inflate(R.layout.fragment_my_schedule, null);
-        mViewPager = (ViewPager) view.findViewById(R.id.viewpager);
-        mTabLayout = (TabLayout) view.findViewById(R.id.tablayout);
+        mViewPager =  view.findViewById(R.id.viewpager);
+        mTabLayout =  view.findViewById(R.id.tablayout);
 
         List<Session> allSession = ConferenceDbUtils.getAllSession();
         for (int i = 0; i < allSession.size(); i++) {
@@ -67,10 +71,8 @@ public class MyScheduleActionFragment extends BaseFragment {
             }
         }
 
-        mAdapter = new MyScheduleAdapter(getFragmentManager(), titles, titles.length);
+        mAdapter = new MyScheduleAdapter(getChildFragmentManager(), titles, titles.length);
         mViewPager.setAdapter(mAdapter);
-        mViewPager.setOffscreenPageLimit(2);
-        mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         mTabLayout.setupWithViewPager(mViewPager);
         mViewPager.setCurrentItem(mCurrentPage);
 
@@ -103,6 +105,9 @@ public class MyScheduleActionFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        if(!isBackView){
+            StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
+        }
         MobclickAgent.onPageStart(Constants.FRAGMENT_MYSCHEDULE);
     }
 
@@ -110,5 +115,20 @@ public class MyScheduleActionFragment extends BaseFragment {
     public void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd(Constants.FRAGMENT_MYSCHEDULE);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mSessionDaysList.clear();
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        isBackView = hidden;
+        if(!hidden){
+            StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
+        }
     }
 }

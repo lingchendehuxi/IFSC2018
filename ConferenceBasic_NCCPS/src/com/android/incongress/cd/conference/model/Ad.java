@@ -20,12 +20,23 @@ public class Ad extends DataSupport {
      * version : 2
      * viewLevel : 1
      */
+    private int id;
     private int adId;
     private String adImage;
     private int adLevel;
     private String adLink;
     private int conferencesId;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     /**
+
      * date : 25
      * day : 5
      * hours : 18

@@ -1,0 +1,1 @@
+[{"outputType":{"type":"MERGED_MANIFESTS"},"apkInfo":{"type":"MAIN","splits":[],"versionCode":41,"versionName":"8.0.3","enabled":true,"outputFile":"ConferenceBasic_NCCPS-debug.apk","fullName":"debug","baseName":"debug"},"path":"AndroidManifest.xml","properties":{"packageId":"com.android.incongress.cd.conference","split":"","minSdkVersion":"23"}}]

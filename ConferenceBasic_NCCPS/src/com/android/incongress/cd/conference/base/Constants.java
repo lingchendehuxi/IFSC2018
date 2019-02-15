@@ -1,5 +1,6 @@
 package com.android.incongress.cd.conference.base;
 
+import com.android.incongress.cd.conference.save.SharePreferenceUtils;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 
 /**
@@ -23,8 +24,10 @@ public class Constants {
     public static final String CONFERENCE_ID = "conferenceId";
 
     //微信ID
-    public static final String WX_APPID = "wxfa838da1dfcf007b";
-    public static final String APP_SECRET = "bc7eeb1ad55b3ee478c1acede4d9e98f";
+    public static final String WX_APPID = "wxd40d6655d0199e18";
+    public static final String APP_SECRET = "37325ffce412660d98a02fdd3e7a2617";
+    //每个数据列表显示的最多数
+    public static final String MAXDATA = "10";
 
     public static final String EVENT_ID_MEETING_SCHEDULE = "meeting_schedule";
     public static final String EVENT_ID_SEARCH_SCHEDULE = "search_schedule";
@@ -41,6 +44,8 @@ public class Constants {
     public static final String EVENT_ID_PERSON = "personCenter";
     public static final String EVENT_ID_SHARE = "share";
     public static final String EVENT_ID_MAKE_POST = "make_post";
+    public static final String VIDEO_DETIAL_BEAN = "video_data_bean"; //火速上线视频列表
+    public static final String BOOK_VIDEO_DETIAL_BEAN = "book_video_data_bean";  //可预约的课件可播放的视频
 
     public static final String  ACTIVITY_SPLASH = "启动页"; // splashActivity
     public static final String ACTIVITY_CONFERENCES = "选择大会页面"; // conferencesActivity
@@ -51,6 +56,7 @@ public class Constants {
     public static final String FRAGMENT_PERSONCENTER ="个人中心";// personCenterFragment
     public static final String FRAGMENT_MESSAGESTATION = "消息站";// messageStationFragment
     public static final String FRAGMENT_MEETINGSCHEDULELIST = "看日程列表模式";// meetingScheduleListFragment
+    public static final String FRAGMENT_COLLEGETEXTLIST = "CIT学院文章列表模式";// CollegeListDetailFragment
     public static final String FRAGMENT_MEETINGSCHEDULECALENDAR = "看日程日历模式";// meetingScheduleCanlendarFragment
     public static final String FRAGMENT_SESSIONDETAIL = "日程详情页";// sessionDetailFragment
     public static final String FRAGMENT_SPEAKERDETAIL = "讲者详情页";// speakerDetailFragment
@@ -75,6 +81,10 @@ public class Constants {
     public static final String FRAGMENT_POSTERDETAIL = "壁报详情模块";// posterDetailFragment
 
     public static final String ACTIVITY_COLLEGE = "学院页面";// collegeActivity
+    public static final String ACTIVITY_COLLEGE_PLAY = "学院页面，播放";// collegeActivity
+    public static final String ACTIVITY_COLLEGE_ORDER = "学院页面，预约";// collegeActivity
+    public static final String ACTIVITY_COLLEGE_PLAY_BLWS = "学院页面，播放保利威视";// collegeActivity
+    public static final String ACTIVITY_COLLEGE_PLAY_BDY = "学院页面，播放百度云";// collegeActivity
 
     public static final String FRAGMENT_EXHIBITORS = "参展商";// exhibitorsFragment
     public static final String FRAGMENT_EXHIBITORSDETAIL = "参展商详情";// exhibitorDetailFragment
@@ -82,6 +92,9 @@ public class Constants {
     public static final String ACTIVITY_SCANE = "扫一扫";// scaneActivity
 
     public static final String FRAGMENT_MAKEPOST = "发帖";// makePostFragment
+    /*我的*/
+    public static final String MY_ORDER_COURSER = "我的预约";// myMindbooklistfragment
+
 
     /**
      * 是否存在compas页面
@@ -101,6 +114,7 @@ public class Constants {
     public static final String USER_FAMILY_NAME = "familyName";
     public static final String USER_GIVEN_NAME = "givenName";
     public static final String USER_IMG = "img";
+    public static final String USER_SEX = "sex";
     /** 用户手机号 **/
     public static final String USER_MOBILE = "userMobile";
     /** 用户登录id **/
@@ -108,7 +122,10 @@ public class Constants {
     /** 用户类型 **/
     public static final String USER_TYPE = "userType";
     public static final String USER_FACULTYID = "facultyId";
-
+    public static final String USER_OPENID = "openId";
+    public static final String USER_NICK_NAME = "nickName";
+    public static final String CONID = "conId";
+    public static final String FROMWHERE = "fromWhere";
     /** 会议日程 提醒开关**/
     public static final String LOOK_SCHEDULE_TIPS = "lookScheduleTips";
 
@@ -204,7 +221,7 @@ public class Constants {
     private static final String HOST_TEST = "http://www.incongress.cn/Conferences/proxy.do";;/** 服务器地址 **/
     private static final String NEWSPREFIX_TEST="http://114.80.201.49/"; /** 会议之声的下载地址 **/
     private static final String DZBB_TEST = "http://www.incongress.cn/posterAction.do"; /** 电子壁报**/
-    private static final String E_CASE_WEBSITE_TEST = "http://incongress.cn/webapp/discussion/CIT2016H5/casesList.html?conId=" + Constants.conId; //电子病历
+    private static final String E_CASE_WEBSITE_TEST = "http://incongress.cn/webapp/discussion/CIT2016H5/casesList.html?conId=" + Constants.getConId(); //电子病历
 
     private static final int CIT_WEBSITE_TEST = R.string.cit_live_url_test; /** CIT 加载地址 **/
     private static final int HD_SESSION_QUESTION_TEST = R.string.hd_question_site_test; /** 现场互动提问地址 **/
@@ -219,7 +236,7 @@ public class Constants {
     private static final String HOST_OFFICIAL = "http://app.incongress.cn/Conferences/proxy.do";/** 服务器地址 **/
     private static final String NEWSPREFIX_OFFICIAL ="http://app.incongress.cn/Conferences"; /** 会议之声的下载地址 **/
     private static final String DZBB_OFFICIAL = "http://m.incongress.cn/posterAction.do"; /** 电子壁报**/
-    private static final String E_CASE_WEBSITE_OFFICIAL = "http://m.incongress.cn/webapp/discussion/CIT2016H5/casesList.html?conId=" + Constants.conId; /** 电子病例 **/
+    private static final String E_CASE_WEBSITE_OFFICIAL = "http://m.incongress.cn/webapp/discussion/CIT2016H5/casesList.html?conId=" + Constants.getConId(); /** 电子病例 **/
 
     private static final int CIT_WEBSITE_OFFICIAL = R.string.cit_live_url_official;  /** CIT 加载地址 **/
     private static final int HD_SESSION_QUESTION_OFFICIAL = R.string.hd_question_site_official; /** 现场互动提问地址 **/
@@ -228,6 +245,8 @@ public class Constants {
     private static final int CIT_COLLEGE_OFFICIAL = R.string.cit_college_url_official; /** CIT 学院 **/
     private static final int HdSession_QUESTION_LIST_OFFICIAL = R.string.hd_question_list_official; /** 提问列表 **/
     private static final  int MEETING_GUIDE_URL_OFFICIAL = R.string.meeting_guide_info_officiaol; /** 参会指南 **/
+    public static final String BASE_EXAM_TABLE = "/Exam/data?";
+    public static final String BASE_LOCAL_LIST = "/sessiongroup.do?";
 
     public static final String get_HOST() {
         if(isDebug)
@@ -314,33 +333,52 @@ public class Constants {
 
     public static final String getPreUrl() {
         if(isDebug)
-            return "http://114.80.201.49/";
+            return "http://incongress.cn/";
         else
             return "http://app.incongress.cn/";
     }
+
+    /*反馈地址*/
+    public static final String FEEDBACK_URI = "http://weixin.incongress.cn/xhy/xhyHtml5/html/feedback.html";
+    /*个人资料修改地址*/
+    public static final String MODEFIY_INFO_URI = "http://app.incongress.cn/modelH5/canhuizhuce/updateUser.jsp?";
+    /*CIT学院的分享地址*/
+    public static final String CIT_SHARE_URI = "http://app.incongress.cn/Exam/data?method=getDataByDataId&dataId=";
     /*所有功能的开关*/
+
     /** 广告广播 **/
-    public static final String ACTION_CHANGE_AD = "android.intent.action.change_ad.basic.nccps";
+    public static final String ACTION_CHANGE_AD = "android.intent.action.change_ad.basic.cit";
+    public static final String ACTION_UPDATE_MEET = "android.intent.action.update_meet";
+    public static final String ACTION_COMMENT_UPDATE = "android.intent.action.update_comment.cit";
+    /** 首页点击的按钮位置   */
+    public static final Boolean HOME_CLICK_POSITION_INNER = false;
     /**　微分享信key **/
     public static final String WXKey = "wx959030923745168b" ;
     /** 项目名称 一定要修改**/
-    public static final String PROJECT_NAME = "ifsc2018";
-    public static final String APPNAME = "IFSC";
+    public static final String APPNAME = "CIT";
+
+    //初始数据库版本
+    public static final int DATA_VERSION = 258;
+    public static final int APP_VERSION = 41;
     /** 参会易下载地址(根据产品不同地址不同) **/
-    public static final String APP_DOWNLOAD_SITE = "http://app.incongress.cn/ifsc2018/app";
+    public static final String APP_DOWNLOAD_SITE = "http://app.incongress.cn/cit";
     /** 下载地址 **/
-    public static final String DOWNLOADDIR="/cd_incongress_ifsc/download/";
+    public static final String DOWNLOADDIR="/cd_incongress_cit/download/";
     /** 解压地址 **/
-    public static final String FILESDIR="/cd_incongress_ifsc/files/";
+    public static final String FILESDIR="/cd_incongress_cit/files/";
+
+    //豌豆荚地址
+    public static final String MARKAPP_URI = "https://www.wandoujia.com/apps/com.android.incongress.cd.conference";
+    public static final String PACKAGE_NAME = "com.android.incongress.cd.conference";
     //conference id
-    public static int conId = 348;
+    public static int conId = 44;//44 cit
     //看日程
-   //日程分享      //默认为true
-   public static final boolean SCHEDULE_SHARE = true;
-   //课件预约
-   public static final boolean SCHEDULE_BOOK = true;
-   //日程提问
-    public static final boolean SCHEDULE_ASK = true;
+    //日程分享      //默认为true
+    public static final boolean SCHEDULE_SHARE = true;
+    //课件预约
+    public static final boolean SCHEDULE_BOOK = false;
+    //日程提问
+    public static final boolean SCHEDULE_ASK = false;
     //讲者信息介绍
     public static final boolean SCHEDULE_SPEAKER_INFO = true;
     //参会指南     分享
@@ -353,5 +391,14 @@ public class Constants {
     //播客   点赞   评论
     public static boolean SCENICXIU_PRISE_COMMENT = true;
     //首页消息和视频如果没有数据，就不会显示
-
+    //分享界面
+    //CIT学院的分享
+    public static boolean COLLEGE_HOME_SHARE = false;
+    //获取conId
+    public static final int getConId() {
+        return SharePreferenceUtils.getAppInt(Constants.CONID,Constants.conId);
+    }
+    public static final String getFromWhere() {
+        return SharePreferenceUtils.getAppString(Constants.FROMWHERE);
+    }
 }

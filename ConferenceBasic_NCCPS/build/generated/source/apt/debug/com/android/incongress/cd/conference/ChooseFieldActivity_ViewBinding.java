@@ -16,7 +16,7 @@ import java.lang.Override;
 public class ChooseFieldActivity_ViewBinding<T extends ChooseFieldActivity> implements Unbinder {
   protected T target;
 
-  private View view2131624130;
+  private View view2131297295;
 
   public ChooseFieldActivity_ViewBinding(final T target, Finder finder, Object source) {
     this.target = target;
@@ -26,7 +26,7 @@ public class ChooseFieldActivity_ViewBinding<T extends ChooseFieldActivity> impl
     target.mTvTitle = finder.findRequiredViewAsType(source, R.id.title_text, "field 'mTvTitle'", TextView.class);
     view = finder.findRequiredView(source, R.id.tv_confirm, "field 'mTvConfirm' and method 'onConfirmClick'");
     target.mTvConfirm = finder.castView(view, R.id.tv_confirm, "field 'mTvConfirm'", TextView.class);
-    view2131624130 = view;
+    view2131297295 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -46,8 +46,8 @@ public class ChooseFieldActivity_ViewBinding<T extends ChooseFieldActivity> impl
     target.mTvConfirm = null;
     target.mRvFields = null;
 
-    view2131624130.setOnClickListener(null);
-    view2131624130 = null;
+    view2131297295.setOnClickListener(null);
+    view2131297295 = null;
 
     this.target = null;
   }

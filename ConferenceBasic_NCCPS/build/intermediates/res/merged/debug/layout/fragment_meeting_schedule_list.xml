@@ -3,35 +3,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:background="@color/white"
+    android:background="@color/black"
     android:id="@+id/rl_container"
     android:layout_height="match_parent">
-
-    <TextView
+    <include
+        android:id="@+id/ll_title"
+        layout="@layout/fragment_select_time_titlebar"/>
+    <LinearLayout
+        android:id="@+id/ll_show_on_off"
         android:layout_width="match_parent"
-        android:text="@string/tips"
-        android:background="@drawable/tips_bg"
-        android:layout_margin="3dp"
-        android:id="@+id/tv_tips"
-        android:textColor="#7E7E7E"
-        android:visibility="gone"
-        android:textSize="@dimen/text_size_small"
-        android:drawableRight="@drawable/edittext_delete"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:text="@string/use"
+            android:background="@drawable/tips_bg"
+            android:layout_margin="3dp"
+            android:id="@+id/tv_tips"
+            android:textColor="#7E7E7E"
+            android:visibility="gone"
+            android:textSize="@dimen/text_size_small"
+            android:gravity="center"
+            android:layout_height="wrap_content" />
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tablayout"
-        android:layout_width="match_parent"
-        app:tabIndicatorColor="@color/theme_color"
-        android:background="@color/white"
-        app:tabSelectedTextColor="@color/theme_color"
-        style="@style/MyCustomTabTextAppearance"
-        android:layout_height="wrap_content"
-        />
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewpager"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
+        <com.android.incongress.cd.conference.widget.MyViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+    </LinearLayout>
 
 </LinearLayout>

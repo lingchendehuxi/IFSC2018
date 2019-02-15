@@ -9,7 +9,6 @@
         android:id="@+id/search_condition_layou"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
         android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -18,6 +17,7 @@
         android:paddingBottom="10dp">
 
         <android.support.v7.widget.CardView
+            android:id="@+id/session_day_card"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:cardCornerRadius="5dp">
@@ -26,54 +26,121 @@
                 android:id="@+id/session_day"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/theme_color"
+                android:background="@color/search_cancel_color"
                 android:paddingLeft="19dp"
                 android:paddingTop="8dp"
                 android:paddingRight="21dp"
                 android:paddingBottom="8dp"
-                android:textColor="@color/white" />
+                android:textColor="@color/unselect_color" />
 
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_gravity="top|right"
-                android:scaleType="centerCrop"
-                android:src="@drawable/seach_bg_1"
-                android:tint="@color/theme_color" />
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|right">
 
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_gravity="top|right"
-                android:scaleType="centerCrop"
-                android:src="@drawable/seach_delete"
-                android:tint="@color/theme_color" />
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/search_bg_1"
+                    android:tint="@color/theme_color" />
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/search_bg_2"
+                    android:tint="@color/white" />
+            </FrameLayout>
         </android.support.v7.widget.CardView>
 
-        <TextView
-            android:id="@+id/session_time"
+        <android.support.v7.widget.CardView
+            android:id="@+id/session_time_card"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:background="@color/theme_color"
-            android:drawableRight="@drawable/seach_delete"
-            android:drawablePadding="5dp"
-            android:padding="5dp"
-            android:textColor="@color/white" />
+            app:cardCornerRadius="5dp">
 
-        <TextView
-            android:id="@+id/session_room"
+            <TextView
+                android:id="@+id/session_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/search_cancel_color"
+                android:paddingLeft="19dp"
+                android:paddingTop="8dp"
+                android:paddingRight="21dp"
+                android:paddingBottom="8dp"
+                android:textColor="@color/unselect_color" />
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|right">
+
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/search_bg_1"
+                    android:tint="@color/theme_color" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/search_bg_2"
+                    android:tint="@color/white" />
+            </FrameLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/session_room_card"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:background="@color/theme_color"
-            android:drawableRight="@drawable/seach_delete"
-            android:drawablePadding="5dp"
-            android:ellipsize="end"
-            android:padding="5dp"
-            android:singleLine="true"
-            android:textColor="@color/white" />
+            app:cardCornerRadius="5dp">
+
+            <TextView
+                android:id="@+id/session_room"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/search_cancel_color"
+                android:paddingLeft="19dp"
+                android:paddingTop="8dp"
+                android:paddingRight="21dp"
+                android:paddingBottom="8dp"
+                android:textColor="@color/unselect_color" />
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|right">
+
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/search_bg_1"
+                    android:tint="@color/theme_color" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/search_bg_2"
+                    android:tint="@color/white" />
+            </FrameLayout>
+        </android.support.v7.widget.CardView>
+
     </LinearLayout>
 
     <TextView
@@ -92,6 +159,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/tips_results"
+        android:scrollbars="none"
         android:divider="@null" />
 
     <TextView

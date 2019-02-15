@@ -7,6 +7,7 @@ import org.litepal.crud.DataSupport;
  * Created by Jacky on 2016/7/25.
  */
 public class Tips extends DataSupport {
+    private int id;
     private int tipsId;// 基本信息编号
     private int conferencesId;// 参会议编号
     private String tipsContent;// 基本信息
@@ -14,6 +15,14 @@ public class Tips extends DataSupport {
     private String tipsTitle;// 标题
     private String tipsTitle_En;// 标题 英语
     private String tipsContent_En;// 内容 英语
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getTipsId() {
         return tipsId;

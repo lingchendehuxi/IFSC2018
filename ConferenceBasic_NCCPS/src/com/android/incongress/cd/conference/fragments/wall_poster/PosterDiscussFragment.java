@@ -6,6 +6,7 @@ import android.text.SpannableStringBuilder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -60,7 +61,7 @@ public class PosterDiscussFragment extends BaseActivity implements OnClickListen
     public final static int MSG_REFESHDONE = 0x2000;//刷新完成
     private List<CommunityTopicContentBean> mList;
     private MeetingCommunityCommentsAdapter mAdapter;
-    private DZBBBean mDZBBBean;
+    private DZBBBean.ArrayBean mDZBBBean;
     private IncongressTextView mNoDataView;
     private int mPosterCommentId = 0;
 
@@ -158,7 +159,7 @@ public class PosterDiscussFragment extends BaseActivity implements OnClickListen
             e.printStackTrace();
         }
 
-        CHYHttpClientUsage.getInstanse().doCreatePosterDiscuss(AppApplication.userId, AppApplication.userType, userName, content, Constants.conId, mDZBBBean.getPosterId(), new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
+        CHYHttpClientUsage.getInstanse().doCreatePosterDiscuss(AppApplication.userId, AppApplication.userType, userName, content, Constants.getConId(), mDZBBBean.getPosterId(), new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
@@ -266,7 +267,7 @@ public class PosterDiscussFragment extends BaseActivity implements OnClickListen
 
     @Override
     protected void initViewsAction() {
-        mDZBBBean = (DZBBBean) getIntent().getSerializableExtra("bean");
+        mDZBBBean = (DZBBBean.ArrayBean) getIntent().getSerializableExtra("bean");
         mIncongressEditText = (IncongressEditText) findViewById(R.id.hysq_comments_edit);
         mListView = (ListView) findViewById(R.id.hysq_comments_list);
         mRefreshLayout = (RefreshLayout) findViewById(R.id.pull_refresh_scrollview);

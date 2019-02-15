@@ -1,350 +1,271 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@android:color/white"
+    android:scrollbars="none">
 
-    <RelativeLayout
-        android:id="@+id/rl_top"
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:background="@color/action_bar_bg">
-
-        <com.android.incongress.cd.conference.widget.IncongressTextView
-            android:id="@+id/title_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:ellipsize="middle"
-            android:gravity="center"
-            android:text="@string/bottom_tab_me"
-            android:textColor="#FFF"
-            android:textSize="20sp" />
-
-        <ImageView
-            android:id="@+id/iv_scane"
-            android:layout_width="55dp"
-            android:visibility="gone"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:scaleType="centerInside"
-            android:src="@drawable/scane_scane" />
-    </RelativeLayout>
-
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/rl_top">
+        android:orientation="vertical">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#F0EFF3"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-            <RelativeLayout
+            <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:padding="@dimen/layout_padding">
-
-                <ImageView
-                    android:id="@+id/civ_me"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:layout_marginLeft="24dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/professor_default" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="64dp"
-                    android:layout_toRightOf="@id/civ_me">
-
-                    <Button
-                        android:id="@+id/bt_login"
-                        android:layout_width="wrap_content"
-                        android:layout_height="26dp"
-                        android:layout_centerInParent="true"
-                        android:background="@drawable/bt_background"
-                        android:text="@string/login"
-                        android:textAllCaps="false"
-                        android:textColor="@color/gray"
-                        android:textSize="@dimen/text_size_small" />
-
-                    <LinearLayout
-                        android:id="@+id/ll_person_info"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_centerInParent="true"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical"
-                        android:paddingLeft="@dimen/layout_padding"
-                        android:visibility="gone">
-
-                        <TextView
-                            android:id="@+id/tv_welcome"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/gray"
-                            android:textSize="@dimen/text_size_small" />
-
-                        <TextView
-                            android:id="@+id/tv_name"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
-                            android:textColor="@color/theme_color"
-                            android:textSize="@dimen/text_size_large" />
-                    </LinearLayout>
-
-                </RelativeLayout>
-            </RelativeLayout>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/dividerColor" />
+                android:layout_height="match_parent"
+                android:src="@color/theme_color" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/layout_margin"
-                android:background="@color/white"
+                android:background="@drawable/mine_fragment_bg"
+                android:gravity="center_horizontal"
                 android:orientation="vertical"
-                android:paddingBottom="26dp">
+                android:paddingTop="35dp">
 
-                <RelativeLayout
-                    android:id="@+id/bt_tiezi"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:background="#FFF"
-                    android:clickable="true">
-
-                    <TextView
-                        android:id="@+id/tv_my_field"
-                        android:layout_width="wrap_content"
-                        android:layout_height="45dp"
-                        android:drawablePadding="20dp"
-                        android:gravity="center_vertical"
-                        android:paddingLeft="@dimen/layout_margin"
-                        android:paddingRight="40dp"
-                        android:text="@string/mymeeting_tiezi"
-                        android:textColor="#FF000000"
-                        android:textSize="@dimen/text_size_small" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="30dp"
-                        android:background="@drawable/me_next" />
-
-                    <View
-                        android:layout_width="fill_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginLeft="@dimen/layout_margin"
-                        android:background="@color/dividerColor" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/bt_note"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:background="#FFF"
-                    android:clickable="true">
-
-                    <TextView
-                        android:id="@+id/tv_my_keshi"
-                        android:layout_width="wrap_content"
-                        android:layout_height="45dp"
-                        android:drawablePadding="20dp"
-                        android:gravity="center_vertical"
-                        android:paddingLeft="@dimen/layout_margin"
-                        android:paddingRight="40dp"
-                        android:text="@string/mymeeting_note"
-                        android:textColor="#FF000000"
-                        android:textSize="@dimen/text_size_small" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="30dp"
-                        android:background="@drawable/me_next" />
-
-                    <View
-                        android:layout_width="fill_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginLeft="@dimen/layout_margin"
-                        android:background="@color/dividerColor" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/mycenter_warmning_panel"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
+                <TextView
+                    android:id="@+id/tv_modify_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="-2dp"
+                    android:background="@drawable/modify_info_border"
+                    android:paddingRight="7dp"
+                    android:text="修改资料"
+                    android:textColor="@android:color/white"
                     android:visibility="gone"
-                    android:background="#FFF"
-                    android:clickable="true">
+                    android:textSize="12sp" />
 
-                    <TextView
-                        android:id="@+id/mycenter_warmning"
-                        android:layout_width="wrap_content"
-                        android:layout_height="45dp"
-                        android:drawablePadding="20dp"
-                        android:gravity="center_vertical"
-                        android:paddingLeft="@dimen/layout_margin"
-                        android:paddingRight="40dp"
-                        android:text="@string/mymeeting_warning"
-                        android:textColor="#FF000000"
-                        android:textSize="@dimen/text_size_small" />
+                <com.android.incongress.cd.conference.widget.CircleImageView
+                    android:id="@+id/civ_me"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/professor_default" />
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="30dp"
-                        android:background="@drawable/me_next" />
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="23dp"
+                    android:text="JIM"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/text_size_large" />
 
-                    <View
-                        android:layout_width="fill_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginLeft="@dimen/layout_margin"
-                        android:background="@color/dividerColor" />
-                </RelativeLayout>
+                <TextView
+                    android:id="@+id/tv_welcome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_20"
+                    android:layout_marginBottom="@dimen/margin_60"
+                    android:text="欢迎使用参会易"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/text_size_small" />
 
-                <RelativeLayout
-                    android:id="@+id/settings_contact_panel"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:background="#FFF"
-                    android:clickable="true">
-
-                    <TextView
-                        android:id="@+id/settings_contact"
-                        android:layout_width="wrap_content"
-                        android:layout_height="45dp"
-                        android:drawablePadding="20dp"
-                        android:gravity="center_vertical"
-                        android:paddingLeft="@dimen/layout_margin"
-                        android:paddingRight="40dp"
-                        android:text="@string/settings_contact"
-                        android:textColor="#FF000000"
-                        android:textSize="@dimen/text_size_small" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="30dp"
-                        android:background="@drawable/me_next" />
-
-                    <View
-                        android:layout_width="fill_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginLeft="@dimen/layout_margin"
-                        android:background="@color/dividerColor" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/settings_share_panel"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:background="#FFF"
-                    android:clickable="true">
-
-                    <TextView
-                        android:id="@+id/settings_share"
-                        android:layout_width="wrap_content"
-                        android:layout_height="45dp"
-                        android:drawablePadding="20dp"
-                        android:gravity="center_vertical"
-                        android:paddingLeft="@dimen/layout_margin"
-                        android:paddingRight="40dp"
-                        android:text="@string/settings_share"
-                        android:textColor="#FF000000"
-                        android:textSize="@dimen/text_size_small" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="30dp"
-                        android:background="@drawable/me_next" />
-
-                    <View
-                        android:layout_width="fill_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginLeft="@dimen/layout_margin"
-                        android:background="@color/dividerColor" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/settings_help_panel"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:background="#FFF"
-                    android:clickable="true">
-
-                    <TextView
-                        android:id="@+id/settings_help"
-                        android:layout_width="wrap_content"
-                        android:layout_height="45dp"
-                        android:drawablePadding="20dp"
-                        android:gravity="center_vertical"
-                        android:paddingLeft="@dimen/layout_margin"
-                        android:paddingRight="40dp"
-                        android:text="@string/settings_help"
-                        android:textColor="#FF000000"
-                        android:textSize="@dimen/text_size_small" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="30dp"
-                        android:background="@drawable/me_next" />
-
-                    <View
-                        android:layout_width="fill_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginLeft="@dimen/layout_margin"
-                        android:background="@color/dividerColor" />
-                </RelativeLayout>
             </LinearLayout>
+
+        </FrameLayout>
+
+        <com.zyp.cardview.YcCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="-60dp"
+            android:layout_marginRight="5dp"
+            android:background="@color/theme_color"
+            app:ycCardCornerRadius="5dp"
+            app:ycCardElevation="11dp"
+            app:ycCardMaxElevation="16dp"
+            app:ycCardPreventCornerOverlap="false"
+            app:ycEndShadowColor="@color/shadow_end_color"
+            app:ycStartShadowColor="@color/shadow_color">
+
+            <com.android.incongress.cd.conference.widget.NoScrollGridView
+                android:id="@+id/gv_list"
+                android:layout_width="match_parent"
+                android:paddingLeft="23dp"
+                android:paddingRight="23dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:numColumns="4" />
+        </com.zyp.cardview.YcCardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/mycenter_warmning_panel"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:background="@drawable/rounded_corners"
+                android:clickable="true"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/mycenter_warmning"
+                    style="@style/home_me_text_style"
+                    android:text="@string/mymeeting_warning" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="23dp"
+                    android:background="@drawable/me_next" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/line_color" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/settings_contact_panel"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:background="@drawable/rounded_corners"
+                android:clickable="true">
+
+                <TextView
+                    android:id="@+id/settings_contact"
+                    style="@style/home_me_text_style"
+                    android:text="@string/settings_contact" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="23dp"
+                    android:background="@drawable/me_next" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/line_color" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/settings_share_panel"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:background="@drawable/rounded_corners"
+                android:clickable="true">
+
+                <TextView
+                    android:id="@+id/settings_share"
+                    style="@style/home_me_text_style"
+                    android:text="@string/settings_share" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="23dp"
+                    android:background="@drawable/me_next" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/line_color" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/settings_mark"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:background="@drawable/rounded_corners"
+                android:clickable="true">
+
+                <TextView
+                    style="@style/home_me_text_style"
+                    android:text="@string/settings_mark" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="23dp"
+                    android:background="@drawable/me_next" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/line_color" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/settings_help_panel"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:background="@drawable/rounded_corners"
+                android:clickable="true">
+
+                <TextView
+                    android:id="@+id/settings_help"
+                    style="@style/home_me_text_style"
+                    android:text="@string/settings_help" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="23dp"
+                    android:background="@drawable/me_next" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/line_color" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/setting"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:background="@drawable/rounded_corners"
+                android:clickable="true">
+
+                <TextView
+                    style="@style/home_me_text_style"
+                    android:text="@string/home_setting" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="23dp"
+                    android:background="@drawable/me_next" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/line_color" />
+            </RelativeLayout>
         </LinearLayout>
-    </ScrollView>
+    </LinearLayout>
+</ScrollView>
 
-    <Button
-        android:id="@+id/bt_login_out"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/layout_margin"
-        android:background="@color/theme_color"
-        android:paddingBottom="6dp"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp"
-        android:paddingTop="6dp"
-        android:text="@string/login_out"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_size_large"
-        android:visibility="gone" />
-
-</RelativeLayout>

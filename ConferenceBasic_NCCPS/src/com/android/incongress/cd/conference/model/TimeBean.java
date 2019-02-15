@@ -12,10 +12,18 @@ public class TimeBean extends DataSupport {
      * endTime : 12
      * difference : 16
      */
-
+    private int id;
     private int startTime;
     private int endTime;
     private int difference;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getStartTime() {
         return startTime;

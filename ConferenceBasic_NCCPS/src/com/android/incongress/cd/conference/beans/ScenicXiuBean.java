@@ -1,11 +1,12 @@
 package com.android.incongress.cd.conference.beans;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Jacky on 2016/1/13.
  */
-public class ScenicXiuBean {
+public class ScenicXiuBean implements Serializable {
     private int sceneShowId;
     private int type;
     private String author;

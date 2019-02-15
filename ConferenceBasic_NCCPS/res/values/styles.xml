@@ -15,22 +15,6 @@
         <item name="android:listDivider">@drawable/divider_bg</item>
     </style>
 
-    <!--    &lt;!&ndash; Application theme. &ndash;&gt;
-        <style name="AppTheme" parent="AppBaseTheme">
-            &lt;!&ndash; All customizations that are NOT specific to a particular API-level can go here. &ndash;&gt;
-            <item name="colorPrimary">@color/white</item>
-            <item name="colorPrimaryDark">@color/white</item>
-        </style>-->
-
-    <!--<style name="StarCheckBox" parent="@android:style/Widget.CompoundButton.CheckBox">-->
-    <!--<item name="android:button">@drawable/btn_star</item>-->
-    <!--<item name="android:maxHeight">10.0dip</item>-->
-    <!--</style>-->
-
-    <!--<style name="HyrcCheckBox" parent="@android:style/Widget.CompoundButton.CheckBox">-->
-    <!--<item name="android:button">@drawable/check_hyrc</item>-->
-    <!--</style>-->
-
     <style name="SwitchButton" parent="@android:style/Widget.CompoundButton.CheckBox">
         <item name="android:button">@drawable/btn_switch</item>
         <item name="android:height">20dp</item>
@@ -67,11 +51,16 @@
     <style name="MyCustomTabTextAppearance" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">18sp</item>
         <item name="textAllCaps">true</item>
+        <item name="android:textAllCaps">true</item>
     </style>
 
     <style name="icon_popup_window">
         <item name="android:windowEnterAnimation">@anim/slide_up</item>
         <item name="android:windowExitAnimation">@anim/slide_down</item>
+    </style>
+    <style name="icon_popup_window_no_down">
+        <item name="android:windowEnterAnimation">@anim/slide_up</item>
+        <item name="android:windowExitAnimation">@null</item>
     </style>
 
     <style name="dir_popupwindow_anim">
@@ -184,7 +173,7 @@
     <style name="edite_line">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
-        <item name="android:background">@color/gray_99</item>
+        <item name="android:background">@color/line_color</item>
     </style>
     <style name="baseTextStyle">
         <item name="android:layout_width">wrap_content</item>
@@ -200,6 +189,118 @@
         <item name="android:paddingRight">40dp</item>
         <item name="android:textColor">@color/black_login_text</item>
         <item name="android:textSize">@dimen/text_size_media</item>
+    </style>
+    <style name="transparentFrameWindowStyle" parent="android:style/Theme.Dialog">
+        <item name="android:windowBackground">@drawable/photo_choose_bg</item>
+    </style>
+    <style name="Widget_GifView" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+    <style name="popup_footer">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">@dimen/margin_50</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <declare-styleable name="ReadMoreTextView"><attr format="string" name="trimExpandedText"/><attr format="string" name="trimCollapsedText"/><attr format="integer" name="trimLength"/><attr format="boolean" name="showTrimExpandedText"/><attr format="color" name="colorClickableText"/><attr format="integer" name="trimLines"/><attr name="trimMode"><enum name="trimModeLine" value="0"/><enum name="trimModeLength" value="1"/></attr></declare-styleable>
+
+
+    <!--保利威视-->
+
+    <style name="iv_click_controller_land_top_dm">
+        <item name="android:layout_width">@dimen/dmcolor_commom_wh</item>
+        <item name="android:layout_height">@dimen/dmcolor_commom_wh</item>
+        <item name="android:clickable">true</item>
+        <item name="android:scaleType">centerInside</item>
+        <item name="android:translationX">@dimen/dmcolor_commom_tran</item>
+        <item name="android:translationY">@dimen/talk_common_margin</item>
+    </style>
+
+    <style name="iv_click_controller_land_top">
+        <item name="android:layout_width">@dimen/top_layout_height_s</item>
+        <item name="android:layout_height">@dimen/top_layout_height_s</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:clickable">true</item>
+        <item name="android:background">@drawable/polyv_commom_click_color_gray</item>
+        <item name="android:scaleType">center</item>
+    </style>
+
+    <style name="iv_click_controller_land_top_l">
+        <item name="android:layout_width">@dimen/top_layout_dm_height</item>
+        <item name="android:layout_height">@dimen/top_layout_dm_height</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:clickable">true</item>
+        <item name="android:background">@drawable/polyv_commom_click_color_gray</item>
+        <item name="android:scaleType">center</item>
+    </style>
+
+    <style name="iv_click_controller_land_center">
+        <item name="android:layout_width">@dimen/center_right_layout_height</item>
+        <item name="android:layout_height">@dimen/center_right_layout_height</item>
+        <item name="android:clickable">true</item>
+        <item name="android:scaleType">center</item>
+    </style>
+
+    <style name="iv_click_controller_land_bottom">
+        <item name="android:layout_width">@dimen/bottom_layout_height_l</item>
+        <item name="android:layout_height">@dimen/bottom_layout_height_l</item>
+        <item name="android:clickable">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:background">@drawable/polyv_commom_click_color_gray</item>
+        <item name="android:scaleType">center</item>
+    </style>
+
+    <style name="tv_click_controller_land_center">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:clickable">true</item>
+        <item name="android:textColor">@color/polyv_bit_text_color</item>
+        <item name="android:textSize">@dimen/center_text_size_l</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="tv_click_controller_land_center_s">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:clickable">true</item>
+        <item name="android:textColor">@color/polyv_bit_text_color</item>
+        <item name="android:textSize">@dimen/center_text_size</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="tv_click_controller_land_center_s_padding_tb" parent="tv_click_controller_land_center_s">
+        <item name="android:paddingTop">@dimen/talk_common_margin</item>
+        <item name="android:paddingBottom">@dimen/talk_common_margin</item>
+    </style>
+
+    <style name="tv_click_controller_land_center_not_click">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/top_layout_color_white</item>
+        <item name="android:textSize">@dimen/center_text_size</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="tv_click_controller_land_bottom">
+        <item name="android:layout_width">@dimen/bottom_layout_height_l</item>
+        <item name="android:layout_height">@dimen/bottom_layout_height_l</item>
+        <item name="android:clickable">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginRight">@dimen/center_bottom_margin_left_s</item>
+        <item name="android:textColor">@color/polyv_play_bt_color</item>
+        <item name="android:textSize">@dimen/bottom_right_text_size</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:background">@drawable/polyv_commom_click_color_gray</item>
+    </style>
+
+    <style name="iv_click_controller_port_bottom">
+        <item name="android:layout_width">@dimen/bottom_layout_height</item>
+        <item name="android:layout_height">@dimen/bottom_layout_height</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:clickable">true</item>
+        <item name="android:background">@drawable/polyv_commom_click_color_gray</item>
+        <item name="android:scaleType">center</item>
     </style>
 
 </resources>

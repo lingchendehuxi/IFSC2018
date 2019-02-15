@@ -2,11 +2,11 @@ ext {
     android = [
             compileSdkVersion       :   27,
             buildToolsVersion       :   "27.0.1",
-            minSdkVersion           :   19,
+            minSdkVersion           :   23,
             targetSdkVersion        :   22,
-            applicationId           :   "cn.incongress.ifsc",
-            versionCode             :    1,
-            versionName             :    "1.0.0"
+            applicationId           :   "com.android.incongress.cd.conference",
+            versionCode             :    41,
+            versionName             :    "8.0.3"
     ]
 
     dependencies = [

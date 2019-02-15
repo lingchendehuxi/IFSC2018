@@ -1,6 +1,6 @@
 [
     {
-        "outputFile": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-zh\\values-zh.xml",
+        "outputFile": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-zh\\values-zh.xml",
         "map": [
             {
                 "to": {
@@ -11,7 +11,7 @@
                     "endOffset": 111
                 },
                 "from": {
-                    "file": "C:\\Users\\Admin\\.android\\build-cache\\2c513b258b476fbd6259381dfb401282fedd1606\\output\\res\\values-zh\\values-zh.xml",
+                    "file": "C:\\Users\\Administrator\\.android\\build-cache\\03e5a5a8487b6e9c15cfd49d3c862a7b71d12b10\\output\\res\\values-zh\\values-zh.xml",
                     "position": {
                         "startLine": 4,
                         "startColumn": 4,
@@ -30,7 +30,7 @@
                     "endOffset": 175
                 },
                 "from": {
-                    "file": "C:\\Users\\Admin\\.android\\build-cache\\2c513b258b476fbd6259381dfb401282fedd1606\\output\\res\\values-zh\\values-zh.xml",
+                    "file": "C:\\Users\\Administrator\\.android\\build-cache\\03e5a5a8487b6e9c15cfd49d3c862a7b71d12b10\\output\\res\\values-zh\\values-zh.xml",
                     "position": {
                         "startLine": 5,
                         "startColumn": 4,
@@ -49,7 +49,7 @@
                     "endOffset": 237
                 },
                 "from": {
-                    "file": "C:\\Users\\Admin\\.android\\build-cache\\2c513b258b476fbd6259381dfb401282fedd1606\\output\\res\\values-zh\\values-zh.xml",
+                    "file": "C:\\Users\\Administrator\\.android\\build-cache\\03e5a5a8487b6e9c15cfd49d3c862a7b71d12b10\\output\\res\\values-zh\\values-zh.xml",
                     "position": {
                         "startLine": 6,
                         "startColumn": 4,
@@ -68,7 +68,7 @@
                     "endOffset": 290
                 },
                 "from": {
-                    "file": "C:\\Users\\Admin\\.android\\build-cache\\2c513b258b476fbd6259381dfb401282fedd1606\\output\\res\\values-zh\\values-zh.xml",
+                    "file": "C:\\Users\\Administrator\\.android\\build-cache\\03e5a5a8487b6e9c15cfd49d3c862a7b71d12b10\\output\\res\\values-zh\\values-zh.xml",
                     "position": {
                         "startLine": 7,
                         "startColumn": 4,
@@ -87,7 +87,7 @@
                     "endOffset": 337
                 },
                 "from": {
-                    "file": "C:\\Users\\Admin\\.android\\build-cache\\2c513b258b476fbd6259381dfb401282fedd1606\\output\\res\\values-zh\\values-zh.xml",
+                    "file": "C:\\Users\\Administrator\\.android\\build-cache\\03e5a5a8487b6e9c15cfd49d3c862a7b71d12b10\\output\\res\\values-zh\\values-zh.xml",
                     "position": {
                         "startLine": 8,
                         "startColumn": 4,
@@ -106,7 +106,7 @@
                     "endOffset": 383
                 },
                 "from": {
-                    "file": "C:\\Users\\Admin\\.android\\build-cache\\2c513b258b476fbd6259381dfb401282fedd1606\\output\\res\\values-zh\\values-zh.xml",
+                    "file": "C:\\Users\\Administrator\\.android\\build-cache\\03e5a5a8487b6e9c15cfd49d3c862a7b71d12b10\\output\\res\\values-zh\\values-zh.xml",
                     "position": {
                         "startLine": 9,
                         "startColumn": 4,
@@ -125,7 +125,7 @@
                     "endOffset": 430
                 },
                 "from": {
-                    "file": "C:\\Users\\Admin\\.android\\build-cache\\2c513b258b476fbd6259381dfb401282fedd1606\\output\\res\\values-zh\\values-zh.xml",
+                    "file": "C:\\Users\\Administrator\\.android\\build-cache\\03e5a5a8487b6e9c15cfd49d3c862a7b71d12b10\\output\\res\\values-zh\\values-zh.xml",
                     "position": {
                         "startLine": 10,
                         "startColumn": 4,

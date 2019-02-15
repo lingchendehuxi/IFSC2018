@@ -1,6 +1,7 @@
 package com.android.incongress.cd.conference.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +12,19 @@ import android.widget.TextView;
 import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.model.Class;
 import com.android.incongress.cd.conference.model.ConferenceDbUtils;
+import com.android.incongress.cd.conference.model.Meeting;
 import com.android.incongress.cd.conference.model.Session;
 import com.android.incongress.cd.conference.widget.stick_header.StickyListHeadersAdapter;
 import com.android.incongress.cd.conference.utils.DateUtil;
+import com.google.android.exoplayer.C;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -29,6 +36,8 @@ public class MeetingScheduleListAdapter extends BaseAdapter implements StickyLis
     private List<Session> mSessions;
     private List<Class> mClassBean;
     private LayoutInflater mInflater;
+    private List<Meeting> mMeetingBeanList = new ArrayList<>();
+    private LinkedList<Session> linkedList = new LinkedList<>();
 
     //1）sectionIndices数组用来存放每一轮分组的第一个item的位置。
     //2）sectionHeaders数组用来存放每一个分组要展现的数据，
@@ -39,6 +48,12 @@ public class MeetingScheduleListAdapter extends BaseAdapter implements StickyLis
         this.mSessions = session;
         this.mInflater = LayoutInflater.from(ctx);
         this.mClassBean = ConferenceDbUtils.getAllClasses();
+        Collections.sort(mSessions, new Comparator<Session>() {
+            @Override
+            public int compare(Session session, Session t1) {
+                return ((Integer)(ConferenceDbUtils.getClassOrder(session.getClassesId()+""))).compareTo(ConferenceDbUtils.getClassOrder(t1.getClassesId()+""));
+            }
+        });
         mSectionIndices = getSectionIndices();
         mSectionHeaders = getSectionHeaders();
     }
@@ -101,7 +116,7 @@ public class MeetingScheduleListAdapter extends BaseAdapter implements StickyLis
     private String[] getSectionHeaders(){
         String[] sectionHeader = new String[mSectionIndices.length];
         for(int i=0; i< mSectionIndices.length; i++) {
-            sectionHeader[i] = mSessions.get(mSectionIndices[i]).getClassesId() + "";
+            sectionHeader[mSectionIndices.length-i-1] = mSessions.get(mSectionIndices[i]).getClassesId() + "";
         }
 
         return sectionHeader;
@@ -125,9 +140,9 @@ public class MeetingScheduleListAdapter extends BaseAdapter implements StickyLis
         }else {
             holder.view_begin.setVisibility(View.VISIBLE);
         }
-
+        Log.d("sgqTest", "getHeaderView: "+position);
         for(int i=0; i<mClassBean.size(); i++) {
-            if(mSessions.get(position).getClassesId() == mClassBean.get(i).getClassesId()) {
+            if(mClassBean.get(i).getClassesId() == mSessions.get(position).getClassesId()) {
                 if(AppApplication.systemLanguage == 1) {
                     holder.tvClassRoom.setText(mClassBean.get(i).getClassesCode());
                 }else {
@@ -172,6 +187,7 @@ public class MeetingScheduleListAdapter extends BaseAdapter implements StickyLis
         }else {
             holder = (ViewHolder) convertView.getTag();
         }
+        getMeetingBeanBySessionId(String.valueOf(mSessions.get(position).getSessionGroupId()));
 
         if(AppApplication.systemLanguage == 1) {
             holder.tvMeetingName.setText(mSessions.get(position).getSessionName());
@@ -193,5 +209,13 @@ public class MeetingScheduleListAdapter extends BaseAdapter implements StickyLis
     class ViewHolder {
         TextView tvMeetingName;
         TextView tvMeetingTime;
+    }
+    /**
+     * 根据sessionGroupId去查找所有的meetingId
+     *
+     * @param sessionGroupId
+     */
+    private void getMeetingBeanBySessionId(String sessionGroupId) {
+        mMeetingBeanList.addAll(ConferenceDbUtils.getMeetingBySessionGroupId(sessionGroupId));
     }
 }

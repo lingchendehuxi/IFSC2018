@@ -1,26 +1,26 @@
 [
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\layout-en\\activity_register.xml",
-        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\layout-en\\activity_register.xml"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\layout-en\\merge_vertical_text_image.xml",
+        "source": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\res\\layout-en\\merge_vertical_text_image.xml"
     },
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\layout-en\\activity_register_confirm.xml",
-        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\layout-en\\activity_register_confirm.xml"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\layout-en\\merge_horizontal_text_image.xml",
+        "source": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\res\\layout-en\\merge_horizontal_text_image.xml"
     },
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\layout-en\\merge_vertical_text_image.xml",
-        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\layout-en\\merge_vertical_text_image.xml"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\layout-en\\activity_register.xml",
+        "source": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\res\\layout-en\\activity_register.xml"
     },
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\layout-en\\fragment_home_cit2017.xml",
-        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\layout-en\\fragment_home_cit2017.xml"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\layout-en\\activity_register_confirm.xml",
+        "source": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\res\\layout-en\\activity_register_confirm.xml"
     },
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\layout-en\\activity_login.xml",
-        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\layout-en\\activity_login.xml"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\layout-en\\fragment_home_cit2017.xml",
+        "source": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\res\\layout-en\\fragment_home_cit2017.xml"
     },
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\layout-en\\merge_horizontal_text_image.xml",
-        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\layout-en\\merge_horizontal_text_image.xml"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\layout-en\\activity_getcode.xml",
+        "source": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\res\\layout-en\\activity_getcode.xml"
     }
 ]

@@ -17,6 +17,7 @@ import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.BaseFragment;
 import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.model.BusInfo;
+import com.android.incongress.cd.conference.widget.StatusBarUtil;
 import com.google.gson.Gson;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
@@ -37,10 +38,13 @@ public class MeetingBusRemindAllFragment extends BaseFragment {
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private BusRemindAdapter mAdapter;
+    //参数为了在切换到activity返回后，fragment重新设置导航栏字体颜色
+    private boolean isBackView = true;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        StatusBarUtil.setStatusBarDarkTheme(getActivity(),true);
         View view = inflater.inflate(R.layout.fragment_bus_reminder_all, container, false);
         mTabLayout = (TabLayout) view.findViewById(R.id.tablayout);
         mViewPager = (ViewPager) view.findViewById(R.id.pager);
@@ -53,7 +57,7 @@ public class MeetingBusRemindAllFragment extends BaseFragment {
     }
 
     private void initData() {
-        CHYHttpClientUsage.getInstanse().doGetBusInfo(Constants.conId,new JsonHttpResponseHandler(Constants.ENCODING_GBK){
+        CHYHttpClientUsage.getInstanse().doGetBusInfo(Constants.getConId(),new JsonHttpResponseHandler(Constants.ENCODING_GBK){
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -136,4 +140,20 @@ public class MeetingBusRemindAllFragment extends BaseFragment {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(!isBackView){
+            StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
+        }
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        isBackView = hidden;
+        if(!hidden){
+            StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
+        }
+    }
 }

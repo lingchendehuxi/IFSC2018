@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/system_title_size"
+    android:gravity="center_vertical"
+    android:orientation="vertical">
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/post"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_size_media"/>
+        android:textColor="@color/business_color"
+        android:textSize="@dimen/text_size_media" />
 
 </LinearLayout>

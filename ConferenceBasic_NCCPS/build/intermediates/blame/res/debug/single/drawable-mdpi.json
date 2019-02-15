@@ -1,174 +1,38 @@
 [
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\common_google_signin_btn_icon_light_pressed.9.png",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-mdpi\\common_google_signin_btn_icon_light_pressed.9.png"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\ic_launcher.png",
+        "source": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-mdpi\\ic_launcher.png"
     },
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\common_plus_signin_btn_icon_dark_focused.9.png",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-mdpi\\common_plus_signin_btn_icon_dark_focused.9.png"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\ic_gf_back.png",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\b4e9e145945188849aa4c082af0c821572ef2cae\\output\\res\\drawable-mdpi\\ic_gf_back.png"
     },
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\common_plus_signin_btn_text_light_focused.9.png",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-mdpi\\common_plus_signin_btn_text_light_focused.9.png"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\ic_gf_camera.png",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\b4e9e145945188849aa4c082af0c821572ef2cae\\output\\res\\drawable-mdpi\\ic_gf_camera.png"
     },
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\common_full_open_on_phone.png",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-mdpi\\common_full_open_on_phone.png"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\gf_ic_preview.png",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\b4e9e145945188849aa4c082af0c821572ef2cae\\output\\res\\drawable-mdpi\\gf_ic_preview.png"
     },
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\gf_ic_preview.png",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\00f81b563bc26b67b1050c22bcf9be5a413d676d\\output\\res\\drawable-mdpi\\gf_ic_preview.png"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\message_tz.png",
+        "source": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-mdpi\\message_tz.png"
     },
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\common_google_signin_btn_text_dark_pressed.9.png",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-mdpi\\common_google_signin_btn_text_dark_pressed.9.png"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\ic_gf_crop.png",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\b4e9e145945188849aa4c082af0c821572ef2cae\\output\\res\\drawable-mdpi\\ic_gf_crop.png"
     },
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\common_plus_signin_btn_icon_dark_disabled.9.png",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-mdpi\\common_plus_signin_btn_icon_dark_disabled.9.png"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\ic_gf_rotate.png",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\b4e9e145945188849aa4c082af0c821572ef2cae\\output\\res\\drawable-mdpi\\ic_gf_rotate.png"
     },
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\common_plus_signin_btn_text_dark_focused.9.png",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-mdpi\\common_plus_signin_btn_text_dark_focused.9.png"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\ic_gf_done.png",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\b4e9e145945188849aa4c082af0c821572ef2cae\\output\\res\\drawable-mdpi\\ic_gf_done.png"
     },
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\common_plus_signin_btn_icon_light_normal.9.png",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-mdpi\\common_plus_signin_btn_icon_light_normal.9.png"
-    },
-    {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\common_plus_signin_btn_text_dark_disabled.9.png",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-mdpi\\common_plus_signin_btn_text_dark_disabled.9.png"
-    },
-    {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\common_google_signin_btn_icon_light_disabled.9.png",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-mdpi\\common_google_signin_btn_icon_light_disabled.9.png"
-    },
-    {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\ic_gf_done.png",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\00f81b563bc26b67b1050c22bcf9be5a413d676d\\output\\res\\drawable-mdpi\\ic_gf_done.png"
-    },
-    {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\common_google_signin_btn_icon_dark_normal.9.png",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-mdpi\\common_google_signin_btn_icon_dark_normal.9.png"
-    },
-    {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\common_plus_signin_btn_icon_light_pressed.9.png",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-mdpi\\common_plus_signin_btn_icon_light_pressed.9.png"
-    },
-    {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\common_plus_signin_btn_text_dark_normal.9.png",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-mdpi\\common_plus_signin_btn_text_dark_normal.9.png"
-    },
-    {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\ic_gf_crop.png",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\00f81b563bc26b67b1050c22bcf9be5a413d676d\\output\\res\\drawable-mdpi\\ic_gf_crop.png"
-    },
-    {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\common_google_signin_btn_text_light_normal.9.png",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-mdpi\\common_google_signin_btn_text_light_normal.9.png"
-    },
-    {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\common_plus_signin_btn_icon_light_disabled.9.png",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-mdpi\\common_plus_signin_btn_icon_light_disabled.9.png"
-    },
-    {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\common_google_signin_btn_icon_light_normal.9.png",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-mdpi\\common_google_signin_btn_icon_light_normal.9.png"
-    },
-    {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\common_plus_signin_btn_icon_dark_pressed.9.png",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-mdpi\\common_plus_signin_btn_icon_dark_pressed.9.png"
-    },
-    {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\ic_gf_rotate.png",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\00f81b563bc26b67b1050c22bcf9be5a413d676d\\output\\res\\drawable-mdpi\\ic_gf_rotate.png"
-    },
-    {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\common_google_signin_btn_text_dark_normal.9.png",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-mdpi\\common_google_signin_btn_text_dark_normal.9.png"
-    },
-    {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\common_google_signin_btn_text_dark_focused.9.png",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-mdpi\\common_google_signin_btn_text_dark_focused.9.png"
-    },
-    {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\ic_launcher.png",
-        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-mdpi\\ic_launcher.png"
-    },
-    {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\common_plus_signin_btn_text_dark_pressed.9.png",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-mdpi\\common_plus_signin_btn_text_dark_pressed.9.png"
-    },
-    {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\common_plus_signin_btn_icon_light_focused.9.png",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-mdpi\\common_plus_signin_btn_icon_light_focused.9.png"
-    },
-    {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\common_plus_signin_btn_icon_dark_normal.9.png",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-mdpi\\common_plus_signin_btn_icon_dark_normal.9.png"
-    },
-    {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\ic_gf_back.png",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\00f81b563bc26b67b1050c22bcf9be5a413d676d\\output\\res\\drawable-mdpi\\ic_gf_back.png"
-    },
-    {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\message_tz.png",
-        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-mdpi\\message_tz.png"
-    },
-    {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\common_plus_signin_btn_text_light_pressed.9.png",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-mdpi\\common_plus_signin_btn_text_light_pressed.9.png"
-    },
-    {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\ic_gf_clear.png",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\00f81b563bc26b67b1050c22bcf9be5a413d676d\\output\\res\\drawable-mdpi\\ic_gf_clear.png"
-    },
-    {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\ic_gf_camera.png",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\00f81b563bc26b67b1050c22bcf9be5a413d676d\\output\\res\\drawable-mdpi\\ic_gf_camera.png"
-    },
-    {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\common_google_signin_btn_text_light_disabled.9.png",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-mdpi\\common_google_signin_btn_text_light_disabled.9.png"
-    },
-    {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\common_plus_signin_btn_text_light_disabled.9.png",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-mdpi\\common_plus_signin_btn_text_light_disabled.9.png"
-    },
-    {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\common_google_signin_btn_icon_dark_pressed.9.png",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-mdpi\\common_google_signin_btn_icon_dark_pressed.9.png"
-    },
-    {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\common_google_signin_btn_icon_dark_focused.9.png",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-mdpi\\common_google_signin_btn_icon_dark_focused.9.png"
-    },
-    {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\common_google_signin_btn_icon_light_focused.9.png",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-mdpi\\common_google_signin_btn_icon_light_focused.9.png"
-    },
-    {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\common_google_signin_btn_icon_dark_disabled.9.png",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-mdpi\\common_google_signin_btn_icon_dark_disabled.9.png"
-    },
-    {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\wddy_newicon_tie.png",
-        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\drawable-mdpi\\wddy_newicon_tie.png"
-    },
-    {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\common_google_signin_btn_text_dark_disabled.9.png",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-mdpi\\common_google_signin_btn_text_dark_disabled.9.png"
-    },
-    {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\common_plus_signin_btn_text_light_normal.9.png",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-mdpi\\common_plus_signin_btn_text_light_normal.9.png"
-    },
-    {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\common_google_signin_btn_text_light_pressed.9.png",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-mdpi\\common_google_signin_btn_text_light_pressed.9.png"
-    },
-    {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\common_google_signin_btn_text_light_focused.9.png",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\drawable-mdpi\\common_google_signin_btn_text_light_focused.9.png"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\ic_gf_clear.png",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\b4e9e145945188849aa4c082af0c821572ef2cae\\output\\res\\drawable-mdpi\\ic_gf_clear.png"
     }
 ]

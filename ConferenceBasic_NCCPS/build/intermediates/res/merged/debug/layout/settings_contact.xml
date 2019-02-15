@@ -1,81 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="#FFF"
-    android:padding="15dp" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical" >
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="211dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/connect_back_bg" />
 
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/login_logo_new" />
-
-        <com.android.incongress.cd.conference.widget.IncongressTextView
-            android:id="@+id/settings_contact"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:autoLink="all"
-            android:lineSpacingExtra="2dp"
-            android:drawablePadding="20dp"
-            android:gravity="center_vertical"
-            android:paddingTop="10dp"
-            android:text="@string/settings_contact_test"
-            android:textColor="#000"
-            android:textSize="18sp" />
-
-        <com.android.incongress.cd.conference.widget.IncongressTextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:autoLink="all"
-            android:drawablePadding="20dp"
-            android:layout_marginTop="2dp"
-            android:gravity="center_vertical"
-            android:visibility="gone"
-            android:textColor="#000"
-            android:text="@string/setting_tel"
-            android:textColorLink="@color/theme_color"
-            android:textSize="18sp" />
-
-        <com.android.incongress.cd.conference.widget.IncongressTextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:drawablePadding="20dp"
-            android:gravity="center_vertical"
-            android:layout_marginTop="2dp"
-            android:text="@string/settings_contact_text_fax"
-            android:textColor="#000"
-            android:textSize="18sp"
-             />
-
-        <com.android.incongress.cd.conference.widget.IncongressTextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:autoLink="all"
-            android:drawablePadding="20dp"
-            android:gravity="center_vertical"
-            android:text="@string/settings_contact_text_mail"
-            android:textColor="#000"
-            android:textColorLink="@color/theme_color"
-            android:textSize="18sp" />
-    </LinearLayout>
-
-    <LinearLayout
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" >
+        android:layout_marginLeft="33dp"
+        android:layout_marginTop="24dp"
+        android:drawableLeft="@drawable/business_cooperation"
+        android:drawablePadding="9dp"
+        android:drawableTint="@color/black_login_text"
+        android:text="@string/business_cooperation"
+        android:textColor="@color/business_color"
+        android:textSize="15sp" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/logo_incongress" />
-    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="37dp"
+        android:layout_marginTop="24dp"
+        android:autoLink="all"
+        android:text="@string/tel_number"
+        android:textColor="@color/business_text_color"
+        android:textSize="14sp" />
 
-</RelativeLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="37dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/settings_contact_text_fax"
+        android:textColor="@color/business_text_color"
+        android:textSize="14sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="37dp"
+        android:layout_marginTop="24dp"
+        android:autoLink="all"
+        android:text="@string/settings_contact_text_mail"
+        android:textColor="@color/business_text_color"
+        android:textSize="14sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="37dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/settings_contact_text_wx"
+        android:textColor="@color/business_text_color"
+        android:textSize="14sp" />
+</LinearLayout>

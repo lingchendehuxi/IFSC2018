@@ -22,6 +22,7 @@ public class Exhibitor extends DataSupport{
      * exhibitorsLocation : null
      * mapName :
      */
+    private int id;
     private int exhibitorsId;
     private String address;
     private String info;
@@ -38,6 +39,14 @@ public class Exhibitor extends DataSupport{
     private String mapName;
     private String addressEn;
     private String otherUrl;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getOtherUrl() {
         return otherUrl;

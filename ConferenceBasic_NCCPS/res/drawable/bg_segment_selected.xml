@@ -2,11 +2,11 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <stroke
-        android:width="0.8dp"
-        android:color="@color/theme_color" />
+        android:width="1dp"
+        android:color="@color/bg_search_selected" />
     
     <corners android:radius="5dp" />
-    <solid android:color="@color/theme_color"/>
+    <solid android:color="@color/bg_search_selected"/>
 
     <padding
         android:bottom="6dp"

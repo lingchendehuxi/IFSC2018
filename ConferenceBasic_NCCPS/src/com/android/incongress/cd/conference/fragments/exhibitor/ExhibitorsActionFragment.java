@@ -28,6 +28,7 @@ import com.android.incongress.cd.conference.utils.JSONCatch;
 import com.android.incongress.cd.conference.utils.PicUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
 import com.android.incongress.cd.conference.utils.transformer.CircleTransform;
+import com.android.incongress.cd.conference.widget.StatusBarUtil;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -53,6 +54,8 @@ public class ExhibitorsActionFragment extends BaseFragment {
     private TextView mSessioncn, mSessionen, mZWTcn, mZWTen;
     private ImageView mSessionimg, mZWTimg;
     private String sessionUrl, zwtUrls, sessionCn;
+    //参数为了在切换到activity返回后，fragment重新设置导航栏字体颜色
+    private boolean isBackView = true;
 
     public ExhibitorsActionFragment() {
     }
@@ -64,6 +67,7 @@ public class ExhibitorsActionFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        StatusBarUtil.setStatusBarDarkTheme(getActivity(),true);
         View view = inflater.inflate(R.layout.exhibitor_list_view, null);
         mListView = (ListView) view.findViewById(R.id.exhibitor_list);
         mNoDataView = (TextView) view.findViewById(R.id.exhibitor_no_data);
@@ -121,7 +125,7 @@ public class ExhibitorsActionFragment extends BaseFragment {
     }
 
     private void getData() {
-        CHYHttpClientUsage.getInstanse().doGetCzs(Constants.conId + "", new JsonHttpResponseHandler("gbk") {
+        CHYHttpClientUsage.getInstanse().doGetCzs(Constants.getConId() + "", new JsonHttpResponseHandler("gbk") {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
@@ -152,6 +156,9 @@ public class ExhibitorsActionFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        if(!isBackView){
+            StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
+        }
         MobclickAgent.onPageStart(Constants.FRAGMENT_EXHIBITORS);
     }
 
@@ -159,5 +166,14 @@ public class ExhibitorsActionFragment extends BaseFragment {
     public void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd(Constants.FRAGMENT_EXHIBITORS);
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        isBackView = hidden;
+        if(!hidden){
+            StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
+        }
     }
 }

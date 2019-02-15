@@ -101,7 +101,7 @@ public class PhotoAlbumGridAdapter extends BaseAdapter {
                     return;
                 }
 
-                CHYHttpClientUsage.getInstanse().doPhotoWallLaud(AppApplication.userId, AppApplication.userType,photoWallArrayBean.getPhotoWallId(), Constants.conId + "", AppApplication.getSystemLanuageCode(), new JsonHttpResponseHandler(){
+                CHYHttpClientUsage.getInstanse().doPhotoWallLaud(AppApplication.userId, AppApplication.userType,photoWallArrayBean.getPhotoWallId(), Constants.getConId() + "", AppApplication.getSystemLanuageCode(), new JsonHttpResponseHandler(){
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                         super.onSuccess(statusCode, headers, response);

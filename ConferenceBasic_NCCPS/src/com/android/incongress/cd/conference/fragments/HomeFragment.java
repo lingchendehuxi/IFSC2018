@@ -332,7 +332,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
      * 获取数据
      */
     private void getHomeNums() {
-        CHYHttpClientUsage.getInstanse().doGetLookCount(Constants.conId + "", AppApplication.userId + "", AppApplication.userType + "", AppApplication.TOKEN_IMEI, new JsonHttpResponseHandler() {
+        CHYHttpClientUsage.getInstanse().doGetLookCount(Constants.getConId() + "", AppApplication.userId + "", AppApplication.userType + "", AppApplication.TOKEN_IMEI, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
@@ -537,7 +537,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
      * 专家秘书
      */
     private void goSecretary() {
-        CHYHttpClientUsage.getInstanse().doGetSceneShowQuestions(Constants.conId + "", AppApplication.userId + "", "-1", AppApplication.getSystemLanuageCode(), new JsonHttpResponseHandler("gbk") {
+        CHYHttpClientUsage.getInstanse().doGetSceneShowQuestions(Constants.getConId() + "", AppApplication.userId + "", "-1", AppApplication.getSystemLanuageCode(), new JsonHttpResponseHandler("gbk") {
             @Override
             public void onStart() {
                 super.onStart();
@@ -603,7 +603,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
      */
     private void goHandsOn() {
         WebViewContainerActivity.startWebViewContainerActivity(getActivity(),
-                getString(Constants.get_HANDS_ON_SITE(), Constants.conId, AppApplication.getSystemLanuageCode(), AppApplication.userId, AppApplication.userType), getString(R.string.home_hands_on));
+                getString(Constants.get_HANDS_ON_SITE(), Constants.getConId(), AppApplication.getSystemLanuageCode(), AppApplication.userId, AppApplication.userType), getString(R.string.home_hands_on));
     }
 
     /**
@@ -618,7 +618,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         Drawable drawable = getActivity().getResources().getDrawable(R.drawable.scane_scane);
         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
         tvRight.setCompoundDrawables(null, null, drawable, null);
-        fragment.setRightView(rightView);
 
         MobclickAgent.onEvent(getActivity(), Constants.EVENT_ID_POSTER);
         action(fragment, R.string.home_wallpaper, rightView, false, false, false);
@@ -646,7 +645,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     private void goCollege() {
 
         MobclickAgent.onEvent(getActivity(), Constants.EVENT_ID_COLLEGE);
-        CollegeActivity.startCitCollegeActivity(getActivity(), getString(R.string.home_cit_college), getString(Constants.get_CIT_COLLEGE(),Constants.conId,AppApplication.getSystemLanuageCode(),AppApplication.userId, AppApplication.userType));
+        CollegeActivity.startCitCollegeActivity(getActivity(), getString(R.string.home_cit_college), getString(Constants.get_CIT_COLLEGE(),Constants.getConId(),AppApplication.getSystemLanuageCode(),AppApplication.userId, AppApplication.userType));
     }
 
     /**

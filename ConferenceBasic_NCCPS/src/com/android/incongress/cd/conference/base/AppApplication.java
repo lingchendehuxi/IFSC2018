@@ -1,9 +1,7 @@
 package com.android.incongress.cd.conference.base;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -14,11 +12,9 @@ import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
-import android.preference.PreferenceManager;
 import android.support.multidex.MultiDex;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -28,12 +24,11 @@ import com.android.incongress.cd.conference.model.Ad;
 import com.android.incongress.cd.conference.save.ParseUser;
 import com.android.incongress.cd.conference.save.SharePreferenceUtils;
 import com.android.incongress.cd.conference.services.AdService;
-import com.android.incongress.cd.conference.utils.LanguageUtil;
-import com.android.incongress.cd.conference.utils.LogUtils;
-import com.android.incongress.cd.conference.widget.zxing.activity.ZXingLibrary;
 import com.android.incongress.cd.conference.utils.CrashHandler;
 import com.android.incongress.cd.conference.utils.GlideImageLoader;
-import com.android.incongress.cd.conference.utils.StringUtils;
+import com.android.incongress.cd.conference.utils.LogUtils;
+import com.android.incongress.cd.conference.widget.zxing.activity.ZXingLibrary;
+import com.easefun.polyvsdk.PolyvSDKClient;
 import com.loopj.android.http.AsyncHttpClient;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
@@ -47,10 +42,8 @@ import com.umeng.socialize.PlatformConfig;
 import org.litepal.LitePalApplication;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
 
 import cn.finalteam.galleryfinal.CoreConfig;
 import cn.finalteam.galleryfinal.FunctionConfig;
@@ -85,7 +78,7 @@ public class AppApplication extends LitePalApplication {
     public static IncongressBean conBean = new IncongressBean();
 
     //1代表 中文  2代表英文 其他值  代表随系统变化
-    public static int systemLanguage = 1;
+    public static int systemLanguage = 3;
 
     public static Typeface mTypeface = null;
 
@@ -131,7 +124,7 @@ public class AppApplication extends LitePalApplication {
 //        OkHttpFinal.getInstance().init(okhttpBuilder.build());
 
        /* * 微信分享初始化 **/
-        PlatformConfig.setWeixin("wx41d9d818412e4dea", "c0f5be28ec3827f31e7fcf18fea87d03");
+        PlatformConfig.setWeixin("wxd40d6655d0199e18", "37325ffce412660d98a02fdd3e7a2617");
 
         /**新浪分享初始化**/
         PlatformConfig.setSinaWeibo("4015025148", "458be4e8e2dbce03700b155aef9c8123","https://api.weibo.com/oauth2/default.html");
@@ -156,7 +149,6 @@ public class AppApplication extends LitePalApplication {
 //        config.locale = Locale.ENGLISH;
 //        resources.updateConfiguration(config, dm);
 
-        getSystemLauanguage();
         CrashHandler.getInstance().init(getApplicationContext());
 
         if (systemLanguage != 1) {
@@ -193,16 +185,14 @@ public class AppApplication extends LitePalApplication {
                 .setEnablePreview(true)
                 .setMutiSelectMaxSize(9)
                 .build();
-
         //配置imageloader
         GlideImageLoader imageloader = new GlideImageLoader();
         CoreConfig coreConfig = new CoreConfig.Builder(mContext, imageloader, theme).setFunctionConfig(functionConfig).build();
-
+        //相册配置
+        GalleryFinal.init(coreConfig);
         //配置一下zxing的初始化工作
         ZXingLibrary.initDisplayOpinion(this);
 
-        //相册配置
-        GalleryFinal.init(coreConfig);
         //初始化用户数据
         ParseUser.initUserInfo();
         /*if (StringUtils.isAllNotEmpty(SharePreferenceUtils.getUser(Constants.USER_NAME),
@@ -214,6 +204,8 @@ public class AppApplication extends LitePalApplication {
         }*/
         //不默认统计Activity
         MobclickAgent.openActivityDurationTrack(false);
+        //初始化保利威视
+        initPolyvCilent();
     }
     public static AppApplication getInstance(){
         if(instance == null){
@@ -310,21 +302,6 @@ public class AppApplication extends LitePalApplication {
         return file.getAbsolutePath();
     }
 
-    private void getSystemLauanguage() {
-        Locale locale = getResources().getConfiguration().locale;
-        String language = locale.getLanguage();
-        if (language.endsWith("zh")) {
-            systemLanguage = 1;
-        }else{
-            systemLanguage = 2;
-            Resources resources = getResources();//获得res资源对象
-            Configuration config = resources.getConfiguration();//获得设置对象
-            DisplayMetrics dm = resources .getDisplayMetrics();//获得屏幕参数：主要是分辨率，像素等。
-            config.locale = Locale.ENGLISH; //英文
-            resources.updateConfiguration(config, dm);
-        }
-    }
-
     public static String getSystemLanuageCode() {
         if (systemLanguage == 1) {
             return "cn";
@@ -403,4 +380,27 @@ public class AppApplication extends LitePalApplication {
             e.printStackTrace();
         }
     }
+    //加密秘钥和加密向量，在后台->设置->API接口中获取，用于解密SDK加密串
+    //值修改请参考https://github.com/easefun/polyv-android-sdk-demo/wiki/10.%E5%85%B3%E4%BA%8E-SDK%E5%8A%A0%E5%AF%86%E4%B8%B2-%E4%B8%8E-%E7%94%A8%E6%88%B7%E9%85%8D%E7%BD%AE%E4%BF%A1%E6%81%AF%E5%8A%A0%E5%AF%86%E4%BC%A0%E8%BE%93
+    /** 加密秘钥 */
+    private String aeskey = "VXtlHmwfS2oYm0CZ";
+    /** 加密向量 */
+    private String iv = "2u9gDPKdX6GyQJKU";
+
+    public void initPolyvCilent() {
+        //网络方式取得SDK加密串，（推荐）
+        //网络获取到的SDK加密串可以保存在本地SharedPreference中，下次先从本地获取
+//		new LoadConfigTask().execute();
+        PolyvSDKClient client = PolyvSDKClient.getInstance();
+        //使用SDK加密串来配置
+        client.setConfig("POft5F5piX+CUvwVC99ENyorruGGChHaMuY4es1RvZyxOYYxProEkZf9QMh+fXplYijSAAssN1JECVJoM9oyaiS80VBy1nCW4JLy/4i+ATTcH4cxkzAl7GtUkBbq+DMO+aGDGI6tHVeDQXEak5NwhA==", aeskey, iv, getApplicationContext());
+        //初始化SDK设置
+        client.initSetting(getApplicationContext());
+        //启动Bugly
+        client.initCrashReport(getApplicationContext());
+        //启动Bugly后，在学员登录时设置学员id
+//		client.crashReportSetUserId(userId);
+    }
+
+
 }

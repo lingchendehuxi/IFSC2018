@@ -26,6 +26,7 @@ import com.android.incongress.cd.conference.adapters.MeetingScheduleListFragment
 import com.android.incongress.cd.conference.base.BaseFragment;
 import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.fragments.search_schedule.NewSearchScheduleActionFragment;
+import com.android.incongress.cd.conference.fragments.search_schedule.SegmentScheduleActionFragment;
 import com.android.incongress.cd.conference.model.ConferenceDbUtils;
 import com.android.incongress.cd.conference.model.Session;
 import com.android.incongress.cd.conference.utils.CommonUtils;
@@ -33,6 +34,7 @@ import com.android.incongress.cd.conference.utils.DensityUtil;
 import com.android.incongress.cd.conference.utils.TimeUtils;
 import com.android.incongress.cd.conference.widget.ListViewForScrollView;
 import com.android.incongress.cd.conference.widget.MyViewPager;
+import com.android.incongress.cd.conference.widget.StatusBarUtil;
 import com.android.incongress.cd.conference.widget.popup.ChooseTimePopupWindow;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 import com.umeng.analytics.MobclickAgent;
@@ -45,7 +47,6 @@ import java.util.List;
  */
 public class MeetingScheduleListActionFragment extends BaseFragment {
     private MyViewPager mViewPager;
-    private TabLayout mTabLayout;
     private MeetingScheduleListFragmentAdapter mPageAdapter;
     private ArrayList<String> mSessionDaysList = new ArrayList<>();
     private ArrayList<String> newSessionDaysList = new ArrayList<>();
@@ -56,6 +57,11 @@ public class MeetingScheduleListActionFragment extends BaseFragment {
     private int mCurrentPage = 0;
     private ListAdapter listAdapter;
     private ChooseTimePopupWindow popupWindow;
+    private static float ScreenHeightLPercent = 0.35f;
+    private static float ScreenHeightHPercent = 0.45f;
+    private float fixHeight;
+    //参数为了在切换到activity返回后，fragment重新设置导航栏字体颜色
+    private boolean isBackView = true;
 
     @Override
     public void onAttach(Context context) {
@@ -65,12 +71,12 @@ public class MeetingScheduleListActionFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        StatusBarUtil.setStatusBarDarkTheme(getActivity(),true);
         View view = inflater.inflate(R.layout.fragment_meeting_schedule_list, null, false);
         rl_select_time = view.findViewById(R.id.rl_select_time);
         mViewPager = view.findViewById(R.id.viewpager);
         title_back = view.findViewById(R.id.title_back);
         iv_search = view.findViewById(R.id.iv_search);
-        mTabLayout =  view.findViewById(R.id.tablayout);
         mTvTips = view.findViewById(R.id.tv_tips);
         mSelectTime = view.findViewById(R.id.tv_select_time);
         linearLayout = view.findViewById(R.id.ll_show_on_off);
@@ -124,15 +130,13 @@ public class MeetingScheduleListActionFragment extends BaseFragment {
         }*/
         getSessionDays();
         newSessionDaysList = getStringList();
-        mSelectTime.setText(newSessionDaysList.get(0));
+        if(mSessionDaysList.size()!=0){
+            mSelectTime.setText(newSessionDaysList.get(0));
+        }
         mPageAdapter = new MeetingScheduleListFragmentAdapter(getChildFragmentManager(), mSessionDaysList);
         mViewPager.setScrollble(false);
         mViewPager.setAdapter(mPageAdapter);
         mViewPager.setOffscreenPageLimit(3);
-        mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-        mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-        mTabLayout.setVisibility(View.GONE);
-        //mTabLayout.setupWithViewPager(mViewPager);
         for(int i = 0;i<mSessionDaysList.size();i++){
             if(TimeUtils.getCurrentTimeMD().equals(mSessionDaysList.get(i))){
                 mCurrentPage = i;
@@ -205,10 +209,21 @@ public class MeetingScheduleListActionFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        if(!isBackView){
+            StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
+        }
         getActivity().findViewById(R.id.title_back_panel).setVisibility(View.VISIBLE);
         MobclickAgent.onPageStart(Constants.FRAGMENT_MEETINGSCHEDULELIST);
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        isBackView = hidden;
+        if(!hidden){
+            StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
+        }
+    }
 
     @Override
     public void onPause() {
@@ -220,10 +235,26 @@ public class MeetingScheduleListActionFragment extends BaseFragment {
     private void initPopupWindow(View view){
         popupWindow = new ChooseTimePopupWindow(getActivity());
         ListView listView = popupWindow.getmListView();
-
         listAdapter = new ListAdapter(getActivity(),newSessionDaysList);
         listAdapter.setCurrentItem(mCurrentPage);
         listView.setAdapter(listAdapter);
+        int totalHeight = 0;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View listItem = listAdapter.getView(i, null, listView);
+            listItem.measure(0, 0); //计算子项View 的宽高 //统计所有子项的总高度
+            totalHeight += listItem.getMeasuredHeight() + listView.getDividerHeight();
+        }
+        if(DensityUtil.getScreenSize(getActivity())[1]<=1920){
+            fixHeight = DensityUtil.getScreenSize(getActivity())[1] * ScreenHeightLPercent;
+        }else {
+            fixHeight = DensityUtil.getScreenSize(getActivity())[1] * ScreenHeightHPercent;
+        }
+        if (totalHeight > fixHeight) {
+            totalHeight = (int) fixHeight;
+        }
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight;
+        listView.setLayoutParams(params);
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
@@ -247,17 +278,11 @@ public class MeetingScheduleListActionFragment extends BaseFragment {
         popupWindow.showAsDropDown(view,offsetX,1,Gravity.CENTER);
     }
     /**
-     * 查日程(包含讲者检索)
+     * 查日程
      */
     private void goSearchSchedule(String title) {
-        ImageView searchView = (ImageView) CommonUtils.initView(getActivity(), R.layout.title_right_image);
-        searchView.setImageResource(R.drawable.search);
-        NewSearchScheduleActionFragment searchFragment = new NewSearchScheduleActionFragment();
-        searchFragment.setRightView(searchView);
-        /*View titleView = CommonUtils.initView(getActivity(), R.layout.title_segment);
-        searchFragment.setCenterView(titleView);*/
-        //goQuestions("提问");
-        action(searchFragment, title, searchView, false, false, false);
+        SegmentScheduleActionFragment fragment = new SegmentScheduleActionFragment();
+        action(fragment, null);
     }
     class ListAdapter extends BaseAdapter {
         ArrayList<String> listBeans;
@@ -312,4 +337,5 @@ public class MeetingScheduleListActionFragment extends BaseFragment {
             TextView tv_time;
         }
     }
+
 }

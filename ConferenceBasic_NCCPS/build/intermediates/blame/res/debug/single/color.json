@@ -1,122 +1,90 @@
 [
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\abc_hint_foreground_material_dark.xml",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\color\\abc_hint_foreground_material_dark.xml"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\sliding_selector.xml",
+        "source": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\res\\color\\sliding_selector.xml"
     },
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\abc_btn_colored_text_material.xml",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\color\\abc_btn_colored_text_material.xml"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\abc_secondary_text_material_light.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\4773ef71a14a8d9e92152eeb0911af1be6bec93b\\output\\res\\color\\abc_secondary_text_material_light.xml"
     },
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\abc_secondary_text_material_dark.xml",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\color\\abc_secondary_text_material_dark.xml"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\abc_secondary_text_material_dark.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\4773ef71a14a8d9e92152eeb0911af1be6bec93b\\output\\res\\color\\abc_secondary_text_material_dark.xml"
     },
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\abc_tint_edittext.xml",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\color\\abc_tint_edittext.xml"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\abc_primary_text_material_dark.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\4773ef71a14a8d9e92152eeb0911af1be6bec93b\\output\\res\\color\\abc_primary_text_material_dark.xml"
     },
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\design_tint_password_toggle.xml",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\67e2355ffe87152db1182b968ab8d572b74148b0\\output\\res\\color\\design_tint_password_toggle.xml"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\polyv_left_text_color.xml",
+        "source": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\res\\color\\polyv_left_text_color.xml"
     },
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\abc_tint_switch_thumb.xml",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\color\\abc_tint_switch_thumb.xml"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\abc_search_url_text.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\4773ef71a14a8d9e92152eeb0911af1be6bec93b\\output\\res\\color\\abc_search_url_text.xml"
     },
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\metting_schedule_details_zcrcolor.xml",
-        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\color\\metting_schedule_details_zcrcolor.xml"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\abc_hint_foreground_material_light.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\4773ef71a14a8d9e92152eeb0911af1be6bec93b\\output\\res\\color\\abc_hint_foreground_material_light.xml"
     },
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\text_selector.xml",
-        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\color\\text_selector.xml"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\abc_primary_text_disable_only_material_dark.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\4773ef71a14a8d9e92152eeb0911af1be6bec93b\\output\\res\\color\\abc_primary_text_disable_only_material_dark.xml"
     },
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\abc_tint_switch_track.xml",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\color\\abc_tint_switch_track.xml"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\text_selector.xml",
+        "source": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\res\\color\\text_selector.xml"
     },
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\switch_thumb_material_light.xml",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\color\\switch_thumb_material_light.xml"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\polyv_play_bt_color.xml",
+        "source": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\res\\color\\polyv_play_bt_color.xml"
     },
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\abc_tint_default.xml",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\color\\abc_tint_default.xml"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\abc_background_cache_hint_selector_material_dark.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\4773ef71a14a8d9e92152eeb0911af1be6bec93b\\output\\res\\color\\abc_background_cache_hint_selector_material_dark.xml"
     },
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\abc_hint_foreground_material_light.xml",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\color\\abc_hint_foreground_material_light.xml"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\switch_thumb_material_dark.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\4773ef71a14a8d9e92152eeb0911af1be6bec93b\\output\\res\\color\\switch_thumb_material_dark.xml"
     },
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\abc_primary_text_material_light.xml",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\color\\abc_primary_text_material_light.xml"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\polyv_bit_text_color.xml",
+        "source": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\res\\color\\polyv_bit_text_color.xml"
     },
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\sliding_selector.xml",
-        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\color\\sliding_selector.xml"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\search_title_color.xml",
+        "source": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\res\\color\\search_title_color.xml"
     },
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\common_plus_signin_btn_text_light.xml",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\color\\common_plus_signin_btn_text_light.xml"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\select_change_clarity_color.xml",
+        "source": "E:\\myCode\\IFSC2018\\IFSC2018\\YCVideoPlayerLib\\build\\intermediates\\bundles\\default\\res\\color\\select_change_clarity_color.xml"
     },
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\abc_tint_seek_thumb.xml",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\color\\abc_tint_seek_thumb.xml"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\abc_primary_text_disable_only_material_light.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\4773ef71a14a8d9e92152eeb0911af1be6bec93b\\output\\res\\color\\abc_primary_text_disable_only_material_light.xml"
     },
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\abc_search_url_text.xml",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\color\\abc_search_url_text.xml"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\abc_hint_foreground_material_dark.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\4773ef71a14a8d9e92152eeb0911af1be6bec93b\\output\\res\\color\\abc_hint_foreground_material_dark.xml"
     },
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\abc_primary_text_disable_only_material_light.xml",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\color\\abc_primary_text_disable_only_material_light.xml"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\metting_schedule_details_zcrcolor.xml",
+        "source": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\res\\color\\metting_schedule_details_zcrcolor.xml"
     },
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\search_title_color.xml",
-        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\color\\search_title_color.xml"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\switch_thumb_material_light.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\4773ef71a14a8d9e92152eeb0911af1be6bec93b\\output\\res\\color\\switch_thumb_material_light.xml"
     },
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\common_plus_signin_btn_text_dark.xml",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\color\\common_plus_signin_btn_text_dark.xml"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\abc_primary_text_material_light.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\4773ef71a14a8d9e92152eeb0911af1be6bec93b\\output\\res\\color\\abc_primary_text_material_light.xml"
     },
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\common_google_signin_btn_text_dark.xml",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\color\\common_google_signin_btn_text_dark.xml"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\abc_background_cache_hint_selector_material_light.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\4773ef71a14a8d9e92152eeb0911af1be6bec93b\\output\\res\\color\\abc_background_cache_hint_selector_material_light.xml"
     },
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\abc_primary_text_material_dark.xml",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\color\\abc_primary_text_material_dark.xml"
-    },
-    {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\switch_thumb_material_dark.xml",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\color\\switch_thumb_material_dark.xml"
-    },
-    {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\abc_primary_text_disable_only_material_dark.xml",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\color\\abc_primary_text_disable_only_material_dark.xml"
-    },
-    {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\abc_tint_btn_checkable.xml",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\color\\abc_tint_btn_checkable.xml"
-    },
-    {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\design_error.xml",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\67e2355ffe87152db1182b968ab8d572b74148b0\\output\\res\\color\\design_error.xml"
-    },
-    {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\common_google_signin_btn_text_light.xml",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\ecadd5bab7e80de19051034e58ce4e16989638de\\output\\res\\color\\common_google_signin_btn_text_light.xml"
-    },
-    {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\abc_tint_spinner.xml",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\color\\abc_tint_spinner.xml"
-    },
-    {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\abc_btn_colored_borderless_text_material.xml",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\color\\abc_btn_colored_borderless_text_material.xml"
-    },
-    {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\abc_secondary_text_material_light.xml",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\color\\abc_secondary_text_material_light.xml"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\color\\design_error.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\72d1127d00e13ba7a3eab6bd6138eb1cdd604175\\output\\res\\color\\design_error.xml"
     }
 ]

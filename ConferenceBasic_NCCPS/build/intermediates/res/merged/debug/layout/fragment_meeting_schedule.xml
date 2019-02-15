@@ -1,38 +1,56 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:background="@color/white"
+    xmlns:tl="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_whole_view"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/rl_whole_view">
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <TextView
-        android:layout_width="match_parent"
-        android:text="Tips：日程相关模块可完全离线使用哦~~"
-        android:background="@drawable/tips_bg"
         android:id="@+id/tv_tips"
-        android:layout_margin="3dp"
-        android:textColor="#7E7E7E"
-        android:visibility="gone"
-        android:textSize="@dimen/text_size_small"
-        android:drawableRight="@drawable/edittext_delete"
-        android:layout_height="wrap_content" />
-
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tablayout"
         android:layout_width="match_parent"
-        app:tabIndicatorColor="@color/theme_color"
-        android:background="@color/white"
-        app:tabSelectedTextColor="@color/theme_color"
-        style="@style/MyCustomTabTextAppearance"
         android:layout_height="wrap_content"
-        />
+        android:layout_margin="3dp"
+        android:background="@drawable/tips_bg"
+        android:drawableRight="@drawable/edittext_delete"
+        android:text="Tips：日程相关模块可完全离线使用哦~~"
+        android:textColor="#7E7E7E"
+        android:textSize="@dimen/text_size_small"
+        android:visibility="gone" />
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/pager"
-        android:layout_height="match_parent"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_weight="1">
-    </android.support.v4.view.ViewPager>
+        android:layout_height="wrap_content"
+        android:background="@android:color/black"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
+        <ImageView
+            android:id="@+id/close"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:scaleType="center"
+            android:src="@drawable/nav_btn_back" />
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/ll_tabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal" />
+        </HorizontalScrollView>
+
+    </LinearLayout>
+
+    <com.android.incongress.cd.conference.widget.ScrollControlViewpager
+        android:id="@+id/scroll_pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 </LinearLayout>

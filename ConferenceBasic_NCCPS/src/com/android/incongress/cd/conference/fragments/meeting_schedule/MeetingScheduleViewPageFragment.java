@@ -5,6 +5,7 @@ import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -16,6 +17,7 @@ import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.incongress.cd.conference.HomeActivity;
@@ -28,8 +30,12 @@ import com.android.incongress.cd.conference.model.Class;
 import com.android.incongress.cd.conference.model.ConferenceDbUtils;
 import com.android.incongress.cd.conference.model.Session;
 import com.android.incongress.cd.conference.save.SharePreferenceUtils;
+import com.android.incongress.cd.conference.utils.ActivityUtils;
+import com.android.incongress.cd.conference.utils.DensityUtil;
 import com.android.incongress.cd.conference.utils.TimeUtils;
+import com.android.incongress.cd.conference.utils.ToastUtils;
 import com.android.incongress.cd.conference.widget.ScrollControlViewpager;
+import com.flyco.tablayout.SlidingTabLayout;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 import com.umeng.analytics.MobclickAgent;
 
@@ -45,10 +51,10 @@ import java.util.List;
 public class MeetingScheduleViewPageFragment extends BaseFragment {
 
     private MeetingScheduleAdapter adapter;
-    private TabLayout mTabLayout;
+    private LinearLayout ll_tabLayout;
     private ScrollControlViewpager mViewpager;
     private CharSequence Titles[];
-    private int Numboftabs;
+    private List<Fragment> fragmentList = new ArrayList<>();
 
     private List<String> mSessionDaysList = new ArrayList<>();
     private List<Class> mRoomList = new ArrayList<>();
@@ -66,14 +72,11 @@ public class MeetingScheduleViewPageFragment extends BaseFragment {
         getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_meeting_schedule, null, false);
-        mTabLayout = (TabLayout) view.findViewById(R.id.table_layout);
-        mViewpager = (ScrollControlViewpager) view.findViewById(R.id.pager);
+        ll_tabLayout = view.findViewById(R.id.ll_tabLayout);
+        mViewpager = (ScrollControlViewpager) view.findViewById(R.id.scroll_pager);
         close = (ImageView) view.findViewById(R.id.close);
-        mViewpager.setOffscreenPageLimit(3);
         mViewpager.setCanScroll(false);
-
-        mTabLayout.setTabMode(TabLayout.MODE_FIXED);
-        mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        mViewpager.setOffscreenPageLimit(4);
         mTvTips = (TextView) view.findViewById(R.id.tv_tips);
         mTvTips.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,7 +158,6 @@ public class MeetingScheduleViewPageFragment extends BaseFragment {
                 }
             }
 
-            Numboftabs = mSessionDaysList.size();
             mRoomList.addAll(ConferenceDbUtils.getAllClasses());//获取会议室
             return "";
         }
@@ -167,10 +169,46 @@ public class MeetingScheduleViewPageFragment extends BaseFragment {
         @Override
         protected void onPostExecute(String result) {
             mDialog.dismiss();
-
-            adapter = new MeetingScheduleAdapter(getChildFragmentManager(), Titles, Numboftabs,mSessionDaysList);
+            final List<TextView> list = new ArrayList<>();
+            for(int i =0;i<Titles.length;i++){
+                View view = LayoutInflater.from(getActivity()).inflate(R.layout.schedule_table_item,null);
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams((DensityUtil.getScreenSize(getActivity())[0]-DensityUtil.dip2px(getActivity(),50f))/4, ViewGroup.LayoutParams.WRAP_CONTENT);
+                LinearLayout ll_tabItem = view.findViewById(R.id.ll_tabItem);
+                final TextView textView = view.findViewById(R.id.tv_title);
+                String[] strings = Titles[i].toString().split("-");
+                String title;
+                if(strings.length!=3){
+                    ToastUtils.showToast("时间格式错误");
+                    return;
+                }else {
+                    title =  Integer.valueOf(strings[1])+"月\n"+Integer.valueOf(strings[2])+"日";
+                }
+                textView.setText(title);
+                textView.setTag(i);
+                ll_tabItem.setLayoutParams(params);
+                list.add(textView);
+                textView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        for(int j = 0;j<list.size();j++){
+                            list.get(j).setTextColor(getResources().getColor(R.color.white));
+                            list.get(j).setBackground(getResources().getDrawable(R.drawable.bg_schedule_unselected));
+                        }
+                        textView.setTextColor(getResources().getColor(R.color.black));
+                        textView.setBackground(getResources().getDrawable(R.drawable.bg_schedule_selected));
+                        mViewpager.setCurrentItem((int)view.getTag());
+                    }
+                });
+                ll_tabLayout.addView(view);
+            }
+            for(int i = 0;i<mSessionDaysList.size();i++){
+                MeetingScheduleDetailActionFragment fragment = MeetingScheduleDetailActionFragment.getSingleScheduleFragmetn(Titles[i].toString(), (ArrayList<String>) mSessionDaysList);
+                fragmentList.add(fragment);
+            }
+            adapter = new MeetingScheduleAdapter(getChildFragmentManager(), fragmentList);
             mViewpager.setAdapter(adapter);
-            mTabLayout.setupWithViewPager(mViewpager);
+            list.get(mCurrentPage).setTextColor(getResources().getColor(R.color.black));
+            list.get(mCurrentPage).setBackground(getResources().getDrawable(R.drawable.bg_schedule_selected));
             mViewpager.setCurrentItem(mCurrentPage);
         }
 
@@ -216,6 +254,7 @@ public class MeetingScheduleViewPageFragment extends BaseFragment {
     @Override
     public void onPause() {
         super.onPause();
+        MobclickAgent.onPageEnd(Constants.FRAGMENT_MEETINGSCHEDULECALENDAR);
     }
 
     @Override

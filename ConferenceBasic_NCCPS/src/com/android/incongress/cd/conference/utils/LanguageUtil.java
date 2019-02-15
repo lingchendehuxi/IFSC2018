@@ -23,6 +23,13 @@ public class LanguageUtil {
                 myLocale = new Locale("en");
                 break;
             default:
+
+                String locale = Locale.getDefault().getLanguage();
+                if("en".equals(locale)){
+                    AppApplication.systemLanguage = 2;
+                }else if("zh".equals(locale)){
+                    AppApplication.systemLanguage = 1;
+                }
                 return;
         }
         Resources res = context.getResources();

@@ -10,6 +10,7 @@ import com.android.incongress.cd.conference.api.CHYHttpClientUsage;
 import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.BaseActivity;
 import com.android.incongress.cd.conference.base.Constants;
+import com.android.incongress.cd.conference.save.SharePreferenceUtils;
 import com.android.incongress.cd.conference.utils.LogUtils;
 import com.android.incongress.cd.conference.utils.StringUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
@@ -56,7 +57,7 @@ public class FindbackCCodeSecondActivity extends BaseActivity {
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-            CHYHttpClientUsage.getInstanse().doFindbackCCode(name,mobile, AppApplication.getSystemLanuageCode(), Constants.PROJECT_NAME, Constants.conId + "",new JsonHttpResponseHandler(Constants.ENCODING_GBK){
+            CHYHttpClientUsage.getInstanse().doFindbackCCode(name,mobile, AppApplication.getSystemLanuageCode(), Constants.getFromWhere(), Constants.getConId() + "",new JsonHttpResponseHandler(Constants.ENCODING_GBK){
                 @Override
                 public void onStart() {
                     super.onStart();

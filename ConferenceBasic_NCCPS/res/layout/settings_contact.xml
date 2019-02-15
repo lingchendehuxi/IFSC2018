@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="37dp"
         android:layout_marginTop="24dp"
-        android:autoLink="all"
+        android:autoLink="phone"
         android:text="@string/tel_number"
         android:textColor="@color/business_text_color"
         android:textSize="14sp" />
@@ -38,6 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="37dp"
         android:layout_marginTop="24dp"
+        android:autoLink="all"
         android:text="@string/settings_contact_text_fax"
         android:textColor="@color/business_text_color"
         android:textSize="14sp" />
@@ -47,7 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="37dp"
         android:layout_marginTop="24dp"
-        android:autoLink="all"
+        android:autoLink="email"
         android:text="@string/settings_contact_text_mail"
         android:textColor="@color/business_text_color"
         android:textSize="14sp" />

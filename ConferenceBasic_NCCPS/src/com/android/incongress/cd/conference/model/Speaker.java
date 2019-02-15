@@ -7,6 +7,7 @@ import org.litepal.crud.DataSupport;
  * Created by Jacky on 2016/7/25.
  */
 public class Speaker extends DataSupport {
+    private int id;
     private int speakerId;// 演讲者编号
     private int conferencesId;// 参会议编号
     private String remark;// 备注
@@ -22,6 +23,13 @@ public class Speaker extends DataSupport {
     private int userId;// userId;
     private String pykey; //
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getSpeakerId() {
         return speakerId;

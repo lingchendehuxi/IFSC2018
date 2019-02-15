@@ -46,7 +46,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/layout_margin"
-            android:background="@drawable/bg_button"
+            android:background="@drawable/bg_button_ed"
             android:text="@string/get_c_code"
             android:textAllCaps="false"
             android:textColor="@color/white"

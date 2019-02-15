@@ -1,34 +1,34 @@
 [
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\abc_edit_text_material.xml",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\drawable-v21\\abc_edit_text_material.xml"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\abc_action_bar_item_background_material.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\4773ef71a14a8d9e92152eeb0911af1be6bec93b\\output\\res\\drawable-v21\\abc_action_bar_item_background_material.xml"
     },
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\design_bottom_navigation_item_background.xml",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\67e2355ffe87152db1182b968ab8d572b74148b0\\output\\res\\drawable-v21\\design_bottom_navigation_item_background.xml"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\notification_action_background.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\c63df7f43a391959426fe00897a5c955354dea4b\\output\\res\\drawable-v21\\notification_action_background.xml"
     },
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\notification_action_background.xml",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\drawable-v21\\notification_action_background.xml"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\avd_hide_password.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\72d1127d00e13ba7a3eab6bd6138eb1cdd604175\\output\\res\\drawable-v21\\avd_hide_password.xml"
     },
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\abc_btn_colored_material.xml",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\drawable-v21\\abc_btn_colored_material.xml"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\abc_edit_text_material.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\4773ef71a14a8d9e92152eeb0911af1be6bec93b\\output\\res\\drawable-v21\\abc_edit_text_material.xml"
     },
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\abc_action_bar_item_background_material.xml",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\2685792c7e263b5561ff50b32a6ba8b30bef9375\\output\\res\\drawable-v21\\abc_action_bar_item_background_material.xml"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\avd_show_password.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\72d1127d00e13ba7a3eab6bd6138eb1cdd604175\\output\\res\\drawable-v21\\avd_show_password.xml"
     },
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\avd_show_password.xml",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\67e2355ffe87152db1182b968ab8d572b74148b0\\output\\res\\drawable-v21\\avd_show_password.xml"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\design_password_eye.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\72d1127d00e13ba7a3eab6bd6138eb1cdd604175\\output\\res\\drawable-v21\\design_password_eye.xml"
     },
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\avd_hide_password.xml",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\67e2355ffe87152db1182b968ab8d572b74148b0\\output\\res\\drawable-v21\\avd_hide_password.xml"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\abc_btn_colored_material.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\4773ef71a14a8d9e92152eeb0911af1be6bec93b\\output\\res\\drawable-v21\\abc_btn_colored_material.xml"
     },
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\design_password_eye.xml",
-        "source": "C:\\Users\\Admin\\.android\\build-cache\\67e2355ffe87152db1182b968ab8d572b74148b0\\output\\res\\drawable-v21\\design_password_eye.xml"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\design_bottom_navigation_item_background.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\72d1127d00e13ba7a3eab6bd6138eb1cdd604175\\output\\res\\drawable-v21\\design_bottom_navigation_item_background.xml"
     }
 ]

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<litepal>
+    <dbname value="conference_csccm"></dbname>
+    <version value="1"></version>
+
+    <list>
+        <mapping class="com.android.incongress.cd.conference.model.Ad"></mapping>
+        <mapping class="com.android.incongress.cd.conference.model.Alert"></mapping>
+        <mapping class="com.android.incongress.cd.conference.model.Class"></mapping>
+        <mapping class="com.android.incongress.cd.conference.model.Conferences"></mapping>
+        <mapping class="com.android.incongress.cd.conference.model.Confield"></mapping>
+        <mapping class="com.android.incongress.cd.conference.model.Exhibitor"></mapping>
+        <mapping class="com.android.incongress.cd.conference.model.ExhibitorActivity"></mapping>
+        <mapping class="com.android.incongress.cd.conference.model.Map"></mapping>
+        <mapping class="com.android.incongress.cd.conference.model.Meeting"></mapping>
+        <mapping class="com.android.incongress.cd.conference.model.Note"></mapping>
+        <mapping class="com.android.incongress.cd.conference.model.Role"></mapping>
+        <mapping class="com.android.incongress.cd.conference.model.Session"></mapping>
+        <mapping class="com.android.incongress.cd.conference.model.Speaker"></mapping>
+        <mapping class="com.android.incongress.cd.conference.model.Tips"></mapping>
+        <mapping class="com.android.incongress.cd.conference.model.PosterPraise"></mapping>
+        <mapping class="com.android.incongress.cd.conference.model.TimeBean"></mapping>
+        <mapping class="com.android.incongress.cd.conference.model.CompasBean"></mapping>
+        <mapping class="com.android.incongress.cd.conference.beans.EsmosBean"></mapping>
+        <mapping class="com.android.incongress.cd.conference.beans.EsmoVersionBean"></mapping>
+        <mapping class="com.android.incongress.cd.conference.model.ConferenceData"></mapping>
+        <mapping class="com.android.incongress.cd.conference.model.ConpassAd"></mapping>
+        <mapping class="com.android.incongress.cd.conference.beans.MyFieldBean"></mapping>
+        <mapping class="com.android.incongress.cd.conference.beans.BusRemindBean"></mapping>
+        <mapping class="com.android.incongress.cd.conference.model.MeetingRemindBean"></mapping>
+    </list>
+
+</litepal>

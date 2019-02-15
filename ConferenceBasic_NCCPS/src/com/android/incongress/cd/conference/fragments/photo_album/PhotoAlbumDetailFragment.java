@@ -164,7 +164,7 @@ public class PhotoAlbumDetailFragment extends BaseFragment implements GalleryFin
     }
 
     private void getPhotos(final int lastId) {
-        CHYHttpClientUsage.getInstanse().doGetPhotoWallImgs(AppApplication.userId, AppApplication.userType,Constants.conId+"", AppApplication.getSystemLanuageCode(),mTypeId, lastId, new JsonHttpResponseHandler(){
+        CHYHttpClientUsage.getInstanse().doGetPhotoWallImgs(AppApplication.userId, AppApplication.userType,Constants.getConId()+"", AppApplication.getSystemLanuageCode(),mTypeId, lastId, new JsonHttpResponseHandler(){
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -251,7 +251,7 @@ public class PhotoAlbumDetailFragment extends BaseFragment implements GalleryFin
             e.printStackTrace();
         }
 
-        CHYHttpClientUsage.getInstanse().doCreatePhotoImage(Constants.conId+"", AppApplication.userId +"", AppApplication.userType + "", mTypeId + "", AppApplication.getSystemLanuageCode(),new File(filePhth),
+        CHYHttpClientUsage.getInstanse().doCreatePhotoImage(Constants.getConId()+"", AppApplication.userId +"", AppApplication.userType + "", mTypeId + "", AppApplication.getSystemLanuageCode(),new File(filePhth),
                 new JsonHttpResponseHandler(){
                     @Override
                     public void onStart() {

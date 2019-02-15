@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <corners android:bottomLeftRadius="6dp" />
+    <solid android:color="@color/bg_search_selected" />
+
+    <padding
+        android:bottom="2dp"
+        android:left="15dp"
+        android:top="2dp"
+        android:right="15dp"/>
+
+</shape>

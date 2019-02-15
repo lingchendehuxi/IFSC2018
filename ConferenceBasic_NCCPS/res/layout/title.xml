@@ -1,9 +1,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/title_container"
     android:layout_width="match_parent"
-    android:paddingTop="@dimen/system_title_size"
     android:layout_height="@dimen/system_title_and_size"
-    android:background="@color/action_bar_bg">
+    android:background="@color/action_bar_bg"
+    android:paddingTop="@dimen/system_title_size">
 
     <LinearLayout
         android:id="@+id/title_back_panel"
@@ -16,13 +16,13 @@
             android:id="@+id/title_back"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_marginLeft="10dp"
             android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
             android:clickable="false"
             android:focusable="false"
             android:scaleType="centerCrop"
-            android:tint="@color/back_color"
-            android:src="@drawable/backimg" />
+            android:src="@drawable/backimg"
+            android:tint="@color/back_color" />
     </LinearLayout>
 
     <View
@@ -58,11 +58,15 @@
         android:layout_toRightOf="@id/title_baseline"
         android:ellipsize="end"
         android:gravity="center"
-        android:textStyle="bold"
         android:singleLine="true"
         android:text="@string/app_name"
         android:textColor="@color/black_login_text"
-        android:textSize="17sp" />
+        android:textSize="17sp"
+        android:textStyle="bold" />
+
+    <View
+        android:layout_alignParentBottom="true"
+        style="@style/edite_line" />
 
     <LinearLayout
         android:id="@+id/title_center_custom_view"
@@ -86,37 +90,6 @@
         android:orientation="horizontal"
         android:visibility="gone"></LinearLayout>
 
-    <RelativeLayout
-        android:id="@+id/rl_edit_mode"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/action_bar_bg"
-        android:visibility="gone">
-
-        <TextView
-            android:id="@+id/tv_cancel"
-            android:layout_width="55dp"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/negative_button"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size_media" />
-
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/tv_ok"
-            android:layout_width="55dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:gravity="center"
-            android:text="@string/positive_button"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size_media" />
-    </RelativeLayout>
 
 
 </RelativeLayout>

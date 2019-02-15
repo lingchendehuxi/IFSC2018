@@ -2,6 +2,7 @@ package com.android.incongress.cd.conference.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.ViewGroup;
 
@@ -14,7 +15,7 @@ import java.util.List;
 /**
  * Created by Jacky on 2016/1/15.
  */
-public class MyScheduleAdapter extends FragmentStatePagerAdapter {
+public class MyScheduleAdapter extends FragmentPagerAdapter {
     private CharSequence Titles[];
     private int NumbOfTabs;
 

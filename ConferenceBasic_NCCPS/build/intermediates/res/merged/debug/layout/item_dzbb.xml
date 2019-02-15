@@ -2,65 +2,74 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="10dp" >
+    android:orientation="vertical">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:paddingLeft="11dp"
+        android:paddingTop="16dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="16dp">
 
-        <com.android.incongress.cd.conference.widget.IncongressTextView
-            android:id="@+id/posterCode"
-            android:layout_width="wrap_content"
-            android:textColor="@color/black"
+        <ImageView
+            android:id="@+id/poster_image_view"
+            android:layout_width="140dp"
+            android:layout_height="105dp"
+            android:scaleType="fitXY" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="13sp" />
+            android:layout_marginLeft="16dp"
+            android:orientation="vertical">
 
-        <com.android.incongress.cd.conference.widget.IncongressTextView
-            android:id="@+id/conField"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/posterCode"
-            android:textColor="@color/black"
-            android:layout_marginLeft="20dp"
-            android:textSize="13sp" />
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/posterCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-2dp"
+                android:textColor="@color/theme_color"
+                android:textSize="10sp" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="3dp" >
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:fontFamily="sans-serif-light"
+                android:textColor="@color/black_login_text"
+                android:textSize="13sp" />
 
-        <com.android.incongress.cd.conference.widget.IncongressTextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:maxLines="3"
-            android:ellipsize="end"
-            android:textSize="15sp" />
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/author"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:textColor="@color/unselect_color"
+                android:textSize="10sp" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="3dp" >
+            <TextView
+                android:id="@+id/conField"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:textColor="@color/unselect_color"
+                android:textSize="10sp" />
 
-        <com.android.incongress.cd.conference.widget.IncongressTextView
-            android:id="@+id/author"
-            android:layout_width="wrap_content"
-            android:textColor="@color/black"
-            android:layout_height="wrap_content"
-            android:textSize="15sp" />
-    </RelativeLayout>
-<TextView
-    android:id="@+id/jingxuan"
-    android:layout_marginTop="3dp"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textSize="8dp"
-    android:padding="3dp"
-    android:textColor="@color/theme_color"
-    android:text="精选"
-    android:background="@drawable/bg_login_selected"/>
+            <TextView
+                android:id="@+id/jingxuan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:textColor="@color/unselect_color"
+                android:textSize="10sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        style="@style/edite_line"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" />
 </LinearLayout>

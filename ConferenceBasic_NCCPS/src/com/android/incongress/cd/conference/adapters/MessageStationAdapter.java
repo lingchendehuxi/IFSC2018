@@ -1,24 +1,17 @@
 package com.android.incongress.cd.conference.adapters;
 
 import android.content.Context;
-import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextPaint;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.beans.MessageBean;
-import com.android.incongress.cd.conference.utils.transformer.CircleTransform;
+import com.android.incongress.cd.conference.utils.PicUtils;
 import com.android.incongress.cd.conference.widget.CircleImageView;
-import com.bumptech.glide.Glide;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
-import com.yqritc.recyclerviewflexibledivider.FlexibleDividerDecoration;
-import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
 import java.util.List;
 
@@ -42,7 +35,7 @@ public class MessageStationAdapter extends RecyclerView.Adapter<MessageStationAd
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        ViewHolder holder = null;
+        ViewHolder holder;
         View view;
         viewType = TYPE_HAVE_URL;
         if (viewType == TYPE_HAVE_URL) {
@@ -50,7 +43,7 @@ public class MessageStationAdapter extends RecyclerView.Adapter<MessageStationAd
             view.setOnClickListener(this);
             holder = new ViewHolder(view);
         } else {
-            view = mInflater.inflate(R.layout.item_messagestation_without_url, parent, false);
+            view = mInflater.inflate(R.layout.item_mind_book_item, parent, false);
             view.setOnClickListener(this);
             holder = new ViewHolder(view);
         }
@@ -61,8 +54,29 @@ public class MessageStationAdapter extends RecyclerView.Adapter<MessageStationAd
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         MessageBean bean = mBeans.get(position);
-        holder.tvMessage.setText(bean.getContent());
+        String content = bean.getContent();
+        int finalPosition = content.indexOf("】");
+        boolean isShow = content.startsWith("【");
+        if(isShow){
+            String string1 = content.substring(1,finalPosition);
+            String string2 = content.substring(finalPosition+1,content.length()-1);
+            holder.tv_title.setText(string1);
+            holder.tvMessage.setText(string2);
+        }else {
+            holder.tv_title.setVisibility(View.GONE);
+            holder.tvMessage.setText(content);
+        }
         holder.tvTime.setText(bean.getCreateTime());
+        if(TextUtils.isEmpty(bean.getUrl())){
+            holder.iv_left.setImageResource(R.drawable.professor_default);
+        }else {
+            PicUtils.loadCircleImage(mContext,bean.getUrl(),holder.iv_left);
+        }
+        if(bean.getType() == 2){
+            holder.tv_more.setVisibility(View.VISIBLE);
+        }else {
+            holder.tv_more.setVisibility(View.GONE);
+        }
         //将数据保存在itemView的Tag中，以便点击时进行获取
         holder.itemView.setTag(bean);
     }
@@ -93,7 +107,7 @@ public class MessageStationAdapter extends RecyclerView.Adapter<MessageStationAd
 
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvMessage,tv_title;
-        TextView tvTime;
+        TextView tvTime,tv_more;
         CircleImageView iv_left;
 
         public ViewHolder(View itemView) {
@@ -102,6 +116,7 @@ public class MessageStationAdapter extends RecyclerView.Adapter<MessageStationAd
             iv_left = itemView.findViewById(R.id.iv_left);
             tvMessage = itemView.findViewById(R.id.tv_message);
             tvTime = itemView.findViewById(R.id.tv_time);
+            tv_more = itemView.findViewById(R.id.tv_more);
         }
     }
 

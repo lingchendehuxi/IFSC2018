@@ -5,7 +5,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.ViewGroup;
 
+import com.android.incongress.cd.conference.fragments.me.MindBookFragment;
 import com.android.incongress.cd.conference.fragments.me.MyMessageListFragment;
+import com.android.incongress.cd.conference.fragments.me.MyMindBookListFragment;
 import com.android.incongress.cd.conference.fragments.my_schedule.MyScheduleDetailActionFragment;
 
 /**
@@ -37,8 +39,4 @@ public class MessageListAdapter extends FragmentStatePagerAdapter {
         return NumbOfTabs;
     }
 
-    @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
-        super.destroyItem(container, position, object);
-    }
 }

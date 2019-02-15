@@ -5,7 +5,10 @@
       <module fileurl="file://$PROJECT_DIR$/ConferenceBasic_NCCPS/ConferenceBasic_NCCPS.iml" filepath="$PROJECT_DIR$/ConferenceBasic_NCCPS/ConferenceBasic_NCCPS.iml" />
       <module fileurl="file://$PROJECT_DIR$/IFSC2018.iml" filepath="$PROJECT_DIR$/IFSC2018.iml" />
       <module fileurl="file://$PROJECT_DIR$/Library_SuperRecyclerView/Library_SuperRecyclerView.iml" filepath="$PROJECT_DIR$/Library_SuperRecyclerView/Library_SuperRecyclerView.iml" />
+      <module fileurl="file://$PROJECT_DIR$/YCVideoPlayerLib/YCVideoPlayerLib.iml" filepath="$PROJECT_DIR$/YCVideoPlayerLib/YCVideoPlayerLib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/badgeviewlib/badgeviewlib.iml" filepath="$PROJECT_DIR$/badgeviewlib/badgeviewlib.iml" />
       <module fileurl="file://$PROJECT_DIR$/bottom-navigation-bar/bottom-navigation-bar.iml" filepath="$PROJECT_DIR$/bottom-navigation-bar/bottom-navigation-bar.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cardview/cardview.iml" filepath="$PROJECT_DIR$/cardview/cardview.iml" />
     </modules>
   </component>
 </project>

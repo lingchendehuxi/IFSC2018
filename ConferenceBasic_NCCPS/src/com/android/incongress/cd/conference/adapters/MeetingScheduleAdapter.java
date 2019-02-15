@@ -5,9 +5,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.ViewGroup;
 
-import com.android.incongress.cd.conference.fragments.meeting_schedule.MeetingScheduleDetailActionFragment;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,37 +15,28 @@ public class MeetingScheduleAdapter extends FragmentStatePagerAdapter {
 
     /** 标题 **/
     private CharSequence Titles[];
-    /**  tab栏 **/
-    private int NumbOfTabs;
     //所有session的list集合
-    private List<String> mSessionDayList;
+    private List<Fragment> fragmentList;
 
-    public MeetingScheduleAdapter(FragmentManager fm, CharSequence mTitles[], int mNumbOfTabsumb, List<String> sessionDayList) {
+    public MeetingScheduleAdapter(FragmentManager fm, List<Fragment> fragmentList) {
         super(fm);
-        this.Titles = mTitles;
-        this.NumbOfTabs = mNumbOfTabsumb;
-        this.mSessionDayList = sessionDayList;
+        this.fragmentList = fragmentList;
     }
 
     @Override
     public Fragment getItem(int position) {
-        return MeetingScheduleDetailActionFragment.getSingleScheduleFragmetn(Titles[position].toString(), (ArrayList<String>) mSessionDayList);
+        return fragmentList.get(position);
     }
 
-    @Override
-    public CharSequence getPageTitle(int position) {
-        CharSequence month = Titles[position].subSequence(5,7);
-        return Integer.valueOf(month.toString())+"月\n"+Titles[position].subSequence(8,10);
-    }
 
 
     @Override
     public int getCount() {
-        return NumbOfTabs;
+        return fragmentList.size();
     }
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-		super.destroyItem(container, position, object);
+        super.destroyItem(container, position, object);
     }
 }

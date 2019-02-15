@@ -1,9 +1,12 @@
 package com.android.incongress.cd.conference.utils;
 
+import android.graphics.Paint;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.style.AbsoluteSizeSpan;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.android.incongress.cd.conference.base.AppApplication;
 
@@ -290,6 +293,11 @@ public class StringUtils {
         }
         return m;
     }
+    //方法三：
+    public static boolean isNumeric(String str){
+        Pattern pattern = Pattern.compile("[0-9]*");
+        return pattern.matcher(str).matches();
+    }
 
     /**
      * @param content
@@ -322,5 +330,70 @@ public class StringUtils {
         mUse.setSpan(ass, 0, mUse.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         editText.setHint(new SpannableString(mUse));
     }
+    //将textview中的文字进行排版
+    public static String autoSplitText(final TextView tv) {
+        final String rawText = tv.getText().toString(); //原始文本
+        final Paint tvPaint = tv.getPaint(); //paint，包含字体等信息
+        final float tvWidth = tv.getWidth() - tv.getPaddingLeft() - tv.getPaddingRight(); //控件可用宽度
 
+        //将原始文本按行拆分
+        String [] rawTextLines = rawText.replaceAll("\r", "").split("\n");
+        StringBuilder sbNewText = new StringBuilder();
+        for (String rawTextLine : rawTextLines) {
+            if (tvPaint.measureText(rawTextLine) <= tvWidth) {
+                //如果整行宽度在控件可用宽度之内，就不处理了
+                sbNewText.append(rawTextLine);
+            } else {
+                //如果整行宽度超过控件可用宽度，则按字符测量，在超过可用宽度的前一个字符处手动换行
+                float lineWidth = 0;
+                for (int cnt = 0; cnt != rawTextLine.length(); ++cnt) {
+                    char ch = rawTextLine.charAt(cnt);
+                    lineWidth += tvPaint.measureText(String.valueOf(ch));
+                    if (lineWidth <= tvWidth) {
+                        sbNewText.append(ch);
+                    } else {
+                        sbNewText.append("\n");
+                        lineWidth = 0;
+                        --cnt;
+                    }
+                }
+            }
+            sbNewText.append("\n");
+        }
+
+        //把结尾多余的\n去掉
+        if (!rawText.endsWith("\n")) {
+            sbNewText.deleteCharAt(sbNewText.length() - 1);
+        }
+
+        return sbNewText.toString();
+    }
+    //设置中英文显示分隔符#@#
+    public static void setTextShow(TextView textView,String text){
+        if(!TextUtils.isEmpty(text)){
+            String[] texts = text.split("#@#");
+            if(AppApplication.systemLanguage == 1){
+                textView.setText(texts[0]);
+            }else {
+                if(texts.length>1){
+                    textView.setText(texts[1]);
+                }
+            }
+        }
+    }
+    //设置中英文显示分隔符,  第一个英文符分割
+    public static void setCommaTextShow(TextView textView,String text){
+        if (!TextUtils.isEmpty(text)) {
+            int splitLength = text.indexOf(",");
+            if (AppApplication.systemLanguage == 1) {
+                textView.setText(text.substring(0,splitLength));
+            } else {
+                if(splitLength != 0){
+                    textView.setText(text.substring(splitLength+1,text.length()));
+                }else {
+                    textView.setText("");
+                }
+            }
+        }
+    }
 }

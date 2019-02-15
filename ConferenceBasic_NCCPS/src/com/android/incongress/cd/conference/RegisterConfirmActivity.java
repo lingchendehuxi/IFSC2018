@@ -161,7 +161,7 @@ public class RegisterConfirmActivity extends BaseActivity {
     }
 
     private void doGetSms(String mobile, String lan) {
-        CHYHttpClientUsage.getInstanse().doGetSmsMobile(Constants.conId, mobile, Constants.ConfirmTypeRegister,lan ,new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
+        CHYHttpClientUsage.getInstanse().doGetSmsMobile(Constants.getConId(), mobile, Constants.ConfirmTypeRegister,lan ,new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
             @Override
             public void onStart() {
                 super.onStart();
@@ -204,7 +204,7 @@ public class RegisterConfirmActivity extends BaseActivity {
         });
     }
     private void doMobileRegister(String name, String givenName, String familyName,String mobile, String confirmCode, String language) {
-        CHYHttpClientUsage.getInstanse().doMobileRegUser(name, familyName, givenName, mobile, Constants.PROJECT_NAME,language, confirmCode, new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
+        CHYHttpClientUsage.getInstanse().doMobileRegUser(name, familyName, givenName, mobile, Constants.getFromWhere(),language, confirmCode, new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
             @Override
             public void onStart() {
                 super.onStart();
@@ -282,7 +282,7 @@ public class RegisterConfirmActivity extends BaseActivity {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        CHYHttpClientUsage.getInstanse().doEmailRegUser(name, familyName, givenName, mobile, confirmCode, Constants.PROJECT_NAME,language, new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
+        CHYHttpClientUsage.getInstanse().doEmailRegUser(name, familyName, givenName, mobile, confirmCode, Constants.getFromWhere(),language, new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
                 @Override
                 public void onStart() {
                     super.onStart();
@@ -316,6 +316,7 @@ public class RegisterConfirmActivity extends BaseActivity {
                             showDialog(msg, null);
                         } else {
                             ParseUser.saveUserInfo(response.toString());
+                            SharePreferenceUtils.saveUserBoolean(Constants.USER_IS_LOGIN, true);
                             /*Gson gson = new Gson();
                             UserInfoEnBean user = gson.fromJson(response.toString(), UserInfoEnBean.class);
 

@@ -2,6 +2,7 @@ package com.android.incongress.cd.conference.base;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.android.incongress.cd.conference.HomeActivity;
+import com.android.incongress.cd.conference.LoginActivity;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 
 public class BaseFragment extends Fragment {
@@ -61,6 +63,7 @@ public class BaseFragment extends Fragment {
 
     /**
      * id标题
+     *
      * @param fragment
      * @param id
      * @param adTop
@@ -106,6 +109,7 @@ public class BaseFragment extends Fragment {
 
         activity.setTitleEntry(true, false, true, view, title, adTop, adBottom, true, isNavShow);
     }
+
     /**
      * 只显示自定义标题
      *
@@ -121,6 +125,7 @@ public class BaseFragment extends Fragment {
 
     /**
      * id标题 + 自定义右上角
+     *
      * @param fragment
      * @param id
      * @param view
@@ -131,12 +136,12 @@ public class BaseFragment extends Fragment {
     public void action(BaseFragment fragment, int id, View view, boolean adTop, boolean adBottom, boolean isNavShow) {
         HomeActivity activity = (HomeActivity) getActivity();
         activity.addFragment(this, fragment);
-
         activity.setTitleEntry(true, false, true, view, id, adTop, adBottom, true, isNavShow);
     }
 
     /**
      * id标题 + 自定义右上角 + 自定义标题
+     *
      * @param fragment
      * @param id
      * @param view
@@ -170,6 +175,12 @@ public class BaseFragment extends Fragment {
     public boolean toggleShurufa() {
         HomeActivity activity = (HomeActivity) getActivity();
         return activity.toggleShurufa();
+    }
+    public void turnToLogin(){
+        if(!AppApplication.isUserLogIn()){
+            Intent intent = new Intent(getActivity(),LoginActivity.class);
+            startActivity(intent);
+        }
     }
 
     public static void setListViewHeightBasedOnChildren(ListView listView) {
@@ -211,6 +222,7 @@ public class BaseFragment extends Fragment {
         lp.alpha = 0.3f;
         getActivity().getWindow().setAttributes(lp);
     }
+
     /**
      * 内容区域变量
      */

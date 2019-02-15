@@ -23,6 +23,7 @@ import com.android.incongress.cd.conference.api.CHYHttpClientUsage;
 import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.BaseFragment;
 import com.android.incongress.cd.conference.base.Constants;
+import com.android.incongress.cd.conference.utils.JSONCatch;
 import com.android.incongress.cd.conference.widget.IconChoosePopupWindow;
 import com.android.incongress.cd.conference.utils.MyLogger;
 import com.android.incongress.cd.conference.utils.PicUtils;
@@ -200,7 +201,7 @@ public class MakePostActionFragment extends BaseFragment implements GalleryFinal
                 e.printStackTrace();
             }
 
-            CHYHttpClientUsage.getInstanse().doCreateSceneShowImg(Constants.conId + "", AppApplication.userId + "", AppApplication.userType + "",mPostScenicShowId, new File(filePhth), new JsonHttpResponseHandler() {
+            CHYHttpClientUsage.getInstanse().doCreateSceneShowImg(Constants.getConId() + "", AppApplication.userId + "", AppApplication.userType + "",mPostScenicShowId, new File(filePhth), new JsonHttpResponseHandler() {
                 @Override
                 public void onStart() {
                     super.onStart();
@@ -245,11 +246,11 @@ public class MakePostActionFragment extends BaseFragment implements GalleryFinal
      */
     private void doCreateContent()   {
         String content = mEtPostContent.getText().toString().trim();
-        int conId = Constants.conId;
+        int conId = Constants.getConId();
         int userId = AppApplication.userId;
         int userType = AppApplication.userType;
         try {
-            CHYHttpClientUsage.getInstanse().doCreateSceneShowTxt(conId + "", userId + "", userType + "", mPostScenicShowId, URLEncoder.encode(content, Constants.ENCODING_UTF8), new JsonHttpResponseHandler() {
+            CHYHttpClientUsage.getInstanse().doCreateSceneShowTxt(conId + "", userId + "", userType + "", mPostScenicShowId, URLEncoder.encode(content, Constants.ENCODING_UTF8), new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
                 @Override
                 public void onStart() {
                     super.onStart();
@@ -280,6 +281,7 @@ public class MakePostActionFragment extends BaseFragment implements GalleryFinal
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     super.onSuccess(statusCode, headers, response);
+                    ToastUtils.showToast(JSONCatch.parseString("msg",response));
                     MyLogger.jLog().i(response.toString());
                 }
             });

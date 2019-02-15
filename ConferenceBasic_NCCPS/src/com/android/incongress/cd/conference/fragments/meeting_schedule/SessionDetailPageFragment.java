@@ -1,10 +1,11 @@
 package com.android.incongress.cd.conference.fragments.meeting_schedule;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
@@ -32,7 +33,6 @@ import com.android.incongress.cd.conference.fragments.question.MakeQuestionFragm
 import com.android.incongress.cd.conference.fragments.search_speaker.SpeakerDetailFragment;
 import com.android.incongress.cd.conference.model.Alert;
 import com.android.incongress.cd.conference.model.Class;
-import com.android.incongress.cd.conference.model.ConferenceDb;
 import com.android.incongress.cd.conference.model.ConferenceDbUtils;
 import com.android.incongress.cd.conference.model.Meeting;
 import com.android.incongress.cd.conference.model.Role;
@@ -44,9 +44,11 @@ import com.android.incongress.cd.conference.utils.CommonUtils;
 import com.android.incongress.cd.conference.utils.DateUtil;
 import com.android.incongress.cd.conference.utils.LogUtils;
 import com.android.incongress.cd.conference.utils.MyLogger;
+import com.android.incongress.cd.conference.utils.ShareUtils;
 import com.android.incongress.cd.conference.widget.ListViewForScrollView;
 import com.android.incongress.cd.conference.widget.MyButton;
 import com.android.incongress.cd.conference.widget.ScrollControlViewpager;
+import com.android.incongress.cd.conference.widget.StatusBarUtil;
 import com.android.incongress.cd.conference.widget.flow_layout.FlowLayout;
 import com.android.incongress.cd.conference.widget.flow_layout.TagFlowLayout;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
@@ -59,7 +61,7 @@ import java.util.List;
  * Created by Jacky on 2015/12/16.
  * Session详情页
  */
-public class SessionDetailPageFragment extends BaseFragment {
+public class SessionDetailPageFragment extends BaseFragment implements View.OnClickListener {
 
     private TextView mTvScheduleTime, mTvRoom, mTvScheduleName, mTvScheduleDetailTime;
     private LinearLayout mLlSpeakerContainer;
@@ -81,7 +83,7 @@ public class SessionDetailPageFragment extends BaseFragment {
     private List<Class> mClasses = new ArrayList<>();
     private List<Role> mRoleListAll = new ArrayList<>();
 
-    private ImageView mIvSessionAlarm;
+    private ImageView mIvSessionAlarm,mShareSession;
     private ProgressBar mLoadingBar;
 
     public static final String BUNDLE_SESSION_ID = "sessionID";
@@ -96,15 +98,6 @@ public class SessionDetailPageFragment extends BaseFragment {
     public void onDetach() {
         super.onDetach();
     }
-
-
-    private Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-
-        }
-    };
 
     /**
      * 闹铃模式
@@ -129,6 +122,7 @@ public class SessionDetailPageFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
         View view = inflater.inflate(R.layout.fragment_session_detail_page, container, false);
         try {
             mSessionid = getArguments().getInt(BUNDLE_SESSION_ID);
@@ -137,24 +131,25 @@ public class SessionDetailPageFragment extends BaseFragment {
             mClassBean = null;
             mClasses = null;
         }
+        mTvScheduleTime =  view.findViewById(R.id.tv_schedule_time);
+        mTvRoom =  view.findViewById(R.id.tv_schedule_room);
+        mTvScheduleName =  view.findViewById(R.id.tv_schedule_name);
+        mTvScheduleDetailTime =  view.findViewById(R.id.tv_schedule_detail_time);
+        mLlSpeakerContainer =  view.findViewById(R.id.ll_speaker_container);
+        mLvMeetings =  view.findViewById(R.id.lv_meetings);
+        mScrollview =  view.findViewById(R.id.scrollview);
+        mBtLocation =  view.findViewById(R.id.bt_location);
+        mBtAlarm =  view.findViewById(R.id.bt_alarm);
+        mIvSessionAlarm =  view.findViewById(R.id.iv_session_alarm);
+        mShareSession = view.findViewById(R.id.share_session);
+        mShareSession.setOnClickListener(this);
+        mLoadingBar =  view.findViewById(R.id.progressbar);
 
-        mTvScheduleTime = (TextView) view.findViewById(R.id.tv_schedule_time);
-        mTvRoom = (TextView) view.findViewById(R.id.tv_schedule_room);
-        mTvScheduleName = (TextView) view.findViewById(R.id.tv_schedule_name);
-        mTvScheduleDetailTime = (TextView) view.findViewById(R.id.tv_schedule_detail_time);
-        mLlSpeakerContainer = (LinearLayout) view.findViewById(R.id.ll_speaker_container);
-        mLvMeetings = (ListViewForScrollView) view.findViewById(R.id.lv_meetings);
-        mScrollview = (ScrollView) view.findViewById(R.id.scrollview);
-        mBtLocation = (MyButton) view.findViewById(R.id.bt_location);
-        mBtAlarm = (MyButton) view.findViewById(R.id.bt_alarm);
-        mIvSessionAlarm = (ImageView) view.findViewById(R.id.iv_session_alarm);
-        mLoadingBar = (ProgressBar) view.findViewById(R.id.progressbar);
-
-
+        registerMessageReceiver();
         new MyAsynkTask().execute();
 
         //      showGuideInfo(); 引导页暂时去除
-
+        startPostponedEnterTransition();
         return view;
     }
 
@@ -255,7 +250,7 @@ public class SessionDetailPageFragment extends BaseFragment {
      * @param speakerId
      * @return
      */
-    private Speaker getSpeakerById(String speakerId) {
+    public static Speaker getSpeakerById(String speakerId) {
         if ("".equals(speakerId)) {
             return null;
         }
@@ -391,8 +386,7 @@ public class SessionDetailPageFragment extends BaseFragment {
             mTvScheduleDetailTime.setText(mSessionBean.getStartTime() + "-" + mSessionBean.getEndTime());
 
 
-
-            mMeetingWithSpeakerAdapter = new MeetingWithSpeakerAdapter(getActivity(),mClassBean.getClassesCode(), mMeetingBeanList, mAllSpeakers, new MeetingWithSpeakerAdapter.OnTagListener() {
+            mMeetingWithSpeakerAdapter = new MeetingWithSpeakerAdapter(getActivity(), mClassBean.getClassesCode(), mMeetingBeanList, mAllSpeakers, new MeetingWithSpeakerAdapter.OnTagListener() {
                 @Override
                 public void tagListener(Speaker bean) {
                     if (!mIsAlarmMode) {
@@ -418,26 +412,11 @@ public class SessionDetailPageFragment extends BaseFragment {
                         mIvSessionAlarm.setImageResource(R.drawable.sessiondetail_alarmoff);
                         mSessionBean.setAttention(Constants.NOATTENTION);
                         Alert alert = ConferenceDbUtils.getAlertByAlertId(mSessionBean.getClassesId());
-                        if(alert!= null){
+                        if (alert != null) {
                             Log.d("sgqTest", "doWhenMeetingAlarmClicked: 删除session闹钟");
                             ConferenceDbUtils.deleteAlert(alert);
                         }
                     }
-                }
-            }, new MeetingWithSpeakerAdapter.MeetingQuestionListener() {
-                @Override
-                public void doWhenQuestionClick(int speakerId, String speakerName, int meetingId, String meetingName) {
-                    if (AppApplication.userType== Constants.TYPE_USER_VISITOR) {
-                       LoginActivity.startLoginActivity(getActivity(), LoginActivity.TYPE_NORMAL, "", "", "" , "");
-//                         ChooseIdentityActivity.startChooseIdentityActivity(getActivity());
-                        return;
-                    }
-
-                    View question = CommonUtils.initView(getActivity(), R.layout.title_right_textview);
-                    MakeQuestionFragment instance = new MakeQuestionFragment();
-                    instance.setMeetingQuestionInfo(speakerName, speakerId, meetingId, meetingName);
-                    instance.setRightListener(question);
-                    action(instance, getString(R.string.ask_sb, speakerName), question, false, false, false);
                 }
             });
 
@@ -533,7 +512,7 @@ public class SessionDetailPageFragment extends BaseFragment {
 
                 final SpeakerTagAdapter speakerAdapter = new SpeakerTagAdapter(getActivity(), speakers);
 
-                if(getActivity() != null) {
+                if (getActivity() != null) {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -544,7 +523,7 @@ public class SessionDetailPageFragment extends BaseFragment {
                             } else {
                                 ((TextView) roleView.findViewById(R.id.tv_role_name)).setText(mRoleList.get(temp).getEnName());
                             }
-                            final TagFlowLayout flowLayout = (TagFlowLayout) roleView.findViewById(R.id.speaker_by_role);
+                            final TagFlowLayout flowLayout = roleView.findViewById(R.id.speaker_by_role);
 
                             mLlSpeakerContainer.addView(roleView);
 
@@ -611,6 +590,27 @@ public class SessionDetailPageFragment extends BaseFragment {
         return classBean;
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.share_session:
+                //分享
+                String shareTitle;
+                if (AppApplication.systemLanguage == 1) {
+                    shareTitle = mSessionBean.getSessionName();
+                } else {
+                    shareTitle = mSessionBean.getSessionNameEN();
+                }
+
+                //http://app.incongress.cn/chyWebApp/assetsCit/session_detail.jsp?sessionId=38105&conId=194&isShare=1
+
+                //ShareUtils.shareTextWithUrl(getActivity(), shareTitle, "", Constants.APP_DOWNLOAD_SITE, null);
+                ShareUtils.shareTextWithUrl(getActivity(), shareTitle, "会议日程",
+                        "http://app.incongress.cn/chyWebApp/assetsCsc/session_detail.jsp?sessionId=" + mSessionBean.getSessionGroupId() + "&conId=" + Constants.getConId() + "&isShare=1", null);
+                //252
+                break;
+        }
+    }
 
     /**
      * 显示指示页
@@ -628,8 +628,9 @@ public class SessionDetailPageFragment extends BaseFragment {
             });
         }
     }
+
     //调用session订闹钟
-    private void enableSessionClick(){
+    private void enableSessionClick() {
         Alert alertbean = new Alert();
         alertbean.setDate(mSessionBean.getSessionDay());
         alertbean.setEnable(1);
@@ -649,11 +650,51 @@ public class SessionDetailPageFragment extends BaseFragment {
         if (bean != null)
             AlermClock.addClock(bean);
     }
+
     //取消用session订闹钟
-    private void unEnableSessionClick(){
+    private void unEnableSessionClick() {
         Alert alertForSession = ConferenceDbUtils.getAlertByAlertId(mSessionBean.getClassesId());
         if (alertForSession != null) {
             ConferenceDbUtils.deleteAlert(alertForSession);
+        }
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(!hidden){
+            StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
+        }
+    }
+
+    private UpdateReceiver updateReceiver;
+    //更新meeting广播接收器
+    class UpdateReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (Constants.ACTION_UPDATE_MEET.equals(intent.getAction())) {
+                if(mMeetingWithSpeakerAdapter!=null){
+                    mMeetingBeanList.clear();
+                    getMeetingBeanBySessionId(String.valueOf(mSessionBean.getSessionGroupId()));
+                    mMeetingWithSpeakerAdapter.notifyDataSetChanged();
+                }
+            }
+        }
+
+    }
+
+    //注册更新meet广播接收器
+    public void registerMessageReceiver() {
+        updateReceiver = new UpdateReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Constants.ACTION_UPDATE_MEET);
+        getActivity().registerReceiver(updateReceiver, filter);
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (updateReceiver != null) {
+            getActivity().unregisterReceiver(updateReceiver);
         }
     }
 }

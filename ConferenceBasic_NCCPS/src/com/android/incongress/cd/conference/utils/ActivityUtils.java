@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.view.View;
+import android.view.ViewTreeObserver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,13 +33,28 @@ public class ActivityUtils {
         }
     }
     //获取控件的高度
-    public  static int getViewHeight(View view){
+    public  static int getViewHeight(final View view){
+
         int w = View.MeasureSpec.makeMeasureSpec(0,
                 View.MeasureSpec.UNSPECIFIED);
         int h = View.MeasureSpec.makeMeasureSpec(0,
                 View.MeasureSpec.UNSPECIFIED);
-        view.measure(w, h);
+        view.measure(0, h);
         return view.getMeasuredHeight();
+    }
+    //第二种测试方式
+    public static int getViewheightTest(final View view){
+        int height;
+        ViewTreeObserver vto = view.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                view.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                view.getHeight();
+                view.getWidth();
+            }
+        });
+        return view.getHeight();
     }
     /**
      * 检测是否安装微信

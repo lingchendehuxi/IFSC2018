@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -13,24 +14,22 @@ import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.incongress.cd.conference.ScenicXiuPicsViewpagerActivity;
 import com.android.incongress.cd.conference.api.CHYHttpClientUsage;
 import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.Constants;
-import com.android.incongress.cd.conference.beans.CommentArrayBean;
 import com.android.incongress.cd.conference.beans.ScenicXiuBean;
 import com.android.incongress.cd.conference.fragments.scenic_xiu.ScenicXiuFragment;
-import com.android.incongress.cd.conference.utils.PicUtils;
-import com.android.incongress.cd.conference.widget.ListViewForScrollView;
-import com.android.incongress.cd.conference.widget.NoScrollGridView;
 import com.android.incongress.cd.conference.utils.CommentUtils;
 import com.android.incongress.cd.conference.utils.MyLogger;
+import com.android.incongress.cd.conference.utils.PicUtils;
 import com.android.incongress.cd.conference.utils.StringUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
 import com.android.incongress.cd.conference.utils.transformer.CircleTransform;
+import com.android.incongress.cd.conference.widget.CircleImageView;
+import com.android.incongress.cd.conference.widget.NoScrollGridView;
 import com.bumptech.glide.Glide;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
@@ -49,11 +48,13 @@ import java.util.List;
  */
 public class ScenicXiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private NewsAndActivitysListener mListener;
+    private praiseCommentListener commentListener;
     private List<ScenicXiuBean> mDatas;
     private Context mContext;
 
     private static final int TYPE_NEW = 1;
     private static final int TYPE_NOTIFACATION = 2;
+    private static final int TYPE_VIDEO = 3;
     private static final int TYPE_MAKE_POST = 4;
     private static final int TYPE_COMPANY_ACTIVITY = 5;
     private static final int TYPE_QUESTION = 6;
@@ -66,43 +67,42 @@ public class ScenicXiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     private List<View> mOperationViewList = new ArrayList<>();
 
-    public ScenicXiuAdapter(List<ScenicXiuBean> beans, NewsAndActivitysListener listener, Context context) {
+    public ScenicXiuAdapter(List<ScenicXiuBean> beans, NewsAndActivitysListener listener, praiseCommentListener commentListener, Context context) {
         this.mDatas = beans;
         this.mContext = context;
         this.mListener = listener;
+        this.commentListener = commentListener;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == TYPE_NEW) {
-            //新闻 --> 没有评论和点赞
-            View view = LayoutInflater.from(mContext).inflate(R.layout.item_scenic_xiu_news, parent, false);
-            ViewHolder1News holder = new ViewHolder1News(view);
-            AppApplication.applyFont(mContext,view,"fonts/zd.TTF");
-            return holder;
-        } else if (viewType == TYPE_NOTIFACATION) {
+        /*View view = LayoutInflater.from(mContext).inflate(R.layout.item_scenic_xiu_news, parent, false);
+        return holder;*/
+        if (viewType == TYPE_NOTIFACATION || viewType == TYPE_NEW) {
             //通知 --> 没有评论和点赞
             View view = LayoutInflater.from(mContext).inflate(R.layout.item_scenic_xiu_notifacation, parent, false);
             ViewHolder2Notifacation holder = new ViewHolder2Notifacation(view);
-            AppApplication.applyFont(mContext,view,"fonts/zd.TTF");
+            return holder;
+        } else if (viewType == TYPE_VIDEO) {
+            View view = LayoutInflater.from(mContext).inflate(R.layout.item_scenic_xiu_video, parent, false);
+            ViewHolder3Video holder = new ViewHolder3Video(view);
             return holder;
         } else if (viewType == TYPE_MAKE_POST) {
             //发帖
             View view = LayoutInflater.from(mContext).inflate(R.layout.item_scenic_xiu_make_post, parent, false);
             ViewHolder4MakePost holder = new ViewHolder4MakePost(view);
-            AppApplication.applyFont(mContext,view,"fonts/zd.TTF");
             return holder;
         } else if (viewType == TYPE_COMPANY_ACTIVITY) {
             //企业活动
             View view = LayoutInflater.from(mContext).inflate(R.layout.item_scenic_xiu_company_activity, parent, false);
             ViewHolder5CompanyActivitys holder = new ViewHolder5CompanyActivitys(view);
-            AppApplication.applyFont(mContext,view,"fonts/zd.TTF");
+            AppApplication.applyFont(mContext, view, "fonts/zd.TTF");
             return holder;
         } else if (viewType == TYPE_QUESTION) {
             //提问
             View view = LayoutInflater.from(mContext).inflate(R.layout.item_scenic_xiu_question, parent, false);
             ViewHolder6Question holder = new ViewHolder6Question(view);
-            AppApplication.applyFont(mContext,view,"fonts/zd.TTF");
+            AppApplication.applyFont(mContext, view, "fonts/zd.TTF");
             return holder;
         }
         return null;
@@ -113,44 +113,43 @@ public class ScenicXiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         int viewType = getItemViewType(position);
 
         //新闻类型,不能点赞和评论
+        final ScenicXiuBean bean = mDatas.get(position);
         if (viewType == TYPE_NEW) {
-            final ScenicXiuBean bean = mDatas.get(position);
-            ((ViewHolder1News) holder).tvPublisherName.setText(bean.getAuthor());
-            ((ViewHolder1News) holder).tvPublishTime.setText(bean.getTimeShow());
+            ((ViewHolder2Notifacation) holder).tvPublisherName.setText(bean.getAuthor());
+            ((ViewHolder2Notifacation) holder).tvPublishTime.setText(bean.getTimeShow());
 
             //防止闪烁
             if (StringUtils.isEmpty(bean.getLogoUrl())) {
-                ((ViewHolder1News) holder).ivShow.setVisibility(View.GONE);
-                ((ViewHolder1News) holder).tvIntroduction.setVisibility(View.VISIBLE);
-                ((ViewHolder1News) holder).tvIntroduction.setText(bean.getIntroduction());
+                ((ViewHolder2Notifacation) holder).ivShow.setVisibility(View.GONE);
+                ((ViewHolder2Notifacation) holder).tvIntroduction.setVisibility(View.VISIBLE);
+                ((ViewHolder2Notifacation) holder).tvIntroduction.setText(bean.getIntroduction());
             } else {
-                ((ViewHolder1News) holder).tvIntroduction.setVisibility(View.GONE);
-                ((ViewHolder1News) holder).ivShow.setVisibility(View.VISIBLE);
+                ((ViewHolder2Notifacation) holder).tvIntroduction.setVisibility(View.GONE);
+                ((ViewHolder2Notifacation) holder).ivShow.setVisibility(View.VISIBLE);
                 String url = bean.getLogoUrl();
-                if(url.contains("https:"))
-                    url = url.replaceFirst("s","");
-                PicUtils.loadImageUrl(mContext,url,((ViewHolder1News) holder).ivShow);
+                if (url.contains("https:"))
+                    url = url.replaceFirst("s", "");
+                PicUtils.loadImageUrl(mContext, url, ((ViewHolder2Notifacation) holder).ivShow);
             }
 
-            ((ViewHolder1News) holder).tvContent.setText(bean.getTitle());
-            ((ViewHolder1News) holder).rlNews.setOnClickListener(new View.OnClickListener() {
+            ((ViewHolder2Notifacation) holder).tvContent.setText(bean.getTitle());
+            ((ViewHolder2Notifacation) holder).rlNotify.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     mListener.doWhenNewsOrActivityClicked(TYPE_NEWS, bean.getHtmlUrl(), bean.getTitle());
                 }
             });
-            if(AppApplication.systemLanguage == 1){
-                ((ViewHolder1News) holder).scenicxiu_news.setImageResource(R.drawable.scenicxiu_news);
-                ((ViewHolder1News) holder).news_tips.setImageResource(R.drawable.news_tips);
-            }else{
-                ((ViewHolder1News) holder).scenicxiu_news.setImageResource(R.drawable.scenicxiu_news_en);
-                ((ViewHolder1News) holder).news_tips.setImageResource(R.drawable.news_tips_en);
+            if (AppApplication.systemLanguage == 1) {
+                ((ViewHolder2Notifacation) holder).scenicxiu_news.setImageResource(R.drawable.scenicxiu_news);
+                ((ViewHolder2Notifacation) holder).notifacation_tip.setImageResource(R.drawable.news_tips);
+            } else {
+                ((ViewHolder2Notifacation) holder).scenicxiu_news.setImageResource(R.drawable.scenicxiu_news_en);
+                ((ViewHolder2Notifacation) holder).notifacation_tip.setImageResource(R.drawable.news_tips_en);
             }
         }
 
         //通知类型
         else if (viewType == TYPE_NOTIFACATION) {
-            final ScenicXiuBean bean = mDatas.get(position);
             ((ViewHolder2Notifacation) holder).tvPublisherName.setText(bean.getAuthor());
             ((ViewHolder2Notifacation) holder).tvPublishTime.setText(bean.getTimeShow());
 
@@ -162,9 +161,14 @@ public class ScenicXiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 ((ViewHolder2Notifacation) holder).tvIntroduction.setVisibility(View.GONE);
                 ((ViewHolder2Notifacation) holder).ivShow.setVisibility(View.VISIBLE);
                 String url = bean.getLogoUrl();
-                if(url.contains("https:"))
-                    url = url.replaceFirst("s","");
-                PicUtils.loadImageUrl(mContext,url,((ViewHolder2Notifacation) holder).ivShow);
+                if (url.contains("https:"))
+                    url = url.replaceFirst("s", "");
+                PicUtils.loadImageUrl(mContext, url, ((ViewHolder2Notifacation) holder).ivShow);
+            }
+            if(TextUtils.isEmpty(bean.getAuthorImg())){
+                ((ViewHolder2Notifacation) holder).notify_img.setImageResource(R.drawable.professor_default);
+            }else {
+                PicUtils.loadCircleImage(mContext,bean.getAuthorImg(),((ViewHolder2Notifacation) holder).notify_img);
             }
 
             ((ViewHolder2Notifacation) holder).tvContent.setText(bean.getTitle());
@@ -175,48 +179,63 @@ public class ScenicXiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     mListener.doWhenNewsOrActivityClicked(TYPE_NOTIFY, bean.getHtmlUrl(), bean.getTitle());
                 }
             });
-            if(AppApplication.systemLanguage == 1){
+            if (AppApplication.systemLanguage == 1) {
                 ((ViewHolder2Notifacation) holder).scenicxiu_news.setImageResource(R.drawable.scenicxiu_news);
                 ((ViewHolder2Notifacation) holder).notifacation_tip.setImageResource(R.drawable.notifacation_tip);
-            }else{
+            } else {
                 ((ViewHolder2Notifacation) holder).scenicxiu_news.setImageResource(R.drawable.scenicxiu_news_en);
                 ((ViewHolder2Notifacation) holder).notifacation_tip.setImageResource(R.drawable.notifacation_tip_en);
             }
         }
+        //视频类型
+        else if (viewType == TYPE_VIDEO) {
+            ((ViewHolder3Video) holder).tvPublisherName.setText(bean.getAuthor());
+            ((ViewHolder3Video) holder).tvPublishTime.setText(bean.getTimeShow());
+
+            if (StringUtils.isEmpty(bean.getLogoUrl())) {
+                ((ViewHolder3Video) holder).tvIntroduction.setVisibility(View.VISIBLE);
+                ((ViewHolder3Video) holder).tvIntroduction.setText(bean.getIntroduction());
+            } else {
+                ((ViewHolder3Video) holder).tvIntroduction.setVisibility(View.GONE);
+            }
+
+            ((ViewHolder3Video) holder).tvContent.setText(bean.getTitle());
+            if(!TextUtils.isEmpty(bean.getAuthorImg())){
+                PicUtils.loadCircleImage(mContext,bean.getAuthorImg(),((ViewHolder3Video) holder).notify_img);
+            }else {
+                ((ViewHolder3Video) holder).notify_img.setImageResource(R.drawable.professor_default);
+            }
+        }
         //发帖类型
         else if (viewType == TYPE_MAKE_POST) {
-            final ScenicXiuBean bean = mDatas.get(position);
 
             ((ViewHolder4MakePost) holder).tvPublisherName.setText(bean.getAuthor());
             ((ViewHolder4MakePost) holder).tvPublishTime.setText(bean.getTimeShow());
 
-            ((ViewHolder4MakePost) holder).tvCommentNum.setText(mContext.getString(R.string.xxx_comments, bean.getCommentCount() + ""));
-            ((ViewHolder4MakePost) holder).tvPraiseNum.setText(mContext.getString(R.string.xxx_praise, bean.getLaudCount() + ""));
+            ((ViewHolder4MakePost) holder).tvCommentNum.setText(bean.getCommentCount() + "");
+            ((ViewHolder4MakePost) holder).tvPraiseNum.setText(bean.getLaudCount() + "");
 
             if (bean.getCommentCount() == 0) {
                 ((ViewHolder4MakePost) holder).tvCommentNum.setVisibility(View.GONE);
-            }else {
+            } else {
                 ((ViewHolder4MakePost) holder).tvCommentNum.setVisibility(View.VISIBLE);
             }
 
             if (bean.getLaudCount() == 0) {
                 ((ViewHolder4MakePost) holder).tvPraiseNum.setVisibility(View.GONE);
-            }else {
+            } else {
                 ((ViewHolder4MakePost) holder).tvPraiseNum.setVisibility(View.VISIBLE);
             }
 
             if (!StringUtils.isEmpty(bean.getAuthorImg())) {
-                String url = bean.getAuthorImg();
-                if(url.contains("https:"))
-                    url = url.replaceFirst("s","");
-                Glide.with(mContext).load(url).transform(new CircleTransform(mContext)).placeholder(R.drawable.professor_default).into(((ViewHolder4MakePost) holder).civPublisherIcon);
-            } else {
+                PicUtils.loadCircleImage(mContext,bean.getAuthorImg(),((ViewHolder4MakePost) holder).civPublisherIcon);
+            }else {
                 ((ViewHolder4MakePost) holder).civPublisherIcon.setImageResource(R.drawable.professor_default);
             }
-            ((ViewHolder4MakePost) holder).tvComment.setOnClickListener(new View.OnClickListener() {
+            ((ViewHolder4MakePost) holder).ll_post.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-                    doComment(1, position, bean.getSceneShowId(), "", "", -1, ((ViewHolder4MakePost) holder).llMoreOperationContainer);
+                public void onClick(View view) {
+                    commentListener.doWhenCommentClicked(bean);
                 }
             });
 
@@ -225,7 +244,7 @@ public class ScenicXiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 Drawable praiseDrawable = mContext.getResources().getDrawable(R.drawable.praised);
                 praiseDrawable.setBounds(0, 0, praiseDrawable.getMinimumWidth(), praiseDrawable.getMinimumHeight());
                 ((ViewHolder4MakePost) holder).tvPraiseNum.setCompoundDrawables(praiseDrawable, null, null, null);
-            }else {
+            } else {
                 ((ViewHolder4MakePost) holder).tvPraiseNum.setTextColor(mContext.getResources().getColor(R.color.gray));
                 Drawable praiseDrawable = mContext.getResources().getDrawable(R.drawable.praise);
                 praiseDrawable.setBounds(0, 0, praiseDrawable.getMinimumWidth(), praiseDrawable.getMinimumHeight());
@@ -240,9 +259,9 @@ public class ScenicXiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 e.printStackTrace();
             }
 
-            if(TextUtils.isEmpty(content)) {
+            if (TextUtils.isEmpty(content)) {
                 ((ViewHolder4MakePost) holder).tvContent.setVisibility(View.GONE);
-            }else {
+            } else {
                 ((ViewHolder4MakePost) holder).tvContent.setVisibility(View.VISIBLE);
                 ((ViewHolder4MakePost) holder).tvContent.setText(content);
             }
@@ -260,40 +279,18 @@ public class ScenicXiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                         ScenicXiuPicsViewpagerActivity.startViewPagerActivity(mContext, strPics, position);
                     }
                 });
-            }else {
+                ((ViewHolder4MakePost) holder).gridViewPics.setOnTouchBlankPositionListener(new NoScrollGridView.OnTouchBlankPositionListener() {
+                    @Override
+                    public void onTouchBlank(MotionEvent event) {
+                        commentListener.doWhenCommentClicked(bean);
+                    }
+                });
+            } else {
                 ((ViewHolder4MakePost) holder).gridViewPics.setVisibility(View.GONE);
             }
 
-            ((ViewHolder4MakePost) holder).llMoreOperationContainer.setVisibility(View.GONE);
-            ((ViewHolder4MakePost) holder).ivMoreOperationClick.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    doWhenMoreViewClick(((ViewHolder4MakePost) holder).llMoreOperationContainer);
-                }
-            });
-
-            ((ViewHolder4MakePost) holder).tvPraise.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    doPraise(((ViewHolder4MakePost) holder).tvPraiseNum, position, bean.getSceneShowId(), AppApplication.userId, AppApplication.userType);
-                    ((ViewHolder4MakePost) holder).llMoreOperationContainer.setVisibility(View.GONE);
-                }
-            });
-
-            //评论列表 适配数据
-            ((ViewHolder4MakePost) holder).lvComments.setDividerHeight(0);
-            ((ViewHolder4MakePost) holder).lvComments.setAdapter(new ScenicXiuCommentAdapter(mContext, bean.getCommentArray()));
-
-            ((ViewHolder4MakePost) holder).lvComments.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int commentPosition, long id) {
-                    CommentArrayBean commentBean = bean.getCommentArray().get(commentPosition);
-                    doComment(2, position, bean.getSceneShowId(), commentBean.getUserId() + "", commentBean.getUserName(), commentBean.getCommentId(), ((ViewHolder4MakePost) holder).llMoreOperationContainer);
-                }
-            });
         } else if (viewType == TYPE_COMPANY_ACTIVITY) {
             //企业活动类型
-            final ScenicXiuBean bean = mDatas.get(position);
 
             //设置发布者名字
             ((ViewHolder5CompanyActivitys) holder).tvPublisherName.setText(bean.getAuthor());
@@ -305,12 +302,12 @@ public class ScenicXiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             ((ViewHolder5CompanyActivitys) holder).tvPraiseNum.setText(mContext.getString(R.string.xxx_praise, bean.getLaudCount() + ""));
             if (bean.getCommentCount() == 0) {
                 ((ViewHolder5CompanyActivitys) holder).tvCommentNum.setVisibility(View.GONE);
-            }else {
+            } else {
                 ((ViewHolder5CompanyActivitys) holder).tvCommentNum.setVisibility(View.VISIBLE);
             }
             if (bean.getLaudCount() == 0) {
                 ((ViewHolder5CompanyActivitys) holder).tvPraiseNum.setVisibility(View.GONE);
-            }else {
+            } else {
                 ((ViewHolder5CompanyActivitys) holder).tvPraiseNum.setVisibility(View.VISIBLE);
             }
 
@@ -319,7 +316,7 @@ public class ScenicXiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 Drawable praiseDrawable = mContext.getResources().getDrawable(R.drawable.praised);
                 praiseDrawable.setBounds(0, 0, praiseDrawable.getMinimumWidth(), praiseDrawable.getMinimumHeight());
                 ((ViewHolder5CompanyActivitys) holder).tvPraiseNum.setCompoundDrawables(praiseDrawable, null, null, null);
-            }else {
+            } else {
                 ((ViewHolder5CompanyActivitys) holder).tvPraiseNum.setTextColor(mContext.getResources().getColor(R.color.gray));
                 Drawable praiseDrawable = mContext.getResources().getDrawable(R.drawable.praise);
                 praiseDrawable.setBounds(0, 0, praiseDrawable.getMinimumWidth(), praiseDrawable.getMinimumHeight());
@@ -328,10 +325,9 @@ public class ScenicXiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
             //头像
             if (!StringUtils.isEmpty(bean.getAuthorImg())) {
-                String url = bean.getAuthorImg();
-                if(url.contains("https:"))
-                    url = url.replaceFirst("s","");
-                Glide.with(mContext).load(url).transform(new CircleTransform(mContext)).placeholder(R.drawable.professor_default).into(((ViewHolder5CompanyActivitys) holder).civPublisherIcon);
+                PicUtils.loadCircleImage(mContext,bean.getAuthorImg(),((ViewHolder5CompanyActivitys) holder).civPublisherIcon);
+            }else {
+                ((ViewHolder5CompanyActivitys) holder).civPublisherIcon.setImageResource(R.drawable.professor_default);
             }
 
             //评论操作
@@ -384,12 +380,8 @@ public class ScenicXiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 }
             });
 
-            //评论列表 适配数据
-            ((ViewHolder5CompanyActivitys) holder).lvComments.setDividerHeight(0);
-            ((ViewHolder5CompanyActivitys) holder).lvComments.setAdapter(new ScenicXiuCommentAdapter(mContext, mDatas.get(position).getCommentArray()));
         } else if (viewType == TYPE_QUESTION) {
             //提问只有点赞，没有评论
-            final ScenicXiuBean bean = mDatas.get(position);
             try {
                 String question = URLDecoder.decode(bean.getContent(), Constants.ENCODING_UTF8);
                 question = URLDecoder.decode(question, Constants.ENCODING_UTF8);
@@ -401,8 +393,8 @@ public class ScenicXiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
             if (!StringUtils.isEmpty(bean.getAuthorImg())) {
                 String url = bean.getAuthorImg();
-                if(url.contains("https:"))
-                    url = url.replaceFirst("s","");
+                if (url.contains("https:"))
+                    url = url.replaceFirst("s", "");
                 Glide.with(mContext).load(url).transform(new CircleTransform(mContext)).placeholder(R.drawable.professor_default).into(((ViewHolder6Question) holder).civAuthor);
             }
 
@@ -427,18 +419,17 @@ public class ScenicXiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 Drawable praiseDrawable = mContext.getResources().getDrawable(R.drawable.praised);
                 praiseDrawable.setBounds(0, 0, praiseDrawable.getMinimumWidth(), praiseDrawable.getMinimumHeight());
                 ((ViewHolder6Question) holder).tvPraiseNum.setCompoundDrawables(praiseDrawable, null, null, null);
-            }else {
+            } else {
                 ((ViewHolder6Question) holder).tvPraiseNum.setTextColor(mContext.getResources().getColor(R.color.gray));
                 Drawable praiseDrawable = mContext.getResources().getDrawable(R.drawable.praise);
                 praiseDrawable.setBounds(0, 0, praiseDrawable.getMinimumWidth(), praiseDrawable.getMinimumHeight());
                 ((ViewHolder6Question) holder).tvPraiseNum.setCompoundDrawables(praiseDrawable, null, null, null);
             }
 
-            if(!TextUtils.isEmpty(bean.getAuthorImg())) {
-                String url = bean.getAuthorImg();
-                if(url.contains("https:"))
-                    url = url.replaceFirst("s","");
-                Glide.with(mContext).load(url).transform(new CircleTransform(mContext)).placeholder(R.drawable.professor_default).into(((ViewHolder6Question) holder).civAuthor);
+            if (!TextUtils.isEmpty(bean.getAuthorImg())) {
+                PicUtils.loadCircleImage(mContext,bean.getAuthorImg(),((ViewHolder6Question) holder).civAuthor);
+            }else {
+                ((ViewHolder6Question) holder).civAuthor.setImageResource(R.drawable.professor_default);
             }
             ((ViewHolder6Question) holder).tvAuthor.setText(bean.getAuthor());
 
@@ -470,38 +461,19 @@ public class ScenicXiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         return mDatas.size();
     }
 
-    class ViewHolder1News extends RecyclerView.ViewHolder {
-        RelativeLayout rlNews;
-        TextView tvPublisherName;
-        TextView tvPublishTime;
-        TextView tvContent;
-        TextView tvIntroduction;
-        ImageView ivShow,scenicxiu_news,news_tips;
-
-        public ViewHolder1News(View view) {
-            super(view);
-            rlNews = (RelativeLayout) view.findViewById(R.id.rl_news);
-            ivShow = (ImageView) view.findViewById(R.id.iv_show);
-            scenicxiu_news = (ImageView) view.findViewById(R.id.scenicxiu_news);
-            news_tips = (ImageView) view.findViewById(R.id.news_tips);
-            tvPublisherName = (TextView) view.findViewById(R.id.tv_publisher_name);
-            tvPublishTime = (TextView) view.findViewById(R.id.tv_publish_time);
-            tvContent = (TextView) view.findViewById(R.id.tv_publish_content);
-            tvIntroduction = (TextView) view.findViewById(R.id.tv_publish_introduction);
-        }
-    }
-
+    //通知和新闻共用
     class ViewHolder2Notifacation extends RecyclerView.ViewHolder {
-        RelativeLayout rlNotify;
+        LinearLayout rlNotify;
         TextView tvPublisherName;
         TextView tvPublishTime;
         TextView tvContent;
         TextView tvIntroduction;
-        ImageView ivShow,scenicxiu_news,notifacation_tip;
+        ImageView ivShow, scenicxiu_news, notifacation_tip;
+        CircleImageView notify_img;
 
         public ViewHolder2Notifacation(View view) {
             super(view);
-            rlNotify = (RelativeLayout) view.findViewById(R.id.rl_notify);
+            rlNotify = view.findViewById(R.id.ll_notify);
             ivShow = (ImageView) view.findViewById(R.id.iv_show);
             scenicxiu_news = (ImageView) view.findViewById(R.id.scenicxiu_news);
             notifacation_tip = (ImageView) view.findViewById(R.id.notifacation_tip);
@@ -509,6 +481,31 @@ public class ScenicXiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             tvPublishTime = (TextView) view.findViewById(R.id.tv_publish_time);
             tvContent = (TextView) view.findViewById(R.id.tv_publish_content);
             tvIntroduction = (TextView) view.findViewById(R.id.tv_publish_introduction);
+            notify_img = view.findViewById(R.id.notify_img);
+        }
+    }
+
+    //视频
+    class ViewHolder3Video extends RecyclerView.ViewHolder {
+        LinearLayout rlNotify;
+        TextView tvPublisherName;
+        TextView tvPublishTime;
+        TextView tvContent;
+        TextView tvIntroduction;
+        ImageView scenicxiu_news, notifacation_tip;
+        CircleImageView notify_img;
+
+        public ViewHolder3Video(View view) {
+            super(view);
+            rlNotify = view.findViewById(R.id.ll_notify);
+            scenicxiu_news = (ImageView) view.findViewById(R.id.scenicxiu_news);
+            notifacation_tip = (ImageView) view.findViewById(R.id.notifacation_tip);
+            tvPublisherName = (TextView) view.findViewById(R.id.tv_publisher_name);
+            tvPublishTime = (TextView) view.findViewById(R.id.tv_publish_time);
+            tvContent = (TextView) view.findViewById(R.id.tv_publish_content);
+            tvIntroduction = (TextView) view.findViewById(R.id.tv_publish_introduction);
+            notify_img = view.findViewById(R.id.notify_img);
+
         }
     }
 
@@ -521,10 +518,9 @@ public class ScenicXiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         TextView tvCommentNum;
         TextView tvPraiseNum;
         ImageView ivMoreOperationClick;
-        LinearLayout llMoreOperationContainer;
+        LinearLayout ll_post;
         TextView tvComment;
         TextView tvPraise;
-        ListViewForScrollView lvComments;
 
         public ViewHolder4MakePost(View view) {
             super(view);
@@ -536,8 +532,7 @@ public class ScenicXiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             tvCommentNum = (TextView) view.findViewById(R.id.tv_comment_num);
             tvPraiseNum = (TextView) view.findViewById(R.id.tv_praise_num);
             ivMoreOperationClick = (ImageView) view.findViewById(R.id.iv_operate_more);
-            llMoreOperationContainer = (LinearLayout) view.findViewById(R.id.ll_more_operate_container);
-            lvComments = (ListViewForScrollView) view.findViewById(R.id.lv_commets);
+            ll_post = view.findViewById(R.id.ll_post);
             tvComment = (TextView) view.findViewById(R.id.tv_comment);
             tvPraise = (TextView) view.findViewById(R.id.tv_praise);
         }
@@ -555,7 +550,6 @@ public class ScenicXiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         LinearLayout llMoreOperationContainer;
         TextView tvComment;
         TextView tvPraise;
-        ListViewForScrollView lvComments;
 
         public ViewHolder5CompanyActivitys(View view) {
             super(view);
@@ -568,7 +562,6 @@ public class ScenicXiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             tvPraiseNum = (TextView) view.findViewById(R.id.tv_praise_num);
             ivMoreOperationClick = (ImageView) view.findViewById(R.id.iv_operate_more);
             llMoreOperationContainer = (LinearLayout) view.findViewById(R.id.ll_more_operate_container);
-            lvComments = (ListViewForScrollView) view.findViewById(R.id.lv_commets);
             tvComment = (TextView) view.findViewById(R.id.tv_comment);
             tvPraise = (TextView) view.findViewById(R.id.tv_praise);
         }
@@ -601,21 +594,17 @@ public class ScenicXiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     /**
-     * 清楚所有的评论框
-     */
-    public void clearAllCommentArea() {
-        if (mOperationViewList.size() > 0) {
-            for (int i = 0; i < mOperationViewList.size(); i++) {
-                mOperationViewList.get(i).setVisibility(View.INVISIBLE);
-            }
-        }
-    }
-
-    /**
      * 新闻中心和展商活动的回调
      */
     public interface NewsAndActivitysListener {
         void doWhenNewsOrActivityClicked(int type, String url, String title);
+    }
+
+    /**
+     * 点赞评论的回调
+     */
+    public interface praiseCommentListener {
+        void doWhenCommentClicked(ScenicXiuBean bean);
     }
 
 

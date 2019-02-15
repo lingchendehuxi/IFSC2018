@@ -19,6 +19,8 @@ import com.android.incongress.cd.conference.beans.DZBBBean;
 import com.android.incongress.cd.conference.beans.DZBBDiscussResponseBean;
 import com.android.incongress.cd.conference.beans.IncongressBean;
 import com.android.incongress.cd.conference.beans.VersionBean;
+import com.android.incongress.cd.conference.save.SharePreferenceUtils;
+import com.android.incongress.cd.conference.utils.JSONCatch;
 import com.android.incongress.cd.conference.utils.JSONUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -40,26 +42,31 @@ public class JsonParser {
     }
 
     //解析初始化数据
-    public static IncongressBean parseIncongress(String str) {
+    public static IncongressBean parseIncongress(JSONObject str) {
         IncongressBean bean = new IncongressBean();
         try {
-            JSONObject obj = new JSONObject(str);
-            String client = obj.getString("client");
-            String appVersion = obj.getString("appVersion");
+            String client = JSONCatch.parseString("client",str);
+            String appVersion = JSONCatch.parseString("appVersion",str);
             String clientVersion = "";
             if (client.equals("1")) {
-                clientVersion = obj.getString("clientVersion");
+                clientVersion = JSONCatch.parseString("clientVersion",str);
             }
             String url = "";
             if (client.equals("1")) {
-                url = obj.getString("url");
+                url = JSONCatch.parseString("url",str);
             }
-            String version = obj.getString("version");
-            int newsCount = obj.getInt("newsCount");
-            int reCount = obj.getInt("reCount");
+            if(str.has("currentConId")){
+                SharePreferenceUtils.saveAppInt(Constants.CONID,JSONCatch.parseInt("currentConId",str));
+            }
+            if(str.has("currentFromWhere")){
+                SharePreferenceUtils.saveAppString(Constants.FROMWHERE,JSONCatch.parseString("currentFromWhere",str));
+            }
+            String version = JSONCatch.parseString("version",str);
+            int newsCount = JSONCatch.parseInt("newsCount",str);
+            int reCount = JSONCatch.parseInt("reCount",str);
             List<VersionBean> versions = new ArrayList<VersionBean>();
             Gson gson = new Gson();
-            versions = (List<VersionBean>) gson.fromJson(version, new TypeToken<List<VersionBean>>() {}.getType());
+            versions = gson.fromJson(version, new TypeToken<List<VersionBean>>() {}.getType());
             bean.setClient(client);
             bean.setAppVersion(appVersion);
             bean.setClientVersion(clientVersion);
@@ -99,35 +106,6 @@ public class JsonParser {
         return new String[]{name, enName};
     }
 
-    public static List<DZBBBean> parseDzbb(String json) {
-        List<DZBBBean> dzbbs = new ArrayList<DZBBBean>();
-        int maxCount = JSONUtils.getInt(json, "maxCount", -1);
-        JSONArray array = JSONUtils.getJSONArray(json, "array", null);
-
-        if (array == null) {
-            return null;
-        }
-
-        for (int i = 0; i < array.length(); i++) {
-            try {
-                JSONObject obj = array.getJSONObject(i);
-                int posterId = obj.getInt("posterId");
-                String posterCode = obj.getString("posterCode");
-                String conField = obj.getString("conField");
-                String title = obj.getString("title");
-                String author = obj.getString("author");
-                String posterPicUrl = obj.getString("posterPicUrl");
-                int disCount = obj.getInt("disCount");
-                int isJingxuan = obj.getInt("isJingxuan");
-
-                DZBBBean bean = new DZBBBean(posterId, posterCode, conField, title, author, posterPicUrl, maxCount, disCount,isJingxuan);
-                dzbbs.add(bean);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-        return dzbbs;
-    }
 
     //解析电子壁报中的评论 列表
     public static List<CommunityTopicContentBean> parseDZBBContent(String json) {

@@ -40,17 +40,15 @@ public class MeetingWithSpeakerAdapter extends BaseAdapter {
     private List<Role> mAllRoles;
 
     private SessionAlarmListener mSessionAlarmListener;
-    private MeetingQuestionListener mMeetingQuestionListener;
     private String room;
 
-    public MeetingWithSpeakerAdapter(Context ctx, String room, List<Meeting> meetings, List<List<Speaker>> speakers, OnTagListener listener, SessionAlarmListener sessionListener, MeetingQuestionListener questionListener) {
+    public MeetingWithSpeakerAdapter(Context ctx, String room, List<Meeting> meetings, List<List<Speaker>> speakers, OnTagListener listener, SessionAlarmListener sessionListener) {
         this.mContext = ctx;
         this.room = room;
         this.mMeetings = meetings;
         this.mSpeakers = speakers;
         this.mOnTagListner = listener;
         this.mSessionAlarmListener = sessionListener;
-        this.mMeetingQuestionListener = questionListener;
         this.mAllRoles = ConferenceDbUtils.getAllRoles();
     }
 
@@ -86,10 +84,10 @@ public class MeetingWithSpeakerAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_meeeting_with_flow, null);
             holder.tvMeetingTime = (TextView) convertView.findViewById(R.id.tv_session_time);
             holder.tvMeetingName = (TextView) convertView.findViewById(R.id.tv_session_name);
-            holder.tvAsk = (TextView) convertView.findViewById(R.id.tv_ask);
-            holder.tvAsk.setVisibility(Constants.SCHEDULE_ASK?View.VISIBLE:View.GONE);
             holder.tflNames = (TagFlowLayout) convertView.findViewById(R.id.tfl_names);
             holder.ivAlarm = (ImageView) convertView.findViewById(R.id.iv_alarm);
+            holder.meet_alarm = convertView.findViewById(R.id.meet_alarm);
+            holder.meet_order = convertView.findViewById(R.id.meet_order);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -104,7 +102,7 @@ public class MeetingWithSpeakerAdapter extends BaseAdapter {
         } else {
             sp = new SpannableString(bean.getTopicEn());
         }
-       //sp.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), 0, 4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //粗体
+        //sp.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), 0, 4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //粗体
         holder.tvMeetingName.setText(sp);
         holder.tvMeetingTime.setText(bean.getStartTime());
         //该会议下的所有的speaker
@@ -129,27 +127,17 @@ public class MeetingWithSpeakerAdapter extends BaseAdapter {
                 }
             });
 
-            if(speakers == null || speakers.size() == 0) {
-                holder.tvAsk.setVisibility(View.GONE);
-            }else {
-                holder.tvAsk.setVisibility(View.VISIBLE);
-                holder.tvAsk.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(speakers != null && speakers.size() > 0) {
-                            Speaker speaker = speakers.get(0);
-                            String topic = "";
-                            if(AppApplication.systemLanguage== 1)
-                                topic = bean.getTopic();
-                            else
-                                topic = bean.getTopicEn();
-                            mMeetingQuestionListener.doWhenQuestionClick(speaker.getSpeakerId(), speaker.getSpeakerName(), bean.getMeetingId(), topic);
-                        }
-                    }
-                });
-            }
         }
-
+        if(mMeetings.get(position).getAttention() == 1){
+            holder.meet_alarm.setVisibility(View.VISIBLE);
+        }else {
+            holder.meet_alarm.setVisibility(View.INVISIBLE);
+        }
+        if(mMeetings.get(position).isOrder()){
+            holder.meet_order.setVisibility(View.VISIBLE);
+        }else {
+            holder.meet_order.setVisibility(View.INVISIBLE);
+        }
         if (mIsAlarmMode) {
             holder.ivAlarm.setVisibility(View.VISIBLE);
         } else {
@@ -233,10 +221,9 @@ public class MeetingWithSpeakerAdapter extends BaseAdapter {
     }
 
     class ViewHolder {
-        ImageView ivAlarm;
+        ImageView ivAlarm,meet_alarm,meet_order;
         TextView tvMeetingName,tvMeetingTime;
         TagFlowLayout tflNames;
-        TextView tvAsk;
     }
 
     public interface OnTagListener {
@@ -247,9 +234,6 @@ public class MeetingWithSpeakerAdapter extends BaseAdapter {
         void doWhenMeetingAlarmClicked(boolean sessionAlarmToggle);
     }
 
-    public interface MeetingQuestionListener {
-        void doWhenQuestionClick(int speakerId, String speakerName, int meetingId, String meetingName);
-    }
 
     /**
      * 根据roleId获取身份信息

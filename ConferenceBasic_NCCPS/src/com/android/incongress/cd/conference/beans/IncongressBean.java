@@ -11,6 +11,8 @@ public class IncongressBean {
 	private int newsCount;// 表示新闻的总数据量
 	private int reCount;// 展商活动的总数据量
 	private List<VersionBean> versionList;// 数据包下载列表
+	private int conId;
+	private String currentFromWhere;
 
 	public String getClient() {
 		return client;
@@ -44,7 +46,23 @@ public class IncongressBean {
 		this.url = url;
 	}
 
-	public int getNewsCount() {
+    public int getConId() {
+        return conId;
+    }
+
+    public void setConId(int conId) {
+        this.conId = conId;
+    }
+
+    public String getCurrentFromWhere() {
+        return currentFromWhere;
+    }
+
+    public void setCurrentFromWhere(String currentFromWhere) {
+        this.currentFromWhere = currentFromWhere;
+    }
+
+    public int getNewsCount() {
 		return newsCount;
 	}
 

@@ -61,7 +61,7 @@
             android:id="@+id/bt_register"
             android:layout_width="match_parent"
             android:layout_marginTop="24dp"
-            android:background="@drawable/bg_button"
+            android:background="@drawable/bg_button_ed"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_large"
             android:layout_height="46dp" />

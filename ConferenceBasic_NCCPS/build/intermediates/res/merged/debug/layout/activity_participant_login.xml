@@ -90,7 +90,7 @@
 
         <Button
             android:id="@+id/login"
-            android:background="@drawable/bg_button"
+            android:background="@drawable/bg_button_ed"
             android:text="@string/login"
             android:textAllCaps="false"
             android:layout_width="match_parent"

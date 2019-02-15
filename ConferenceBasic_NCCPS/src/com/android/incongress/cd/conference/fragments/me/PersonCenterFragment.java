@@ -1,29 +1,38 @@
 package com.android.incongress.cd.conference.fragments.me;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.incongress.cd.conference.CollegeActivity;
+import com.android.incongress.cd.conference.HomeActivity;
 import com.android.incongress.cd.conference.LoginActivity;
+import com.android.incongress.cd.conference.LoginForUpdateInfoActivity;
+import com.android.incongress.cd.conference.adapters.MyQuestionsSquarAdapter;
 import com.android.incongress.cd.conference.api.CHYHttpClientUsage;
 import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.BaseFragment;
 import com.android.incongress.cd.conference.base.Constants;
-import com.android.incongress.cd.conference.beans.MeGridListBean;
+import com.android.incongress.cd.conference.fragments.question.MyQuestionSquarFragment;
 import com.android.incongress.cd.conference.model.ConferenceDbUtils;
 import com.android.incongress.cd.conference.model.Note;
 import com.android.incongress.cd.conference.save.ParseUser;
@@ -33,6 +42,8 @@ import com.android.incongress.cd.conference.utils.MyLogger;
 import com.android.incongress.cd.conference.utils.PicUtils;
 import com.android.incongress.cd.conference.utils.ShareUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
+import com.android.incongress.cd.conference.utils.mark_star.AppUtils;
+import com.android.incongress.cd.conference.utils.mark_star.GoToScoreUtils;
 import com.android.incongress.cd.conference.utils.transformer.CircleTransform;
 import com.android.incongress.cd.conference.widget.CircleImageView;
 import com.android.incongress.cd.conference.widget.IconChoosePopupWindow;
@@ -41,6 +52,7 @@ import com.android.incongress.cd.conference.widget.StatusBarUtil;
 import com.bumptech.glide.Glide;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
+import com.pedaily.yc.ycdialoglib.selectDialog.CustomSelectDialog;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
@@ -55,6 +67,8 @@ import java.util.List;
 import cn.finalteam.galleryfinal.FunctionConfig;
 import cn.finalteam.galleryfinal.GalleryFinal;
 import cn.finalteam.galleryfinal.model.PhotoInfo;
+import q.rorbin.badgeview.Badge;
+import q.rorbin.badgeview.QBadgeView;
 
 /**
  * Created by Jacky on 2016/1/28.
@@ -64,23 +78,23 @@ import cn.finalteam.galleryfinal.model.PhotoInfo;
 public class PersonCenterFragment extends BaseFragment implements View.OnClickListener, GalleryFinal.OnHanlderResultCallback {
 
     public static final int REQUEST_LOGIN = 0x0001;
-    private RelativeLayout mMeetingAlertPanel, mContackPanel, mSharePanel, mHelpPanel, mRlMyField, mRlMyKeshi, mRlSettingsCache;
-    private TextView mTvCacheSize;
+    private RelativeLayout mMeetingAlertPanel, mContackPanel, mSharePanel, mHelpPanel, mRlMyField, mRlMyKeshi, mRlSettingsCache,mSettingsMark,mSettings;
+    private TextView tv_modify_info;
     private TextView username, welcomeInfo;
     private int mNoteCount, mTieZiCount;
     private CircleImageView mCivHeadIcon;
     private NoScrollGridView mGridView;
-    private ArrayList<MeGridListBean> meGridListBeans;
     private boolean currentState = false;
     //中间图片和文字
     private Drawable[] imgList;
     private String[] strList;
+    //拖动气泡
+    private List<Badge> badges;
 
     private static final int HANDLE_TIEZI_COUNT = 0x0001;
     private static final int HANDLE_NOTE_COUNT = 0x0002;
-
-    //缓存文件
-    private String mCacheFilePath = "";
+    //参数为了在切换到activity返回后，fragment重新设置导航栏字体颜色
+    private boolean isBackView = true;
 
     /**
      * 页面是否处于打开状态
@@ -89,13 +103,8 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
 
     private final int REQUEST_CODE_CAMERA = 1000;
     private final int REQUEST_CODE_GALLERY = 1001;
-    private final int REQUEST_IDENTIFY_CODE = 1002;
 
     //头像上传相关
-    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
-    private static final int ALBUM_IMAGE_ACTIVITY_REQUEST_CODE = 200;
-    public static final int MEDIA_TYPE_IMAGE = 1;
-    public static final int MEDIA_TYPE_VIDEO = 2;
     private static final int UPLOAD_IMGURL_SUCCESS = 3;
     public static final String EXTRA_FROM_ME = "fromMe";
 
@@ -147,10 +156,17 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
                 SettingContactActionFragment contact = new SettingContactActionFragment();
                 action(contact, R.string.settings_contact, false, false, false);
                 break;
+            case R.id.setting:
+                SettingFragment settingFragment = new SettingFragment();
+                action(settingFragment, R.string.system_setting, false, false, false);
+                break;
             case R.id.settings_share_panel:
                 ShareUtils.shareTextWithUrl(getActivity(), Constants.APPNAME, getString(R.string.settings_share_wxtitle), Constants.APP_DOWNLOAD_SITE, null);
                 /*SettingsShare share = new SettingsShare();
                 action(share, R.string.settings_share_title, false, false, false);*/
+                break;
+            case R.id.settings_mark:
+                goToStar(getActivity());
                 break;
             case R.id.settings_help_panel:
                 /*SettingsHelper help = new SettingsHelper ();
@@ -158,33 +174,28 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
                 TextView mText = (TextView) view.findViewById(R.id.hysq_jiangliangju_titlebar_send);
                 help.setView(mText);
                 action(help, R.string.settings_help_title, view, false, false, false);*/
-                String url = "http://weixin.incongress.cn/xhy/xhyHtml5/html/feedback.html";
-                url = url + "?userId=" + AppApplication.userId + "&project=" + Constants.PROJECT_NAME + "&lan=" + AppApplication.getSystemLanuageCode();
-
-                CollegeActivity.startCitCollegeActivity(getContext(), getActivity().getResources().getString(R.string.settings_help_title), url);
+                CollegeActivity.startCitCollegeActivity(getContext(), getActivity().getResources().getString(R.string.settings_help_title), Constants.FEEDBACK_URI);
+                break;
+            case R.id.tv_modify_info:
+                CollegeActivity.startCitCollegeActivity(getContext(), getActivity().getResources().getString(R.string.settings_modify_info_title), Constants.MODEFIY_INFO_URI+"typeApp=4");
+                /*ModifyInfoFragment fragment = new ModifyInfoFragment();
+                action(fragment, R.string.my_info, false, false, false);*/
                 break;
             /*case R.id.bt_login:
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 getActivity().startActivityForResult(intent, REQUEST_LOGIN);
                 break;*/
             /*case R.id.bt_login_out:
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle(R.string.dialog_tips).setMessage(R.string.login_out_tips).setPositiveButton(R.string.positive_button, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        loginOut();
-                    }
-                }).setNegativeButton(R.string.negative_button, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                }).setCancelable(false).show();
+
                 break;*/
             case R.id.civ_me:
+            case R.id.tv_name:
                 if (AppApplication.isUserLogIn()) {
-                    initPopupWindow();
-                    //mIconChoosePopupWindow.showAtLocation(mLlPersonInfo, Gravity.BOTTOM, 0, 0);
-                    lightOff();
+                    /*initPopupWindow();
+                    mIconChoosePopupWindow.showAtLocation(mCivHeadIcon, Gravity.BOTTOM, 0, 0);
+                    lightOff();*/
+                    Intent intent = new Intent(getActivity(),LoginForUpdateInfoActivity.class);
+                    getActivity().startActivity(intent);
                 } else {
                     LoginActivity.startLoginActivity(getActivity(), LoginActivity.TYPE_NORMAL, "", "", "", "");
 //                    ChooseIdentityActivity.startChooseIdentityActivity(getActivity());
@@ -202,18 +213,6 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
                 Intent keshiIntent = new Intent(new Intent(getActivity(), ChooseKeShiActivity.class));
                 keshiIntent.putExtra(EXTRA_FROM_ME, true);
                 startActivity(keshiIntent);
-            case R.id.settings_cache:
-                showDialog("确定清理缓存吗？", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        CacheUtils.deleteFolderFile(mCacheFilePath,true);
-                        mTvCacheSize.setText("0.0");
-                    }
-                }, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                    }
-                }, false);
                 break;*/
             default:
                 break;
@@ -223,12 +222,13 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
     private void initEvents() {
         mMeetingAlertPanel.setOnClickListener(this);
         mContackPanel.setOnClickListener(this);
+        mSettingsMark.setOnClickListener(this);
         mSharePanel.setOnClickListener(this);
         mHelpPanel.setOnClickListener(this);
         mCivHeadIcon.setOnClickListener(this);
-        /*mRlMyField.setOnClickListener(this);
-        mRlMyKeshi.setOnClickListener(this);
-        mRlSettingsCache.setOnClickListener(this);*/
+        mSettings.setOnClickListener(this);
+        tv_modify_info.setOnClickListener(this);
+        username.setOnClickListener(this);
         getNoteCount();
     }
 
@@ -244,36 +244,36 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        StatusBarUtil.setStatusBarDarkTheme(getActivity(),false);
+        StatusBarUtil.setStatusBarDarkTheme(getActivity(), false);
         View view = inflater.inflate(R.layout.fragment_me, container, false);
 
         // mRlMyField = (RelativeLayout) view.findViewById(R.id.rl_my_field);
         //mRlMyKeshi = (RelativeLayout) view.findViewById(R.id.rl_my_keshi);
-        mCivHeadIcon =  view.findViewById(R.id.civ_me);
-        mMeetingAlertPanel =  view.findViewById(R.id.mycenter_warmning_panel);
-        mContackPanel = (RelativeLayout) view.findViewById(R.id.settings_contact_panel);
-        mSharePanel = (RelativeLayout) view.findViewById(R.id.settings_share_panel);
-        mHelpPanel = (RelativeLayout) view.findViewById(R.id.settings_help_panel);
-        username = (TextView) view.findViewById(R.id.tv_name);
-        welcomeInfo = (TextView) view.findViewById(R.id.tv_welcome);
+        mCivHeadIcon = view.findViewById(R.id.civ_me);
+        mMeetingAlertPanel = view.findViewById(R.id.mycenter_warmning_panel);
+        mContackPanel = view.findViewById(R.id.settings_contact_panel);
+        mSettingsMark = view.findViewById(R.id.settings_mark);
+        mSharePanel = view.findViewById(R.id.settings_share_panel);
+        mHelpPanel = view.findViewById(R.id.settings_help_panel);
+        mSettings = view.findViewById(R.id.setting);
+        username = view.findViewById(R.id.tv_name);
+        welcomeInfo = view.findViewById(R.id.tv_welcome);
         mGridView = view.findViewById(R.id.gv_list);
-        meGridListBeans = new ArrayList<>();
-        imgList = new Drawable[]{getResources().getDrawable(R.drawable.remind),getResources().getDrawable(R.drawable.quiz),getResources().getDrawable(R.drawable.post),getResources().getDrawable(R.drawable.note)};
-        strList = new String[]{getString(R.string.me_remind),getString(R.string.me_quiz),getString(R.string.me_post),getString(R.string.me_note)};
-        for(int i = 0;i<4;i++){
-            MeGridListBean bean = new MeGridListBean();
-            bean.setTestImg("");
-            bean.setTestTiltle("测试"+i);
-            meGridListBeans.add(bean);
-        }
-        mGridView.setAdapter(new GridListAdapter(getActivity(),meGridListBeans));
+        tv_modify_info = view.findViewById(R.id.tv_modify_info);
+        imgList = new Drawable[]{getResources().getDrawable(R.drawable.remind), getResources().getDrawable(R.drawable.quiz), getResources().getDrawable(R.drawable.post), getResources().getDrawable(R.drawable.note)};
+        strList = new String[]{getString(R.string.me_remind), getString(R.string.me_quiz), getString(R.string.me_post), getString(R.string.me_note)};
+        mGridView.setAdapter(new GridListAdapter(getActivity()));
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                switch (i){
+                switch (i) {
                     case 0:
+                        MindBookFragment fragment = new MindBookFragment();
+                        action(fragment,null);
                         break;
                     case 1:
+                        MyQuestionSquarFragment squarFragment = new MyQuestionSquarFragment();
+                        action(squarFragment, R.string.me_quiz, false, false, false);
                         break;
                     case 2:
                         if (AppApplication.isUserLogIn()) {
@@ -291,55 +291,14 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
             }
         });
 
-        String cacheSize = "";
-        mCacheFilePath = AppApplication.instance().getSDPath() + Constants.DOWNLOADDIR;
-
-        try {
-            cacheSize = CacheUtils.getCacheSize(new File(mCacheFilePath));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-//        mTvCacheSize.setText(cacheSize);
-
         initEvents();
         refreshInfo();
         return view;
     }
 
-
-    /**
-     * 退出登录
-     */
-    private void loginOut() {
-        refreshInfo();
-        ParseUser.clearUserInfo(getActivity());
-        /*AppApplication.setSPStringValue(Constants.USER_NAME, StringUtils.EMPTY_STR);
-        AppApplication.setSPIntegerValue(Constants.USER_ID, -1);
-        AppApplication.setSPIntegerValue(Constants.USER_TYPE, Constants.TYPE_USER_VISITOR);
-        AppApplication.setSPStringValue(Constants.USER_IMG, StringUtils.EMPTY_STR);*/
-
-        /*AppApplication.setSPBooleanValue(Constants.USER_IS_LOGIN, false);
-        AppApplication.userType = Constants.TYPE_USER_VISITOR;
-        AppApplication.userId = -1;
-        AppApplication.username = "";*/
-
-        /*Intent loginIntent = new Intent();
-        loginIntent.setAction(LoginActivity.LOGOUT_ACTION);
-        getActivity().sendBroadcast(loginIntent);*/
-
-//        queryCount();
-
-//        Intent intent = new Intent(getActivity(), LoginActivity.class);
-//        intent.putExtra("fromSplash", true);
-//        startActivity(intent);
-//        getActivity().finish();
-    }
-
-
     private void queryCount() {
         //查询我的发帖
-        CHYHttpClientUsage.getInstanse().doGetSceneShowByUser(Constants.conId + "", "-1", AppApplication.userId + "", AppApplication.userType + "", new JsonHttpResponseHandler() {
+        CHYHttpClientUsage.getInstanse().doGetSceneShowByUser(Constants.getConId() + "", "-1", AppApplication.userId + "", AppApplication.userType + "", new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
@@ -464,7 +423,9 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
         super.onResume();
         mIsOpen = true;
         queryCount();
-
+        if(!isBackView){
+            StatusBarUtil.setStatusBarDarkTheme(getActivity(), false);
+        }
         MobclickAgent.onPageStart(Constants.FRAGMENT_PERSONCENTER);
     }
 
@@ -478,73 +439,105 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
 
     //刷新用户信息
     public void refreshInfo() {
-        if (SharePreferenceUtils.getUserBoolean(Constants.USER_IS_LOGIN, false)) {
+        if (SharePreferenceUtils.getUserBoolean(Constants.USER_IS_LOGIN, false)&&username!=null&&welcomeInfo!=null&&mCivHeadIcon!=null) {
             username.setText(SharePreferenceUtils.getUser(Constants.USER_NAME));
             welcomeInfo.setText(getString(R.string.mymeeting_welcome_sb, SharePreferenceUtils.getUser(Constants.USER_NAME)));
-            Glide.with(getActivity()).load(SharePreferenceUtils.getUser(Constants.USER_IMG)).placeholder(R.drawable.professor_default).transform(new CircleTransform(getActivity())).into(mCivHeadIcon);
-        }else {
-            mCivHeadIcon.setImageResource(R.drawable.professor_default);
+            PicUtils.loadCircleImage(getActivity(),SharePreferenceUtils.getUser(Constants.USER_IMG),mCivHeadIcon);
         }
     }
 
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if(!hidden){
-            StatusBarUtil.setStatusBarDarkTheme(getActivity(),false);
+        isBackView = hidden;
+        if (!hidden) {
+            StatusBarUtil.setStatusBarDarkTheme(getActivity(), false);
         }
     }
-    class GridListAdapter extends BaseAdapter{
-        ArrayList<MeGridListBean> listBeans;
+
+    class GridListAdapter extends BaseAdapter {
         public Context context;
         public LayoutInflater layoutInflater;
-        public GridListAdapter (Context context,ArrayList<MeGridListBean> listBeans){
+
+        public GridListAdapter(Context context) {
             this.context = context;
-            this.listBeans = listBeans;
             layoutInflater = LayoutInflater.from(context);
+            badges = new ArrayList<>();
         }
+
         @Override
         public int getCount() {
-            return listBeans.size();
+            return strList.length;
         }
 
         @Override
         public Object getItem(int position) {
-            return listBeans.get(position);
+            return null;
         }
 
         @Override
         public long getItemId(int position) {
-            return position;
+            return 0;
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            View view;
-            MyHold myHold;
-            if(convertView == null){
-                view = layoutInflater.inflate(R.layout.fragment_me_gv_list,null);
-                myHold = new MyHold();
-                myHold.iv_gv_list = view.findViewById(R.id.iv_gv_list);
-                myHold.tv_gv_list = view.findViewById(R.id.tv_gv_list);
-                myHold.remind_red = view.findViewById(R.id.remind_red);
-                view.setTag(myHold);
-            }else {
-                view = convertView;
-                myHold = (MyHold) view.getTag();
+            convertView = layoutInflater.inflate(R.layout.fragment_me_gv_list, null);
+            ImageView iv_gv_list = convertView.findViewById(R.id.iv_gv_list);
+            TextView tv_gv_list = convertView.findViewById(R.id.tv_gv_list);
+            TextView remind_red = convertView.findViewById(R.id.remind_red);
+            iv_gv_list.setImageDrawable(imgList[position]);
+            tv_gv_list.setText(strList[position]);
+            if (position == 0) {
+                badges.add(new QBadgeView(context).bindTarget(remind_red).setBadgeGravity(Gravity.TOP | Gravity.END).setBadgeTextSize(9, true).setBadgePadding(-0.00005f,true).stroke(getResources().getColor(R.color.remind_cycle_color),2,true).setBadgeBackgroundColor(getResources().getColor(R.color.remind_cycle_color)));//.setBadgeNumber()
             }
-            myHold.iv_gv_list.setImageDrawable(imgList[position]);
-            myHold.tv_gv_list.setText(strList[position]);
-            if(position == 0){
-                myHold.remind_red.setVisibility(View.VISIBLE);
+            for (Badge badge : badges) {
+                badge.setOnDragStateChangedListener(new Badge.OnDragStateChangedListener() {
+                    @Override
+                    public void onDragStateChanged(int dragState, Badge badge, View targetView) {
+                        if(dragState == STATE_SUCCEED){
+                            ToastUtils.showShorToast("消除成功");
+                        }
+                    }
+                });
             }
-            //PicUtils.loadImageUrl(context,listBeans.get(position).testImg,myHold.iv_gv_list);
-            //myHold.tv_gv_list.setText(listBeans.get(position).getTestTiltle());
-            return view;
+            return convertView;
         }
-        class MyHold {
-            ImageView iv_gv_list;
-            TextView tv_gv_list,remind_red;
+    }
+    //对app进行评分
+    /**
+     * 跳转应用市场
+     */
+    public void goToStar(final Activity context) {
+        ArrayList<String> installAppMarkets = GoToScoreUtils.getInstallAppMarkets(context);
+        final ArrayList<String> filterInstallMarkets = GoToScoreUtils.getFilterInstallMarkets(context, installAppMarkets);
+        final ArrayList<String> markets = new ArrayList<>();
+        if (filterInstallMarkets.size() > 0) {
+            //过滤
+            for (int a = 0; a < filterInstallMarkets.size(); a++) {
+                Log.e("应用市场++++", filterInstallMarkets.get(a));
+                String pkg = filterInstallMarkets.get(a);
+                //if (installAppMarkets.contains(pkg)&&!"com.tencent.android.qqdownloader".equals(pkg)) {
+                    markets.add(pkg);
+                //}
+            }
+            List<String> names = new ArrayList<>();
+            for (int b = 0; b < markets.size(); b++) {
+                AppUtils.AppInfo appInfo = AppUtils.getAppInfo(markets.get(b));
+                String name = appInfo.getName();
+                names.add(name);
+            }
+            GoToScoreUtils.showDialog(context, new CustomSelectDialog.SelectDialogListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    GoToScoreUtils.launchAppDetail(context, Constants.PACKAGE_NAME, markets.get(position));
+                }
+            }, names);
+        } else {
+            //豌豆荚评分链接
+            Uri uri = Uri.parse(Constants.MARKAPP_URI);
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
         }
     }
 

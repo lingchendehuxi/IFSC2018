@@ -11,6 +11,15 @@ public class Map extends DataSupport {
     private int conferencesId;// 参会议编号
     private String mapRemark;// 地图楼层 显示名字
     private String mapUrl;// 图片名称 去查找资源
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getConferencesmapId() {
         return conferencesmapId;

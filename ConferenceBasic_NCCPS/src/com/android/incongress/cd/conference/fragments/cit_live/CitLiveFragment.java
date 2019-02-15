@@ -21,6 +21,7 @@ import android.widget.RelativeLayout;
 import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.widget.IncongressTextView;
+import com.android.incongress.cd.conference.widget.StatusBarUtil;
 import com.android.incongress.cd.conference.widget.VideoEnabledWebChromeClient;
 import com.android.incongress.cd.conference.widget.VideoEnabledWebView;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
@@ -182,7 +183,7 @@ public class CitLiveFragment extends FragmentActivity {
 		}else {
 			lan = "en";
 		}
-		String url = getString(Constants.get_CIT_LIVE_URL(),  Constants.conId, lan, AppApplication.userId, AppApplication.userType);
+		String url = getString(Constants.get_CIT_LIVE_URL(),  Constants.getConId(), lan, AppApplication.userId, AppApplication.userType);
 
 		IsNetWorkOpen = AppApplication.instance().NetWorkIsOpen();
 		
@@ -239,4 +240,5 @@ public class CitLiveFragment extends FragmentActivity {
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
 	}
+
 }

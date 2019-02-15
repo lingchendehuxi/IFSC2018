@@ -191,6 +191,19 @@ public class ConferenceDbUtils {
         }
         return bean;
     }
+    /**
+     * 根据会议id返回一个优先级
+     * @param classId
+     * @return
+     */
+    public static int getClassOrder(String classId) {
+        int priority = 0;
+        List<Class> mList = DataSupport.where("classesId = ?", classId + "").find(Class.class);
+        if(mList!= null && mList.size() >0) {
+            priority = mList.get(0).getLevel();
+        }
+        return priority;
+    }
 
     /**
      * 获取所有的会议室
@@ -438,9 +451,25 @@ public class ConferenceDbUtils {
 
         return sessions;
     }
+    /**
+     * 根据关键字获取session
+     * @return
+     */
+    public static List<Session> getSessionBySearch(String searchString) {
+        List<Session> sessions = null;
+
+        try {
+            sessions = DataSupport.where("sessionName like ?", "%" + searchString + "%").find(Session.class);
+        }catch (Exception e) {
+            e.printStackTrace();
+            sessions = new ArrayList<>();
+        }
+
+        return sessions;
+    }
 
     public static List<Meeting> getMeetingBySessions(List<Session> sessions) {
-       List<Meeting> meetings = new ArrayList<>();
+        List<Meeting> meetings = new ArrayList<>();
         if(sessions.size()>0) {
             for(int i=0; i<sessions.size(); i++) {
                 Session bean = sessions.get(i);
@@ -663,6 +692,21 @@ public class ConferenceDbUtils {
 
         return meetings;
     }
+    /**
+     * 根据关注获取所有的meeting
+     * @return
+     */
+    public static List<Meeting> getMeetingsByAttention( String isAttention) {
+        List<Meeting> meetings = null;
+        try {
+            meetings = DataSupport.where(" attention = ?", isAttention).find(Meeting.class);
+        }catch (Exception e) {
+            e.printStackTrace();
+            meetings = new ArrayList<>();
+        }
+
+        return meetings;
+    }
 
     /**
      * 通过时间和关注与否获取的session列表
@@ -674,6 +718,22 @@ public class ConferenceDbUtils {
         List<Session> sessions = null;
         try {
             sessions = DataSupport.where("sessionday = ? and attention = ?", time, isAttention).find(Session.class);
+        }catch (Exception e) {
+            e.printStackTrace();
+            sessions = new ArrayList<>();
+        }
+
+        return sessions;
+    }
+    /**
+     * 通过关注与否获取的session列表
+     * @param isAttention
+     * @return
+     */
+    public static List<Session> getSessionByAttention(String isAttention) {
+        List<Session> sessions = null;
+        try {
+            sessions = DataSupport.where("attention = ?", isAttention).find(Session.class);
         }catch (Exception e) {
             e.printStackTrace();
             sessions = new ArrayList<>();
@@ -756,7 +816,14 @@ public class ConferenceDbUtils {
      * @return
      */
     public static List<Alert> getAllAlert() {
-        return DataSupport.findAll(Alert.class);
+        List<Alert> alertList;
+        try {
+            alertList = DataSupport.findAll(Alert.class);
+        }catch (Exception e) {
+            e.printStackTrace();
+            alertList = new ArrayList<>();
+        }
+        return alertList;
     }
     /**
      * 删除所有和session有关的meeting的闹铃 alert

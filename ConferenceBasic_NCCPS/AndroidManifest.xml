@@ -101,9 +101,9 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name="com.android.incongress.cd.conference.HomeActivity"
+            android:configChanges="orientation|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:configChanges="orientation|screenSize"
             android:theme="@style/Theme.AppCompat.Light"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
@@ -128,6 +128,12 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name="com.android.incongress.cd.conference.LoginActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/splashTheme"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+        <activity
+            android:name="com.android.incongress.cd.conference.WxForLoginActivity"
+            android:launchMode="singleTop"
             android:theme="@style/splashTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
@@ -147,17 +153,17 @@
                 <action android:name="android.intent.action.LOCALE_CHANGED" />
             </intent-filter>
         </receiver>
-        <receiver android:name="com.android.incongress.cd.conference.utils.AlarmReceiver"
+        <receiver
+            android:name="com.android.incongress.cd.conference.utils.AlarmReceiver"
             android:process=":remote">
             <intent-filter>
                 <action android:name="com.android.incongress.cd.conference.alarm_start" />
                 <action android:name="alarm_killed" />
                 <action android:name="cancel_snooze" />
             </intent-filter>
-        </receiver >
+        </receiver>
 
-        <service android:name="com.android.incongress.cd.conference.utils.AlarmKlaxon">
-        </service>
+        <service android:name="com.android.incongress.cd.conference.utils.AlarmKlaxon"></service>
         <service android:name="com.android.incongress.cd.conference.services.AdService" />
 
         <activity android:name="com.android.incongress.cd.conference.WebViewContainerActivity" />
@@ -176,7 +182,7 @@
         <service
             android:name="cn.jpush.android.service.PushService"
             android:enabled="true"
-            android:exported="false" >
+            android:exported="false">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.REGISTER" />
                 <action android:name="cn.jpush.android.intent.REPORT" />
@@ -188,10 +194,9 @@
 
         <!-- since 3.0.9 Required SDK 核心功能-->
         <provider
-            android:authorities="${applicationId}.DataProvider"
             android:name="cn.jpush.android.service.DataProvider"
-            android:exported="true"
-            />
+            android:authorities="${applicationId}.DataProvider"
+            android:exported="true" />
 
         <!-- since 1.8.0 option 可选项。用于同一设备中不同应用的 JPush 服务相互拉起的功能。 -->
         <!-- 若不启用该功能可删除该组件，或把 enabled 设置成 false ；拉起服务被关闭，App 不会通过拉起服务拉起其他的 App，也不会被其他 App 拉起。 -->
@@ -199,26 +204,25 @@
             android:name="cn.jpush.android.service.DaemonService"
             android:enabled="true"
             android:exported="true">
-            <intent-filter >
+            <intent-filter>
                 <action android:name="cn.jpush.android.intent.DaemonService" />
-                <category android:name="${applicationId}"/>
+                <category android:name="${applicationId}" />
             </intent-filter>
         </service>
 
         <!-- since 3.1.0 Required SDK 核心功能-->
         <provider
-            android:authorities="${applicationId}.DownloadProvider"
             android:name="cn.jpush.android.service.DownloadProvider"
-            android:exported="true"
-            />
+            android:authorities="${applicationId}.DownloadProvider"
+            android:exported="true" />
 
         <!-- Required SDK 核心功能-->
         <receiver
             android:name="cn.jpush.android.service.PushReceiver"
-            android:enabled="true" >
+            android:enabled="true">
             <intent-filter android:priority="1000">
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />
-                <category android:name="${applicationId}"/>
+                <category android:name="${applicationId}" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.USER_PRESENT" />
@@ -228,6 +232,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_ADDED" />
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
                 <data android:scheme="package" />
             </intent-filter>
         </receiver>
@@ -236,10 +241,11 @@
         <activity
             android:name="cn.jpush.android.ui.PushActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:theme="@android:style/Theme.NoTitleBar"
-            android:exported="false" >
+            android:exported="false"
+            android:theme="@android:style/Theme.NoTitleBar">
             <intent-filter>
                 <action android:name="cn.jpush.android.ui.PushActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="${applicationId}" />
             </intent-filter>
@@ -260,8 +266,7 @@
         <service
             android:name="cn.jpush.android.service.DownloadService"
             android:enabled="true"
-            android:exported="false" >
-        </service>
+            android:exported="false"></service>
 
         <!-- Required SDK 核心功能-->
         <receiver android:name="cn.jpush.android.service.AlarmReceiver" />
@@ -270,7 +275,8 @@
         <!-- 新的 tag/alias 接口结果返回需要开发者配置一个自定的广播 -->
         <!-- 该广播需要继承 JPush 提供的 JPushMessageReceiver 类, 并如下新增一个 Intent-Filter -->
 
-        <receiver android:name="com.android.incongress.cd.conference.receiver.JPushReceiver"
+        <receiver
+            android:name="com.android.incongress.cd.conference.receiver.JPushReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
@@ -302,7 +308,7 @@
         <!-- Required. AppKey copied from Portal -->
         <meta-data
             android:name="JPUSH_APPKEY"
-            android:value="5e601ce4e99a09fb5f9ac9d3" />
+            android:value="1166102290db1b4dea494322" />
         <!-- JPush Required end -->
         <activity android:name="com.android.incongress.cd.conference.CountryCodeActivity" />
         <activity android:name="com.android.incongress.cd.conference.ChooseIdentityActivity" />
@@ -317,17 +323,22 @@
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name="com.android.incongress.cd.conference.widget.zxing.activity.QRCodeCaptureActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
 
         <!-- 微信回调页面 -->
         <activity
-            android:name="cn.incongress.nccps.wxapi.WXEntryActivity"
+            android:name="com.android.incongress.cd.conference.wxapi.WXEntryActivity"
             android:exported="true"
             android:theme="@android:style/Theme.Translucent" />
 
         <!-- 友盟相关设置 -->
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="5b9a4d64b27b0a1958000299" />
+            android:value="5848f72ea325114764000448" />
         <!-- 豌豆荚渠道 -->
         <!-- <meta-data android:value="Wandoujia" android:name="UMENG_CHANNEL"/> -->
         <!-- 百度渠道 -->
@@ -346,8 +357,9 @@
             android:screenOrientation="portrait"
             android:theme="@style/myTransparent"
             android:windowSoftInputMode="adjustNothing" />
-        <activity android:name="com.android.incongress.cd.conference.AlarmActivity"
-            android:theme="@style/NoTitleDialog"/>
+        <activity
+            android:name="com.android.incongress.cd.conference.AlarmActivity"
+            android:theme="@style/NoTitleDialog" />
         <activity android:name="com.android.incongress.cd.conference.fragments.wall_poster.PosterImageFragment" />
         <activity android:name="com.android.incongress.cd.conference.fragments.wall_poster.PosterDiscussFragment" />
         <activity android:name="com.android.incongress.cd.conference.MakeQuestionActivity" />
@@ -357,9 +369,6 @@
         -->
         <activity android:name="com.android.incongress.cd.conference.fragments.me.MyMeetingNoteEditorActivity" />
 
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
         <!--
         <activity
             android:name=".WBShareActivity"
@@ -371,11 +380,18 @@
             </intent-filter>
         </activity>
         -->
-        <!--会议日程-->
         <activity
-            android:name="com.android.incongress.cd.conference.fragments.meeting_schedule.MeetingScheduleDetailActivity"
-            android:screenOrientation="landscape"></activity>
-
+            android:name="com.android.incongress.cd.conference.fragments.scenic_xiu.ScenicXiuCommentActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name="com.android.incongress.cd.conference.VideoPlayDetailActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity
+            android:name="com.android.incongress.cd.conference.PolyvVideoPlayDetailActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity android:name="com.android.incongress.cd.conference.LoginForUpdateInfoActivity" />
     </application>
 
 </manifest>

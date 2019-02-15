@@ -103,10 +103,8 @@ public class AlarmActivity extends BaseActivity {
                                         //alarmMusic.stop();
                                         vibrator.cancel();
                                         String liveUrl = url + "?canShare=1";
-                                        if (liveUrl.contains("?"))
-                                            liveUrl = liveUrl + "&userId=" + AppApplication.userId + "&userType=" + AppApplication.userType + "&lan=" + AppApplication.getSystemLanuageCode();
-                                        else
-                                            liveUrl = liveUrl + "?userId=" + AppApplication.userId + "&userType=" + AppApplication.userType + "&lan=" + AppApplication.getSystemLanuageCode();
+                                        if (!liveUrl.contains("?"))
+                                            liveUrl = liveUrl + "?";
                                         CollegeActivity.startCitCollegeActivity(AlarmActivity.this, finalLiveName, liveUrl);
                                         AlarmActivity.this.finish();
                                         dialog.dismiss();
@@ -125,10 +123,6 @@ public class AlarmActivity extends BaseActivity {
                                         //alarmMusic.stop();
                                         vibrator.cancel();
                                         String liveUrl = url + "?canShare=1";
-                                        if (liveUrl.contains("?"))
-                                            liveUrl = liveUrl + "&userId=" + AppApplication.userId + "&userType=" + AppApplication.userType + "&lan=" + AppApplication.getSystemLanuageCode();
-                                        else
-                                            liveUrl = liveUrl + "?userId=" + AppApplication.userId + "&userType=" + AppApplication.userType + "&lan=" + AppApplication.getSystemLanuageCode();
                                         CollegeActivity.startCitCollegeActivity(AlarmActivity.this, finalLiveName, liveUrl);
                                         AlarmActivity.this.finish();
                                         dialog.dismiss();
@@ -146,10 +140,6 @@ public class AlarmActivity extends BaseActivity {
                                     //alarmMusic.stop();
                                     vibrator.cancel();
                                     String liveUrl = url + "?canShare=1";
-                                    if (liveUrl.contains("?"))
-                                        liveUrl = liveUrl + "&userId=" + AppApplication.userId + "&userType=" + AppApplication.userType + "&lan=" + AppApplication.getSystemLanuageCode();
-                                    else
-                                        liveUrl = liveUrl + "?userId=" + AppApplication.userId + "&userType=" + AppApplication.userType + "&lan=" + AppApplication.getSystemLanuageCode();
                                     CollegeActivity.startCitCollegeActivity(AlarmActivity.this, newTitle, liveUrl);
                                     AlarmActivity.this.finish();
                                     dialog.dismiss();

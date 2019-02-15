@@ -1,29 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
     <include
         android:id="@+id/search_title"
-        layout="@layout/seach_schedule_title"/>
-    <RelativeLayout
+        layout="@layout/seach_schedule_title" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="18dp"
+        android:background="@drawable/top_shadow" />
+
+    <LinearLayout
         android:id="@+id/rl_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/search_title"
-        android:layout_marginTop="10dp"
         android:background="@color/white"
-        android:gravity="center_vertical"
-        android:paddingBottom="@dimen/layout_padding"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp"
-        android:paddingTop="@dimen/layout_padding">
+        android:gravity="center"
+        android:paddingTop="@dimen/margin_20"
+        android:paddingBottom="@dimen/margin_20">
 
         <ImageView
             android:id="@+id/iv_prev"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
+            android:layout_width="35dp"
+            android:layout_height="25dp"
+            android:layout_marginRight="@dimen/margin_30"
+            android:paddingLeft="@dimen/margin_20"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
             android:adjustViewBounds="true"
             android:scaleType="centerInside"
             android:src="@drawable/left_arrow" />
@@ -32,104 +40,268 @@
             android:id="@+id/tv_current_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:drawableLeft="@drawable/search_day_logo"
-            android:drawablePadding="@dimen/layout_padding"
             android:gravity="center_vertical"
             android:singleLine="true"
             android:text="3月19日"
-            android:textColor="@color/theme_color"
-            android:textSize="@dimen/text_size_large" />
+            android:textColor="@color/black_login_text"
+            android:textSize="21sp" />
 
         <ImageView
             android:id="@+id/iv_last"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
+            android:layout_width="35dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="@dimen/margin_30"
             android:adjustViewBounds="true"
             android:scaleType="centerInside"
+            android:paddingRight="@dimen/margin_20"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
             android:src="@drawable/right_arrow_clickable" />
-    </RelativeLayout>
+    </LinearLayout>
 
-    <RelativeLayout
-        android:id="@+id/rl_certain_time"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_below="@id/rl_time"
-        android:layout_marginTop="@dimen/layout_margin"
-        android:background="@color/white">
+        android:layout_height="5dp"
+        android:background="@color/line_color" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_time"
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </RelativeLayout>
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <View
+                android:id="@+id/custom_time"
+                android:layout_width="200dp"
+                android:layout_height="35dp"
+                android:background="@drawable/bg_segment_unselected" />
+
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/rl_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@android:color/transparent">
+
+            <com.android.incongress.cd.conference.widget.PickerView
+                android:id="@+id/minute_from"
+                android:layout_width="@dimen/picker_width"
+                android:layout_height="120dp" />
+            <TextView
+                android:id="@+id/textF"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@id/minute_from"
+                android:gravity="center"
+                android:text=":" />
+            <com.android.incongress.cd.conference.widget.PickerView
+                android:id="@+id/second_from"
+                android:layout_width="@dimen/picker_width"
+                android:layout_height="120dp"
+                android:layout_toRightOf="@id/textF" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@id/second_from"
+                android:gravity="center"
+                android:text="-" />
+
+            <com.android.incongress.cd.conference.widget.PickerView
+                android:id="@+id/minute_to"
+                android:layout_width="@dimen/picker_width"
+                android:layout_height="120dp"
+                android:layout_toRightOf="@id/textView" />
+            <TextView
+                android:id="@+id/textT"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@id/minute_to"
+                android:gravity="center"
+                android:text=":" />
+
+            <com.android.incongress.cd.conference.widget.PickerView
+                android:id="@+id/second_to"
+                android:layout_width="@dimen/picker_width"
+                android:layout_height="120dp"
+                android:layout_toRightOf="@id/textT" />
+
+        </RelativeLayout>
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_20"
+        android:layout_marginTop="17dp"
+        android:layout_marginRight="@dimen/margin_20">
+
+        <LinearLayout
+            android:id="@+id/ll_am"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/bg_segment_unselected"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="上午"
+                android:textColor="@color/unselect_color"
+                android:textSize="@dimen/text_size_media" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(8:00-12:00)"
+                android:textColor="@color/unselect_color"
+                android:textSize="@dimen/text_size_media" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_pm"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_segment_unselected"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="下午"
+                android:textColor="@color/unselect_color"
+                android:textSize="@dimen/text_size_media" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(12:00-18:00)"
+                android:textColor="@color/unselect_color"
+                android:textSize="@dimen/text_size_media" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_ev"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_segment_unselected"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="晚上"
+                android:textColor="@color/unselect_color"
+                android:textSize="@dimen/text_size_media" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(18:00-22:00)"
+                android:textColor="@color/unselect_color"
+                android:textSize="@dimen/text_size_media" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/line_color" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/margin_20"
+                    android:layout_marginTop="@dimen/layout_margin"
+                    android:layout_marginRight="@dimen/margin_20"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:padding="3dp">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_room"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white" />
+                </RelativeLayout>
+
+                <ProgressBar
+                    android:id="@+id/progressbar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center" />
+            </FrameLayout>
+        </LinearLayout>
+
+    </ScrollView>
 
     <LinearLayout
         android:id="@+id/ll_bottom_search"
         android:layout_width="match_parent"
         android:layout_height="68dp"
-        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="@dimen/margin_50"
+        android:layout_marginRight="@dimen/margin_50"
+        android:layout_marginBottom="@dimen/margin_20"
+        android:background="@color/white"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="@dimen/layout_padding">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/iv_reset"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:layout_weight="2"
+            android:background="@drawable/seach_bottom_reset_border"
+            android:gravity="center"
+            android:text="@string/reset"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_media" />
 
-            <ImageView
-                android:id="@+id/iv_reset"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:adjustViewBounds="true"
-                android:scaleType="centerInside"
-                android:background="@drawable/seach_bottom_reset_border"
-                android:src="@drawable/search_reset" />
-
-            <View
-                android:layout_width="0.1dp"
-                android:layout_height="match_parent"
-                android:background="@color/white" />
-
-            <TextView
-                android:id="@+id/tv_start_search"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="9"
-                android:background="@drawable/seach_bottom_content_border"
-                android:gravity="center"
-                android:text="@string/searc_start_search"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size_large" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_start_search"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="7"
+            android:background="@drawable/seach_bottom_content_border"
+            android:gravity="center"
+            android:text="@string/search"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_media" />
     </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/ll_bottom_search"
-        android:layout_below="@id/rl_certain_time"
-        android:layout_marginTop="@dimen/layout_margin"
-        android:background="@color/white"
-        android:gravity="center"
-        android:padding="3dp">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_room"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white" />
-    </RelativeLayout>
-
-    <ProgressBar
-        android:id="@+id/progressbar"
-        android:layout_centerInParent="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-</RelativeLayout>
+</LinearLayout>

@@ -161,7 +161,7 @@ public class ParticipantLoginActivity extends BaseActivity {
                 e.printStackTrace();
             }
             /*CHYHttpClientUsage.getInstanse().doLoginByCode(Constants.LOGIN_TYPE_PATICIPATER, name, code, mobile,"",
-                    AppApplication.getSystemLanuageCode(), Constants.PROJECT_NAME, Constants.conId,
+                    AppApplication.getSystemLanuageCode(), Constants.getFromWhere(), Constants.conId,
                     new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
                         @Override
                         public void onStart() {

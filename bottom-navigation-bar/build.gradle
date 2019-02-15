@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
-    buildToolsVersion rootProject.ext.android.buildToolsVersion
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         minSdkVersion rootProject.ext.android.minSdkVersion
@@ -11,9 +11,9 @@ android {
 }
 
 dependencies {
-    compile rootProject.ext.dependencies.recyclerView
-    compile rootProject.ext.dependencies.appcompat
-    compile rootProject.ext.dependencies.support
-    compile rootProject.ext.dependencies.design
-    compile rootProject.ext.dependencies.nineOldAndroids
+    implementation rootProject.ext.dependencies.recyclerView
+    implementation rootProject.ext.dependencies.appcompat
+    implementation rootProject.ext.dependencies.support
+    implementation rootProject.ext.dependencies.design
+    implementation rootProject.ext.dependencies.nineOldAndroids
 }

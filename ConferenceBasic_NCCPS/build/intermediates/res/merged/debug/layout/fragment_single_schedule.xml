@@ -7,82 +7,91 @@
         android:id="@+id/left_top"
         android:layout_width="80dp"
         android:layout_height="60dp"
-        android:background="@android:color/white"
-        >
+        android:background="@android:color/white">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="@string/current_year"
+            android:textSize="@dimen/text_size_media"
+            android:textStyle="bold" />
     </RelativeLayout>
 
     <com.android.incongress.cd.conference.widget.HScroll
-        android:layout_width="match_parent"
         android:id="@+id/top_scrollview"
-        android:layout_toRightOf="@id/left_top"
-        android:scrollbars="none"
-        android:background="@android:color/white"
+        android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:fillViewport="false">
+        android:layout_toRightOf="@id/left_top"
+        android:background="@android:color/white"
+        android:fillViewport="false"
+        android:scrollbars="none">
+
         <LinearLayout
             android:id="@+id/ll_top_container"
-            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            >
-        </LinearLayout>
+            android:orientation="horizontal"></LinearLayout>
     </com.android.incongress.cd.conference.widget.HScroll>
 
     <View
-        android:layout_width="match_parent"
         android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
         android:layout_below="@id/top_scrollview"
-        android:background="@color/theme_color"
-        android:layout_height="2dp" />
+        android:background="@color/theme_color" />
 
     <com.android.incongress.cd.conference.widget.VScroll
-        android:layout_width="80dp"
-        android:scrollbars="none"
         android:id="@+id/left_scrollview"
-        android:background="@android:color/white"
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
         android:layout_below="@id/divider"
-        android:layout_height="match_parent">
+        android:background="@android:color/white"
+        android:scrollbars="none">
+
         <LinearLayout
             android:id="@+id/ll_left_container"
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            >
-        </LinearLayout>
+            android:orientation="vertical"></LinearLayout>
     </com.android.incongress.cd.conference.widget.VScroll>
 
-    <com.android.incongress.cd.conference.widget.HVScrollView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/divider"
-        android:background="@color/white"
-        android:id="@+id/hv_scrollview"
         android:layout_toRightOf="@id/left_scrollview">
-        <RelativeLayout android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/rl_table_container">
-            <TableLayout
-                android:id="@+id/table_layout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                ></TableLayout>
-            <AbsoluteLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/abs_container"
-                ></AbsoluteLayout>
-        </RelativeLayout>
-    </com.android.incongress.cd.conference.widget.HVScrollView>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="90dp"
-        android:gravity="center"
-        android:text="@string/current_year"
-        android:textSize="@dimen/text_size_media"
-        android:textStyle="bold" />
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.android.incongress.cd.conference.widget.HVScrollView
+                android:id="@+id/hv_scrollview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white">
+
+                <RelativeLayout
+                    android:id="@+id/rl_table_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TableLayout
+                        android:id="@+id/table_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"></TableLayout>
+
+                    <AbsoluteLayout
+                        android:id="@+id/abs_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"></AbsoluteLayout>
+                </RelativeLayout>
+            </com.android.incongress.cd.conference.widget.HVScrollView>
+        </HorizontalScrollView>
+    </ScrollView>
+
+
 </RelativeLayout>

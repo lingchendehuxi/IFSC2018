@@ -63,7 +63,7 @@ public class PosterQuestionFragment extends BaseFragment {
         mQuestionAdapter.setPosterClickListener(new MyPosterQuestionsAdapter.OnPosterClickListener() {
             @Override
             public void onPosterClick(PosterQuestionBean.SceneShowArrayBean bean) {
-                CHYHttpClientUsage.getInstanse().doGetPosterByID(Constants.conId, bean.getPosterId() +"", AppApplication.getSystemLanuageCode(), new JsonHttpResponseHandler(Constants.ENCODING_GBK){
+                CHYHttpClientUsage.getInstanse().doGetPosterByID(Constants.getConId(), bean.getPosterId() +"", AppApplication.getSystemLanuageCode(), new JsonHttpResponseHandler(Constants.ENCODING_GBK){
                     @Override
                     public void onStart() {
                         super.onStart();
@@ -84,7 +84,7 @@ public class PosterQuestionFragment extends BaseFragment {
                         PosterBean posterBean = gson.fromJson(response.toString(), PosterBean.class);
 
                         if(posterBean.getState() == 1) {
-                            DZBBBean dzbb = new DZBBBean(posterBean.getPosterId(),posterBean.getPosterCode(), posterBean.getConField(), posterBean.getTitle(), posterBean.getAuthor(), posterBean.getPosterPicUrl(),0,0,posterBean.getIsJingxuan());
+                            DZBBBean.ArrayBean dzbb = new DZBBBean.ArrayBean(posterBean.getPosterId(),posterBean.getPosterCode(), posterBean.getAuthor(),Integer.parseInt(posterBean.getConField()), posterBean.getTitle(), posterBean.getAuthor(), posterBean.getPosterPicUrl(),"",0,posterBean.getPosterPicUrl(),0);
                             Intent intent = new Intent();
                             intent.setClass(getActivity(), PosterImageFragment.class);
                             Bundle bundle = new Bundle();
@@ -115,7 +115,7 @@ public class PosterQuestionFragment extends BaseFragment {
     }
 
     private void refreshQuestionData(final int lastQuestionId) {
-        CHYHttpClientUsage.getInstanse().doGetQuestionByPoster(Constants.conId, lastQuestionId, AppApplication.userId, AppApplication.userType, AppApplication.getSystemLanuageCode(), new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
+        CHYHttpClientUsage.getInstanse().doGetQuestionByPoster(Constants.getConId(), lastQuestionId, AppApplication.userId, AppApplication.userType, AppApplication.getSystemLanuageCode(), new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);

@@ -6,19 +6,34 @@
     <ListView
         android:id="@+id/lv_schedule"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:divider="@color/gray"
-        android:scrollbarStyle="outsideInset"
-        android:fastScrollEnabled="true"
         android:dividerHeight="0.1dp"
-        android:layout_height="match_parent"/>
+        android:fastScrollEnabled="true"
+        android:scrollbarStyle="outsideInset" />
 
-    <TextView
-        android:id="@+id/tv_tips"
-        android:text="@string/my_schedule_tips"
-        android:textColor="@color/gray"
-        android:visibility="gone"
+    <LinearLayout
+        android:id="@+id/ll_tips"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingBottom="100dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/no_data_icon" />
+
+        <TextView
+            android:id="@+id/tv_tips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_20"
+            android:text="@string/my_schedule_tips"
+            android:textColor="@color/gray" />
+    </LinearLayout>
 
 </RelativeLayout>

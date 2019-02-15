@@ -15,6 +15,7 @@ import com.android.incongress.cd.conference.base.BaseFragment;
 import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.beans.PhotoTypeBean;
 import com.android.incongress.cd.conference.utils.ToastUtils;
+import com.android.incongress.cd.conference.widget.StatusBarUtil;
 import com.google.gson.Gson;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -38,9 +39,12 @@ public class PhotoAlbumFragment extends BaseFragment implements PhotoTypesAdapte
     private PhotoTypesAdapter mPhotoTypeAdapter;
     private List<PhotoTypeBean.PhotoWallTypeArrayBean> mPhotoWallTypeArrayList = new ArrayList<>();
     private ImageView tv_tips;
+    //参数为了在切换到activity返回后，fragment重新设置导航栏字体颜色
+    private boolean isBackView = true;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        StatusBarUtil.setStatusBarDarkTheme(getActivity(),true);
         View view = inflater.inflate(R.layout.fragment_photo_album, container, false);
         mRecyclerView = (XRecyclerView) view.findViewById(R.id.recyclerview);
         mPhotoTypeAdapter = new PhotoTypesAdapter(getActivity(), mPhotoWallTypeArrayList, this);
@@ -74,7 +78,7 @@ public class PhotoAlbumFragment extends BaseFragment implements PhotoTypesAdapte
     private void getDatas() {
         mPhotoWallTypeArrayList.clear();
         mPhotoTypeAdapter.notifyDataSetChanged();
-        CHYHttpClientUsage.getInstanse().doGetPhotoWallTypes(Constants.conId+"", AppApplication.getSystemLanuageCode(), new JsonHttpResponseHandler("gbk"){
+        CHYHttpClientUsage.getInstanse().doGetPhotoWallTypes(Constants.getConId()+"", AppApplication.getSystemLanuageCode(), new JsonHttpResponseHandler("gbk"){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
@@ -110,6 +114,9 @@ public class PhotoAlbumFragment extends BaseFragment implements PhotoTypesAdapte
     @Override
     public void onResume() {
         super.onResume();
+        if(!isBackView){
+            StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
+        }
         MobclickAgent.onPageStart(Constants.FRAGMENT_PHOTOALBUM);
     }
 
@@ -117,5 +124,14 @@ public class PhotoAlbumFragment extends BaseFragment implements PhotoTypesAdapte
     public void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd(Constants.FRAGMENT_PHOTOALBUM);
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        isBackView = hidden;
+        if(!hidden){
+            StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
+        }
     }
 }

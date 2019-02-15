@@ -1,15 +1,19 @@
 package com.android.incongress.cd.conference.fragments.scenic_xiu;
 
-import android.app.ProgressDialog;
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,35 +21,41 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
-import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.ScaleAnimation;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.incongress.cd.conference.CollegeActivity;
-import com.android.incongress.cd.conference.HomeActivity;
 import com.android.incongress.cd.conference.LoginActivity;
-import com.android.incongress.cd.conference.WebViewContainerActivity;
 import com.android.incongress.cd.conference.adapters.ScenicXiuAdapter;
 import com.android.incongress.cd.conference.api.CHYHttpClientUsage;
 import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.BaseFragment;
 import com.android.incongress.cd.conference.base.Constants;
-import com.android.incongress.cd.conference.beans.CommentArrayBean;
 import com.android.incongress.cd.conference.beans.SceneShowTopBean;
 import com.android.incongress.cd.conference.beans.ScenicXiuBean;
 import com.android.incongress.cd.conference.fragments.DynamicHomeFragment;
 import com.android.incongress.cd.conference.fragments.me.PersonCenterFragment;
 import com.android.incongress.cd.conference.save.SharePreferenceUtils;
-import com.android.incongress.cd.conference.utils.MyLogger;
-import com.android.incongress.cd.conference.utils.PicUtils;
-import com.android.incongress.cd.conference.utils.StringUtils;
+import com.android.incongress.cd.conference.utils.CacheManager;
+import com.android.incongress.cd.conference.utils.JSONCatch;
+import com.android.incongress.cd.conference.utils.NetWorkUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
 import com.android.incongress.cd.conference.widget.StatusBarUtil;
-import com.bumptech.glide.Glide;
+import com.android.incongress.cd.conference.widget.blws.PolyvErrorMessageUtils;
+import com.android.incongress.cd.conference.widget.blws.PolyvPlayerMediaController;
+import com.android.incongress.cd.conference.widget.blws.PolyvPlayerPreviewView;
+import com.android.incongress.cd.conference.widget.blws.PolyvScreenUtils;
+import com.easefun.polyvsdk.video.PolyvPlayErrorReason;
+import com.easefun.polyvsdk.video.PolyvVideoView;
+import com.easefun.polyvsdk.video.listener.IPolyvOnErrorListener2;
+import com.easefun.polyvsdk.video.listener.IPolyvOnVideoPlayErrorListener2;
+import com.easefun.polyvsdk.video.listener.IPolyvOnVideoStatusListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
@@ -54,14 +64,9 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 import com.umeng.analytics.MobclickAgent;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.util.Collection;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
@@ -71,55 +76,62 @@ import cz.msebera.android.httpclient.Header;
  * <p/>
  * 现场秀模块
  */
-public class ScenicXiuFragment extends BaseFragment implements View.OnClickListener, ScenicXiuAdapter.NewsAndActivitysListener {
+public class ScenicXiuFragment extends BaseFragment implements View.OnClickListener, ScenicXiuAdapter.NewsAndActivitysListener, ScenicXiuAdapter.praiseCommentListener,XRecyclerView.LoadingListener {
     private XRecyclerView mRecyclerView;
     private ScenicXiuAdapter mAdapter;
-
     private View mScenicXiuTitle;
-
-    private RelativeLayout mRlCommentArea;
-
-    private ProgressDialog mProgressDialog;
-    private String mLastDataId = "-1";
+    private String mLastId;
+    //是否有更多数据： 1：代表还有 0：代表已经没有了
+    private String mIsMore;
+    //参数为了在切换到activity返回后，fragment重新设置导航栏字体颜色
+    private boolean isBackView = true;
 
     public static final String BROAD_SCENIC_XIU_ID = "sceneXiuId";
     public static final String BROAD_POSITION = "position";
     public static final String BROAD_COMMENT_ID = "commentId";
     public static final String BROAD_PARENT_NAME = "parentName";
     public static final String BROAD_PARENT_ID = "parentId";
+    private static final String CACHE_PATH = "scenic_xiu_fragment";
+    private static final String CACHE_PATH_List = "scenic_xiu_fragment_list";
 
     private CommentClickReceiver mCommentReceiver;
-    private Button mBtSend;
-
-    private EditText mEtComment;
-
-    private LinkedList<ScenicXiuBean> mDatas = new LinkedList<>();
+    private ArrayList<ScenicXiuBean> mDatas = new ArrayList<>();
 
     private SceneShowTopBean mTopBean = new SceneShowTopBean();
-    private ImageView mIvFirst,mIvSecond;
-    private ImageView mIvMakepost;
+    private ImageView mIvFirst, mIvSecond;
+    private ImageView mIvMakepost, mTitleBack;
+    private TextView mTitleText;
 
     private boolean first = true;
+    //视频播放器集合
+    private List<PolyvVideoView> listVideo;
+    //缓存
+    private CacheManager cacheManager;
+
     public ScenicXiuFragment() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
-        StatusBarUtil.setStatusBarDarkTheme(getActivity(),false);
+        StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
         View view = inflater.inflate(R.layout.fragment_scenic_xiu, null);
-        mRecyclerView = (XRecyclerView) view.findViewById(R.id.recyclerview);
+        mTitleBack = view.findViewById(R.id.title_back);
+        mTitleBack.setVisibility(View.GONE);
+        mTitleText = view.findViewById(R.id.title_text);
+        mTitleText.setText(R.string.bottom_broadcast);
 
-        mRlCommentArea = (RelativeLayout) view.findViewById(R.id.rl_comment_area);
-        mEtComment = (EditText) view.findViewById(R.id.et_make_comment);
-        mBtSend = (Button) view.findViewById(R.id.bt_send_comment);
+        mRecyclerView = view.findViewById(R.id.recyclerview);
+
         mIvMakepost = (ImageView) view.findViewById(R.id.iv_make_post);
+        listVideo = new ArrayList<>();
+        cacheManager = CacheManager.getInstance().open(CACHE_PATH_List, 1);
 
         mIvMakepost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if(!AppApplication.isUserLogIn()) {
-                    LoginActivity.startLoginActivity(getActivity(), LoginActivity.TYPE_NORMAL, "", "", "" , "");
+                if (!AppApplication.isUserLogIn()) {
+                    LoginActivity.startLoginActivity(getActivity(), LoginActivity.TYPE_NORMAL, "", "", "", "");
                     return;
                 }
 
@@ -127,71 +139,6 @@ public class ScenicXiuFragment extends BaseFragment implements View.OnClickListe
                 View postView = LayoutInflater.from(getActivity()).inflate(R.layout.include_title_make_post, null);
                 fragment.setRightView(postView);
                 action(fragment, R.string.create_post, postView, false, false, false);
-            }
-        });
-        mBtSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String content = mEtComment.getText().toString().trim();
-                try {
-                    content = URLEncoder.encode(content, Constants.ENCODING_UTF8);
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-                if (StringUtils.isEmpty(content)) {
-                    ToastUtils.showShorToast(getString(R.string.comment_no_empty));
-                } else {
-                    CHYHttpClientUsage.getInstanse().doSceneShowComment(mScenicXiuId + "", AppApplication.userId + "", AppApplication.userType + "", content, mCommentId + "", new JsonHttpResponseHandler() {
-                        @Override
-                        public void onStart() {
-                            super.onStart();
-                            mProgressDialog = ProgressDialog.show(getActivity(), null, "loading...");
-                        }
-
-                        @Override
-                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                            super.onSuccess(statusCode, headers, response);
-                            MyLogger.jLog().i(response.toString());
-                            try {
-                                int state = response.getInt("state");
-                                if (state == 1) {
-                                    Gson gson = new Gson();
-                                    List<CommentArrayBean> comments = gson.fromJson(response.getString("commentArray"), new TypeToken<List<CommentArrayBean>>() {}.getType());
-                                    int commentCount = response.getInt("commentCount");
-                                    for (int i = 0; i < comments.size(); i++) {
-                                        CommentArrayBean bean = comments.get(i);
-                                        String name = URLDecoder.decode(bean.getUserName(), Constants.ENCODING_UTF8);
-                                        bean.setUserName(URLDecoder.decode(name, Constants.ENCODING_UTF8));
-                                        if (bean.getParentId() != -1) {
-                                            String parentName = URLDecoder.decode(bean.getParentName(), Constants.ENCODING_UTF8);
-                                            bean.setParentName(URLDecoder.decode(parentName, Constants.ENCODING_UTF8));
-                                        }
-                                    }
-
-                                    if (comments != null && comments.size() > 0) {
-                                        mDatas.get(mPosition).setCommentArray(comments);
-                                        mDatas.get(mPosition).setCommentCount(commentCount);
-                                        mAdapter.notifyDataSetChanged();
-                                    }
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-
-                        @Override
-                        public void onFinish() {
-                            super.onFinish();
-                            if (mProgressDialog != null && mProgressDialog.isShowing())
-                                mProgressDialog.dismiss();
-
-                                mRlCommentArea.setVisibility(View.GONE);
-                                toggleShurufa();
-                                mEtComment.setHint(StringUtils.EMPTY_STR);
-                                mEtComment.setText(StringUtils.EMPTY_STR);
-                        }
-                    });
-                }
             }
         });
 
@@ -203,66 +150,17 @@ public class ScenicXiuFragment extends BaseFragment implements View.OnClickListe
         mRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallRotate);
         mRecyclerView.setArrowImageView(R.drawable.iconfont_downgrey);
 
-        mAdapter = new ScenicXiuAdapter(mDatas, this, getActivity());
-
-        View header = inflater.inflate(R.layout.scenic_top, container , false);
+        View header = inflater.inflate(R.layout.scenic_top, container, false);
         mIvFirst = (ImageView) header.findViewById(R.id.iv_news_notification);
         mIvSecond = (ImageView) header.findViewById(R.id.iv_exhibitors_activity);
         mIvFirst.setOnClickListener(this);
         mIvSecond.setOnClickListener(this);
 
-        //mRecyclerView.addHeaderView(header);
-
+        //配置加载缓存数据
+        mAdapter = new ScenicXiuAdapter(mDatas, this, this, getActivity());
         mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
-            @Override
-            public void onRefresh() {
-                mLastDataId = "-1";
-                mDatas.clear();
-                mAdapter.notifyDataSetChanged();
-                getDownData(mLastDataId);
-            }
-
-            @Override
-            public void onLoadMore() {
-                mLastDataId = mDatas.get(mDatas.size() - 1).getSceneShowId() + "";
-                getDownData(mLastDataId);
-            }
-        });
-
-        mRecyclerView.setRefreshing(true);
-        mRlCommentArea.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mRlCommentArea.setVisibility(View.GONE);
-                mEtComment.setHint(R.string.schedule_comment_sth);
-                ((HomeActivity) getActivity()).toggleShurufa();
-            }
-        });
-
-        /**滑动隐藏发帖按钮 停止滑动显示按钮
-         * 开始*/
-        final int[] mScrollThreshold = new int[1];
-        mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                mScrollThreshold[0] = newState;
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    mIvMakepost.setVisibility(View.VISIBLE);
-                    Animation animation= AnimationUtils.loadAnimation(getActivity(), R.anim.addpost);
-                    mIvMakepost.startAnimation(animation);
-                }
-            }
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                boolean isSignificantDelta = Math.abs(dy) > mScrollThreshold[0];
-                if (isSignificantDelta) {
-                    mIvMakepost.setVisibility(View.GONE);
-                }
-            }
-        }); /*结束*/
+        mRecyclerView.setLoadingListener(this);
+        loadLocalDate();
 
         //注册广播接收器
         registerMessageReceiver();
@@ -282,13 +180,187 @@ public class ScenicXiuFragment extends BaseFragment implements View.OnClickListe
         });
 
 //      showGuideInfo();
+        //配置滑动播放视频
+        mlayoutManager = mRecyclerView.getLayoutManager();
+        handleVideo(mRecyclerView);
         return view;
     }
-    Handler handler = new Handler(){
+
+    //滑动视频处理
+    public RecyclerView.LayoutManager mlayoutManager;
+    private int firstVisibleItem, lastVisibleItem, visibleCount;
+
+    private void handleVideo(XRecyclerView xRecyclerView) {
+        xRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView view, int scrollState) {
+                switch (scrollState) {
+                    //停止的时候播放视频
+                    case 0:
+                        if(NetWorkUtils.NETWORK_TYPE_WIFI.equals(NetWorkUtils.getNetworkTypeName(getActivity()))){
+                            autoPlayVideo();
+                        }
+                        break;
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (mlayoutManager instanceof LinearLayoutManager) {
+                    LinearLayoutManager linearLayoutManager = (LinearLayoutManager) mlayoutManager;
+                    firstVisibleItem = linearLayoutManager.findFirstVisibleItemPosition();
+                    lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
+                    visibleCount = lastVisibleItem - firstVisibleItem;
+                }
+            }
+        });
+
+    }
+
+    //视频播放处理
+    private void autoPlayVideo() {
+        for (int i = 0; i < visibleCount; i++) {
+            if (mDatas.size() != 0 && firstVisibleItem + i < mDatas.size() - 1 && mDatas.get(firstVisibleItem + 1) != null && mDatas.get(firstVisibleItem + i).getType() == 3) {
+                View mView = mlayoutManager.findViewByPosition(firstVisibleItem + i + 1);
+
+                if (mView != null && mView.findViewById(R.id.polyv_video_view) != null) {
+                    final PolyvVideoView videoView = mView.findViewById(R.id.polyv_video_view);
+                    final RelativeLayout viewLayout = mView.findViewById(R.id.view_layout);
+                    final PolyvPlayerMediaController mediaController = mView.findViewById(R.id.polyv_player_media_controller);
+                    final ProgressBar loading_progress = mView.findViewById(R.id.loading_progress);
+                    final PolyvPlayerPreviewView firstStartView = mView.findViewById(R.id.polyv_player_first_start_view);
+                    final LinearLayout videoErrorLayout = mView.findViewById(R.id.video_error_layout);
+                    final TextView videoErrorContent = mView.findViewById(R.id.video_error_content);
+                    final TextView videoErrorRetry = mView.findViewById(R.id.video_error_retry);
+                    mediaController.setFullScreen(false);
+                    videoView.setMediaController(mediaController);
+                    videoView.setOpenPreload(true, 2);
+                    videoView.setAutoContinue(true);
+                    listVideo.add(videoView);
+
+                    Rect rect = new Rect();
+                    videoView.getLocalVisibleRect(rect);
+                    int videoheight3 = videoView.getHeight();
+                    Log.e("videoTest", "i=" + i + "===" + "videoheight3:" + videoheight3 + "===" + "rect.top:" + rect.top + "===" + "rect.bottom:" + rect.bottom);
+                    //以下是播放异常反馈
+                    videoView.setOnErrorListener(new IPolyvOnErrorListener2() {
+                        @Override
+                        public boolean onError() {
+                            String message = "当前视频无法播放，请尝试切换网络重新播放或者向管理员反馈(error code " + PolyvPlayErrorReason.VIDEO_ERROR + ")";
+                            showErrorView(videoErrorLayout, videoErrorContent, message);
+                            Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+                            videoView.setOnVideoPlayErrorListener(new IPolyvOnVideoPlayErrorListener2() {
+                                @Override
+                                public boolean onVideoPlayError(@PolyvPlayErrorReason.PlayErrorReason int playErrorReason) {
+                                    String message = PolyvErrorMessageUtils.getPlayErrorMessage(playErrorReason);
+                                    message += "(error code " + playErrorReason + ")";
+                                    showErrorView(videoErrorLayout, videoErrorContent, message);
+                                    return true;
+                                }
+                            });
+                            videoView.setOnVideoStatusListener(new IPolyvOnVideoStatusListener() {
+                                @Override
+                                public void onStatus(int status) {
+                                    if (status < 60) {
+                                        Toast.makeText(getActivity(), "状态错误 " + status, Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                            return true;
+                        }
+                    });
+                    videoErrorRetry.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            //初始化视频工具
+                            mediaController.initConfig(viewLayout);
+                            videoView.setPlayerBufferingIndicator(loading_progress);
+                            PolyvScreenUtils.generateHeight16_9(getActivity());
+                            pauseListPlay();
+                            play(videoView, mediaController, loading_progress, firstStartView, "23d81808464ddb6d0422ed37cc89aa5a_2", 0, true, false);
+                        }
+                    });
+                    if (videoView.isPlaying()) {
+                        return;
+                    }
+                    if (rect.top == 0 && rect.bottom == videoheight3) {
+                        mediaController.initConfig(viewLayout);
+                        videoView.setPlayerBufferingIndicator(loading_progress);
+                        PolyvScreenUtils.generateHeight16_9(getActivity());
+                        pauseListPlay();
+                        play(videoView, mediaController, loading_progress, firstStartView, "23d81808464ddb6d0422ed37cc89aa5a_2", 0, true, false);
+                        return;
+                    }
+
+                }
+            }
+
+        }
+        Log.e("videoTest", "======================releaseAllVideos=====================");
+        pauseListPlay();
+    }
+
+    /**
+     * 播放视频
+     *
+     * @param vid             视频id
+     * @param bitrate         码率（清晰度）
+     * @param startNow        是否现在开始播放视频
+     * @param isMustFromLocal 是否必须从本地（本地缓存的视频）播放
+     */
+    public void play(final PolyvVideoView videoView, PolyvPlayerMediaController mediaController, ProgressBar loadingProgress, PolyvPlayerPreviewView firstStartView, final String vid, final int bitrate, boolean startNow, final boolean isMustFromLocal) {
+        if (TextUtils.isEmpty(vid)) return;
+
+        videoView.release();
+        mediaController.hide();
+        loadingProgress.setVisibility(View.GONE);
+        firstStartView.hide();
+
+        if (startNow) {
+            //调用setVid方法视频会自动播放
+            videoView.setVid(vid, bitrate, isMustFromLocal);
+        } else {
+            //视频不播放，先显示一张缩略图
+            firstStartView.setCallback(new PolyvPlayerPreviewView.Callback() {
+
+                @Override
+                public void onClickStart() {
+                    /**
+                     * 调用setVid方法视频会自动播放
+                     * 如果是有学员登陆的播放，可以在登陆的时候通过
+                     * {@link com.easefun.polyvsdk.PolyvSDKClient.getinstance().setViewerId()}设置学员id
+                     * 或者调用{@link videoView.setVidWithStudentId}传入学员id进行播放
+                     */
+
+                    videoView.setVidWithStudentId(vid, bitrate, isMustFromLocal, "123");
+                }
+            });
+
+            firstStartView.show(vid);
+        }
+    }
+
+    //暂停所有的播放器
+    private void pauseListPlay() {
+        for (int i = 0; i < listVideo.size(); i++) {
+            if (listVideo.get(i) != null && listVideo.get(i).isPlaying()) {
+                listVideo.get(i).pause();
+            }
+        }
+    }
+
+    //显示视频播放错误信息
+    private void showErrorView(LinearLayout videoErrorLayout, TextView videoErrorContent, String message) {
+        videoErrorLayout.setVisibility(View.VISIBLE);
+        videoErrorContent.setText(message);
+    }
+
+    Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            switch (msg.what){
+            switch (msg.what) {
                 case 1:
                     mIvMakepost.setVisibility(View.VISIBLE);
                     first = false;
@@ -297,70 +369,16 @@ public class ScenicXiuFragment extends BaseFragment implements View.OnClickListe
             }
         }
     };
-    private class HeatbeatThread extends Thread {
-        int anInt = 0;
-        boolean go = true;
-        public void run() {
-            while (go) {
-                getActivity().runOnUiThread(new Runnable() {
-                    public void run() {
-                        if (anInt < 5) {
-                            playHeartbeatAnimation();
-                            anInt++;
-                        }else{
-                            go = false;
-                            heartbeatThread.interrupt();
-                        }
-                    }
-                });
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-    private Thread heartbeatThread;
+
     /**
      * 开始心跳
      */
     private void startHeartBeat() {
-        if (heartbeatThread == null) {
-            heartbeatThread = new HeatbeatThread();
-        }
-        if (!heartbeatThread.isAlive()) {
-            heartbeatThread.start();
-        }
+        Animator anim = AnimatorInflater.loadAnimator(getActivity(),R.animator.head_shake);
+        anim.setTarget(mIvMakepost);
+        anim.start();
     }
-    private void playHeartbeatAnimation() {
-        AnimationSet swellAnimationSet = new AnimationSet(true);
-        swellAnimationSet.addAnimation(new ScaleAnimation(1.0f, 1.2f, 1.0f, 1.2f,
-                Animation.RELATIVE_TO_SELF, 0.5f,
-                Animation.RELATIVE_TO_SELF, 0.5f));
-        swellAnimationSet.addAnimation(new AlphaAnimation(1.0f, 0.3f));
-        swellAnimationSet.setDuration(500);
-        swellAnimationSet.setInterpolator(new AccelerateInterpolator());
-        swellAnimationSet.setFillAfter(true);
-        swellAnimationSet.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {}
-            @Override
-            public void onAnimationRepeat(Animation animation) {}
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                AnimationSet shrinkAnimationSet = new AnimationSet(true);
-                shrinkAnimationSet.addAnimation(new ScaleAnimation(1.2f, 1.0f, 1.2f, 1.0f, Animation.RELATIVE_TO_SELF,
-                        0.5f, Animation.RELATIVE_TO_SELF, 0.5f));
-                shrinkAnimationSet.addAnimation(new AlphaAnimation(0.3f, 1.0f));
-                shrinkAnimationSet.setDuration(1000);
-                shrinkAnimationSet.setInterpolator(new DecelerateInterpolator());
-                shrinkAnimationSet.setFillAfter(false);
-                mIvMakepost.startAnimation(shrinkAnimationSet);// 动画结束时重新开始，实现心跳的View
-            }
-        });
-        mIvMakepost.startAnimation(swellAnimationSet);
-    }
+
 
     /**
      * 通知更新首页信息
@@ -416,7 +434,7 @@ public class ScenicXiuFragment extends BaseFragment implements View.OnClickListe
             public void onClick(View v) {
                 boolean isLogin = AppApplication.isUserLogIn();
 
-                if(!isLogin) {
+                if (!isLogin) {
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
                     getActivity().startActivityForResult(intent, PersonCenterFragment.REQUEST_LOGIN);
                     return;
@@ -433,154 +451,139 @@ public class ScenicXiuFragment extends BaseFragment implements View.OnClickListe
     /**
      * 获取下方现场秀列表
      *
-     * @param lastSceneShowId
+     * @param lastId
      */
-    private void getDownData(final String lastSceneShowId) {
-        CHYHttpClientUsage.getInstanse().doGetSceneShowDown(Constants.conId + "", lastSceneShowId, AppApplication.userId + "", AppApplication.userType + "", new JsonHttpResponseHandler("gbk") {
-            @Override
-            public void onFinish() {
-                super.onFinish();
-                if(mRecyclerView != null) {
-                    mRecyclerView.refreshComplete();
-                    mRecyclerView.loadMoreComplete();
-                }
-            }
+    private void getDownData(final String lastId) {
+        CHYHttpClientUsage.getInstanse().doGetSceneShowDown(Constants.getConId() + "", lastId, AppApplication.userId + "", AppApplication.userType + "", new JsonHttpResponseHandler("gbk") {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-                try {
-                    int state = response.getInt("state");
-                    if (state == 1) {
-                        if (lastSceneShowId.equals("-1")) {
-                            Gson gson = new Gson();
-                            String jsonArray = "";
-
-                            try {
-                                jsonArray = response.getJSONArray("sceneShowArray").toString();
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                            mDatas.addAll((Collection<? extends ScenicXiuBean>) gson.fromJson(jsonArray, new TypeToken<LinkedList<ScenicXiuBean>>() { }.getType()));
-                            mAdapter.notifyDataSetChanged();
-                            mRecyclerView.refreshComplete();
-                            if(first){
-                                handler.sendEmptyMessage(1);
-                            }
-                        } else {
-                            Gson gson = new Gson();
-                            String jsonArray = "";
-                            try {
-                                jsonArray = response.getJSONArray("sceneShowArray").toString();
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-
-                            mDatas.addAll((LinkedList<ScenicXiuBean>) gson.fromJson(jsonArray, new TypeToken<LinkedList<ScenicXiuBean>>() {
-                            }.getType()));
-                            mAdapter.notifyDataSetChanged();
-                            mRecyclerView.loadMoreComplete();
+                String jsonArray = JSONCatch.parseJsonarray("sceneShowArray", response).toString();
+                cacheManager.saveString(CACHE_PATH_List, jsonArray);
+                ArrayList<ScenicXiuBean> tempList = new Gson().fromJson(jsonArray, new TypeToken<ArrayList<ScenicXiuBean>>() {
+                }.getType());
+                if (tempList.size() != 0) {
+                    //刷新进来
+                    if ("-1".equals(lastId)) {
+                        mDatas.clear();
+                        mRecyclerView.refreshComplete();
+                        mRecyclerView.setLoadingMoreEnabled(true);
+                        //加载更多进来
+                    } else {
+                        mRecyclerView.loadMoreComplete();
+                        if ("0".equals(mIsMore)) {
+                            ToastUtils.showShorToast(getString(R.string.incongress_send_no_more_data));
+                            mRecyclerView.setLoadingMoreEnabled(false);
+                            return;
                         }
-
-                        int pageState = response.getInt("pageState");
-                        if(pageState == 0) {
-//                            mRecyclerView.setNoMore(true);
-                            mRecyclerView.loadMoreComplete();
-                        }
-
-                        mTopBean.setImgUrl1(response.getString("imgUrl1"));
-                        mTopBean.setImgUrl2(response.getString("imgUrl2"));
-                        mTopBean.setGotoUrl1(response.getString("gotoUrl1"));
-                        mTopBean.setGotoUrl2(response.getString("gotoUrl2"));
-
-                        String urlFirst = mTopBean.getImgUrl1();
-                        String urlSecond = mTopBean.getImgUrl2();
-                        if(urlFirst.contains("https:"))
-                            urlFirst = urlFirst.replaceFirst("s","");
-
-                        if(urlSecond.contains("https:"))
-                            urlSecond = urlSecond.replaceFirst("s","");
-
-                        PicUtils.loadImageUrl(getContext(),urlFirst,mIvFirst);
-                        PicUtils.loadImageUrl(getContext(),urlSecond,mIvSecond);
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    mDatas.addAll(tempList);
+                    mAdapter.notifyDataSetChanged();
+                    mLastId = String.valueOf(tempList.get(tempList.size() - 1).getSceneShowId());
+                    mIsMore = JSONCatch.parseString("pageState",response);
+                } else {
+                    if ("0".equals(JSONCatch.parseString("pageState",response)) && mDatas.size() != 0) {
+                        mRecyclerView.loadMoreComplete();
+                        ToastUtils.showShorToast(getString(R.string.incongress_send_no_more_data));
+                        mRecyclerView.setLoadingMoreEnabled(false);
+                        return;
+                    }
+                    mRecyclerView.refreshComplete();
+                    mRecyclerView.loadMoreComplete();
+                    return;
+                }
+                if (first) {
+                    handler.sendEmptyMessage(1);
                 }
             }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                mRecyclerView.reset();
+                ToastUtils.showShorToast("获取信息失败，请联系管理员");
+            }
         });
+    }
+    @Override
+    public void onRefresh() {
+        if(!NetWorkUtils.isNetworkConnected(getActivity())){
+            mRecyclerView.refreshComplete();
+            ToastUtils.showToast(getString(R.string.connect_network));
+            return;
+        }
+        getDownData("-1");
+    }
+
+    @Override
+    public void onLoadMore() {
+        if(!NetWorkUtils.isNetworkConnected(getActivity())){
+            mRecyclerView.loadMoreComplete();
+            ToastUtils.showToast(getString(R.string.connect_network));
+            return;
+        }
+        getDownData(mDatas.get(mDatas.size() - 1).getSceneShowId() + "");
+    }
+
+    //无网络的时候加载本地数据
+    private void loadLocalDate() {
+        if (!NetWorkUtils.isNetworkConnected(getActivity())) {
+            String json = cacheManager.getString(CACHE_PATH_List);
+            if (!TextUtils.isEmpty(json)) {
+                Gson gson = new Gson();
+                mDatas.clear();
+                mDatas = gson.fromJson(json, new TypeToken<ArrayList<ScenicXiuBean>>() {
+                }.getType());
+                mAdapter = new ScenicXiuAdapter(mDatas, this, this, getActivity());
+                mRecyclerView.setAdapter(mAdapter);
+                handler.sendEmptyMessage(1);
+            }
+        }else {
+            mRecyclerView.setRefreshing(true);
+        }
     }
 
     public static final String COMMENT_CLICK_RECEIVED_ACTION_NORMAL = "click_action_normal";
     public static final String COMMENT_CLICK_RECEIVED_ACTION_COMMENT = "click_action_comment";
     public static final String GO_TO_LOGIN_FIRST = "go_login";
-    private int mScenicXiuId = 0;
-    private int mPosition = 0;
-    private int mCommentId = 0;
-    private String mParentName = "";
-    private String mUserId = "";
 
     @Override
     public void onClick(View v) {
         int targetId = v.getId();
         if (targetId == R.id.iv_news_notification) {
-            CollegeActivity.startCitCollegeActivity(getActivity(), getString(R.string.media_center),mTopBean.getGotoUrl1(),1);
+            CollegeActivity.startCitCollegeActivity(getActivity(), getString(R.string.media_center), mTopBean.getGotoUrl1(), 1);
         } else if (targetId == R.id.iv_exhibitors_activity) {
-            CollegeActivity.startCitCollegeActivity(getActivity(), getString(R.string.industrial_events),mTopBean.getGotoUrl2(),1);
+            CollegeActivity.startCitCollegeActivity(getActivity(), getString(R.string.industrial_events), mTopBean.getGotoUrl2(), 1);
 
         }
     }
 
     @Override
     public void doWhenNewsOrActivityClicked(int type, String url, String title) {
-        CollegeActivity.startCitCollegeActivity(getActivity(), title,url,1);
+        CollegeActivity.startCitCollegeActivity(getActivity(), title, url, 1);
+    }
+
+    @Override
+    public void doWhenCommentClicked(ScenicXiuBean bean) {
+        ScenicXiuCommentActivity.scenicXiuCommentActivity(getActivity(), bean);
     }
 
     //评论广播接收器
     class CommentClickReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            mScenicXiuId = 0;
-            mPosition = 0;
-            mCommentId = 0;
-            mParentName = "";
-            mUserId = "";
-
-            if (GO_TO_LOGIN_FIRST.equals(intent.getAction())) {
-                LoginActivity.startLoginActivity(getActivity(), LoginActivity.TYPE_NORMAL,"","", "" , "");
-//                ChooseIdentityActivity.startChooseIdentityActivity(getActivity());
-                return;
-            }
-            mScenicXiuId = intent.getIntExtra(BROAD_SCENIC_XIU_ID, 0);
-            mPosition = intent.getIntExtra(BROAD_POSITION, 0);
-            mCommentId = intent.getIntExtra(BROAD_COMMENT_ID, -1);
-            mParentName = intent.getStringExtra(BROAD_PARENT_NAME);
-            mUserId = intent.getStringExtra(BROAD_PARENT_ID);
-
-            if ((AppApplication.userId + "").equals(mUserId)) {
-                return;
-            }
-
-            mRlCommentArea.setVisibility(View.VISIBLE);
-            toggleShurufa();
-            mEtComment.requestFocus();
-
-            if (COMMENT_CLICK_RECEIVED_ACTION_NORMAL.equals(intent.getAction())) {
-
-            } else if (COMMENT_CLICK_RECEIVED_ACTION_COMMENT.equals(intent.getAction())) {
-                mEtComment.setHint("@" + mParentName);
+            if (Constants.ACTION_COMMENT_UPDATE.equals(intent.getAction())) {
+                mRecyclerView.setRefreshing(true);
             }
         }
+
     }
 
     //注册评论广播接收器
     public void registerMessageReceiver() {
         mCommentReceiver = new CommentClickReceiver();
         IntentFilter filter = new IntentFilter();
-        filter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
-        filter.addAction(COMMENT_CLICK_RECEIVED_ACTION_COMMENT);
-        filter.addAction(COMMENT_CLICK_RECEIVED_ACTION_NORMAL);
-        filter.addAction(GO_TO_LOGIN_FIRST);
+        filter.addAction(Constants.ACTION_COMMENT_UPDATE);
         getActivity().registerReceiver(mCommentReceiver, filter);
     }
 
@@ -595,6 +598,9 @@ public class ScenicXiuFragment extends BaseFragment implements View.OnClickListe
     @Override
     public void onResume() {
         super.onResume();
+        if(!isBackView){
+            StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
+        }
         MobclickAgent.onPageStart(Constants.FRAGMENT_SCENICXIU);
     }
 
@@ -602,13 +608,17 @@ public class ScenicXiuFragment extends BaseFragment implements View.OnClickListe
     public void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd(Constants.FRAGMENT_SCENICXIU);
+        pauseListPlay();
     }
 
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if(!hidden){
-            StatusBarUtil.setStatusBarDarkTheme(getActivity(),false);
+        isBackView = hidden;
+        if (!hidden) {
+            StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
+        } else {
+            pauseListPlay();
         }
     }
 }

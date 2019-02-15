@@ -14,9 +14,14 @@ public class SettingContactActionFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
         View view = inflater.inflate(R.layout.settings_contact, null);
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
     }
 
     @Override

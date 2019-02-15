@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <include layout="@layout/activity_home_titlebar" />
+
+        <TextView
+            android:id="@+id/title_tip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="@string/fix_mobile_mobile_tip"
+            android:textColor="@color/login_gray" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_getcode"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="@dimen/margin_40"
+        android:layout_marginRight="@dimen/margin_40"
+        android:layout_weight="3"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:id="@+id/rl_head"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_corners"
+            android:clickable="true"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/head_img"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/iv_next1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/me_next" />
+
+            <com.android.incongress.cd.conference.widget.CircleImageView
+                android:id="@+id/iv_my_head"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="22dp"
+                android:layout_toLeftOf="@id/iv_next1"
+                android:src="@drawable/professor_default" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/user_name" />
+
+        <com.android.incongress.cd.conference.widget.ClearEditText
+            android:id="@+id/et_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_20"
+            android:background="@null"
+            android:drawableRight="@drawable/edittext_delete"
+            android:hint="@string/input_user_name"
+            android:paddingBottom="6dp"
+            android:textColor="@color/theme_color"
+            android:textColorHint="@color/grap_color"
+            android:textSize="@dimen/text_20" />
+
+        <View
+            android:id="@+id/view_background"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/login_gray" />
+
+        <Button
+            android:id="@+id/bt_save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_60"
+            android:background="@drawable/bg_button_ed"
+            android:text="@string/save"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_30"
+            android:gravity="center_horizontal"
+            android:text="@string/login_tip"
+            android:textColor="@color/theme_color"
+            android:visibility="gone"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/tv_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="bottom"
+        android:background="@color/line_color"/>
+    <LinearLayout
+        android:id="@+id/ll_card"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center">
+        <com.android.incongress.cd.conference.widget.cardview.LCardView
+            android:id="@+id/card_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:leftTopCornerRadius="5dp"
+            app:rightTopCornerRadius="5dp"
+            app:bottomShadowHeight="0dp"
+            app:leftShadowWidth="10dp"
+            app:rightShadowWidth="10dp"
+            android:visibility="gone"
+            app:topShadowHeight="10dp">
+
+            <TextView
+                android:id="@+id/tv_chose_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="7dp"
+                android:padding="7dp"
+                android:gravity="center"
+                android:text="测试"
+                android:textColor="@color/theme_color"
+                android:textSize="18sp" />
+
+        </com.android.incongress.cd.conference.widget.cardview.LCardView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_normal"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/tv_normal_time"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="@color/unselect_color"
+            android:paddingLeft="10dp"
+            android:paddingTop="17dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="7dp"
+            android:textSize="18sp"
+            android:text="测试"/>
+    </LinearLayout>
+
+</FrameLayout>
+

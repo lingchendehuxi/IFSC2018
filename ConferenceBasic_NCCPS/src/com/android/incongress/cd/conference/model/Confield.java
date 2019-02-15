@@ -10,6 +10,15 @@ public class Confield extends DataSupport {
     private int conFieldId;// 领域编号
     private String conFieldName;// 领域名称
     private boolean checked = true;
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getConFieldId() {
         return conFieldId;

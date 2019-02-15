@@ -38,6 +38,7 @@ import com.android.incongress.cd.conference.utils.MyLogger;
 import com.android.incongress.cd.conference.utils.MySectionIndexer;
 import com.android.incongress.cd.conference.utils.PinnedHeaderListView;
 import com.android.incongress.cd.conference.utils.StringUtils;
+import com.android.incongress.cd.conference.widget.StatusBarUtil;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 
 import java.util.ArrayList;
@@ -73,6 +74,8 @@ public class SpeakerSearchFragment extends BaseFragment {
             "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U",
             "V", "W", "X", "Y", "Z", "#"};
     private int[] counts;
+    //参数为了在切换到activity返回后，fragment重新设置导航栏字体颜色
+    private boolean isBackView = true;
 
     public SpeakerSearchFragment() {
     }
@@ -92,7 +95,25 @@ public class SpeakerSearchFragment extends BaseFragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if(!isBackView){
+            StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
+        }
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        isBackView = hidden;
+        if(!hidden){
+            StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
+        }
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
+        StatusBarUtil.setStatusBarDarkTheme(getActivity(),true);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         View view = inflater.inflate(R.layout.hysqhome_jiangzhe, null);
         mSearchTitle = (RelativeLayout) view.findViewById(R.id.search_title);

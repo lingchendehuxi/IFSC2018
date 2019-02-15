@@ -244,7 +244,7 @@ public class MeetingScheduleDetailActionFragment extends BaseFragment {
             } else {
                 ((TextView) temp.findViewById(R.id.tv_session)).setText(sessionBean.getSessionNameEN());
             }
-            temp.findViewById(R.id.tv_session).setBackgroundColor( Color.parseColor(getString(R.string.alpha_theme_color)));
+            temp.findViewById(R.id.tv_session).setBackgroundColor( getResources().getColor(R.color.alpha_theme_color));
             temp.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
@@ -267,9 +267,7 @@ public class MeetingScheduleDetailActionFragment extends BaseFragment {
 
                             SessionDetailViewPageFragment detail = new SessionDetailViewPageFragment();
                             detail.setArguments(tartgetPosition, mAllSessionsList);
-                            View moreView = CommonUtils.initView(getActivity(), R.layout.titlebar_session_detail_more);
-                            detail.setRightListener(moreView);
-                            action(detail, R.string.meeting_schedule_detail_title, moreView, false, false, false);
+                            action(detail, R.string.meeting_schedule_detail_title, null, false, false, false);
 
                             return true;
                         } else {

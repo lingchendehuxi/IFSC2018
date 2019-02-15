@@ -3,7 +3,6 @@ package com.android.incongress.cd.conference.fragments.message_station;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,14 +11,9 @@ import com.android.incongress.cd.conference.adapters.MessageListAdapter;
 import com.android.incongress.cd.conference.base.BaseFragment;
 import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.widget.StatusBarUtil;
-import com.android.incongress.cd.conference.widget.mtablayout.TabEntity;
 import com.flyco.tablayout.SlidingTabLayout;
-import com.flyco.tablayout.listener.CustomTabEntity;
-import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 import com.umeng.analytics.MobclickAgent;
-
-import java.util.ArrayList;
 
 /**
  * Created by Jacky on 2016/1/29.
@@ -30,7 +24,9 @@ public class MessageStationActionFragment extends BaseFragment {
     private SlidingTabLayout tab_layout;
     private ViewPager mViewPager;
     private MessageListAdapter adapter;
-    private String[] titles ;
+    private String[] titles;
+    //参数为了在切换到activity返回后，fragment重新设置导航栏字体颜色
+    private boolean isBackView = true;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,6 +51,9 @@ public class MessageStationActionFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        if(!isBackView){
+            StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
+        }
         MobclickAgent.onPageStart(Constants.FRAGMENT_MESSAGESTATION);
     }
 
@@ -67,6 +66,7 @@ public class MessageStationActionFragment extends BaseFragment {
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
+        isBackView = hidden;
         if (!hidden) {
             StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
         }

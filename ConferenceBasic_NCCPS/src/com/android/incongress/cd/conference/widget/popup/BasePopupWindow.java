@@ -53,13 +53,13 @@ public abstract class BasePopupWindow implements BasePopup {
         mContext = context;
 
         mPopupView = getPopupView();
-        mPopupView.setFocusableInTouchMode(false);
+        mPopupView.setFocusableInTouchMode(true);
         //默认占满全屏
         mPopupWindow = new PopupWindow(mPopupView, w, h);
         //指定透明背景，back键相关
         mPopupWindow.setBackgroundDrawable(new ColorDrawable());
-        mPopupWindow.setFocusable(false);
-        mPopupWindow.setOutsideTouchable(false);
+        mPopupWindow.setFocusable(true);
+        mPopupWindow.setOutsideTouchable(true);
         //无需动画
         mPopupWindow.setAnimationStyle(0);
 
@@ -73,14 +73,14 @@ public abstract class BasePopupWindow implements BasePopup {
                     dismiss();
                 }
             });
-//            if (mAnimaView != null) {
-//                mAnimaView.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//
-//                    }
-//                });
-//            }
+            if (mAnimaView != null) {
+                mAnimaView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+            }
         }
         //=============================================================元素获取
         curAnima = getShowAnimation();
@@ -94,13 +94,9 @@ public abstract class BasePopupWindow implements BasePopup {
 
     protected abstract View getClickToDismissView();
 
-    public Animator getShowAnimator() {
-        return null;
-    }
+    public Animator getShowAnimator() { return null; }
 
-    public View getInputView() {
-        return null;
-    }
+    public View getInputView() { return null; }
 
     public Animation getExitAnimation() {
         return null;
@@ -117,21 +113,6 @@ public abstract class BasePopupWindow implements BasePopup {
         } catch (Exception e) {
             Log.e(TAG, "show error");
             e.printStackTrace();
-        }
-    }
-
-    /**
-     * 在VieW的位置下方
-     */
-    public void showPopupWindowBelowView(View view) {
-        try {
-            if(view == null) {
-                tryToShowPopup(0,null);
-            }else {
-                mPopupWindow.showAsDropDown(view);
-            }
-        }catch (Exception e) {
-
         }
     }
 
@@ -184,7 +165,8 @@ public abstract class BasePopupWindow implements BasePopup {
     public void setAdjustInputMethod(boolean needAdjust) {
         if (needAdjust) {
             mPopupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-        } else {
+        }
+        else {
             mPopupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
         }
     }
@@ -193,7 +175,8 @@ public abstract class BasePopupWindow implements BasePopup {
         this.autoShowInputMethod = autoShow;
         if (autoShow) {
             setAdjustInputMethod(true);
-        } else {
+        }
+        else {
             setAdjustInputMethod(false);
         }
     }
@@ -201,7 +184,8 @@ public abstract class BasePopupWindow implements BasePopup {
     public void setBackPressEnable(boolean backPressEnable) {
         if (backPressEnable) {
             mPopupWindow.setBackgroundDrawable(new ColorDrawable());
-        } else {
+        }
+        else {
             mPopupWindow.setBackgroundDrawable(null);
         }
     }
@@ -209,7 +193,8 @@ public abstract class BasePopupWindow implements BasePopup {
     public View getPopupViewById(int resId) {
         if (resId != 0) {
             return LayoutInflater.from(mContext).inflate(resId, null);
-        } else {
+        }
+        else {
             return null;
         }
     }
@@ -242,11 +227,13 @@ public abstract class BasePopupWindow implements BasePopup {
                 curExitAnima.setAnimationListener(mAnimationListener);
                 mAnimaView.clearAnimation();
                 mAnimaView.startAnimation(curExitAnima);
-            } else if (curExitAnimator != null) {
+            }
+            else if (curExitAnimator != null) {
                 curExitAnimator.removeListener(mAnimatorListener);
                 curExitAnimator.addListener(mAnimatorListener);
                 curExitAnimator.start();
-            } else {
+            }
+            else {
                 mPopupWindow.dismiss();
             }
         } catch (Exception e) {
@@ -293,12 +280,26 @@ public abstract class BasePopupWindow implements BasePopup {
 
         }
     };
+    /**
+     * 在VieW的位置下方
+     */
+    public void showPopupWindowBelowView(View view) {
+        try {
+            if(view == null) {
+                tryToShowPopup(0,null);
+            }else {
+                mPopupWindow.showAsDropDown(view);
+            }
+        }catch (Exception e) {
+
+        }
+    }
 
     /**
      * 生成TranslateAnimation
      *
      * @param durationMillis 动画显示时间
-     * @param start          初始位置
+     * @param start 初始位置
      */
     protected Animation getTranslateInAnimation(int start, int end, int durationMillis) {
         Animation translateAnimation = new TranslateAnimation(0, 0, start, end);
@@ -312,7 +313,7 @@ public abstract class BasePopupWindow implements BasePopup {
      * 生成TranslateAnimation
      *
      * @param durationMillis 动画显示时间
-     * @param start          初始位置
+     * @param start 初始位置
      */
     protected Animation getTranslateOutAnimation(int start, int end, int durationMillis) {
         Animation translateAnimation = new TranslateAnimation(0, 0, end, start);

@@ -37,6 +37,7 @@ import com.android.incongress.cd.conference.beans.DZBBBean;
 import com.android.incongress.cd.conference.beans.PosterBean;
 import com.android.incongress.cd.conference.beans.TitleEntry;
 import com.android.incongress.cd.conference.fragments.NewDynamicHomeFragment;
+import com.android.incongress.cd.conference.fragments.me.MindBookFragment;
 import com.android.incongress.cd.conference.fragments.me.PersonCenterFragment;
 import com.android.incongress.cd.conference.fragments.meeting_schedule.SessionDetailViewPageFragment;
 import com.android.incongress.cd.conference.fragments.message_station.MessageStationActionFragment;
@@ -60,12 +61,14 @@ import com.android.incongress.cd.conference.widget.zxing.activity.CodeUtils;
 import com.ashokvarma.bottomnavigation.BadgeItem;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.baidu.mobstat.StatService;
 import com.google.gson.Gson;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -85,6 +88,7 @@ import cn.jpush.android.api.JPushInterface;
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.util.TextUtils;
 
+import static com.android.incongress.cd.conference.fragments.me.SettingFragment.umengDeleteOauth;
 import static com.ashokvarma.bottomnavigation.BottomNavigationBar.BACKGROUND_STYLE_STATIC;
 
 /**
@@ -98,7 +102,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
     private TextView mTitleView; //标题,跳过
     private LinearLayout mCoustomRightView, mCustomTitleView, mBackButtonPanel, mHomeButtonPanel;//自定义view，返回按钮，小房子按钮
     private RelativeLayout mTitleContainer;//整个titleBar，就是上方操作栏
-    private BottomNavigationBar mNavigationBar;
+    public BottomNavigationBar mNavigationBar;
     private BadgeItem mBadgeItem;
 
     public Stack<TitleEntry> getmTitleEntries() {
@@ -250,7 +254,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
 
         //显示数据包的更新信息
         if (getIntent().getBooleanExtra("isNeedShowMsg", false)) {
-            CHYHttpClientUsage.getInstanse().doUpdateInfo(Constants.conId + "", new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
+            CHYHttpClientUsage.getInstanse().doUpdateInfo(Constants.getConId() + "", new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     super.onSuccess(statusCode, headers, response);
@@ -301,27 +305,28 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
         }
 
         //注册登录和退出登录的广播
-
+        // 获取测试设备ID
+        String testDeviceId = StatService.getTestDeviceId(this);
+// 日志输出
+        android.util.Log.d("sgqtest", "Test DeviceId : " + testDeviceId);
+        //这里对41版本强制删除用户信息，重新登录
+        if(!SharePreferenceUtils.getAppBoolean("force_login",false) && Constants.APP_VERSION == 41){
+            SharePreferenceUtils.saveAppBoolean("force_login",true);
+            umengDeleteOauth(this,SHARE_MEDIA.WEIXIN);
+            ParseUser.clearUserInfo(this);
+        }
     }
 
     /*
      * 根据用户id更新用户信息
      */
     private void initRefreshUser() {
-        String mobile = SharePreferenceUtils.getUser(Constants.USER_MOBILE);
-        String trueName = SharePreferenceUtils.getUser(Constants.USER_NAME);
-        try {
-            trueName = URLEncoder.encode(trueName, Constants.ENCODING_UTF8);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        if (!TextUtils.isEmpty(mobile)) {
-            CHYHttpClientUsage.getInstanse().doGetMobileUserInfoByMobile(mobile, trueName, LanguageUtil.getCurrentLan(HomeActivity.this), Constants.conId + "", Constants.PROJECT_NAME, new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
-                @Override
-                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                    super.onSuccess(statusCode, headers, response);
-                    if (JSONCatch.parseInt("state", response) == 1) {
-                        ParseUser.saveUserInfo(response.toString());
+        CHYHttpClientUsage.getInstanse().doGetMobileUserInfoByMobile(LanguageUtil.getCurrentLan(HomeActivity.this), Constants.getConId() + "", Constants.getFromWhere(), new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                if (JSONCatch.parseInt("state", response) == 1) {
+                    ParseUser.saveUserInfo(response.toString());
                                 /*Gson gson = new Gson();
                                 UserInfoBean user = gson.fromJson(response.toString(), UserInfoBean.class);
                                 AppApplication.setSPStringValue(Constants.USER_NAME, user.getName());
@@ -335,15 +340,14 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
                                 AppApplication.username = user.getName();
                                 AppApplication.userType = user.getUserType();
                                 AppApplication.facultyId = user.getFacultyId();*/
-                        if (mMeFragment != null) {
-                            mMeFragment.refreshInfo();
-                        }
-                    } else {
-                        startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+                    if (mMeFragment != null) {
+                        mMeFragment.refreshInfo();
                     }
+                } else {
+                    startActivity(new Intent(HomeActivity.this, LoginActivity.class));
                 }
-            });
-        }
+            }
+        });
     }
 
     @Override
@@ -401,7 +405,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
     private void initJpush() {
         final String registrationID = JPushInterface.getRegistrationID(this);
         Log.d("sgqTest", "initJpush: " + registrationID);
-        CHYHttpClientUsage.getInstanse().doSendToken(Constants.conId + "", Constants.TYPE_ANDROID, registrationID, AppApplication.userId + "", new JsonHttpResponseHandler("gbk") {
+        CHYHttpClientUsage.getInstanse().doSendToken(Constants.getConId() + "", Constants.TYPE_ANDROID, registrationID, SharePreferenceUtils.getUser(Constants.USER_ID) + "", new JsonHttpResponseHandler("gbk") {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
@@ -447,9 +451,9 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
         mMeFragment = new PersonCenterFragment();
         mNavigationBar.setBackgroundStyle(BACKGROUND_STYLE_STATIC);
         mNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);
-        mNavigationBar.setBarBackgroundColor(R.color.theme_bg);
-        mNavigationBar.setActiveColor(R.color.white);
-        mNavigationBar.setInActiveColor(R.color.theme_icon);
+        mNavigationBar.setBarBackgroundColor(R.color.white);
+        mNavigationBar.setActiveColor(R.color.theme_color);
+        mNavigationBar.setInActiveColor(R.color.unselect_color);
         mBadgeItem = new BadgeItem()
                 .setBorderWidth(12)
                 .setBackgroundColor(Color.RED)
@@ -457,11 +461,10 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
                 .setHideOnSelect(false);
         mNavigationBar
                 .addItem(new BottomNavigationItem(R.drawable.bottom_home, R.string.bottom_home))
-                .addItem(new BottomNavigationItem(R.drawable.bottom_boke, R.string.bottom_broadcast))
+                .addItem(new BottomNavigationItem(R.drawable.bottom_boke_ed, R.string.bottom_broadcast).setInactiveIconResource(R.drawable.bottom_boke))
                 .addItem(new BottomNavigationItem(R.drawable.bottom_message, R.string.bottom_message).setBadgeItem(mBadgeItem))
-                .addItem(new BottomNavigationItem(R.drawable.bottom_me, R.string.bottom_me))
+                .addItem(new BottomNavigationItem(R.drawable.bottom_me_ed, R.string.bottom_me).setInactiveIconResource(R.drawable.bottom_me))
                 .initialise();
-
         mNavigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
             @Override
             public void onTabSelected(int position) {
@@ -508,6 +511,11 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
                         case 3:
                             mHomeGuide.setVisibility(View.GONE);
                             MobclickAgent.onEvent(HomeActivity.this, Constants.EVENT_ID_PERSON);
+                            if (!AppApplication.isUserLogIn()) {
+                                mNavigationBar.selectTab(mCurrentPosition);
+                                startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+                                return;
+                            }
                             if (mMeFragment == null) {
                                 mMeFragment = new PersonCenterFragment();
                             }
@@ -563,6 +571,20 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
         transaction.hide(oldfragment);
         transaction.add(R.id.maincontainer, newfragment);
         transaction.show(newfragment);
+        transaction.addToBackStack(newfragment.getClass().getSimpleName());
+        transaction.commit();
+    }
+
+    //设置转场动画
+    public void addScheduleDetailFragment(BaseFragment oldfragment, BaseFragment newfragment, View view) {
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        newfragment.setCallBack(this);
+//        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        transaction.hide(oldfragment);
+        transaction.add(R.id.maincontainer, newfragment);
+        transaction.show(newfragment);
+        transaction.addSharedElement(view, "simple transition name");
         transaction.addToBackStack(newfragment.getClass().getSimpleName());
         transaction.commit();
     }
@@ -805,6 +827,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        listLister.clear();
         stopService(new Intent(getApplicationContext(), AdService.class));
         android.os.Debug.stopMethodTracing();
         unregisterReceiver(mMessageReceiver);
@@ -859,7 +882,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
      * 获取数据
      */
     private void getHomeNums() {
-        CHYHttpClientUsage.getInstanse().doGetLookCount(Constants.conId + "", AppApplication.userId + "", AppApplication.userType + "", AppApplication.TOKEN_IMEI, new JsonHttpResponseHandler() {
+        CHYHttpClientUsage.getInstanse().doGetLookCount(Constants.getConId() + "", AppApplication.userId + "", AppApplication.userType + "", AppApplication.TOKEN_IMEI, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
@@ -918,11 +941,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
                 String share = bundle.getString("H5SHARE");
                 long notificationId = bundle.getLong("notificationId");
                 if (!StringUtils.isEmpty(url)) {
-                    if (url.contains("?")) {
-                        url = url + "&userId=" + AppApplication.userId + "&userType=" + AppApplication.userType + "&lan=" + AppApplication.getSystemLanuageCode();
-                    } else {
-                        url = url + "?userId=" + AppApplication.userId + "&userType=" + AppApplication.userType + "&lan=" + AppApplication.getSystemLanuageCode();
-                    }
                     int type = 3;
                     if (share.equals("1")) {
                         type = 1;
@@ -997,6 +1015,12 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
                     //隐藏专家秘书
                     mDynamicHomeFragment.updateSecretaryView();
                 }
+                if (mMessageStationFragment != null) {
+
+                }
+                if (mMeFragment != null) {
+                    mMeFragment.refreshInfo();
+                }
             }
         }
     }
@@ -1012,11 +1036,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
                 JPushInterface.clearAllNotifications(AppApplication.getContext());
                 String webUrl = url;
                 if (!StringUtils.isEmpty(webUrl)) {
-                    if (webUrl.contains("?")) {
-                        webUrl = url + "&userId=" + AppApplication.userId + "&userType=" + AppApplication.userType + "&lan=" + AppApplication.getSystemLanuageCode();
-                    } else {
-                        webUrl = url + "?userId=" + AppApplication.userId + "&userType=" + AppApplication.userType + "&lan=" + AppApplication.getSystemLanuageCode();
-                    }
                     int type = 3;
                     if (share != null) {
                         if (!share.equals("1")) {
@@ -1094,7 +1113,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
                             JSONObject obj = new JSONObject(posterJson);
                             String posterId = obj.getString("posterId");
 
-                            CHYHttpClientUsage.getInstanse().doGetPosterByID(Constants.conId, posterId, AppApplication.getSystemLanuageCode(), new JsonHttpResponseHandler("gbk") {
+                            CHYHttpClientUsage.getInstanse().doGetPosterByID(Constants.getConId(), posterId, AppApplication.getSystemLanuageCode(), new JsonHttpResponseHandler("gbk") {
                                 @Override
                                 public void onStart() {
                                     super.onStart();
@@ -1121,7 +1140,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
                                     PosterBean posterBean = gson.fromJson(response.toString(), PosterBean.class);
 
                                     if (posterBean.getState() == 1) {
-                                        DZBBBean dzbb = new DZBBBean(posterBean.getPosterId(), posterBean.getPosterCode(), posterBean.getConField(), posterBean.getTitle(), posterBean.getAuthor(), posterBean.getPosterPicUrl(), posterBean.getMaxCount(), posterBean.getDisCount(), posterBean.getIsJingxuan());
+                                        DZBBBean.ArrayBean dzbb = new DZBBBean.ArrayBean(posterBean.getPosterId(), posterBean.getPosterCode(), posterBean.getAuthor(), Integer.parseInt(posterBean.getConField()), posterBean.getTitle(), posterBean.getAuthor(), posterBean.getPosterPicUrl(), posterBean.getMaxCount() + "", posterBean.getDisCount(), posterBean.getPosterPicUrl(), posterBean.getIsJingxuan());
                                         Intent intent = new Intent();
                                         intent.setClass(HomeActivity.this, PosterImageFragment.class);
                                         Bundle bundle = new Bundle();
@@ -1139,11 +1158,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
                         }
                     } else if (posterJson.contains("http://") || posterJson.contains("https://")) {
 
-                        if (posterJson.contains("?")) {
-                            posterJson = posterJson + "&userId=" + AppApplication.userId + "&userType=" + AppApplication.userType + "&lan=" + AppApplication.getSystemLanuageCode();
-                        } else {
-                            posterJson = posterJson + "?userId=" + AppApplication.userId + "&userType=" + AppApplication.userType + "&lan=" + AppApplication.getSystemLanuageCode();
-                        }
                         CollegeActivity.startCitCollegeActivity(HomeActivity.this, "", posterJson);
                     } else {
                         showDialog(posterJson, null, null, false);
@@ -1173,4 +1187,24 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
             }
         }
     }
+
+    private List<MindBookFragment.ManagerNewLister> listLister = new ArrayList<>();
+
+    //处理我的课件预约监听事件
+    public void setMyBookClick(MindBookFragment.ManagerNewLister managerNewLister) {
+        listLister.add(managerNewLister);
+    }
+
+    public List<MindBookFragment.ManagerNewLister> getMyBookClick() {
+        if (listLister.size() == 0) {
+            ToastUtils.showShorToast("对象为空");
+            return null;
+        }
+        return listLister;
+    }
+
+    public void cleanListerList() {
+        listLister.clear();
+    }
+
 }

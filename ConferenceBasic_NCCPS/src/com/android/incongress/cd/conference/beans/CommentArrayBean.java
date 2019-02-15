@@ -1,15 +1,27 @@
 package com.android.incongress.cd.conference.beans;
 
+import java.io.Serializable;
+
 /**
  * Created by Jacky on 2016/1/13.
  */
-public class CommentArrayBean {
+public class CommentArrayBean implements Serializable {
     private String content;
     private int parentId;
     private String userName;
     private String timeShow;
     private int commentId;
     private String parentName;
+    private String userImg;
+
+    public String getUserImg() {
+        return userImg;
+    }
+
+    public void setUserImg(String userImg) {
+        this.userImg = userImg;
+    }
+
     private int userId;
 
     public String getContent() {
@@ -80,7 +92,6 @@ public class CommentArrayBean {
                 ", userId=" + userId +
                 '}';
     }
-
     public CommentArrayBean() {
     }
 

@@ -13,9 +13,18 @@ public class Role extends DataSupport {
      * name : 主持人
      * enName :
      */
+    private int id;
     private int roleId;
     private String name;
     private String enName;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getRoleId() {
         return roleId;

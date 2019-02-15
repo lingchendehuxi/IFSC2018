@@ -180,7 +180,7 @@ public class MeetingBusRemindSingleFragment extends BaseFragment implements Swip
         initData();
     }
     private void initData() {
-        CHYHttpClientUsage.getInstanse().doGetBusInfo(Constants.conId,new JsonHttpResponseHandler(Constants.ENCODING_GBK){
+        CHYHttpClientUsage.getInstanse().doGetBusInfo(Constants.getConId(),new JsonHttpResponseHandler(Constants.ENCODING_GBK){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);

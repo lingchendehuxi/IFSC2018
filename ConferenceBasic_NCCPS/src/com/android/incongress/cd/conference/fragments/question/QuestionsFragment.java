@@ -84,7 +84,6 @@ public class QuestionsFragment extends BaseFragment implements View.OnClickListe
                 Drawable drawable = getActivity().getResources().getDrawable(R.drawable.scane_scane);
                 drawable.setBounds(0,0,drawable.getMinimumWidth(), drawable.getMinimumHeight());
                 tvRight.setCompoundDrawables(null,null,drawable,null);
-                fragment.setRightView(rightView);
                 action(fragment, R.string.home_wallpaper,rightView, false, false, false);
             }
         }

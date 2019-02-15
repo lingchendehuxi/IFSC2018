@@ -1,3 +1,3 @@
-include ':Library_SuperRecyclerView', ':bottom-navigation-bar', ':cardview'
+include ':Library_SuperRecyclerView', ':bottom-navigation-bar', ':cardview', ':badgeviewlib', ':YCVideoPlayerLib'
 include ':ConferenceBasic_NCCPS'
 

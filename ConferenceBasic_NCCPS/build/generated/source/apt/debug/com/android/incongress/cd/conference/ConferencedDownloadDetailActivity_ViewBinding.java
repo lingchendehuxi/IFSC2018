@@ -16,11 +16,11 @@ import java.lang.Override;
 public class ConferencedDownloadDetailActivity_ViewBinding<T extends ConferencedDownloadDetailActivity> implements Unbinder {
   protected T target;
 
-  private View view2131624320;
+  private View view2131296363;
 
-  private View view2131624319;
+  private View view2131296360;
 
-  private View view2131624153;
+  private View view2131296623;
 
   public ConferencedDownloadDetailActivity_ViewBinding(final T target, Finder finder, Object source) {
     this.target = target;
@@ -33,7 +33,7 @@ public class ConferencedDownloadDetailActivity_ViewBinding<T extends Conferenced
     target.mTvRemark = finder.findRequiredViewAsType(source, R.id.tv_remark, "field 'mTvRemark'", TextView.class);
     view = finder.findRequiredView(source, R.id.bt_handle, "field 'mBtHandle' and method 'onHandleClick'");
     target.mBtHandle = finder.castView(view, R.id.bt_handle, "field 'mBtHandle'", Button.class);
-    view2131624320 = view;
+    view2131296363 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -42,7 +42,7 @@ public class ConferencedDownloadDetailActivity_ViewBinding<T extends Conferenced
     });
     view = finder.findRequiredView(source, R.id.bt_delete, "field 'mBtDelete' and method 'onDeleteClick'");
     target.mBtDelete = finder.castView(view, R.id.bt_delete, "field 'mBtDelete'", Button.class);
-    view2131624319 = view;
+    view2131296360 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -50,7 +50,7 @@ public class ConferencedDownloadDetailActivity_ViewBinding<T extends Conferenced
       }
     });
     view = finder.findRequiredView(source, R.id.iv_back, "method 'onBackClick'");
-    view2131624153 = view;
+    view2131296623 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -72,12 +72,12 @@ public class ConferencedDownloadDetailActivity_ViewBinding<T extends Conferenced
     target.mBtHandle = null;
     target.mBtDelete = null;
 
-    view2131624320.setOnClickListener(null);
-    view2131624320 = null;
-    view2131624319.setOnClickListener(null);
-    view2131624319 = null;
-    view2131624153.setOnClickListener(null);
-    view2131624153 = null;
+    view2131296363.setOnClickListener(null);
+    view2131296363 = null;
+    view2131296360.setOnClickListener(null);
+    view2131296360 = null;
+    view2131296623.setOnClickListener(null);
+    view2131296623 = null;
 
     this.target = null;
   }

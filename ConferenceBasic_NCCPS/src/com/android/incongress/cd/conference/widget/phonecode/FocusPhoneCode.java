@@ -13,6 +13,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 
+import com.android.incongress.cd.conference.widget.popup.InputMethodUtils;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 
 import java.util.ArrayList;
@@ -308,5 +309,17 @@ public class FocusPhoneCode extends RelativeLayout{
     //设置一个监听器
     public interface FinishListener{
         void isFinish(boolean isFinish);
+    }
+    //清楚数据
+    public void clearData(){
+        codes.clear();
+        InputMethodUtils.hideSoftInput(context,et_code6);
+        et_code6.setText("");
+        et_code5.setText("");
+        et_code4.setText("");
+        et_code3.setText("");
+        et_code2.setText("");
+        et_code1.setText("");
+
     }
 }

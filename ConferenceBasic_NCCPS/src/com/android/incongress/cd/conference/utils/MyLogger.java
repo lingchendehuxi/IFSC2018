@@ -21,7 +21,7 @@ public class MyLogger
 {
     private final static boolean                logFlag         = true;
 
-    public final static String                  tag             = " " + Constants.PROJECT_NAME + " ";
+    public final static String                  tag             = " " + Constants.getFromWhere() + " ";
     private final static int                    logLevel        = Log.VERBOSE;
     private static Hashtable<String, MyLogger>  sLoggerTable    = new Hashtable<String, MyLogger>();
     private String                              mClassName;

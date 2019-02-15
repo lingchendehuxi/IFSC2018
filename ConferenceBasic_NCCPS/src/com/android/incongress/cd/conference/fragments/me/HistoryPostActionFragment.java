@@ -21,6 +21,7 @@ import com.android.incongress.cd.conference.base.BaseFragment;
 import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.beans.ScenicXiuBean;
 import com.android.incongress.cd.conference.widget.AutoSwipeRefreshLayout;
+import com.android.incongress.cd.conference.widget.StatusBarUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -64,7 +65,6 @@ public class HistoryPostActionFragment extends BaseFragment {
 
                 if (mIsFirst) {
                     mRcvPost.addItemDecoration(new HorizontalDividerItemDecoration.Builder(getActivity())
-                            .paintProvider(mAdapter)
                             .marginProvider(mAdapter)
                             .visibilityProvider(mAdapter)
                             .build());
@@ -154,7 +154,7 @@ public class HistoryPostActionFragment extends BaseFragment {
     }
 
     private void getDownData(final String lastSceneShowId) {
-        CHYHttpClientUsage.getInstanse().doGetSceneShowByUser(Constants.conId + "", lastSceneShowId + "", AppApplication.userId + "", AppApplication.userType + "", new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
+        CHYHttpClientUsage.getInstanse().doGetSceneShowByUser(Constants.getConId() + "", lastSceneShowId + "", AppApplication.userId + "", AppApplication.userType + "", new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
             @Override
             public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
@@ -192,5 +192,19 @@ public class HistoryPostActionFragment extends BaseFragment {
                 }
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
+        }
     }
 }

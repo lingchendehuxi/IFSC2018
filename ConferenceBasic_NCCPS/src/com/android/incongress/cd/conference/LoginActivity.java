@@ -12,6 +12,7 @@ import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -25,8 +26,10 @@ import com.android.incongress.cd.conference.api.CHYHttpClientUsage;
 import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.BaseActivity;
 import com.android.incongress.cd.conference.base.Constants;
+import com.android.incongress.cd.conference.beans.UserInfoEnBean;
 import com.android.incongress.cd.conference.save.ParseUser;
 import com.android.incongress.cd.conference.save.SharePreferenceUtils;
+import com.android.incongress.cd.conference.services.AdService;
 import com.android.incongress.cd.conference.utils.ActivityUtils;
 import com.android.incongress.cd.conference.utils.JSONCatch;
 import com.android.incongress.cd.conference.utils.MyLogger;
@@ -34,12 +37,21 @@ import com.android.incongress.cd.conference.utils.StringUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
 import com.android.incongress.cd.conference.widget.phonecode.CountDownButton;
 import com.android.incongress.cd.conference.widget.phonecode.FocusPhoneCode;
+import com.google.gson.Gson;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
+import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
 import com.tencent.mm.sdk.modelmsg.SendAuth;
+import com.umeng.socialize.UMAuthListener;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.UMShareConfig;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.net.URLEncoder;
+import java.util.Map;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -48,9 +60,9 @@ import cz.msebera.android.httpclient.Header;
  * 登录页面
  */
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
-    private EditText mEtMobile, mEtRegistCode, mEtFamilyName, mEtGivenName, mEtName;
+    private EditText mEtMobile, mEtRegistCode, mEtFamilyName, mEtGivenName, mEtName,mEtConfirmCode;
     private Button mBtLogin, mBtCode;
-    private TextView tv_title, tv_number_code;
+    private TextView tv_title, tv_number_code,mTvGoRegister;
     //private CheckBox mCbRegist;
     private ImageView backimg, we_login;
     private String mUserSMS, mUserMobile, mFamilyName, mGivenName;
@@ -62,6 +74,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private int mCurrentType = 1;
     private ProgressDialog mProgressDialog;
     FocusPhoneCode mFpc;
+    private String nickName, imgUrl, sex;
+    private static int LOGIN_CODE_RESULT = 1000;
+    private static int LOGIN_UPDATA_CODE_RESULT = 1001;
 
     //必须输入注册码类型，不能取消勾选框
     public static final String LOGIN_TYPE = "loginType";
@@ -106,39 +121,46 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         } catch (Exception e) {
             e.printStackTrace();
         }
+        if(AppApplication.systemLanguage == 1){
+            initChinese();
+        }else {
+            initEnglish();
+        }
+    }
 
+    private void initChinese() {
         //公共部分
-        mEtMobile = (EditText) findViewById(R.id.et_mobile);
+        mEtMobile = findViewById(R.id.et_mobile);
         //StringUtils.setViewTextSize(mEtMobile,getResources().getString(R.string.telephone_number));
         //mEtRegistCode = (EditText) findViewById(R.id.et_regist_code);
-        mBtLogin = (Button) findViewById(R.id.bt_login);
+        mBtLogin = findViewById(R.id.bt_login);
         mBtLogin.setOnClickListener(this);
-        mBtCode = (Button) findViewById(R.id.bt_getcode);
+        mBtCode = findViewById(R.id.bt_getcode);
+        mBtLogin.setEnabled(false);
+        mBtLogin.setClickable(false);
+        mBtCode.setEnabled(false);
         mBtCode.setClickable(false);
         mBtCode.setOnClickListener(this);
         //mCbRegist = (CheckBox) findViewById(R.id.cb_regist);
-        backimg = (ImageView) findViewById(R.id.iv_back);
+        backimg = findViewById(R.id.iv_back);
         backimg.setOnClickListener(this);
-        tv_title = (TextView) findViewById(R.id.tv_title);
+        tv_title = findViewById(R.id.tv_title);
         tv_title.setText(getString(R.string.incongress_login));
         mBtCode.getBackground().setAlpha(204);
         mBtLogin.getBackground().setAlpha(204);
         view_background = findViewById(R.id.view_background);
-        ll_getcode = (LinearLayout) findViewById(R.id.ll_getcode);
-        ll_login = (LinearLayout) findViewById(R.id.ll_login);
-        ll_bottom_wx = (LinearLayout) findViewById(R.id.ll_bottom_wx);
-        tv_number_code = (TextView) findViewById(R.id.tv_number_code);
-        we_login = (ImageView) findViewById(R.id.we_login);
+        ll_getcode = findViewById(R.id.ll_getcode);
+        ll_login = findViewById(R.id.ll_login);
+        ll_bottom_wx = findViewById(R.id.ll_bottom_wx);
+        tv_number_code = findViewById(R.id.tv_number_code);
+        we_login = findViewById(R.id.we_login);
         we_login.setOnClickListener(this);
-        mFpc = (FocusPhoneCode) findViewById(R.id.fpc);
-        countDownTextView = (CountDownButton) findViewById(R.id.countDownTextView);
+        mFpc = findViewById(R.id.fpc);
+        countDownTextView = findViewById(R.id.countDownTextView);
         countDownTextView.setOnClickListener(this);
         mCountryCode = "86";
-
-        if (AppApplication.systemLanguage == 1) {
-            initChinese();
-        } else {
-            initEnglish();
+        if (!StringUtils.isEmpty(mUserMobile)) {
+            mEtMobile.setText(mUserMobile);
         }
 
         mEtMobile.addTextChangedListener(new TextWatcher() {
@@ -172,14 +194,17 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     }
                 }
                 if (s.toString().length() == 13) {
+                    mBtCode.setEnabled(true);
                     mBtCode.setClickable(true);
                     mBtCode.getBackground().setAlpha(255);
                     view_background.setBackgroundColor(getResources().getColor(R.color.theme_color));
                 } else if (!TextUtils.isEmpty(s.toString())) {
+                    mBtCode.setEnabled(false);
                     mBtCode.setClickable(false);
                     mBtCode.getBackground().setAlpha(204);
                     view_background.setBackgroundColor(getResources().getColor(R.color.theme_color));
                 } else {
+                    mBtCode.setEnabled(false);
                     mBtCode.setClickable(false);
                     mBtCode.getBackground().setAlpha(204);
                     view_background.setBackgroundColor(getResources().getColor(R.color.login_gray));
@@ -212,65 +237,105 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             //mCbRegist.setVisibility(View.GONE);
         }
 
-       /* if (mCurrentType == TYPE_PROFESSOR) {
-            mCbRegist.setChecked(true);
-            mCbRegist.setClickable(false);
-            AlphaAnimation alpha = new AlphaAnimation(0f, 1f);
-            alpha.setDuration(500);
-            mLlRegistCode.startAnimation(alpha);
-            mLlRegistCode.setVisibility(View.VISIBLE);
-        }*/
 
-      /*  mCbRegist.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    AlphaAnimation alpha = new AlphaAnimation(0f, 1f);
-                    alpha.setDuration(500);
-                    mLlRegistCode.startAnimation(alpha);
-                    mLlRegistCode.setVisibility(View.VISIBLE);
-                } else {
-                    AlphaAnimation alpha = new AlphaAnimation(1f, 0f);
-                    alpha.setDuration(500);
-                    mLlRegistCode.startAnimation(alpha);
-                    alpha.setAnimationListener(new Animation.AnimationListener() {
-                        @Override
-                        public void onAnimationStart(Animation animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animation animation) {
-                            mLlRegistCode.setVisibility(View.GONE);
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animation animation) {
-
-                        }
-                    });
-                }
-            }
-        });
-*/
-
-        mBtCode.setOnClickListener(this);
         mFpc.setFinishListener(new FocusPhoneCode.FinishListener() {
             @Override
             public void isFinish(boolean isFinish) {
                 if (isFinish) {
+                    mBtLogin.setEnabled(true);
                     mBtLogin.setClickable(true);
                     mBtLogin.getBackground().setAlpha(255);
                     mUserSMS = mFpc.getPhoneCode();
+                    mBtLogin.performClick();
                 } else {
+                    mBtLogin.setEnabled(false);
                     mBtLogin.setClickable(false);
                     mBtLogin.getBackground().setAlpha(204);
                 }
             }
         });
-    }
 
+    }
     private void initEnglish() {
+        mEtMobile = (EditText) findViewById(R.id.et_mobile);
+        mEtConfirmCode = (EditText) findViewById(R.id.et_confirm);
+        mEtRegistCode = (EditText) findViewById(R.id.et_regist_code);
+        mBtLogin = (Button) findViewById(R.id.bt_login);
+        mTvGoRegister = (TextView) findViewById(R.id.tv_go_regist);
+        backimg = (ImageView) findViewById(R.id.iv_back);
+        mCountryCode = "86";
+
+        backimg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        //公共部分
+        mEtMobile.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    mEtMobile.setHintTextColor(getResources().getColor(R.color.gray));
+                } else {
+                    mEtMobile.setHintTextColor(getResources().getColor(R.color.white));
+                }
+            }
+        });
+
+        mEtConfirmCode.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    mEtConfirmCode.setHintTextColor(getResources().getColor(R.color.gray));
+                } else {
+                    mEtConfirmCode.setHintTextColor(getResources().getColor(R.color.white));
+                }
+            }
+        });
+
+
+        mEtRegistCode.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    mEtRegistCode.setHintTextColor(getResources().getColor(R.color.gray));
+                } else {
+                    mEtRegistCode.setHintTextColor(getResources().getColor(R.color.white));
+                }
+            }
+        });
+
+        //以下代码不用验证了，有些会议可能单独需要
+        if (mCurrentType == TYPE_SECRETARY) {
+            //mCbRegist.setVisibility(View.GONE);
+            mTvGoRegister.setVisibility(View.GONE);
+        }
+
+        mTvGoRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RegisterActivity.startActivity(LoginActivity.this);
+            }
+        });
+
+        mBtLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String mobile = mEtMobile.getText().toString();
+                String confirmCode = mEtConfirmCode.getText().toString();
+                String registCode = mEtRegistCode.getText().toString();
+
+                    String familyName = mEtFamilyName.getText().toString();
+                    String givenName = mEtGivenName.getText().toString();
+                    if (!StringUtils.isAllNotEmpty( mobile, confirmCode)) {
+                        ToastUtils.showShorToast(getString(R.string.login_info_empty));
+                    } else {
+//                      doLogin(givenName, mobile, confirmCode, Constants.LanguageEnglish);
+                        doLoginbyEmail(mobile, confirmCode, AppApplication.getSystemLanuageCode());
+                    }
+                }
+        });
         mEtFamilyName = (EditText) findViewById(R.id.et_family_name);
         mEtGivenName = (EditText) findViewById(R.id.et_given_name);
         //mTvCountryCode = (TextView) findViewById(R.id.tv_country_code);
@@ -297,7 +362,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             }
         });
 
-
         if (!StringUtils.isEmpty(mFamilyName)) {
             mEtFamilyName.setText(mFamilyName);
         }
@@ -310,21 +374,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         }
     }
 
-    private void initChinese() {
-
-        if (!StringUtils.isEmpty(mUserMobile)) {
-            mEtMobile.setText(mUserMobile);
-        }
-    }
-
-
     //登录成功标识符
     public static final String LOGIN_ACTION = "login";
     //退出登录标识符
     public static final String LOGOUT_ACTION = "logout";
 
-    private void doLogin___(String mobile, String sms, String lan) {
-        CHYHttpClientUsage.getInstanse().doLoginByCode(mobile, sms, lan, Constants.PROJECT_NAME, Constants.conId, new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
+    private void doLogin___(final String mobile, final String sms, String lan) {
+        CHYHttpClientUsage.getInstanse().doLoginByCode(mobile.replaceAll(" ", ""), sms, lan, Constants.getFromWhere(), new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
             public void onStart() {
                 super.onStart();
                 mProgressDialog = ProgressDialog.show(LoginActivity.this, null, "loading...");
@@ -344,27 +400,22 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-
-                MyLogger.jLog().i(response.toString());
                 try {
                     if (JSONCatch.parseInt("state", response) == 1) {
+                        if (TextUtils.isEmpty(JSONCatch.parseString("name", response)) && TextUtils.isEmpty(JSONCatch.parseString("img", response))) {
+                            Intent intent = new Intent(LoginActivity.this, LoginForUpdateInfoActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString(Constants.USER_MOBILE, mobile.replaceAll(" ", ""));
+                            bundle.putString("sms", sms);
+                            bundle.putString(Constants.USER_ID, JSONCatch.parseString(Constants.USER_ID, response));
+                            bundle.putString(Constants.USER_TYPE, JSONCatch.parseString(Constants.USER_TYPE, response));
+                            intent.putExtras(bundle);
+                            mFpc.clearData();
+                            startActivityForResult(intent, LOGIN_UPDATA_CODE_RESULT);
+                            return;
+                        }
                         ParseUser.saveUserInfo(response.toString());
-                        /*Gson gson = new Gson();
-                        UserInfoBean user = gson.fromJson(response.toString(), UserInfoBean.class);
-
-                        AppApplication.setSPStringValue(Constants.USER_NAME, user.getName());
-                        AppApplication.setSPStringValue(Constants.USER_FAMILY_NAME, user.getFamilyName());
-                        AppApplication.setSPStringValue(Constants.USER_GIVEN_NAME, user.getGiveName());
-                        AppApplication.setSPStringValue(Constants.USER_IMG, user.getImg());
-                        AppApplication.setSPStringValue(Constants.USER_MOBILE, user.getMobilePhone());
-                        AppApplication.setSPIntegerValue(Constants.USER_ID, user.getUserId());
-                        AppApplication.setSPIntegerValue(Constants.USER_FACULTYID, user.getFacultyId());
-                        AppApplication.setSPIntegerValue(Constants.USER_TYPE, user.getUserType());*/
-
                         SharePreferenceUtils.saveUserBoolean(Constants.USER_IS_LOGIN, true);
-                        /*AppApplication.userId = user.getUserId();
-                        AppApplication.username = user.getName();
-                        AppApplication.userType = user.getUserType();*/
 
 //                        setResult(RESULT_OK);
                         //发送广播
@@ -384,7 +435,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     }
 
     private void doGetSms(String mobile, String lan) {
-        CHYHttpClientUsage.getInstanse().doGetSmsMobile(Constants.conId, mobile, Constants.ConfirmTypeLogin, lan, new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
+        CHYHttpClientUsage.getInstanse().doGetSmsMobile(Constants.getConId(), mobile.replaceAll(" ", ""), Constants.ConfirmTypeLogin, lan, new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
             @Override
             public void onStart() {
                 super.onStart();
@@ -473,12 +524,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_COUNTRY_CODE) {
                 String code = data.getStringExtra("code");
                 //mTvCountryCode.setText("(+" + code + ")");
                 mCountryCode = code;
+            } else if (requestCode == LOGIN_CODE_RESULT || requestCode == LOGIN_UPDATA_CODE_RESULT) {
+                this.finish();
             }
         }
     }
@@ -495,10 +548,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 break;
             case R.id.we_login:
                 if (ActivityUtils.isWxInstall(getApplicationContext())) {
-                    final SendAuth.Req req = new SendAuth.Req();
-                    req.scope = "snsapi_userinfo";
-                    req.state = "wechat_sdk_demo_test";
-                    AppApplication.wxApi.sendReq(req);
+                    authorization(SHARE_MEDIA.WEIXIN);
                 } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
                     builder.setTitle(R.string.dialog_tips).setMessage("检测到您手机没有安装微信，请安装后使用该功能").setPositiveButton("去下载", new DialogInterface.OnClickListener() {
@@ -528,31 +578,172 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     ll_bottom_wx.setVisibility(View.VISIBLE);
                     we_login.setVisibility(View.VISIBLE);
                     ll_login.setVisibility(View.GONE);
+                    mFpc.clearData();
                 }
+
                 break;
             case R.id.bt_getcode:
-                mUserMobile = mEtMobile.getText().toString().replaceAll(" ", "");
-                if (AppApplication.systemLanguage == 1) {
-                    ll_getcode.setVisibility(View.GONE);
-                    ll_bottom_wx.setVisibility(View.INVISIBLE);
-                    we_login.setVisibility(View.INVISIBLE);
-                    ll_login.setVisibility(View.VISIBLE);
-                    countDownTextView.setCountDownMillis(30000);
-                    countDownTextView.start();
-                    tv_number_code.setText("验证码已发送   " + mUserMobile);
-                    doGetSms(mUserMobile, Constants.LanguageChinese);
-                } else {
-                    String familyName = mEtFamilyName.getText().toString();
-                    String givenName = mEtGivenName.getText().toString();
-                    /*if (!StringUtils.isAllNotEmpty( mobile, confirmCode)) {
-                        ToastUtils.showShorToast(getString(R.string.login_info_empty));
-                    } else {
-//                      doLogin(givenName, mobile, confirmCode, Constants.LanguageEnglish);
-                        doLoginByCode(familyName, givenName, "", mobile, confirmCode, "en", registCode);
-                    }*/
+                mUserMobile = mEtMobile.getText().toString().trim();
+                if (TextUtils.isEmpty(mUserMobile)) {
+                    ToastUtils.showToast("请先输入手机号");
+                    return;
                 }
+                ll_getcode.setVisibility(View.GONE);
+                ll_login.setVisibility(View.VISIBLE);
+                ll_bottom_wx.setVisibility(View.GONE);
+                we_login.setVisibility(View.GONE);
+                countDownTextView.setCountDownMillis(30000);
+                countDownTextView.start();
+                tv_number_code.setText("验证码已发送   " + mUserMobile);
+                doGetSms(mUserMobile, Constants.LanguageChinese);
                 break;
 
         }
     }
+
+    //微信登录授权
+    private void authorization(SHARE_MEDIA share_media) {
+        UMShareAPI.get(AppApplication.getContext()).getPlatformInfo(LoginActivity.this, share_media, new UMAuthListener() {
+            @Override
+            public void onStart(SHARE_MEDIA share_media) {
+                Log.d("myTest", "onStart " + "授权开始");
+            }
+
+            @Override
+            public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
+                Log.d("myTest", "onComplete: " + "授权完成");
+
+                //sdk是6.4.4的,但是获取值的时候用的是6.2以前的(access_token)才能获取到值,未知原因
+                String uid = map.get("uid");
+                String openid = map.get("openid");//微博没有
+                String unionid = map.get("unionid");//微博没有
+                String access_token = map.get("access_token");
+                String refresh_token = map.get("refresh_token");//微信,qq,微博都没有获取到
+                String expires_in = map.get("expires_in");
+                nickName = map.get("name");
+                sex = map.get("gender");
+                imgUrl = map.get("iconurl");
+                loginWX(openid);
+            }
+
+            @Override
+            public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
+                Log.d("myTest", "onError: " + "授权失败");
+            }
+
+            @Override
+            public void onCancel(SHARE_MEDIA share_media, int i) {
+                Log.d("myTest", "onCancel: " + "授权取消");
+            }
+        });
+    }
+
+    private void loginWX(String openId) {
+        CHYHttpClientUsage.getInstanse().doLoginWX(openId, new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
+            @Override
+            public void onStart() {
+                super.onStart();
+                mProgressDialog = ProgressDialog.show(LoginActivity.this, null, "loading...");
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                if ("1".equals(JSONCatch.parseString("state", response))) {
+                    if (TextUtils.isEmpty(JSONCatch.parseString("mobilePhone", response)) && !TextUtils.isEmpty(JSONCatch.parseString("openId", response))) {
+                        Intent intent = new Intent(LoginActivity.this, WxForLoginActivity.class);
+                        intent.putExtra(Constants.USER_OPENID, JSONCatch.parseString(Constants.USER_OPENID, response));
+                        intent.putExtra(Constants.USER_NICK_NAME, nickName);
+                        intent.putExtra(Constants.USER_IMG, imgUrl);
+                        intent.putExtra(Constants.USER_SEX, sex);
+                        startActivityForResult(intent, LOGIN_CODE_RESULT);
+                    } else {
+                        ParseUser.saveUserInfo(response.toString());
+                        SharePreferenceUtils.saveUserBoolean(Constants.USER_IS_LOGIN, true);
+
+                        //发送广播
+                        Intent loginIntent = new Intent();
+                        loginIntent.setAction(LOGIN_ACTION);
+                        sendBroadcast(loginIntent);
+                        finish();
+                    }
+                }
+            }
+
+            @Override
+            public void onFinish() {
+                super.onFinish();
+                mProgressDialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                ToastUtils.showShorToast(getString(R.string.server_error));
+            }
+        });
+    }
+
+    //对英文进行处理
+    private void doLoginbyEmail(final String email, final String psw, String lan){
+        CHYHttpClientUsage.getInstanse().doEmailLoginV1(email,psw,lan,new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
+            public void onStart() {
+                super.onStart();
+                mProgressDialog = ProgressDialog.show(LoginActivity.this, null, "loading...");
+            }
+
+            @Override
+            public void onFinish() {
+                super.onFinish();
+                mProgressDialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                ToastUtils.showShorToast("服务器开小差了，请稍后重试");
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+
+                MyLogger.jLog().i(response.toString());
+                try {
+                    int state = response.getInt("state");
+                    if (state == 1) {
+                        ParseUser.saveUserInfo(response.toString());
+                        SharePreferenceUtils.saveUserBoolean(Constants.USER_IS_LOGIN, true);
+                        /*UserInfoEnBean user = gson.fromJson(response.toString(), UserInfoEnBean.class);
+
+                        AppApplication.setSPBooleanValue(Constants.USER_IS_LOGIN, true);
+                        AppApplication.setSPStringValue(Constants.USER_NAME, user.getName());
+                        AppApplication.setSPStringValue(Constants.USER_IMG, user.getImg());
+                        AppApplication.setSPStringValue(Constants.USER_MOBILE, user.getEmail());
+                        AppApplication.setSPIntegerValue(Constants.USER_ID, user.getUserId());
+                        AppApplication.setSPIntegerValue(Constants.USER_TYPE, user.getUserType());
+
+                        AppApplication.setSPBooleanValue(Constants.USER_IS_LOGIN, true);
+                        AppApplication.userId = user.getUserId();
+                        AppApplication.username = user.getName();
+                        AppApplication.userType = user.getUserType();*/
+
+                        //发送广播
+                        Intent loginIntent = new Intent();
+                        loginIntent.setAction(LOGIN_ACTION);
+                        sendBroadcast(loginIntent);
+                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                        startActivity(intent);
+                        finish();
+
+                    } else {
+                        ToastUtils.showShorToast(response.getString("msg"));
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
 }

@@ -107,7 +107,7 @@ public class MeetingGuideFragment extends BaseFragment {
         @Override
         public Fragment getItem(int position) {
             if (position == 0)
-                return OnlyWebViewActionFragment.getInstance(getActivity().getString(Constants.get_MEETING_GUIDE(), Constants.conId, AppApplication.getSystemLanuageCode()));
+                return OnlyWebViewActionFragment.getInstance(getActivity().getString(Constants.get_MEETING_GUIDE(), Constants.getConId(), AppApplication.getSystemLanuageCode()));
             else
                 return mInfoFragment;
         }
@@ -134,7 +134,7 @@ public class MeetingGuideFragment extends BaseFragment {
             mShareView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ShareUtils.shareTextWithUrl(getActivity(), getString(R.string.share_info), getString(R.string.party_guide), getActivity().getString(Constants.get_MEETING_GUIDE(), Constants.conId, AppApplication.getSystemLanuageCode()), null);
+                    ShareUtils.shareTextWithUrl(getActivity(), getString(R.string.share_info), getString(R.string.party_guide), getActivity().getString(Constants.get_MEETING_GUIDE(), Constants.getConId(), AppApplication.getSystemLanuageCode()), null);
                 }
             });
         }

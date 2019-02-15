@@ -20,17 +20,42 @@ import com.mobile.incongress.cd.conference.basic.csccm.R;
  */
 public class ToastUtils {
     private static Toast toast;
+    /** Data */
+    private static String oldMsg;
+    private static long oneTime = 0;
+    private static long twoTime = 0;
+    /*********************************/
+    public static void showToast( String s){
+        if(toast==null){
+            toast =Toast.makeText(AppApplication.getInstance().getContext(), s, Toast.LENGTH_SHORT);
+            toast.show();
+            oneTime=System.currentTimeMillis();
+        }else{
+            twoTime=System.currentTimeMillis();
+            if(s.equals(oldMsg)){
+                if(twoTime-oneTime>Toast.LENGTH_SHORT){
+                    toast.show();
+                }
+            }else{
+                oldMsg = s;
+                toast.setText(s);
+                toast.show();
+            }
+        }
+        oneTime=twoTime;
+    }
+
 
     public static void showShorToast(String msg) {
-        Toast.makeText(AppApplication.getContext(), msg, Toast.LENGTH_SHORT).show();
+        Toast.makeText(AppApplication.getInstance().getContext(), msg, Toast.LENGTH_SHORT).show();
     }
 
     public static void showShorToast(int msg) {
-        Toast.makeText(AppApplication.getContext(), msg, Toast.LENGTH_SHORT).show();
+        Toast.makeText(AppApplication.getInstance().getContext(), msg, Toast.LENGTH_SHORT).show();
     }
 
     public static void showLongToast(String msg) {
-        Toast.makeText(AppApplication.getContext(), msg, Toast.LENGTH_LONG).show();
+        Toast.makeText(AppApplication.getInstance().getContext(), msg, Toast.LENGTH_LONG).show();
     }
 
     //通知框中间

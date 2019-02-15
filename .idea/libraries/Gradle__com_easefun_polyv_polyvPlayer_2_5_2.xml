@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: com.easefun.polyv:polyvPlayer-2.5.2">
+    <ANNOTATIONS>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/polyvPlayer-2.5.2.aar/e957ecc231f13524090635b216143b17/annotations.zip!/" />
+    </ANNOTATIONS>
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/polyvPlayer-2.5.2.aar/e957ecc231f13524090635b216143b17/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/polyvPlayer-2.5.2.aar/e957ecc231f13524090635b216143b17/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.easefun.polyv/polyvPlayer/2.5.2/d50d867f08be4b5f7b756243975d36a03121046c/polyvPlayer-2.5.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

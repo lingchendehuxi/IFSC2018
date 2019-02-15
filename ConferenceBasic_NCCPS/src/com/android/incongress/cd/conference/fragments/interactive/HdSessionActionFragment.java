@@ -23,6 +23,7 @@ import com.android.incongress.cd.conference.beans.HdSessionBean;
 import com.android.incongress.cd.conference.save.SharePreferenceUtils;
 import com.android.incongress.cd.conference.widget.AutoSwipeRefreshLayout;
 import com.android.incongress.cd.conference.utils.ToastUtils;
+import com.android.incongress.cd.conference.widget.StatusBarUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -49,6 +50,8 @@ public class HdSessionActionFragment extends BaseFragment {
     private AutoSwipeRefreshLayout mAsrlSessions;
 
     private String mEmptyMsg;
+    //参数为了在切换到activity返回后，fragment重新设置导航栏字体颜色
+    private boolean isBackView = true;
 
     private Handler mHandler = new Handler() {
         @Override
@@ -70,6 +73,7 @@ public class HdSessionActionFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        StatusBarUtil.setStatusBarDarkTheme(getActivity(),true);
         View view = inflater.inflate(R.layout.fragment_hd_session, null);
 
         mRcvSession = (RecyclerView) view.findViewById(R.id.rcv_sessions);
@@ -121,7 +125,7 @@ public class HdSessionActionFragment extends BaseFragment {
     }
 
     private void initDatas() {
-        CHYHttpClientUsage.getInstanse().doGetHdSession(Constants.conId + "", AppApplication.getSystemLanuageCode(), new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
+        CHYHttpClientUsage.getInstanse().doGetHdSession(Constants.getConId() + "", AppApplication.getSystemLanuageCode(), new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
                     @Override
                     public void onStart() {
                         super.onStart();
@@ -170,8 +174,25 @@ public class HdSessionActionFragment extends BaseFragment {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WebViewContainerActivity.startWebViewContainerActivity(getActivity(), getActivity().getString(Constants.get_HD_QUESTION_LIST(), Constants.conId, AppApplication.getSystemLanuageCode()), getString(R.string.question_list));
+                WebViewContainerActivity.startWebViewContainerActivity(getActivity(), getActivity().getString(Constants.get_HD_QUESTION_LIST(), Constants.getConId(), AppApplication.getSystemLanuageCode()), getString(R.string.question_list));
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(!isBackView){
+            StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
+        }
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        isBackView = hidden;
+        if(!hidden){
+            StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
+        }
     }
 }

@@ -90,7 +90,7 @@ public class LWheelView extends View{
 	/**
 	 * 文字大小
 	 */
-	private int textSize = 0;
+	private int textSize = 20;
 	/**
 	 * 间隔高度
 	 */

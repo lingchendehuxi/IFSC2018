@@ -1,18 +1,18 @@
 [
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\animator\\fragment_slide_right_exit.xml",
-        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\animator\\fragment_slide_right_exit.xml"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\animator\\fragment_slide_left_enter.xml",
+        "source": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\res\\animator\\fragment_slide_left_enter.xml"
     },
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\animator\\fragment_slide_left_exit.xml",
-        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\animator\\fragment_slide_left_exit.xml"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\animator\\fragment_slide_right_enter.xml",
+        "source": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\res\\animator\\fragment_slide_right_enter.xml"
     },
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\animator\\fragment_slide_left_enter.xml",
-        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\animator\\fragment_slide_left_enter.xml"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\animator\\fragment_slide_right_exit.xml",
+        "source": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\res\\animator\\fragment_slide_right_exit.xml"
     },
     {
-        "merged": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\animator\\fragment_slide_right_enter.xml",
-        "source": "D:\\myCode\\IFSC2018\\ConferenceBasic_NCCPS\\res\\animator\\fragment_slide_right_enter.xml"
+        "merged": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\res\\merged\\debug\\animator\\fragment_slide_left_exit.xml",
+        "source": "E:\\myCode\\IFSC2018\\IFSC2018\\ConferenceBasic_NCCPS\\res\\animator\\fragment_slide_left_exit.xml"
     }
 ]

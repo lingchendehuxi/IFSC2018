@@ -21,6 +21,7 @@ public class Meeting extends DataSupport {
      * facultyId : 151242
      * roleId : 857
      */
+    private int id;
     private int meetingId;
     private String topic;
     private String topicEn;
@@ -33,7 +34,26 @@ public class Meeting extends DataSupport {
     private int sessionGroupId;
     private String facultyId;
     private String roleId;
+    //这个是提醒的标志
     private int attention;
+    //这个是是否预约的标志
+    private boolean order;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public boolean isOrder() {
+        return order;
+    }
+
+    public void setOrder(boolean order) {
+        this.order = order;
+    }
 
     public String getTopicEn() {
         return topicEn;

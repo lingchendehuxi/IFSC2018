@@ -4,13 +4,16 @@ import android.content.Context;
 import android.os.Handler;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 /**
  * Created by 大灯泡 on 2016/1/14.
  * 显示键盘d工具类
  */
 public class InputMethodUtils {
-    /** 显示软键盘 */
+    /**
+     * 显示软键盘
+     */
     public static void showInputMethod(View view) {
         InputMethodManager imm = (InputMethodManager) view.getContext()
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -19,14 +22,18 @@ public class InputMethodUtils {
         }
     }
 
-    /** 显示或隐藏软键盘 */
+    /**
+     * 显示或隐藏软键盘
+     */
     public static void showInputMethod(Context context) {
         InputMethodManager imm = (InputMethodManager) context
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
-    /** 多少时间后显示软键盘 */
+    /**
+     * 多少时间后显示软键盘
+     */
     public static void showInputMethod(final View view, long delayMillis) {
         // 显示输入法
         new Handler().postDelayed(new Runnable() {
@@ -36,5 +43,19 @@ public class InputMethodUtils {
                 InputMethodUtils.showInputMethod(view);
             }
         }, delayMillis);
+    }
+
+    /**
+     * 隐藏键盘
+     *
+     *
+     */
+    public static void hideSoftInput(Context context, EditText et) {
+        try {
+            ((InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE)).
+                    hideSoftInputFromWindow(et.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

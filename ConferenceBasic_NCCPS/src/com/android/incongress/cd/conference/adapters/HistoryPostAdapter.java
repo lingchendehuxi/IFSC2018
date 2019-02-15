@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -25,6 +27,7 @@ import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.beans.ScenicXiuBean;
 import com.android.incongress.cd.conference.fragments.scenic_xiu.ScenicXiuFragment;
 import com.android.incongress.cd.conference.utils.PicUtils;
+import com.android.incongress.cd.conference.widget.CircleImageView;
 import com.android.incongress.cd.conference.widget.ListViewForScrollView;
 import com.android.incongress.cd.conference.widget.NoScrollGridView;
 import com.android.incongress.cd.conference.utils.CommentUtils;
@@ -51,7 +54,6 @@ import java.util.List;
  * 1新闻 2通知 3展商活动 4发帖 5企业活动 6提问
  */
 public class HistoryPostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements
-        FlexibleDividerDecoration.PaintProvider,
         FlexibleDividerDecoration.VisibilityProvider,
         HorizontalDividerItemDecoration.MarginProvider {
     @Override
@@ -64,17 +66,10 @@ public class HistoryPostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         return 0;
     }
 
-    @Override
-    public Paint dividerPaint(int position, RecyclerView parent) {
-        Paint paint = new Paint();
-        paint.setColor(mContext.getResources().getColor(R.color.recyler_gray));
-        paint.setStrokeWidth(32);
-        return paint;
-    }
 
     @Override
     public boolean shouldHideDivider(int position, RecyclerView parent) {
-            return false;
+        return true;
     }
 
     private List<ScenicXiuBean> mDownBeans;
@@ -91,14 +86,14 @@ public class HistoryPostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     private boolean mIsNoMoreData = false;
 
-    public HistoryPostAdapter(List<ScenicXiuBean> beans,Context context) {
+    public HistoryPostAdapter(List<ScenicXiuBean> beans, Context context) {
         this.mDownBeans = beans;
         this.mContext = context;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-       if (viewType == TYPE_NEW) {
+        if (viewType == TYPE_NEW) {
             //新闻 --> 没有评论和点赞
             View view = LayoutInflater.from(mContext).inflate(R.layout.item_scenic_xiu_news, parent, false);
             ViewHolder1News holder = new ViewHolder1News(view);
@@ -144,7 +139,7 @@ public class HistoryPostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
             if (!bean.getImgUrls().equals(((ViewHolder1News) holder).ivShow.getTag())) {
                 ((ViewHolder1News) holder).ivShow.setTag(bean.getImgUrls());
-                PicUtils.loadImageUrl(mContext,bean.getImgUrls(),((ViewHolder1News)holder).ivShow);
+                PicUtils.loadImageUrl(mContext, bean.getImgUrls(), ((ViewHolder1News) holder).ivShow);
             }
 
             ((ViewHolder1News) holder).tvContent.setText(bean.getTitle());
@@ -156,9 +151,14 @@ public class HistoryPostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             ((ViewHolder2Notifacation) holder).tvPublishTime.setText(bean.getTimeShow());
             if (!bean.getImgUrls().equals(((ViewHolder2Notifacation) holder).ivShow.getTag())) {
                 ((ViewHolder2Notifacation) holder).ivShow.setTag(bean.getImgUrls());
-                PicUtils.loadImageUrl(mContext,bean.getImgUrls(),((ViewHolder2Notifacation)holder).ivShow);
+                PicUtils.loadImageUrl(mContext, bean.getImgUrls(), ((ViewHolder2Notifacation) holder).ivShow);
             }
             ((ViewHolder2Notifacation) holder).tvContent.setText(bean.getTitle());
+            if (!TextUtils.isEmpty(bean.getAuthorImg())) {
+                PicUtils.loadCircleImage(mContext, bean.getAuthorImg(), ((ViewHolder2Notifacation) holder).notify_img);
+            } else {
+                ((ViewHolder2Notifacation) holder).notify_img.setImageResource(R.drawable.professor_default);
+            }
         }
         //发帖类型
         else if (viewType == TYPE_MAKE_POST) {
@@ -170,17 +170,17 @@ public class HistoryPostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             ((ViewHolder4MakePost) holder).tvCommentNum.setText(mContext.getString(R.string.xxx_comments, bean.getCommentCount() + ""));
             ((ViewHolder4MakePost) holder).tvPraiseNum.setText(mContext.getString(R.string.xxx_praise, bean.getLaudCount() + ""));
 
-            if(bean.getLaudCount() == 0) {
+            if (bean.getLaudCount() == 0) {
                 ((ViewHolder4MakePost) holder).tvPraiseNum.setVisibility(View.GONE);
             }
-            if(bean.getCommentCount() == 0) {
+            if (bean.getCommentCount() == 0) {
                 ((ViewHolder4MakePost) holder).tvCommentNum.setVisibility(View.GONE);
             }
 
             if (StringUtils.isEmpty(bean.getAuthorImg())) {
                 ((ViewHolder4MakePost) holder).civPublisherIcon.setImageResource(R.drawable.professor_default);
             } else {
-                PicUtils.loadImageUrl(mContext,bean.getImgUrls(),((ViewHolder4MakePost)holder).civPublisherIcon);
+                PicUtils.loadCircleImage(mContext, bean.getAuthorImg(), ((ViewHolder4MakePost) holder).civPublisherIcon);
             }
 
             String content = "";
@@ -205,12 +205,15 @@ public class HistoryPostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     }
                 });
             }
-
-            ((ViewHolder4MakePost) holder).ivMoreOperationClick.setVisibility(View.GONE);
+            if (((ViewHolder4MakePost) holder).ivMoreOperationClick != null) {
+                ((ViewHolder4MakePost) holder).ivMoreOperationClick.setVisibility(View.GONE);
+            }
 
             //评论列表 适配数据
-            ((ViewHolder4MakePost) holder).lvComments.setDividerHeight(0);
-            ((ViewHolder4MakePost) holder).lvComments.setAdapter(new ScenicXiuCommentAdapter(mContext, bean.getCommentArray()));
+            if (((ViewHolder4MakePost) holder).lvComments != null) {
+                ((ViewHolder4MakePost) holder).lvComments.setDividerHeight(0);
+                ((ViewHolder4MakePost) holder).lvComments.setAdapter(new ScenicXiuCommentAdapter(mContext, bean.getCommentArray()));
+            }
 
         } else if (viewType == TYPE_COMPANY_ACTIVITY) {
             final ScenicXiuBean bean = mDownBeans.get(position);
@@ -218,15 +221,17 @@ public class HistoryPostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             ((ViewHolder5CompanyActivitys) holder).tvPublisherName.setText(bean.getAuthor());
             ((ViewHolder5CompanyActivitys) holder).tvPublishTime.setText(bean.getTimeShow());
 
-            ((ViewHolder5CompanyActivitys) holder).tvCommentNum.setText( mContext.getString(R.string.xxx_comments, bean.getCommentCount() + ""));
+            ((ViewHolder5CompanyActivitys) holder).tvCommentNum.setText(mContext.getString(R.string.xxx_comments, bean.getCommentCount() + ""));
             ((ViewHolder5CompanyActivitys) holder).tvPraiseNum.setText(mContext.getString(R.string.xxx_praise, bean.getLaudCount() + ""));
-
-            Glide.with(mContext).load(bean.getAuthor()).transform(new CircleTransform(mContext)).into( ((ViewHolder5CompanyActivitys) holder).civPublisherIcon);
-
-            if(bean.getLaudCount() == 0) {
+            if (!TextUtils.isEmpty(bean.getAuthorImg())) {
+                PicUtils.loadCircleImage(mContext, bean.getAuthorImg(), ((ViewHolder5CompanyActivitys) holder).civPublisherIcon);
+            } else {
+                ((ViewHolder5CompanyActivitys) holder).civPublisherIcon.setImageResource(R.drawable.professor_default);
+            }
+            if (bean.getLaudCount() == 0) {
                 ((ViewHolder5CompanyActivitys) holder).tvPraiseNum.setVisibility(View.GONE);
             }
-            if(bean.getCommentCount() == 0) {
+            if (bean.getCommentCount() == 0) {
                 ((ViewHolder5CompanyActivitys) holder).tvCommentNum.setVisibility(View.GONE);
             }
 
@@ -282,10 +287,12 @@ public class HistoryPostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             if (bean.getLaudCount() == 0) {
                 ((ViewHolder6Question) holder).tvPraiseNum.setVisibility(View.INVISIBLE);
             } else {
-                ((ViewHolder6Question) holder).tvPraiseNum.setText(mContext.getString(R.string.xxx_praise,bean.getLaudCount() + ""));
+                ((ViewHolder6Question) holder).tvPraiseNum.setText(mContext.getString(R.string.xxx_praise, bean.getLaudCount() + ""));
             }
-
-            Glide.with(mContext).load(bean.getAuthor()).transform(new CircleTransform(mContext)).into( ((ViewHolder6Question) holder).civAuthor);
+            if (!TextUtils.isEmpty(bean.getAuthorImg()))
+                PicUtils.loadCircleImage(mContext, bean.getAuthorImg(), ((ViewHolder6Question) holder).civAuthor);
+            else
+                ((ViewHolder6Question) holder).civAuthor.setImageResource(R.drawable.professor_default);
             ((ViewHolder6Question) holder).tvAuthor.setText(bean.getAuthor());
 
             ((ViewHolder6Question) holder).ivMoreOperationClick.setVisibility(View.GONE);
@@ -327,26 +334,26 @@ public class HistoryPostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     class ViewHolder2Notifacation extends RecyclerView.ViewHolder {
-        RelativeLayout rlNotify;
         TextView tvPublisherName;
         TextView tvPublishTime;
         TextView tvContent;
         ImageView ivShow;
+        CircleImageView notify_img;
 
         public ViewHolder2Notifacation(View view) {
             super(view);
-            rlNotify = (RelativeLayout) view.findViewById(R.id.rl_notify);
             ivShow = (ImageView) view.findViewById(R.id.iv_show);
             tvPublisherName = (TextView) view.findViewById(R.id.tv_publisher_name);
             tvPublishTime = (TextView) view.findViewById(R.id.tv_publish_time);
             tvContent = (TextView) view.findViewById(R.id.tv_publish_content);
+            notify_img = view.findViewById(R.id.notify_img);
         }
     }
 
     class ViewHolder4MakePost extends RecyclerView.ViewHolder {
         NoScrollGridView gridViewPics;
         TextView tvPublisherName;
-        ImageView civPublisherIcon;
+        CircleImageView civPublisherIcon;
         TextView tvPublishTime;
         TextView tvContent;
         TextView tvCommentNum;
@@ -361,7 +368,7 @@ public class HistoryPostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             super(view);
             tvPublisherName = (TextView) view.findViewById(R.id.tv_publisher_name);
             gridViewPics = (NoScrollGridView) view.findViewById(R.id.gv_pics);
-            civPublisherIcon = (ImageView) view.findViewById(R.id.civ_publisher);
+            civPublisherIcon = view.findViewById(R.id.civ_publisher);
             tvPublishTime = (TextView) view.findViewById(R.id.tv_publish_time);
             tvContent = (TextView) view.findViewById(R.id.tv_publish_content);
             tvCommentNum = (TextView) view.findViewById(R.id.tv_comment_num);
@@ -468,7 +475,7 @@ public class HistoryPostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     /**
      * 评论 1,正常评论，2 对评论进行回复
      */
-    private void doComment(int type, int position, int sceneShowId,String userId,String parentName, int commentId, View view) {
+    private void doComment(int type, int position, int sceneShowId, String userId, String parentName, int commentId, View view) {
         Intent intent;
         //未登陆
         if (AppApplication.userType == 0) {

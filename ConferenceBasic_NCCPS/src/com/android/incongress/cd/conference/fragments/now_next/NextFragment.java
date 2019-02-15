@@ -23,6 +23,7 @@ import com.android.incongress.cd.conference.model.Session;
 import com.android.incongress.cd.conference.model.Speaker;
 import com.android.incongress.cd.conference.save.SharePreferenceUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
+import com.android.incongress.cd.conference.widget.StatusBarUtil;
 import com.android.incongress.cd.conference.widget.popup.BasePopupWindow;
 import com.android.incongress.cd.conference.widget.popup.ChooseRomPopupWindow;
 import com.android.incongress.cd.conference.utils.CommonUtils;
@@ -67,9 +68,12 @@ public class NextFragment extends BaseFragment {
     private String[] mRoleWithNamess;
     private SuperRecyclerView mRvNowSession;
     private NextAdapter mNextAdapter;
+    //参数为了在切换到activity返回后，fragment重新设置导航栏字体颜色
+    private boolean isBackView = true;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        StatusBarUtil.setStatusBarDarkTheme(getActivity(),true);
         View view = inflater.inflate(R.layout.fragment_next, container, false);
         mLlTimeRoom = (RelativeLayout) view.findViewById(R.id.ll_time_room);
         mTvTime = (TextView) view.findViewById(R.id.tv_time);
@@ -158,9 +162,7 @@ public class NextFragment extends BaseFragment {
 
                             SessionDetailViewPageFragment detail = new SessionDetailViewPageFragment();
                             detail.setArguments(tartgetPosition, mNextSessionsByRoomAndTime);
-                            View moreView = CommonUtils.initView(getActivity(), R.layout.titlebar_session_detail_more);
-                            detail.setRightListener(moreView);
-                            action(detail, R.string.meeting_schedule_detail_title, moreView, false, false, false);
+                            action(detail, R.string.meeting_schedule_detail_title, null, false, false, false);
                         }
                     });
                 } else {
@@ -382,5 +384,22 @@ public class NextFragment extends BaseFragment {
             }
         }
         return isContain;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(!isBackView){
+            StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
+        }
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        isBackView = hidden;
+        if(!hidden){
+            StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
+        }
     }
 }

@@ -70,11 +70,11 @@ public class MakeQuestionFragment extends BaseFragment {
 
 
     public void setMeetingQuestionInfo(String speakerName, int speakerId, int meetingId, String meetingName) {
-            mCurrentQuestionType = QUESTION_MEETING;
-            mSpeakerName = speakerName;
-            mSpeakerId = speakerId;
-            mMeetingId = meetingId;
-            mMeetingName = meetingName;
+        mCurrentQuestionType = QUESTION_MEETING;
+        mSpeakerName = speakerName;
+        mSpeakerId = speakerId;
+        mMeetingId = meetingId;
+        mMeetingName = meetingName;
     }
 
     public void setPosterQuestionInfo(String posterTitle, int posterId, String authorName) {
@@ -133,7 +133,7 @@ public class MakeQuestionFragment extends BaseFragment {
             meetingName = URLEncoder.encode(mMeetingName, Constants.ENCODING_UTF8);
 
             if (!StringUtils.isEmpty(content)) {
-                CHYHttpClientUsage.getInstanse().doCreateSceneShowQuestionNew(Constants.conId + "", AppApplication.userId + "", AppApplication.userType + "", content, mSpeakerId + "",
+                CHYHttpClientUsage.getInstanse().doCreateSceneShowQuestionNew(content, mSpeakerId + "",
                         mMeetingId, meetingName, new JsonHttpResponseHandler() {
                             @Override
                             public void onStart() {
@@ -197,10 +197,10 @@ public class MakeQuestionFragment extends BaseFragment {
 
             if (!StringUtils.isEmpty(content)) {
 
-                if(StringUtils.isEmpty(email)) {
+                if (StringUtils.isEmpty(email)) {
                     ToastUtils.showShorToast("请输入您的email地址");
-                }else{
-                    CHYHttpClientUsage.getInstanse().doCreatePosterQuestion(Constants.conId, AppApplication.userId, AppApplication.userType, posterTitle, content,
+                } else {
+                    CHYHttpClientUsage.getInstanse().doCreatePosterQuestion(Constants.getConId(), AppApplication.userId, AppApplication.userType, posterTitle, content,
                             mPosterId, authorName, email, new JsonHttpResponseHandler() {
                                 @Override
                                 public void onStart() {

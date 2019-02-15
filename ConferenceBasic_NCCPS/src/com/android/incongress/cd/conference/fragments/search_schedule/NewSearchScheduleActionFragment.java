@@ -133,6 +133,6 @@ public class NewSearchScheduleActionFragment extends BaseFragment {
     @Override
     public void onPause() {
         super.onPause();
-        MobclickAgent.onPageStart(Constants.FRAGMENT_SEARCHSCHEDULE);
+        MobclickAgent.onPageEnd(Constants.FRAGMENT_SEARCHSCHEDULE);
     }
 }

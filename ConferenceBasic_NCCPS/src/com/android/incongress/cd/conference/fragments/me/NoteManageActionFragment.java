@@ -15,6 +15,7 @@ import com.android.incongress.cd.conference.base.BaseFragment;
 import com.android.incongress.cd.conference.model.ConferenceDbUtils;
 import com.android.incongress.cd.conference.model.Note;
 import com.android.incongress.cd.conference.utils.CommonUtils;
+import com.android.incongress.cd.conference.widget.StatusBarUtil;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 
 import java.util.List;
@@ -75,5 +76,19 @@ public class NoteManageActionFragment extends BaseFragment {
         }
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
+        }
     }
 }

@@ -54,8 +54,10 @@ public class SearchRoomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             holder.itemView.setTag(null);
             if(mCurrentChoosePosition == 0) {
                 ((SearchAllRoomHolder)holder).tvAllRoom.setTextColor(mContext.getResources().getColor(R.color.theme_color));
+                ((SearchAllRoomHolder)holder).tvAllRoom.setBackground(mContext.getResources().getDrawable(R.drawable.bg_segment_selected));
             }else {
                 ((SearchAllRoomHolder)holder).tvAllRoom.setTextColor(mContext.getResources().getColor(R.color.search_normal_color));
+                ((SearchAllRoomHolder)holder).tvAllRoom.setBackground(mContext.getResources().getDrawable(R.drawable.bg_segment_unselected));
             }
         }else {
             Class bean = mClasses.get(position-1);
@@ -75,11 +77,11 @@ public class SearchRoomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 //            ((SearchRoomHolder)holder).tvRoom.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DensityUtil.dip2px(mContext, 42)));
             ((SearchRoomHolder)holder).tvRoom.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             ((SearchRoomHolder)holder).tvRoom.setTextColor(mContext.getResources().getColor(R.color.search_normal_color));
-            ((SearchRoomHolder)holder).tvRoom.setBackgroundColor(mContext.getResources().getColor(R.color.alpha_gray));
+            ((SearchRoomHolder)holder).tvRoom.setBackground(mContext.getResources().getDrawable(R.drawable.bg_segment_unselected));
 
             if (mCurrentChoosePosition == position) {
                 ((SearchRoomHolder)holder).tvRoom.setTextColor(mContext.getResources().getColor(R.color.theme_color));
-                ((SearchRoomHolder)holder).tvRoom.setBackgroundColor((mContext.getResources().getColor(R.color.alpha_more_theme_color)));
+                ((SearchRoomHolder)holder).tvRoom.setBackground((mContext.getResources().getDrawable(R.drawable.bg_segment_selected)));
             }
         }
     }

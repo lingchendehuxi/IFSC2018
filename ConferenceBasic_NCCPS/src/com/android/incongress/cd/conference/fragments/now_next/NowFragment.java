@@ -24,6 +24,7 @@ import com.android.incongress.cd.conference.model.Session;
 import com.android.incongress.cd.conference.model.Speaker;
 import com.android.incongress.cd.conference.save.SharePreferenceUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
+import com.android.incongress.cd.conference.widget.StatusBarUtil;
 import com.android.incongress.cd.conference.widget.popup.BasePopupWindow;
 import com.android.incongress.cd.conference.widget.popup.ChooseRomPopupWindow;
 import com.android.incongress.cd.conference.utils.CommonUtils;
@@ -46,8 +47,8 @@ import java.util.Set;
 
 public class NowFragment extends BaseFragment {
     //当前时间，以及选择的会议室
-    private TextView mTvTime,mTvRoom;
-    private String mCurrentTime, mCurrentRoom,mCurrentDay;
+    private TextView mTvTime, mTvRoom;
+    private String mCurrentTime, mCurrentRoom, mCurrentDay;
     private int[] mCurrenntHourAndMinute = new int[2]; //分别放当前的小时和分钟
 
     /**
@@ -65,12 +66,15 @@ public class NowFragment extends BaseFragment {
     private List<Session> mNowSessionsByRoom;
     private List<Session> mNowSessionsByRoomAndTime;
     private Map<Integer, List<Meeting>> mMeetingsBySession;
-    private String[]  mRoleWithNamess;
+    private String[] mRoleWithNamess;
     private SuperRecyclerView mRvNowSession;
     private NowAdapter mNowAdapter;
+    //参数为了在切换到activity返回后，fragment重新设置导航栏字体颜色
+    private boolean isBackView = true;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        StatusBarUtil.setStatusBarDarkTheme(getActivity(),true);
         View view = inflater.inflate(R.layout.fragment_now, container, false);
         mLlTimeRoom = (ImageView) view.findViewById(R.id.fg_img);
         mTvTime = (TextView) view.findViewById(R.id.tv_time);
@@ -82,31 +86,31 @@ public class NowFragment extends BaseFragment {
         mTvRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                open = SharePreferenceUtils.getAppBoolean("popup",true);
-                if(open){
-                    if(mRoomPopupWindow == null) {
-                        SharePreferenceUtils.saveAppBoolean("popup",false);
+                open = SharePreferenceUtils.getAppBoolean("popup", true);
+                if (open) {
+                    if (mRoomPopupWindow == null) {
+                        SharePreferenceUtils.saveAppBoolean("popup", false);
                         mRoomPopupWindow = new ChooseRomPopupWindow(getActivity());
 
                         mRoomPopupWindow.setOnDismissListener(new BasePopupWindow.OnDismissListener() {
                             @Override
                             public void onDismiss() {
-                                SharePreferenceUtils.saveAppBoolean("popup",true);
-                               if(look){
-                                   mChooseClasses = mRoomPopupWindow.getCurrentClass();
-                                   getSessionsAndMeetings(mChooseClasses);
-                               }
+                                SharePreferenceUtils.saveAppBoolean("popup", true);
+                                if (look) {
+                                    mChooseClasses = mRoomPopupWindow.getCurrentClass();
+                                    getSessionsAndMeetings(mChooseClasses);
+                                }
                             }
                         });
-                    }else{
-                        SharePreferenceUtils.saveAppBoolean("popup",false);
+                    } else {
+                        SharePreferenceUtils.saveAppBoolean("popup", false);
                     }
                     mRoomPopupWindow.showPopupWindowBelowView(mLlTimeRoom);
-                }else{
-                    if(mRoomPopupWindow.getCurrentClass().size()==0){
+                } else {
+                    if (mRoomPopupWindow.getCurrentClass().size() == 0) {
                         ToastUtils.showLongToast("请选择至少一个会议室");
-                    }else{
-                        SharePreferenceUtils.saveAppBoolean("popup",true);
+                    } else {
+                        SharePreferenceUtils.saveAppBoolean("popup", true);
                         mRoomPopupWindow.dismiss();
                     }
                 }
@@ -118,7 +122,7 @@ public class NowFragment extends BaseFragment {
     }
 
     private void getSessionsAndMeetings(final List<Class> classes) {
-        new AsyncTask<Void,Void,Void>(){
+        new AsyncTask<Void, Void, Void>() {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
@@ -132,7 +136,7 @@ public class NowFragment extends BaseFragment {
                 //mTvTime.setText(getString(R.string.current_time, mCurrentTime));
                 mTvTime.setText(mCurrentRoom);
 
-                if(mMeetingsBySession.size() > 0 && mMeetingsBySession.size() == mNowSessionsByRoomAndTime.size()) {
+                if (mMeetingsBySession.size() > 0 && mMeetingsBySession.size() == mNowSessionsByRoomAndTime.size()) {
                     mNowAdapter = new NowAdapter(mNowSessionsByRoomAndTime, mRoleWithNamess, mAllClasses, mMeetingsBySession, mCurrentDay, mCurrenntHourAndMinute, getActivity());
                     mRvNowSession.setLayoutManager(new LinearLayoutManager(getActivity()));
                     mRvNowSession.setAdapter(mNowAdapter);
@@ -149,12 +153,10 @@ public class NowFragment extends BaseFragment {
 
                             SessionDetailViewPageFragment detail = new SessionDetailViewPageFragment();
                             detail.setArguments(tartgetPosition, mNowSessionsByRoomAndTime);
-                            View moreView = CommonUtils.initView(getActivity(), R.layout.titlebar_session_detail_more);
-                            detail.setRightListener(moreView);
-                            action(detail, R.string.meeting_schedule_detail_title, moreView, false, false, false);
+                            action(detail, R.string.meeting_schedule_detail_title, null, false, false, false);
                         }
                     });
-                }else {
+                } else {
                     mNowAdapter = new NowAdapter(mNowSessionsByRoomAndTime, mRoleWithNamess, mAllClasses, mMeetingsBySession, mCurrentDay, mCurrenntHourAndMinute, getActivity());
                     mRvNowSession.setLayoutManager(new LinearLayoutManager(getActivity()));
                     mRvNowSession.setAdapter(mNowAdapter);
@@ -167,16 +169,16 @@ public class NowFragment extends BaseFragment {
                 //时间获取
                 mCurrentDay = DateUtil.getNowDate(DateUtil.DEFAULT);
                 mCurrenntHourAndMinute = getHourAndTime(DateUtil.getNowTime());
-                mCurrentTime = mCurrenntHourAndMinute[0] +":" + mCurrenntHourAndMinute[1] + " " +getPMorAM(mCurrenntHourAndMinute);
+                mCurrentTime = mCurrenntHourAndMinute[0] + ":" + mCurrenntHourAndMinute[1] + " " + getPMorAM(mCurrenntHourAndMinute);
                 mCurrentTime = DateUtil.getNowTime();
 
                 //会议室获取
                 mCurrentRoom = "";
-                if(mChooseClasses== null || mChooseClasses.size() == 0) {
+                if (mChooseClasses == null || mChooseClasses.size() == 0) {
                     mCurrentRoom = getString(R.string.all_room);
-                }else{
+                } else {
                     for (int i = 0; i < mChooseClasses.size(); i++) {
-                        mCurrentRoom  = mCurrentRoom + "，" + mChooseClasses.get(i).getClassesCode();
+                        mCurrentRoom = mCurrentRoom + "，" + mChooseClasses.get(i).getClassesCode();
                     }
                     mCurrentRoom = mCurrentRoom.substring(1);
                 }
@@ -187,21 +189,21 @@ public class NowFragment extends BaseFragment {
                 mNowSessions = ConferenceDbUtils.getSessionsBySessionDayOrderByClassIdAndStartTime(mCurrentDay);
                 mNowSessionsByRoom = new ArrayList<>();
 
-                if(classes != null && classes.size() > 0) {
-                    for (int i = 0; i <mNowSessions.size() ; i++) {
+                if (classes != null && classes.size() > 0) {
+                    for (int i = 0; i < mNowSessions.size(); i++) {
                         Session session = mNowSessions.get(i);
                         boolean isInClass = false;
-                        for(int j = 0; j< classes.size(); j++) {
-                            if(session.getClassesId() == classes.get(j).getClassesId()) {
+                        for (int j = 0; j < classes.size(); j++) {
+                            if (session.getClassesId() == classes.get(j).getClassesId()) {
                                 isInClass = true;
                                 break;
                             }
                         }
-                        if(isInClass) {
+                        if (isInClass) {
                             mNowSessionsByRoom.add(session);
                         }
                     }
-                }else {
+                } else {
                     mNowSessionsByRoom.addAll(mNowSessions);
                 }
 
@@ -209,7 +211,7 @@ public class NowFragment extends BaseFragment {
                 mNowSessionsByRoomAndTime = new ArrayList<>();
                 for (int i = 0; i < mNowSessionsByRoom.size(); i++) {
                     Session session = mNowSessionsByRoom.get(i);
-                    if(isInTime(mCurrenntHourAndMinute, getHourAndTime(session.getStartTime()), getHourAndTime(session.getEndTime()))) {
+                    if (isInTime(mCurrenntHourAndMinute, getHourAndTime(session.getStartTime()), getHourAndTime(session.getEndTime()))) {
                         mNowSessionsByRoomAndTime.add(session);
                     }
                 }
@@ -222,22 +224,22 @@ public class NowFragment extends BaseFragment {
                         Session session = mNowSessionsByRoomAndTime.get(i);
 
                         List<Meeting> meetingBySessionGroupId = ConferenceDbUtils.getMeetingBySessionGroupId(session.getSessionGroupId() + "");
-                        mMeetingsBySession.put(i,meetingBySessionGroupId);
+                        mMeetingsBySession.put(i, meetingBySessionGroupId);
 
                         String[] facultyIds = session.getFacultyId().split(",");
                         String[] roleIds = session.getRoleId().split(",");
 
-                        if(!TextUtils.isEmpty(session.getFacultyId()) &&facultyIds.length > 0 && facultyIds.length == roleIds.length) {
+                        if (!TextUtils.isEmpty(session.getFacultyId()) && facultyIds.length > 0 && facultyIds.length == roleIds.length) {
                             //保存讲者信息，并保存对应讲者的身份类型
                             List<Speaker> speakers = new ArrayList<>();
-                            for(int j=0; j< facultyIds.length; j++) {
+                            for (int j = 0; j < facultyIds.length; j++) {
                                 Speaker temp = new Speaker();
                                 String facultyId = facultyIds[j];
                                 String roleId = roleIds[j];
                                 temp.setSpeakerId(Integer.parseInt(facultyId));
                                 temp.setType(Integer.parseInt(roleId));
                                 Speaker searchSpeaker = ConferenceDbUtils.getSpeakerById(facultyId);
-                                if(searchSpeaker == null)
+                                if (searchSpeaker == null)
                                     continue;
                                 temp.setSpeakerName(searchSpeaker.getSpeakerName());
                                 speakers.add(temp);
@@ -245,41 +247,41 @@ public class NowFragment extends BaseFragment {
 
                             //获取唯一，不重复的身份类型
                             Set<String> noRepeatRolesSet = new HashSet<>();
-                            for(int j=0; j< roleIds.length; j++) {
+                            for (int j = 0; j < roleIds.length; j++) {
                                 noRepeatRolesSet.add(roleIds[j]);
                             }
                             String[] noRepeatRoles = noRepeatRolesSet.toArray(new String[noRepeatRolesSet.size()]);
 
                             //将对应身份的人加入
-                            for(int j=0; j<noRepeatRoles.length; j++) {
+                            for (int j = 0; j < noRepeatRoles.length; j++) {
                                 String roleId = noRepeatRoles[j];
                                 Role role = ConferenceDbUtils.getRoleById(roleId);
-                                if(role == null)
+                                if (role == null)
                                     continue;
-                                String roleWithName =role.getName() +":";
-                                for(int z =0; z < speakers.size(); z++) {
+                                String roleWithName = role.getName() + ":";
+                                for (int z = 0; z < speakers.size(); z++) {
                                     Speaker speaker = speakers.get(z);
-                                    if(roleId.equals(speaker.getType()+"")) {
-                                        if(roleWithName.endsWith(":")) {
+                                    if (roleId.equals(speaker.getType() + "")) {
+                                        if (roleWithName.endsWith(":")) {
                                             roleWithName = roleWithName + speakers.get(z).getSpeakerName();
-                                        }else {
-                                            roleWithName = roleWithName +"," + speakers.get(z).getSpeakerName();
+                                        } else {
+                                            roleWithName = roleWithName + "," + speakers.get(z).getSpeakerName();
                                         }
                                     }
                                 }
 
-                                if(TextUtils.isEmpty(mRoleWithNamess[i])) {
+                                if (TextUtils.isEmpty(mRoleWithNamess[i])) {
                                     mRoleWithNamess[i] = roleWithName;
-                                }else {
-                                    mRoleWithNamess[i] = mRoleWithNamess[i]  +"#@#" + roleWithName;
+                                } else {
+                                    mRoleWithNamess[i] = mRoleWithNamess[i] + "#@#" + roleWithName;
                                 }
                             }
-                        }else {
+                        } else {
                             //没有就放空字符串
                             mRoleWithNamess[i] = "";
                         }
                     }
-                }else {
+                } else {
 
                 }
 
@@ -290,29 +292,30 @@ public class NowFragment extends BaseFragment {
 
     /**
      * 获取当前时间，并存入int数组中
+     *
      * @param time
      * @return
      */
     private int[] getHourAndTime(String time) {
-        int[] tempHourAndMinute = {0,0};
-        if(TextUtils.isEmpty(time))
+        int[] tempHourAndMinute = {0, 0};
+        if (TextUtils.isEmpty(time))
             return tempHourAndMinute;
         try {
-            String hour = time.substring(0,2);
-            if(!TextUtils.isEmpty(hour)) {
+            String hour = time.substring(0, 2);
+            if (!TextUtils.isEmpty(hour)) {
                 int tempHour = Integer.parseInt(hour);
                 tempHourAndMinute[0] = tempHour;
-            }else {
+            } else {
                 tempHourAndMinute[0] = 0;
             }
-            String minute = time.substring(3,5);
-            if(!TextUtils.isEmpty(minute)) {
+            String minute = time.substring(3, 5);
+            if (!TextUtils.isEmpty(minute)) {
                 int tempMinute = Integer.parseInt(minute);
                 tempHourAndMinute[1] = tempMinute;
-            }else {
+            } else {
                 tempHourAndMinute[1] = 0;
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             LogUtils.println("time parse error:" + e.getMessage());
         }
 
@@ -321,41 +324,62 @@ public class NowFragment extends BaseFragment {
 
     /**
      * 获取时间是AM还是PM
+     *
      * @param hourAndMinute
      * @return
      */
     private String getPMorAM(int[] hourAndMinute) {
         int hour = hourAndMinute[0];
-        if(hour >= 12) {
-           return "PM";
+        if (hour >= 12) {
+            return "PM";
         }
-        return  "AM";
+        return "AM";
     }
 
     /**
      * 判断是否在指定时间范围内
+     *
      * @param currentHourAndMinute
      * @param startHourAndMinute
      * @param endHourAndMinute
      * @return
      */
-    private boolean isInTime(int[] currentHourAndMinute , int[] startHourAndMinute, int[] endHourAndMinute) {
-        Date currentData = DateUtil.getDate(mCurrentDay +" " + currentHourAndMinute[0] +":" + currentHourAndMinute[1], DateUtil.DEFAULT_MINUTE);
-        Date startData = DateUtil.getDate(mCurrentDay +" " + startHourAndMinute[0] +":" + startHourAndMinute[1], DateUtil.DEFAULT_MINUTE);
-        Date endData = DateUtil.getDate(mCurrentDay +" " + endHourAndMinute[0] +":" + endHourAndMinute[1], DateUtil.DEFAULT_MINUTE);
+    private boolean isInTime(int[] currentHourAndMinute, int[] startHourAndMinute, int[] endHourAndMinute) {
+        Date currentData = DateUtil.getDate(mCurrentDay + " " + currentHourAndMinute[0] + ":" + currentHourAndMinute[1], DateUtil.DEFAULT_MINUTE);
+        Date startData = DateUtil.getDate(mCurrentDay + " " + startHourAndMinute[0] + ":" + startHourAndMinute[1], DateUtil.DEFAULT_MINUTE);
+        Date endData = DateUtil.getDate(mCurrentDay + " " + endHourAndMinute[0] + ":" + endHourAndMinute[1], DateUtil.DEFAULT_MINUTE);
 
-        if(currentData.getTime() >= startData.getTime() && currentData.getTime() <= endData.getTime())
+        if (currentData.getTime() >= startData.getTime() && currentData.getTime() <= endData.getTime())
             return true;
         return false;
     }
-private boolean look = true;
+
+    private boolean look = true;
+
     @Override
     public void onStop() {
         super.onStop();
         look = false;
-        SharePreferenceUtils.saveAppBoolean("popup",true);
-        if(mRoomPopupWindow != null){
+        SharePreferenceUtils.saveAppBoolean("popup", true);
+        if (mRoomPopupWindow != null) {
             mRoomPopupWindow.dismiss();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(!isBackView){
+            StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
+        }
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        isBackView = hidden;
+        if(!hidden){
+            StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
         }
     }
 }

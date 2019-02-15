@@ -1,0 +1,26 @@
+{
+    "logs": [
+        {
+            "outputFile": "F:\\modify\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-zh\\values-zh.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\Administrator\\.gradle\\caches\\transforms-1\\files-1.1\\xrecyclerview-1.2.7.aar\\c6eba856604239ab09a39934d1898c98\\res\\values-zh\\values-zh.xml",
+                    "from": {
+                        "startLines": "4,5,6,7,8,9,10",
+                        "startColumns": "4,4,4,4,4,4,4",
+                        "startOffsets": "177,238,302,364,417,464,510",
+                        "endColumns": "60,63,61,52,46,45,46",
+                        "endOffsets": "233,297,359,412,459,505,552"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6,7,8",
+                        "startColumns": "4,4,4,4,4,4,4",
+                        "startOffsets": "55,116,180,242,295,342,388",
+                        "endColumns": "60,63,61,52,46,45,46",
+                        "endOffsets": "111,175,237,290,337,383,430"
+                    }
+                }
+            ]
+        }
+    ]
+}

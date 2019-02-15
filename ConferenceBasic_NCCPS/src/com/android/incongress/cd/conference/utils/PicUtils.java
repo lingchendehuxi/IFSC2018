@@ -12,6 +12,11 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 
 import java.io.BufferedOutputStream;
@@ -94,6 +99,18 @@ public class PicUtils {
     //使用glide简单加载file图片
     public static void loadImageFile(Context context, File file, ImageView view){
         Glide.with(context).load(file).error(R.drawable.img_error).placeholder(R.drawable.default_load_bg).into(view);
+    }
+    public static void loadCircleImage(Context context,String url,final ImageView view){
+        Glide.with(context).load(url)
+                .placeholder(R.drawable.professor_default)
+                .error(R.drawable.professor_default)
+                .into(new SimpleTarget<GlideDrawable>() {
+                    @Override
+                    public void onResourceReady(GlideDrawable resource,
+                                                GlideAnimation<? super GlideDrawable> glideAnimation) {
+                        view.setImageDrawable(resource);
+                    }
+                });
     }
 
 }

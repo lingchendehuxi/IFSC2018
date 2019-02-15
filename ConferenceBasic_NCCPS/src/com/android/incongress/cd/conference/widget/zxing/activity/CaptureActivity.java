@@ -75,6 +75,6 @@ public class CaptureActivity extends FragmentActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        MobclickAgent.onPageStart(Constants.ACTIVITY_SCANE);
+        MobclickAgent.onPageEnd(Constants.ACTIVITY_SCANE);
     }
 }

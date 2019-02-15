@@ -17,6 +17,7 @@ public class Class extends DataSupport{
      * level : 0
      * mapName :
      */
+    private int id;
     private int classesCapacity;
     private String classesCode;
 
@@ -26,6 +27,14 @@ public class Class extends DataSupport{
     private int level;
     private String mapName;
     private String classCodeEn;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getClassCodeEn() {
         return classCodeEn;

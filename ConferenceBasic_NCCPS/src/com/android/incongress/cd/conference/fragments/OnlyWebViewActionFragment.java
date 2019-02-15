@@ -25,6 +25,7 @@ import com.android.incongress.cd.conference.base.BaseFragment;
 import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.utils.ProgressWebView;
 import com.android.incongress.cd.conference.utils.ShareUtils;
+import com.android.incongress.cd.conference.widget.StatusBarUtil;
 import com.bm.library.PhotoView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
@@ -40,6 +41,8 @@ public class OnlyWebViewActionFragment extends BaseFragment {
     private ProgressWebView mOnlyWebview;
     private PhotoView mPhotoView;
     private String mUrl;
+    //参数为了在切换到activity返回后，fragment重新设置导航栏字体颜色
+    private boolean isBackView = true;
 
     private static final String BUNDLE_URL = "url";
 
@@ -63,6 +66,7 @@ public class OnlyWebViewActionFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        StatusBarUtil.setStatusBarDarkTheme(getActivity(),true);
         View view = inflater.inflate(R.layout.fragment_onlywebview, null);
         mOnlyWebview = (ProgressWebView) view.findViewById(R.id.wv_only);
         mPhotoView = (PhotoView) view.findViewById(R.id.photoview);
@@ -102,7 +106,7 @@ public class OnlyWebViewActionFragment extends BaseFragment {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ShareUtils.shareTextWithUrl(getActivity(), getString(R.string.share_info), getString(R.string.party_guide), getActivity().getString(Constants.get_MEETING_GUIDE(), Constants.conId, AppApplication.getSystemLanuageCode()), null);
+                    ShareUtils.shareTextWithUrl(getActivity(), getString(R.string.share_info), getString(R.string.party_guide), getActivity().getString(Constants.get_MEETING_GUIDE(), Constants.getConId(), AppApplication.getSystemLanuageCode()), null);
                 }
             });
         }
@@ -219,4 +223,21 @@ public class OnlyWebViewActionFragment extends BaseFragment {
             }
         }
     };
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(!isBackView){
+            StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
+        }
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        isBackView = hidden;
+        if(!hidden){
+            StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
+        }
+    }
 }

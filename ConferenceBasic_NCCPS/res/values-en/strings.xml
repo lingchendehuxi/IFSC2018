@@ -12,6 +12,7 @@
     <string name="system_nomessage">You have no notifications</string>
     <string name="personal_nomessage">You have no messages</string>
     <string name="look_all">View All</string>
+    <string name="look_detail">View Detail</string>
     <string name="bottom_tab_home">Home</string>
     <string name="bottom_tab_broadcast">Podcast</string>
     <string name="bottom_tab_me">Personal Center</string>
@@ -19,6 +20,9 @@
     <string name="bus_tips">No data</string>
     <string name="photo_tips">Please Try Again</string>
     <string name="question_meeting">Program</string>
+    <string name="live">Live</string>
+    <string name="schedule">Schedule</string>
+    <string name="bus">Bus</string>
     <string name="question_post">Poster</string>
 
     <string name="question_poster_tips">no question here</string>
@@ -39,14 +43,14 @@
     <string name="home_search">Search</string>
     <string name="home_scane">Scan Me</string>
     <string name="home_setting">Settings</string>
-    <string name="home_review">IFSC On-Demand</string>
+    <string name="home_review">CIT On-Demand</string>
     <string name="home_electroniccase">e-Case</string>
     <string name="home_secretary">Faculty\nExclusive</string>
     <string name="home_messagestation">Message Center</string>
     <string name="home_scene_xiu">Info\nRelease</string>
-    <string name="home_cit_live">IFSC Live</string>
+    <string name="home_cit_live">CIT Live</string>
     <string name="home_hands_on">Learning\nCenter</string>
-    <string name="home_cit_college">IFSC On-Demand</string>
+    <string name="home_cit_college">CIT On-Demand</string>
     <string name="home_me">User Center</string>
     <string name="home_interactive">Interactive\nDiscussion</string>
     <string name="my_task">My Task(%1$s)</string>
@@ -110,7 +114,7 @@
     <!-- other -->
     <string name="alert_start">%1$s will start in %2$s in %3$s</string>
     <string name="alert_pending">Later</string>
-    <string name="app_name">IFSC</string>
+    <string name="app_name">CIT</string>
     <string name="conference_exit_app">Are you sure to exit app?</string>
     <string name="action_settings">Settings</string>
     <string name="test">Test</string>
@@ -125,7 +129,7 @@
     <string name="no_such_secretary_name">No result or incorrect spelling on the name of faculty.\nTry with the different one.</string>
     <string name="yes_such_secretary_name"><Data>
 <![CDATA[ <h3>Congratulations, your meeting reminder is set!</h3> You will receive notification 5 minutes before the start of the sessions or presentations, please stay up to date!
-For any changes of reminder time,please go to "My IFSC > My reminder".]]>
+For any changes of reminder time,please go to "My CIT > My reminder".]]>
 </Data></string>
     <string name="part_in_activitys">I Will participate the following secretary_no_infory alert function</string>
     <string name="success_open_alarm">Meeting reminder is set. You will\nreceive notification %d minutes before\nthe start of the sessions or presentations!</string>
@@ -139,7 +143,7 @@ For any changes of reminder time,please go to "My IFSC > My reminder".]]>
     <string name="secretary_speaker">Presentation:</string>
     <string name="logout_secretary">This will stop meeting reminder.Are you\nsure you want to log out of the function?</string>
     <string name="secretary_login">Set meeting reminder</string>
-    <string name="secretary_no_info">All the presentations you participated are over now.\nSee you next IFSC conference!</string>
+    <string name="secretary_no_info">All the presentations you participated are over now.\nSee you next CIT conference!</string>
     <string name="secretary_loading">Secretary is loading…</string>
     <string name="secretary_type_role">Role:</string>
 
@@ -242,7 +246,7 @@ For any changes of reminder time,please go to "My IFSC > My reminder".]]>
 
     <string name="secretay_role">Role:</string>
     <string name="secretay_reminding">Reminding</string>
-    <string name="retrieval_results">Retrieval results：</string>
+    <string name="retrieval_results">Retrieval results：%d</string>
     <string name="search_time">The end time should not be earlier than the start time. Please select again</string>
     <!-- 设置 -->
     <string name="settings_database">Data Updates</string>
@@ -269,10 +273,10 @@ For any changes of reminder time,please go to "My IFSC > My reminder".]]>
     <string name="settings_share_title">Share to My Friends</string>
     <string name="settings_contact_test">Dear Users,\nFor any questions or bugs found when using this app,please contact us.Thanks!
 </string>
-    <string name="setting_tel">Tel:021-52981008</string>
-    <string name="settings_contact_text_fax">Fax: 021–52981008 ext 808 </string>
-    <string name="settings_contact_text_mail">Email:service@incongress.net</string>
-    <string name="settings_contact_text_wx">WeChat:incongress</string>
+    <string name="setting_tel">Tel: 021-52981008</string>
+    <string name="settings_contact_text_fax">Fax: 021-52981008*808</string>
+    <string name="settings_contact_text_mail">Email: service@incongress.net</string>
+    <string name="settings_contact_text_wx">WeChat: incongress</string>
     <string name="settings_share_sms">SMS</string>
     <string name="settings_share_mail">Email</string>
     <string name="settings_share_content">Come and join me with ‘iConference’ APP! Download now at: http://m.incongress.cn/ifsc2018/app</string>
@@ -307,7 +311,7 @@ For any changes of reminder time,please go to "My IFSC > My reminder".]]>
     <string name="mymeeting_warning">My Reminder</string>
     <string name="mymeeting_wellcome">Welcome</string>
     <string name="mymeeting_wellcome1">Welcome,</string>
-    <string name="mymeeting_wellcome2">,to IFSC!</string>
+    <string name="mymeeting_wellcome2">,to CIT!</string>
     <string name="mymeeting_finish">Done</string>
     <string name="mymeeting_manage">Edit</string>
     <string name="mymeeting_w_timemanage">Reminder Timing Set</string>
@@ -418,7 +422,7 @@ Before first use, you’ll need to download the latest conference data. Afterwar
     <string name="complete_your_info">need complete info</string>
     <string name="server_error">something error in server</string>
     <string name="register_success">register success</string>
-    <string name="first_author">First Author:</string>
+    <string name="first_author">Author:</string>
     <string name="send">send</string>
     <string name="given_name">Given Name</string>
     <string name="family_name">Family Name</string>
@@ -536,14 +540,30 @@ Before first use, you’ll need to download the latest conference data. Afterwar
     <string name="me_quiz">quiz</string>
     <string name="me_post">post</string>
     <string name="me_note">note</string>
+    <string name="user_name">Nickname</string>
+    <string name="mobile">mobile</string>
+    <string name="delete">delete</string>
+    <string name="wx_number">weixin number</string>
+    <string name="modify_name">Modify Name</string>
     <string name="settings_mark">APP mark</string>
     <string name="business_cooperation">Business Cooperation</string>
     <string name="tel_number">tel: 021-52981008</string>
+    <string name="notify_setting">notify setting</string>
+    <string name="system_setting">system setting</string>
+    <string name="privacy_policy">privacy policy</string>
+    <string name="my_info">Person Info</string>
+    <string name="head_img">head</string>
+    <string name="settings_modify_info_title">Userinfo</string>
+    <string name="incongress_modify_person_info">Edit profile photo and nickname</string>
     <!--会议部分-->
     <string name="seach_title_hint">Enter the meeting keyword and start searching quickly！</string>
-
+    <string name="schedule_mind">schedule reminder</string>
+    <string name="professor_ask">professor ask</string>
+    <string name="classes_map">classes map</string>
+    <string name="reset">reset</string>
+    <string name="search">search</string>
     <!--包名修改的部分-->
-    <string name="share_info">IFSC Infomation</string>
+    <string name="share_info">CIT Infomation</string>
     <string name="party_guide">Meeting Guide</string>
     <!--首页-->
     <string name="system_notify">SYSTEM NOTIFY</string>

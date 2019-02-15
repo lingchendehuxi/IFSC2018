@@ -1,349 +1,182 @@
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cn.incongress.ifsc"
-    android:versionCode="1"
-    android:versionName="1.0.0" >
-
-    <uses-sdk
-        android:minSdkVersion="14"
-        android:targetSdkVersion="22" />
-
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_GPS" />
-    <uses-permission android:name="android.permission.ACCESS_ASSISTED_GPS" />
-    <uses-permission android:name="android.permission.ACCESS_LOCATION" />
-    <uses-permission android:name="android.permission.READ_LOGS" />
-    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
-    <uses-permission android:name="android.permission.SUPPRESSACCESSCHECKS" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.FLASHLIGHT" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
-    <uses-feature android:name="android.hardware.camera" />
-    <uses-feature android:name="android.hardware.camera.autofocus" />
-
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.READ_PROFILE" />
-
-    <!-- JPush 推送需要的权限 start  com.mobile.incongress.cd.conference.basic.csccm -->
-    <!-- Required -->
-    <permission
-        android:name="com.android.incongress.cd.conference.permission.JPUSH_MESSAGE"
-        android:protectionLevel="signature" />
-
-    <!-- Required -->
-    <uses-permission android:name="com.android.incongress.cd.conference.permission.JPUSH_MESSAGE" />
-    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" /> <!-- since 1.6.0 -->
-
-
-    <!-- Optional. Required for location feature -->
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-
-    <!-- JPush 推送需要的权限 end -->
-
-    <uses-feature android:name="android.hardware.camera" />
-    <uses-feature android:name="android.hardware.camera.autofocus" />
-
-    <!-- 获取手机任务信息（进程,app列表） -->
-    <uses-permission android:name="android.permission.GET_TASKS" /> <!-- 拨打电话 -->
-    <uses-permission android:name="android.permission.CALL_PHONE" />
-
-    <meta-data
-        android:name="android.support.VERSION"
-        android:value="25.3.1" />
-
-    <application
-        android:name="com.android.incongress.cd.conference.base.AppApplication"
-        android:allowBackup="true"
-        android:hardwareAccelerated="true"
-        android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
-        android:largeHeap="true"
-        android:supportsRtl="true"
-        android:theme="@style/AppBaseTheme" >
-
-        <!-- 配置 -->
-        <!-- <meta-data -->
-        <!-- android:name="com.android.incongress.cd.conference.utils.glide.SimpleGlideModule" -->
-        <!-- android:value="GlideModule" -->
-        <!-- /> -->
-        <activity
-            android:name="com.android.incongress.cd.conference.SplashActivity"
-            android:exported="true"
-            android:hardwareAccelerated="true"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:windowSoftInputMode="adjustNothing" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="com.android.incongress.cd.conference.AdvertisesActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity
-            android:name="com.android.incongress.cd.conference.GuideAcitivity"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity
-            android:name="com.android.incongress.cd.conference.HomeActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light"
-            android:windowSoftInputMode="adjustPan" >
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="iccit" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="com.android.incongress.cd.conference.fragments.cit_live.CitLiveFragment"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar" />
-        <activity
-            android:name="com.android.incongress.cd.conference.CollegeActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name="com.android.incongress.cd.conference.LoginActivity"
-            android:theme="@style/splashTheme"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-        <activity
-            android:name="com.android.incongress.cd.conference.GestureImageViewActivity"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar" />
-        <activity
-            android:name="com.android.incongress.cd.conference.WebViewVideoActivity"
-            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
-            android:theme="@android:style/Theme.NoTitleBar" />
-
-        <receiver android:name="com.android.incongress.cd.conference.utils.AlarmInitReceiver" >
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.TIME_SET" />
-                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
-                <action android:name="android.intent.action.LOCALE_CHANGED" />
-            </intent-filter>
-        </receiver>
-        <receiver android:name="com.android.incongress.cd.conference.utils.AlarmReceiver" >
-            <intent-filter>
-                <action android:name="com.android.incongress.cd.conference.alarm_start" />
-                <action android:name="alarm_killed" />
-                <action android:name="cancel_snooze" />
-            </intent-filter>
-        </receiver>
-
-        <service android:name="com.android.incongress.cd.conference.utils.AlarmKlaxon" >
-            <intent-filter>
-                <action android:name="com.android.incongress.cd.conference.alarm_start" />
-            </intent-filter>
-        </service>
-        <service android:name="com.android.incongress.cd.conference.services.AdService" />
-
-        <activity android:name="com.android.incongress.cd.conference.WebViewContainerActivity" />
-        <activity
-            android:name="com.android.incongress.cd.conference.ScenicXiuPicsViewpagerActivity"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
-        <activity android:name="com.android.incongress.cd.conference.fragments.professor_secretary.AnswerQuestionActivity" />
-
-        <!-- 注册 -->
-        <activity android:name="com.android.incongress.cd.conference.RegisterActivity" />
-        <activity android:name="com.android.incongress.cd.conference.RegisterConfirmActivity" />
-        <activity android:name="com.android.incongress.cd.conference.fragments.professor_secretary.SecretaryActivity" />
-        <!-- JPush Required start -->
-        <service
-            android:name="cn.jpush.android.service.PushService"
-            android:enabled="true"
-            android:exported="false" >
-            <intent-filter>
-                <action android:name="cn.jpush.android.intent.REGISTER" />
-                <action android:name="cn.jpush.android.intent.REPORT" />
-                <action android:name="cn.jpush.android.intent.PushService" />
-                <action android:name="cn.jpush.android.intent.PUSH_TIME" />
-            </intent-filter>
-        </service>
-
-        <receiver android:name="com.android.incongress.cd.conference.receiver.JPushReceiver" >
-            <intent-filter>
-                <action android:name="cn.jpush.android.intent.REGISTRATION" />
-                <action android:name="cn.jpush.android.intent.UNREGISTRATION" />
-                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
-                <action android:name="cn.jpush.android.intent.ACTION_RICHPUSH_CALLBACK" />
-                <action android:name="cn.jpush.android.intent.CONNECTION" />
-
-                <category android:name="cn.incongress.ifsc" />
-            </intent-filter>
-        </receiver>
-
-        <!-- Required -->
-        <receiver
-            android:name="cn.jpush.android.service.PushReceiver"
-            android:enabled="true" >
-            <intent-filter android:priority="1000" >
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />
-
-                <category android:name="cn.incongress.ifsc" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.USER_PRESENT" />
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_ADDED" />
-                <action android:name="android.intent.action.PACKAGE_REMOVED" />
-
-                <data android:scheme="package" />
-            </intent-filter>
-        </receiver>
-        <!-- Required SDK核心功能 -->
-        <activity
-            android:name="cn.jpush.android.ui.PushActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
-            <intent-filter>
-                <action android:name="cn.jpush.android.ui.PushActivity" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="cn.incongress.ifsc" />
-            </intent-filter>
-        </activity>
-
-        <!-- Required SDK核心功能 -->
-        <service
-            android:name="cn.jpush.android.service.DownloadService"
-            android:enabled="true"
-            android:exported="false" />
-        <!-- Required SDK核心功能 -->
-        <receiver android:name="cn.jpush.android.service.AlarmReceiver" />
-
-        <!-- Required. For publish channel feature -->
-        <!-- JPUSH_CHANNEL 是为了方便开发者统计APK分发渠道。 -->
-        <!-- 例如: -->
-        <!-- 发到 Google Play 的APK可以设置为 google-play; -->
-        <!-- 发到其他市场的 APK 可以设置为 xxx-market。 -->
-        <!-- 目前这个渠道统计功能的报表还未开放。 -->
-        <!-- CSSCR -->
-        <meta-data
-            android:name="JPUSH_CHANNEL"
-            android:value="developer-default" />
-        <!-- Required. AppKey copied from Portal -->
-        <meta-data
-            android:name="JPUSH_APPKEY"
-            android:value="5e601ce4e99a09fb5f9ac9d3" />
-        <!-- JPush Required end -->
-        <activity android:name="com.android.incongress.cd.conference.CountryCodeActivity" />
-        <activity android:name="com.android.incongress.cd.conference.ChooseIdentityActivity" />
-        <activity android:name="com.android.incongress.cd.conference.ConferencedDownloadDetailActivity" />
-        <activity android:name="com.android.incongress.cd.conference.FindbackCCodeFirstActivity" />
-        <activity android:name="com.android.incongress.cd.conference.ParticipantLoginActivity" />
-        <activity android:name="com.android.incongress.cd.conference.FindbackCCodeSecondActivity" />
-        <activity android:name="com.android.incongress.cd.conference.ChooseFieldActivity" />
-        <activity android:name="com.android.incongress.cd.conference.ChooseKeShiActivity" />
-        <activity
-            android:name="com.android.incongress.cd.conference.widget.zxing.activity.CaptureActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden" />
-
-        <!-- 微信回调页面 -->
-        <activity
-            android:name="com.android.incongress.cd.conference.wxapi.WXEntryActivity"
-            android:exported="true"
-            android:theme="@android:style/Theme.Translucent" />
-
-        <!-- 友盟相关设置 -->
-        <meta-data
-            android:name="UMENG_APPKEY"
-            android:value="5b9a4d64b27b0a1958000299" />
-        <!-- 豌豆荚渠道 -->
-        <!-- <meta-data android:value="Wandoujia" android:name="UMENG_CHANNEL"/> -->
-        <!-- 百度渠道 -->
-        <!-- <meta-data android:value="baidu" android:name="UMENG_CHANNEL"/> -->
-        <!-- 应用宝渠道 -->
-        <!-- <meta-data android:value="tencent" android:name="UMENG_CHANNEL"/> -->
-        <!-- pre 渠道 -->
-        <!-- <meta-data android:value="pre" android:name="UMENG_CHANNEL"/> -->
-        <service android:name="com.android.incongress.cd.conference.services.DownloadService" />
-
-        <activity android:name="com.android.incongress.cd.conference.ConferenceActivity" />
-        <activity
-            android:name="com.android.incongress.cd.conference.DialogActivity"
-            android:exported="true"
-            android:hardwareAccelerated="true"
-            android:screenOrientation="portrait"
-            android:theme="@style/myTransparent"
-            android:windowSoftInputMode="adjustNothing" />
-        <activity android:name="com.android.incongress.cd.conference.AlarmActivity" />
-        <activity android:name="com.android.incongress.cd.conference.fragments.wall_poster.PosterImageFragment" />
-        <activity android:name="com.android.incongress.cd.conference.fragments.wall_poster.PosterDiscussFragment" />
-        <activity android:name="com.android.incongress.cd.conference.MakeQuestionActivity" />
-        <!--
- ATTENTION: This was auto-generated to add Google Play services to your project for
-     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
-        -->
-        <activity android:name="com.android.incongress.cd.conference.fragments.me.MyMeetingNoteEditorActivity" />
-
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
-        <!--
-        <activity
-            android:name=".WBShareActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        -->
-        <!-- 会议日程 -->
-        <activity
-            android:name="com.android.incongress.cd.conference.fragments.meeting_schedule.MeetingScheduleDetailActivity"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name="cn.finalteam.galleryfinal.PhotoSelectActivity"
-            android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="cn.finalteam.galleryfinal.PhotoEditActivity"
-            android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="cn.finalteam.galleryfinal.PhotoPreviewActivity"
-            android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
-    </application>
-
+<?xml version="1.0" encoding="UTF-8"?><manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.android.incongress.cd.conference" android:versionName="8.0.3" android:versionCode="41">
+  <uses-sdk android:targetSdkVersion="22" android:minSdkVersion="23"/>
+  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+  <uses-permission android:name="android.permission.ACCESS_GPS"/>
+  <uses-permission android:name="android.permission.ACCESS_ASSISTED_GPS"/>
+  <uses-permission android:name="android.permission.ACCESS_LOCATION"/>
+  <uses-permission android:name="android.permission.READ_LOGS"/>
+  <uses-permission android:name="android.permission.CHANGE_CONFIGURATION"/>
+  <uses-permission android:name="android.permission.SUPPRESSACCESSCHECKS"/>
+  <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+  <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+  <uses-permission android:name="android.permission.CAMERA"/>
+  <uses-permission android:name="android.permission.WAKE_LOCK"/>
+  <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+  <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW"/>
+  <uses-permission android:name="android.permission.VIBRATE"/>
+  <uses-permission android:name="android.permission.FLASHLIGHT"/>
+  <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+  <uses-feature android:name="android.hardware.camera"/>
+  <uses-feature android:name="android.hardware.camera.autofocus"/>
+  <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
+  <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+  <uses-permission android:name="android.permission.READ_PROFILE"/>
+  <permission android:name="com.android.incongress.cd.conference.permission.JPUSH_MESSAGE" android:protectionLevel="signature"/>
+  <uses-permission android:name="com.android.incongress.cd.conference.permission.JPUSH_MESSAGE"/>
+  <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT"/>
+  <uses-permission android:name="android.permission.INTERNET"/>
+  <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+  <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+  <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+  <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+  <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+  <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+  <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
+  <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+  <uses-permission android:name="android.permission.GET_TASKS"/>
+  <uses-permission android:name="android.permission.VIBRATE"/>
+  <uses-feature android:name="android.hardware.camera"/>
+  <uses-feature android:name="android.hardware.camera.autofocus"/>
+  <uses-permission android:name="android.permission.CALL_PHONE"/>
+  <application android:supportsRtl="true" android:hardwareAccelerated="true" android:debuggable="true" android:label="@string/app_name" android:name="com.android.incongress.cd.conference.base.AppApplication" android:theme="@style/AppBaseTheme" android:largeHeap="true" android:icon="@drawable/ic_launcher" android:allowBackup="true" android:testOnly="true">
+    <meta-data android:name="android.max_aspect" android:value="2.1"/>
+    <activity android:screenOrientation="portrait" android:hardwareAccelerated="true" android:label="@string/app_name" android:name="com.android.incongress.cd.conference.SplashActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar" android:exported="true" android:windowSoftInputMode="adjustNothing">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN"/>
+        <category android:name="android.intent.category.LAUNCHER"/>
+      </intent-filter>
+    </activity>
+    <activity android:name="com.android.incongress.cd.conference.AdvertisesActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+    <activity android:screenOrientation="portrait" android:name="com.android.incongress.cd.conference.GuideAcitivity" android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+    <activity android:screenOrientation="portrait" android:launchMode="singleTask" android:name="com.android.incongress.cd.conference.HomeActivity" android:configChanges="orientation|screenSize" android:theme="@style/Theme.AppCompat.Light" android:windowSoftInputMode="adjustPan">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:scheme="iccit"/>
+      </intent-filter>
+    </activity>
+    <activity android:screenOrientation="portrait" android:name="com.android.incongress.cd.conference.fragments.cit_live.CitLiveFragment" android:configChanges="keyboardHidden|orientation|screenSize" android:theme="@android:style/Theme.NoTitleBar"/>
+    <activity android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" android:name="com.android.incongress.cd.conference.CollegeActivity" android:configChanges="keyboardHidden|orientation|screenSize" android:theme="@android:style/Theme.NoTitleBar"/>
+    <activity android:windowSoftInputMode="stateAlwaysHidden|adjustPan" android:launchMode="singleTop" android:name="com.android.incongress.cd.conference.LoginActivity" android:theme="@style/splashTheme"/>
+    <activity android:windowSoftInputMode="stateAlwaysHidden|adjustPan" android:launchMode="singleTop" android:name="com.android.incongress.cd.conference.WxForLoginActivity" android:theme="@style/splashTheme"/>
+    <activity android:screenOrientation="portrait" android:name="com.android.incongress.cd.conference.GestureImageViewActivity" android:theme="@android:style/Theme.NoTitleBar"/>
+    <activity android:name="com.android.incongress.cd.conference.WebViewVideoActivity" android:configChanges="orientation|keyboardHidden|navigation|screenSize" android:theme="@android:style/Theme.NoTitleBar"/>
+    <receiver android:name="com.android.incongress.cd.conference.utils.AlarmInitReceiver">
+      <intent-filter>
+        <action android:name="android.intent.action.BOOT_COMPLETED"/>
+        <action android:name="android.intent.action.TIME_SET"/>
+        <action android:name="android.intent.action.TIMEZONE_CHANGED"/>
+        <action android:name="android.intent.action.LOCALE_CHANGED"/>
+      </intent-filter>
+    </receiver>
+    <receiver android:name="com.android.incongress.cd.conference.utils.AlarmReceiver" android:process=":remote">
+      <intent-filter>
+        <action android:name="com.android.incongress.cd.conference.alarm_start"/>
+        <action android:name="alarm_killed"/>
+        <action android:name="cancel_snooze"/>
+      </intent-filter>
+    </receiver>
+    <service android:name="com.android.incongress.cd.conference.utils.AlarmKlaxon"/>
+    <service android:name="com.android.incongress.cd.conference.services.AdService"/>
+    <activity android:name="com.android.incongress.cd.conference.WebViewContainerActivity"/>
+    <activity android:name="com.android.incongress.cd.conference.ScenicXiuPicsViewpagerActivity" android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>
+    <activity android:name="com.android.incongress.cd.conference.fragments.professor_secretary.AnswerQuestionActivity"/>
+    <activity android:name="com.android.incongress.cd.conference.RegisterActivity"/>
+    <activity android:name="com.android.incongress.cd.conference.RegisterConfirmActivity"/>
+    <activity android:name="com.android.incongress.cd.conference.fragments.professor_secretary.SecretaryActivity"/>
+    <service android:enabled="true" android:name="cn.jpush.android.service.PushService" android:exported="false">
+      <intent-filter>
+        <action android:name="cn.jpush.android.intent.REGISTER"/>
+        <action android:name="cn.jpush.android.intent.REPORT"/>
+        <action android:name="cn.jpush.android.intent.PushService"/>
+        <action android:name="cn.jpush.android.intent.PUSH_TIME"/>
+      </intent-filter>
+    </service>
+    <provider android:name="cn.jpush.android.service.DataProvider" android:exported="true" android:authorities="com.android.incongress.cd.conference.DataProvider"/>
+    <service android:enabled="true" android:name="cn.jpush.android.service.DaemonService" android:exported="true">
+      <intent-filter>
+        <action android:name="cn.jpush.android.intent.DaemonService"/>
+        <category android:name="com.android.incongress.cd.conference"/>
+      </intent-filter>
+    </service>
+    <provider android:name="cn.jpush.android.service.DownloadProvider" android:exported="true" android:authorities="com.android.incongress.cd.conference.DownloadProvider"/>
+    <receiver android:name="cn.jpush.android.service.PushReceiver" android:enabled="true">
+      <intent-filter android:priority="1000">
+        <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY"/>
+        <category android:name="com.android.incongress.cd.conference"/>
+      </intent-filter>
+      <intent-filter>
+        <action android:name="android.intent.action.USER_PRESENT"/>
+        <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+      </intent-filter>
+      <intent-filter>
+        <action android:name="android.intent.action.PACKAGE_ADDED"/>
+        <action android:name="android.intent.action.PACKAGE_REMOVED"/>
+        <data android:scheme="package"/>
+      </intent-filter>
+    </receiver>
+    <activity android:name="cn.jpush.android.ui.PushActivity" android:configChanges="orientation|keyboardHidden" android:theme="@android:style/Theme.NoTitleBar" android:exported="false">
+      <intent-filter>
+        <action android:name="cn.jpush.android.ui.PushActivity"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="com.android.incongress.cd.conference"/>
+      </intent-filter>
+    </activity>
+    <activity android:name="cn.jpush.android.ui.PopWinActivity" android:configChanges="orientation|keyboardHidden" android:theme="@style/MyDialogStyle" android:exported="false">
+      <intent-filter>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="com.android.incongress.cd.conference"/>
+      </intent-filter>
+    </activity>
+    <service android:enabled="true" android:name="cn.jpush.android.service.DownloadService" android:exported="false"/>
+    <receiver android:name="cn.jpush.android.service.AlarmReceiver"/>
+    <receiver android:enabled="true" android:name="com.android.incongress.cd.conference.receiver.JPushReceiver" android:exported="false">
+      <intent-filter>
+        <action android:name="cn.jpush.android.intent.REGISTRATION"/>
+        <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED"/>
+        <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED"/>
+        <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED"/>
+        <action android:name="cn.jpush.android.intent.CONNECTION"/>
+        <category android:name="com.android.incongress.cd.conference"/>
+      </intent-filter>
+    </receiver>
+    <meta-data android:name="JPUSH_CHANNEL" android:value="developer-default"/>
+    <meta-data android:name="JPUSH_APPKEY" android:value="1166102290db1b4dea494322"/>
+    <activity android:name="com.android.incongress.cd.conference.CountryCodeActivity"/>
+    <activity android:name="com.android.incongress.cd.conference.ChooseIdentityActivity"/>
+    <activity android:name="com.android.incongress.cd.conference.ConferencedDownloadDetailActivity"/>
+    <activity android:name="com.android.incongress.cd.conference.FindbackCCodeFirstActivity"/>
+    <activity android:name="com.android.incongress.cd.conference.ParticipantLoginActivity"/>
+    <activity android:name="com.android.incongress.cd.conference.FindbackCCodeSecondActivity"/>
+    <activity android:name="com.android.incongress.cd.conference.ChooseFieldActivity"/>
+    <activity android:name="com.android.incongress.cd.conference.ChooseKeShiActivity"/>
+    <activity android:screenOrientation="portrait" android:windowSoftInputMode="stateAlwaysHidden" android:name="com.android.incongress.cd.conference.widget.zxing.activity.CaptureActivity" android:configChanges="orientation|keyboardHidden"/>
+    <activity android:screenOrientation="portrait" android:windowSoftInputMode="stateAlwaysHidden" android:name="com.android.incongress.cd.conference.widget.zxing.activity.QRCodeCaptureActivity" android:configChanges="orientation|keyboardHidden"/>
+    <activity android:name="com.android.incongress.cd.conference.wxapi.WXEntryActivity" android:theme="@android:style/Theme.Translucent" android:exported="true"/>
+    <meta-data android:name="UMENG_APPKEY" android:value="5848f72ea325114764000448"/>
+    <service android:name="com.android.incongress.cd.conference.services.DownloadService"/>
+    <activity android:name="com.android.incongress.cd.conference.ConferenceActivity"/>
+    <activity android:screenOrientation="portrait" android:hardwareAccelerated="true" android:name="com.android.incongress.cd.conference.DialogActivity" android:theme="@style/myTransparent" android:exported="true" android:windowSoftInputMode="adjustNothing"/>
+    <activity android:name="com.android.incongress.cd.conference.AlarmActivity" android:theme="@style/NoTitleDialog"/>
+    <activity android:name="com.android.incongress.cd.conference.fragments.wall_poster.PosterImageFragment"/>
+    <activity android:name="com.android.incongress.cd.conference.fragments.wall_poster.PosterDiscussFragment"/>
+    <activity android:name="com.android.incongress.cd.conference.MakeQuestionActivity"/>
+    <activity android:name="com.android.incongress.cd.conference.fragments.me.MyMeetingNoteEditorActivity"/>
+    <activity android:name="com.android.incongress.cd.conference.fragments.scenic_xiu.ScenicXiuCommentActivity" android:launchMode="singleTask"/>
+    <activity android:name="com.android.incongress.cd.conference.VideoPlayDetailActivity" android:configChanges="orientation|screenSize|keyboardHidden" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+    <activity android:name="com.android.incongress.cd.conference.PolyvVideoPlayDetailActivity" android:configChanges="orientation|screenSize|keyboardHidden" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+    <activity android:name="com.android.incongress.cd.conference.LoginForUpdateInfoActivity"/>
+    <activity android:screenOrientation="portrait" android:name="cn.finalteam.galleryfinal.PhotoSelectActivity" android:configChanges="orientation|keyboard|keyboardHidden|screenSize"/>
+    <activity android:screenOrientation="portrait" android:name="cn.finalteam.galleryfinal.PhotoEditActivity" android:configChanges="orientation|keyboard|keyboardHidden|screenSize"/>
+    <activity android:screenOrientation="portrait" android:name="cn.finalteam.galleryfinal.PhotoPreviewActivity" android:configChanges="orientation|keyboard|keyboardHidden|screenSize"/>
+  </application>
+  <uses-permission android:name="android.permission.BLUETOOTH"/>
 </manifest>

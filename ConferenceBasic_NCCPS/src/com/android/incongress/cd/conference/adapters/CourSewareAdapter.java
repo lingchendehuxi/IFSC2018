@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.beans.CoursewareBean;
+import com.android.incongress.cd.conference.utils.StringUtils;
 import com.android.incongress.cd.conference.utils.transformer.GlideRoundTransform;
 import com.bumptech.glide.Glide;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
@@ -37,42 +38,32 @@ public class CourSewareAdapter extends RecyclerView.Adapter<CourSewareAdapter.Vi
     }
 
     @Override
-    public CourSewareAdapter.ViewHolder onCreateViewHolder(ViewGroup parent , int viewType) {
+    public CourSewareAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final LayoutInflater mInflater = LayoutInflater.from(parent.getContext());
         final View sView = mInflater.inflate(R.layout.item_courseware, parent, false);
         return new CourSewareAdapter.ViewHolder(sView);
     }
 
     @Override
-    public void onBindViewHolder(CourSewareAdapter.ViewHolder holder , int position) {
+    public void onBindViewHolder(CourSewareAdapter.ViewHolder holder, int position) {
         CoursewareBean bean = mCourseBeanList.get(position);
-        String title = bean.getTitle();
         String author = bean.getAuthor();
-        if(title.contains("#@#")){
+        StringUtils.setCommaTextShow(holder.title, bean.getTitle());
+        if (author.contains("#@#")) {
             if (AppApplication.systemLanguage == 1) {
-                title = title.split("#@#")[0];
-            }else{
-                title = title.split("#@#")[1];
+                author = "作者：" + author.split("#@#")[0];
+            } else {
+                author = "Author：" + author.split("#@#")[1];
             }
-        }else{
-            title =  bean.getTitle();
+        } else {
+            author = "作者：" + bean.getAuthor();
         }
-        if(author.contains("#@#")){
-            if (AppApplication.systemLanguage == 1) {
-                author = "作者："+author.split("#@#")[0];
-            }else{
-                author = "Author："+author.split("#@#")[1];
-            }
-        }else{
-            author =  "作者："+bean.getAuthor();
-        }
-            holder.title.setText(title);
-            holder.author.setText(author);
+        holder.author.setText(author);
         Glide.with(mContext).load(bean.getFirstPic()).transform(new GlideRoundTransform(mContext, 5)).into(holder.img);
-        ViewGroup.LayoutParams lp=holder.img.getLayoutParams();
-        lp.height= (int) (width*0.5625);
+        ViewGroup.LayoutParams lp = holder.img.getLayoutParams();
+        lp.height = (int) (width * 0.5625);
         holder.img.setLayoutParams(lp);
-        }
+    }
 
     @Override
     public int getItemCount() {
@@ -81,8 +72,9 @@ public class CourSewareAdapter extends RecyclerView.Adapter<CourSewareAdapter.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         LinearLayout layout;
-        TextView title,author;
+        TextView title, author;
         ImageView img;
+
         public ViewHolder(View view) {
             super(view);
             title = (TextView) view.findViewById(R.id.courseware_title);

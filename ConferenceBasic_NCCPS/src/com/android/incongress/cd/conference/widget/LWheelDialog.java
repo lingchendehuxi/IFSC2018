@@ -22,10 +22,6 @@ public class LWheelDialog extends Dialog implements LWheelView.LWheelViewListene
 	 */
 	private LWheelView.LWheelViewListener listener = null;
 	/**
-	 * 外壳
-	 */
-	private LinearLayout mLlHourFrom, mLlMinuteFrom, mLlHourTo, mLlMinuteTo;
-	/**
 	 * 滚轮
 	 */
 	private LWheelView mWheelHourFrom, mWheelMinuteFrom, mWheelHourTo, mWheelMinuteTo;
@@ -68,10 +64,6 @@ public class LWheelDialog extends Dialog implements LWheelView.LWheelViewListene
 
 		setContentView(R.layout.wheel);
 		getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-		mLlHourFrom = (LinearLayout) findViewById(R.id.hour_from);
-		mLlMinuteFrom = (LinearLayout) findViewById(R.id.minute_from);
-		mLlHourTo = (LinearLayout)findViewById(R.id.hour_to);
-		mLlMinuteTo = (LinearLayout)findViewById(R.id.minute_to);
 
 		mWheelHourFrom = (LWheelView) findViewById(R.id.wheel_hour_from);
 		mWheelMinuteFrom = (LWheelView) findViewById(R.id.wheel_minute_from);
@@ -105,8 +97,6 @@ public class LWheelDialog extends Dialog implements LWheelView.LWheelViewListene
 			break;
 		case DATE:
 			initDate();
-			mLlHourFrom.setVisibility(View.GONE);
-			mLlMinuteFrom.setVisibility(View.GONE);
 			break;
 		case TIME:
 			initTime();

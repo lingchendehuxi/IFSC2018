@@ -3,11 +3,14 @@ package com.android.incongress.cd.conference.fragments.meeting_schedule;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.android.incongress.cd.conference.adapters.MeetingScheduleListAdapter;
 import com.android.incongress.cd.conference.base.BaseFragment;
@@ -94,13 +97,11 @@ public class MeetingScheduleListDetailActionFragment extends BaseFragment {
                         tartgetPosition = i;
                     }
                 }
-
-                SessionDetailViewPageFragment detail = new SessionDetailViewPageFragment();
-                detail.setArguments(tartgetPosition, mAllSessionsList);
-                View moreView = CommonUtils.initView(getActivity(), R.layout.titlebar_session_detail_more);
-                detail.setRightListener(moreView);
-                action(detail, R.string.meeting_schedule_detail_title, moreView, false, false, false);
-
+                if(mAllSessionsList.get(tartgetPosition).getFacultyId() != null){
+                    SessionDetailViewPageFragment detail = new SessionDetailViewPageFragment();
+                    detail.setArguments(tartgetPosition, mAllSessionsList);
+                    action(detail, R.string.meeting_schedule_detail_title, null, false, false, false);
+                }
             }
         });
 

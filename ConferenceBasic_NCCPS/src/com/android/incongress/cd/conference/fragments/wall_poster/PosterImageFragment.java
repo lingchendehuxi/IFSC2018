@@ -19,6 +19,7 @@ import com.android.incongress.cd.conference.model.ConferenceDbUtils;
 import com.android.incongress.cd.conference.utils.PicUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
 import com.android.incongress.cd.conference.widget.IncongressTextView;
+import com.android.incongress.cd.conference.widget.StatusBarUtil;
 import com.bumptech.glide.Glide;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
@@ -35,12 +36,12 @@ public class PosterImageFragment extends BaseActivity {
 
     private ImageView mIvSmallPic;
     private TextView mTvDiscussion;
-    private DZBBBean mBean;
+    private DZBBBean.ArrayBean mBean;
     private static final int MSG_PRAISE_SUCCESS = 2;
     private boolean mIsPraise = false;//是否点赞
     private ImageView mIvPraise,ivback;
     private LinearLayout mLlAskQuestion;
-    private IncongressTextView title;
+    private TextView title;
 
     private Handler mHandler = new Handler() {
         public void handleMessage(android.os.Message msg) {
@@ -89,14 +90,14 @@ public class PosterImageFragment extends BaseActivity {
     @Override
     protected void initViewsAction() {
 
-        mBean = (DZBBBean) getIntent().getSerializableExtra("bean");
+        mBean = (DZBBBean.ArrayBean) getIntent().getSerializableExtra("bean");
         mIvSmallPic = (ImageView) findViewById(R.id.iv_small_pic);
-        title = (IncongressTextView) findViewById(R.id.title_text);
+        title =  findViewById(R.id.title_text);
         mTvDiscussion = (TextView)findViewById(R.id.bt_discussion);
         mIvPraise = (ImageView)findViewById(R.id.iv_praise);
         ivback = (ImageView) findViewById(R.id.title_back);
 
-        title.setText(mBean.getTitle());
+        title.setText(mBean.getPosterTitle());
 
         mLlAskQuestion = (LinearLayout)findViewById(R.id.ll_ask_question);
 
@@ -111,7 +112,7 @@ public class PosterImageFragment extends BaseActivity {
                 startActivity(intent);
             }
         });
-        mPicUrl = mBean.getPosterPicUrl();
+        mPicUrl = mBean.getUrl();
         if(mPicUrl.contains("https:")) {
             mPicUrl = mPicUrl.replaceFirst("s","");
         }
@@ -131,7 +132,7 @@ public class PosterImageFragment extends BaseActivity {
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(PosterImageFragment.this, MakeQuestionActivity.class);
-                intent.putExtra("title",mBean.getTitle());
+                intent.putExtra("title",mBean.getPosterTitle());
                 intent.putExtra("id",mBean.getPosterId());
                 intent.putExtra("name", mBean.getAuthor());
                 startActivity(intent);

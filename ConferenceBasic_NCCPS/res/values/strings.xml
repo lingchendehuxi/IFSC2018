@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--基本属性 -->
-    <string name="app_name">IFSC</string>
+    <string name="app_name">CIT</string>
     <string name="update_database">更新本地数据库，请稍等</string>
     <string name="bottom_tab_home">首页</string>
     <string name="bottom_tab_broadcast">播客</string>
@@ -13,8 +13,8 @@
     <string name="reg_online_en">http://www.citmd.com/sub/app/e_reg.php</string>
 
     <!-- 透明的主题色 -->
-    <string name="alpha_theme_color">#CC6db1f1</string>
     <string name="meeting_video_reservation">课件预约</string>
+    <string name="meeting_video_play">课件播放</string>
     <string name="current_time">当前时间：%1$s</string>
     <string name="all_room">所有会议室</string>
     <string name="now_no_sessions">当前没有正在进行的会议</string>
@@ -56,7 +56,7 @@
     <string name="home_live_and_q">Live Q&#038;A</string>
 
     <string name="home_scene_xiu">现场秀</string>
-    <string name="home_cit_college">IFSC学院</string>
+    <string name="home_cit_college">CIT学院</string>
     <string name="home_me">我</string>
     <string name="home_cit_live">IFSC直播</string>
     <string name="home_interactive">现场互动</string>
@@ -89,7 +89,8 @@
 
     <!-- 我的日程 -->
     <string name="my_schedule_edit">编辑</string>
-    <string name="my_schedule_tips">您还未对当天的日程和发言进行闹铃设置</string>
+    <string name="my_schedule_tips">您还未对日程和发言进行提醒设置</string>
+    <string name="no_data_tips">暂无数据</string>
 
     <!-- 电子壁报 -->
     <string name="cit_net_error">您的网络不给力哦，请稍后再试</string>
@@ -105,7 +106,7 @@
     <string name="dzbb_no_data">无结果</string>
     <string name="home_icon_hyzs">新闻中心</string>
     <string name="home_icon_presidium">Faculty\nExclusive</string>
-    <string name="retrieval_results">为您查找到1个结果：</string>
+    <string name="retrieval_results">为您查找到 %d 个结果：</string>
     <string name="search_time">结束时间必须迟于开始时间，请重新选择</string>
 
 
@@ -171,6 +172,11 @@
 
     <!-- 登录 -->
     <string name="incongress_login">登录</string>
+    <string name="incongress_fix_mobile">绑定手机号</string>
+    <string name="incongress_fix_info">设置基本信息</string>
+    <string name="incongress_modify_person_info">设置头像和用户名</string>
+    <string name="fix_mobile_tip">首次使用微信授权登录，请绑定您的手机号！</string>
+    <string name="fix_mobile_mobile_tip">首次使用手机号登录，请设置基本信息！</string>
     <string name="login_phone_hint">手机</string>
     <string name="login_password_hint">密码</string>
     <string name="login_password_forget">忘记密码</string>
@@ -253,6 +259,7 @@
 
     <!-- 设置 -->
     <string name="settings_database">数据版本更新</string>
+    <string name="clear_cache">清除缓存</string>
     <string name="settings_version">版本更新</string>
     <string name="settings_about">关于参会易</string>
     <string name="settings_contact">联系我们</string>
@@ -273,6 +280,7 @@
     <string name="settings_version_new">软件最新版本信息</string>
     <string name="settings_version_title">软件版本更新</string>
     <string name="settings_help_title">意见反馈</string>
+    <string name="settings_modify_info_title">个人信息</string>
     <string name="settings_share_title">推荐给朋友</string>
     <string name="setting_tel">Tel: 021-23123589</string>
     <string name="settings_about_text">软件介绍：
@@ -435,6 +443,7 @@
     <string name="positive_button">确定</string>
     <string name="negative_button">取消</string>
     <string name="look_all">查看全文</string>
+    <string name="look_detail">查看详情</string>
     <string name="load_again">重新加载</string>
 
     <style name="internet_error">网络异常，请稍后重试</style>
@@ -468,6 +477,7 @@
 
     <string name="login_out">退出当前账号</string>
     <string name="login_out_tips">退出后，需要重新登录使用，确认退出吗？</string>
+    <string name="clear_cache_tips">清除后，需要重新联网缓存数据，确认清除吗？</string>
 
     <string name="plane">平面图</string>
     <string name="home_skip">跳过  </string>
@@ -496,7 +506,7 @@
     <string name="complete_your_info">请填写完整信息</string>
     <string name="server_error">服务器开小差了，请稍后重试</string>
     <string name="register_success">注册成功</string>
-    <string name="first_author">第一作者:</string>
+    <string name="first_author">作者:</string>
     <string name="send">发送</string>
     <string name="telephone_number">请输入手机号</string>
     <string name="verification_code">验证码</string>
@@ -559,7 +569,7 @@
 
     <!-- 实习中心 -->
     <string name="hands_on_site_test">http://incongress.cn/webapp/discussion/CIT2016H5/handsOn.jsp?conId=%1$s&amp;lan=%2$s&amp;userId=%3$s&amp;userType=%4$s&amp;</string>
-    <string name="hands_on_site_official">http://app.incongress.cn/webapp/discussion/CIT2016H5/handsOn.jsp?conId=%1$s&amp;lan=%2$s&amp;userId=%3$s&amp;userType=%4$s&amp;</string>
+    <string name="hands_on_site_official">http://app.incongress.cn/webapp/discussion/cit/2019/handsOn/sessions/qiye.jsp?handsOnConId=%1$s&amp;handsOnFromWhere=%2$s&amp;userId=%3$s&amp;userType=%4$s&amp;</string>
 
     <!-- CIT 学院 -->
     <string name="cit_college_url_test">http://incongress.cn/webapp/discussion/CIT2016H5/reviewList.html?conId=%1$s&amp;lan=%2$s&amp;userId=%3$s&amp;userType=%4$s&amp;</string>
@@ -573,7 +583,7 @@
     <string name="meeting_guide_info_test">http://incongress.cn/Conferences/tips.do?method=getTipsH5&amp;conferencesId=%1$s&amp;lan=%2$s</string>
     <string name="meeting_guide_info_officiaol">http://app.incongress.cn/Conferences/tips.do?method=getTipsH5&amp;conferencesId=%1$s&amp;lan=%2$s</string>
 
-    <string name="current_year">2018</string>
+    <string name="current_year">2019</string>
     <string name="choose_photo_fail">获取照片失败</string>
     <string name="post_photo_more_than_max">超过最大照片数量了哦</string>
 
@@ -605,6 +615,8 @@
     <string name="find_tips_name_and_mobile">请正确填写您的真实姓名及常用手机号</string>
     <string name="find_back_team_tips">如您为团体参会，请联系赞助您参会的企业的负责人，可获取您的C码。</string>
     <string name="splash_loading">初始化中，请稍等</string>
+    <string name="exhibitor_info">展商信息</string>
+    <string name="exhibitor_introduce">展商介绍</string>
     <!--注册以及登录中新加入的 end-->
 
     <string name="social_title">我的参会圈</string>
@@ -617,14 +629,22 @@
     <string name="gravity_right">right</string>
 
     <string name="dzbb_question">向作者提问</string>
+    <string name="submit_question">提交</string>
     <string name="dzbb_discuss">参与讨论</string>
     <string name="question_meeting">日程</string>
+    <string name="live">直播</string>
+    <string name="schedule">课件</string>
+    <string name="bus">班车</string>
+    <string name="hot">HOT</string>
+    <string name="activity">活动</string>
+    <string name="exhibitor">展商</string>
+    <string name="satellite">卫星会</string>
     <string name="book_success">预 约 成 功</string>
     <string name="question_post">壁报</string>
 
     <string name="question_by_faculty">专家</string>
     <string name="question_by_meeting">会议名称</string>
-    <string name="question_content_hint">请输入您的问题Q：...</string>
+    <string name="question_content_hint">问题默认以问号结尾？</string>
     <string name="question_email">请输入您的Email地址，方便专家回复</string>
     <string name="tips">Tips：日程相关模块可完全离线使用哦~~</string>
     <string name="tips_poster">Tips:使用右上方扫描功能即可查看壁报详情参与提问~~</string>
@@ -655,7 +675,16 @@
     <string name="reminder_meet_tips">您关注 %1$s 的日程：%2$s 开始时间：%3$s；结束时间：%4$s 将于稍后开始，请尽快到：%5$s 参加，避免耽误您的日程。</string>
     <!--myUse-->
     <string name="use">测试期待</string>
-
+    <string name="xxx_comments1">评论&#160;%1$s</string>
+    <string name="no_data">暂时还没有数据</string>
+    <string name="connect_network">请检查网络连接</string>
+    <string name="yes">是</string>
+    <string name="no">否</string>
+    <string name="read_less">  收起</string>
+    <string name="read_more">  展开</string>
+    <string name="living">直播中</string>
+    <!--会议-->
+    <string name="reset">重置</string>
     <!--登录界面-->
     <string name="welcome">您好，欢迎使用参会易</string>
     <string name="mobile_text">手机号码</string>
@@ -665,14 +694,30 @@
     <string name="other_type_login">第三方账号登录</string>
     <!--个人中心界面-->
     <string name="me_remind">预约提醒</string>
+    <string name="head_img">头像</string>
     <string name="me_quiz">问答</string>
     <string name="me_post">帖子</string>
     <string name="me_note">笔记</string>
+    <string name="delete">删除</string>
+    <string name="user_name">用户名</string>
+    <string name="input_user_name">请输入用户名</string>
+    <string name="mobile">手机号</string>
+    <string name="wx_number">微信号</string>
+    <string name="modify_name">更改名字</string>
     <string name="settings_mark">APP 评分</string>
     <string name="business_cooperation">商务合作</string>
     <string name="tel_number">电话： 021-52981008</string>
+    <string name="notify_setting">通知设置</string>
+    <string name="system_setting">系统设置</string>
+    <string name="privacy_policy">隐私协议</string>
+    <string name="my_info">我的资料</string>
+    <string name="notify_tip">打开推送需确认 Android 系统设置 -通知 -通知管理 -CIT已打开</string>
     <!--会议部分-->
-    <string name="seach_title_hint">输入会议关键字,开始快速查找</string>
+    <string name="seach_title_hint">输入日程关键字</string>
+    <string name="schedule_mind">日程提醒</string>
+    <string name="professor_ask">专家提问</string>
+    <string name="classes_map">场馆定位</string>
+    <string name="search">查找</string>
     <!--极光推送修改-->
     <!--包名修改的部分-->
     <string name="share_info">IFSC基本信息</string>

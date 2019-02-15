@@ -24,6 +24,7 @@ public class Session extends DataSupport implements Serializable {
      * facultyId : 151240,151241
      * roleId : 856,856
      */
+    private int id;
     private int sessionGroupId;
     private String sessionName;
     private String sessionNameEN;
@@ -35,6 +36,15 @@ public class Session extends DataSupport implements Serializable {
     private String remark;
     private String facultyId;
     private String roleId;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     private int attention;
 
     public String getSessionNameEN() {

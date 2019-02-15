@@ -3,6 +3,7 @@ package com.android.incongress.cd.conference.model;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.beans.EsmoListBean;
@@ -30,7 +31,7 @@ import java.util.List;
  * 通过新的方式创建数据库并加入数据
  */
 //public abstract void demo(String s);
-public  class ConferenceDb {
+public class ConferenceDb {
     private static final String CONFERENCES_TXT = "conferences.txt";
     private static final String SESSION_TXT = "session2.0.txt";
     private static final String MEETING_TXT = "meeting2.0.txt";
@@ -126,11 +127,11 @@ public  class ConferenceDb {
                     DataSupport.deleteAll(Tips.class);
                     DataSupport.deleteAll(TimeBean.class);
 
-                }catch(Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
-                }finally {
+                } finally {
                     postion = CONFERENCES;
-                    SharePreferenceUtils.saveAppInt("postion",postion);
+                    SharePreferenceUtils.saveAppInt("postion", postion);
                 }
 
             case CONFERENCES:
@@ -206,7 +207,8 @@ public  class ConferenceDb {
                             }
                             temp.setTopic(topicCH);
                             temp.setTopicEn(topicEN);
-                            temp.save();
+                            boolean b = temp.save();
+                            Log.d("myTest", "save: "+b);
                         }
 //                file.delete();
                     }
@@ -280,9 +282,9 @@ public  class ConferenceDb {
 
                         for (Speaker speaker : speakers) {
                             speaker.setSpeakerName(speaker.getSpeakerName());
-                            if("".equals(speaker.getEnName())){
+                            if ("".equals(speaker.getEnName())) {
                                 speaker.setEnName(speaker.getSpeakerName());
-                            }else{
+                            } else {
                                 speaker.setEnName(speaker.getEnName());
                             }
                             String speakernamepingyin = PinyinConverter.getPinyin(speaker.getSpeakerName().trim().replace("\n", ""));
@@ -453,19 +455,22 @@ public  class ConferenceDb {
                 updateClock();
         }
     }
-    public static void updateClock(){
+
+    public static void updateClock() {
         List<Alert> list = ConferenceDbUtils.getAllAlert();
-        for(Alert alert:list){
-            if(alert.getRelativeid().length()!=0){
+        if (list == null) {
+            return;
+        }
+        for (Alert alert : list) {
+            if (alert.getRelativeid().length() != 0) {
                 ConferenceDbUtils.getAlertByTitle(alert);
             }
         }
     }
 
 
-
-    public static void createDB(String path,boolean isUpdate) {
-        if(isUpdate) {
+    public static void createDB(String path, boolean isUpdate) {
+        if (isUpdate) {
             //删除数据库
 
             DataSupport.deleteAll(Ad.class);
@@ -493,7 +498,8 @@ public  class ConferenceDb {
             if (file.exists()) {
                 is = new FileInputStream(file);
                 Conferences conferences = parseConference(is);
-                conferences.save();
+                boolean b = conferences.save();
+                Log.d("myTest", "createDB: "+b);
                 is.close();
             }
         } catch (Exception e) {
@@ -512,10 +518,10 @@ public  class ConferenceDb {
                 String sessionEN = "";
 
                 for (Session session : sessions) {
-                    String sessionName[] =  session.getSessionName().split("#@#");
-                    if(sessionName.length == 1) {
+                    String sessionName[] = session.getSessionName().split("#@#");
+                    if (sessionName.length == 1) {
                         sessionCH = sessionEN = sessionName[0];
-                    }else if(sessionName.length == 2){
+                    } else if (sessionName.length == 2) {
                         sessionCH = sessionName[0];
                         sessionEN = sessionName[1];
                     }
@@ -542,9 +548,9 @@ public  class ConferenceDb {
                 String topicEN = "";
                 for (Meeting temp : meetings) {
                     String topic[] = temp.getTopic().split("#@#");
-                    if(topic.length == 1) {
+                    if (topic.length == 1) {
                         topicCH = topicEN = topic[0];
-                    }else if(topic.length == 2){
+                    } else if (topic.length == 2) {
                         topicCH = topic[0];
                         topicEN = topic[1];
                     }
@@ -567,7 +573,7 @@ public  class ConferenceDb {
                 List<Confield> confields = parseConField(is);
                 is.close();
 
-                for(Confield temp: confields) {
+                for (Confield temp : confields) {
                     temp.save();
                 }
 
@@ -588,11 +594,11 @@ public  class ConferenceDb {
                 String chinese = "";
                 String english = "";
 
-                for(Class temp: classes) {
+                for (Class temp : classes) {
                     String[] names = temp.getClassesCode().split("#@#");
-                    if(names.length == 1) {
+                    if (names.length == 1) {
                         chinese = english = names[0];
-                    }else if(names.length == 2) {
+                    } else if (names.length == 2) {
                         chinese = names[0];
                         english = names[1];
                     }
@@ -614,11 +620,11 @@ public  class ConferenceDb {
                 List<Speaker> speakers = parseSpeakers(is);
                 is.close();
 
-                for (Speaker speaker: speakers){
+                for (Speaker speaker : speakers) {
                     speaker.setSpeakerName(speaker.getSpeakerName());
-                    if("".equals(speaker.getEnName())){
+                    if ("".equals(speaker.getEnName())) {
                         speaker.setEnName(speaker.getSpeakerName());
-                    }else{
+                    } else {
                         speaker.setEnName(speaker.getEnName());
                     }
 
@@ -646,9 +652,9 @@ public  class ConferenceDb {
                 for (Exhibitor temp : exhibitors) {
                     String names[] = temp.getTitle().split("#@#");
 
-                    if(names.length == 1) {
+                    if (names.length == 1) {
                         chinese = english = names[0];
-                    }else if(names.length == 2) {
+                    } else if (names.length == 2) {
                         chinese = names[0];
                         english = names[1];
                     }
@@ -656,9 +662,9 @@ public  class ConferenceDb {
                     temp.setTitleEn(english);
 
                     String info[] = temp.getInfo().split("#@#");
-                    if(info.length == 1) {
-                        chinese = english =info[0];
-                    }else if(info.length == 2) {
+                    if (info.length == 1) {
+                        chinese = english = info[0];
+                    } else if (info.length == 2) {
                         chinese = info[0];
                         english = info[1];
                     }
@@ -666,9 +672,9 @@ public  class ConferenceDb {
                     temp.setInfoEn(english);
 
                     String address[] = temp.getAddress().split("#@#");
-                    if(address.length == 1) {
-                        chinese = english =address[0];
-                    }else if(address.length == 2) {
+                    if (address.length == 1) {
+                        chinese = english = address[0];
+                    } else if (address.length == 2) {
                         chinese = address[0];
                         english = address[1];
                     }
@@ -707,7 +713,7 @@ public  class ConferenceDb {
                 is = new FileInputStream(file);
                 List<Ad> ads = parseAds(is);
                 is.close();
-                for (Ad temp: ads) {
+                for (Ad temp : ads) {
                     temp.save();
                 }
 
@@ -764,7 +770,8 @@ public  class ConferenceDb {
         } catch (Exception e) {
             e.printStackTrace();
         }
-}
+    }
+
     // 工具集合
     private static Conferences parseConference(InputStream is) {
         String conference = readJsonString(is);
@@ -776,13 +783,14 @@ public  class ConferenceDb {
     private static EsmoListBean parseEsmo(InputStream is) {
         String str = readJsonString(is);
         Gson gson = new Gson();
-        EsmoListBean esmoList = gson.fromJson(str,EsmoListBean.class);
+        EsmoListBean esmoList = gson.fromJson(str, EsmoListBean.class);
 
         return esmoList;
     }
 
     /**
      * 解析Conpass的广告数据
+     *
      * @param is
      * @return
      */
@@ -791,7 +799,7 @@ public  class ConferenceDb {
         String str = readJsonString(is);
         try {
             JSONArray array = new JSONArray(str);
-            if(array != null && array.length() > 0) {
+            if (array != null && array.length() > 0) {
                 ConpassAd tempAd = null;
                 mAdas = new ArrayList<>();
                 for (int i = 0; i < array.length(); i++) {
@@ -808,7 +816,6 @@ public  class ConferenceDb {
 
         return mAdas;
     }
-
 
 
     private static List<Session> parseSession(InputStream is) {
@@ -998,7 +1005,7 @@ public  class ConferenceDb {
         String roleStr = readJsonString(is);
         List<Role> roles = new ArrayList<>();
 
-        if(!TextUtils.isEmpty(roleStr)) {
+        if (!TextUtils.isEmpty(roleStr)) {
             try {
                 Gson gson = new Gson();
                 JSONArray arr = new JSONArray(roleStr);
@@ -1019,7 +1026,7 @@ public  class ConferenceDb {
         TimeBean time = new TimeBean();
         String timeStr = readJsonString(is);
 
-        if(!TextUtils.isEmpty(timeStr)) {
+        if (!TextUtils.isEmpty(timeStr)) {
             Gson gson = new Gson();
             time = gson.fromJson(timeStr, TimeBean.class);
         }

@@ -2,6 +2,8 @@ package com.android.incongress.cd.conference.fragments.search_schedule;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.CardView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,17 +42,15 @@ public class SearchResultActionFragment extends BaseFragment implements View.OnC
 
     private List<Session> mSessionList = new ArrayList<>();
 
+    private static String BUNDLE_SEARCH_STRING = "searchString";
     private static String BUNDLE_SEARCH_DAY = "searchDay";
     private static String BUNDLE_SEARCH_ROOM = "searchRoom";
     private static String BUNDLE_SEARCH_ROOM_NAME = "searchRoomName";
     private static String BUNDLE_SEARCH_START_TIME = "searchStartTime";
     private static String BUNDLE_SEARCH_END_TIME = "searchEndTime";
 
-    private String mSearchDay = "";
-    private String mSearchRoom = "";
-    private String mSearchRoomName = "";
-    private String mSearchStartTime = "";
-    private String mSearchEndTime = "";
+    private String mSearchDay ,mSearchRoom,mSearchRoomName,mSearchStartTime,mSearchEndTime,mSearchString;
+    private CardView mSessionDayCard,mSessionTimeCard,mSessionRoomCard;
 
     public static final SearchResultActionFragment getInstance(String searchDay, String searchRoom, String searchRoomName, String searchStartTime, String searchEndTime) {
         SearchResultActionFragment fragment = new SearchResultActionFragment();
@@ -63,11 +63,28 @@ public class SearchResultActionFragment extends BaseFragment implements View.OnC
         fragment.setArguments(bundle);
         return fragment;
     }
+    public static final SearchResultActionFragment getSearchInstance(String searchString) {
+        SearchResultActionFragment fragment = new SearchResultActionFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(BUNDLE_SEARCH_STRING, searchString);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search_result, null);
+        mDay =  view.findViewById(R.id.session_day);
+        mRoom =  view.findViewById(R.id.session_room);
+        mTime =  view.findViewById(R.id.session_time);
+        mTitle =  getActivity().findViewById(R.id.title_text);
+        mTvNoDataTips =  view.findViewById(R.id.tv_tips);
+        mResultsTips =  view.findViewById(R.id.tips_results);
+        mLvSearchResult =  view.findViewById(R.id.lv_search_result);
+        mSessionDayCard = view.findViewById(R.id.session_day_card);
+        mSessionTimeCard = view.findViewById(R.id.session_time_card);
+        mSessionRoomCard = view.findViewById(R.id.session_room_card);
         Bundle bundle = getArguments();
 
         mSearchDay = bundle.getString(BUNDLE_SEARCH_DAY);
@@ -75,23 +92,24 @@ public class SearchResultActionFragment extends BaseFragment implements View.OnC
         mSearchRoomName = bundle.getString(BUNDLE_SEARCH_ROOM_NAME);
         mSearchStartTime = bundle.getString(BUNDLE_SEARCH_START_TIME);
         mSearchEndTime = bundle.getString(BUNDLE_SEARCH_END_TIME);
-
-        mSessionBeans = ConferenceDbUtils.getSessionByTimeAndRoom(mSearchDay,mSearchRoom,mSearchStartTime,mSearchEndTime);
+        mSearchString = bundle.getString(BUNDLE_SEARCH_STRING);
+        if(!TextUtils.isEmpty(mSearchString)){
+            mSessionDayCard.setVisibility(View.GONE);
+            mSessionTimeCard.setVisibility(View.GONE);
+            mSessionRoomCard.setVisibility(View.GONE);
+            mSessionBeans = ConferenceDbUtils.getSessionBySearch(mSearchString);
+        }else {
+            mSessionBeans = ConferenceDbUtils.getSessionByTimeAndRoom(mSearchDay,mSearchRoom,mSearchStartTime,mSearchEndTime);
+            mDay.setText(mSearchDay.subSequence(5, 10));
+            mTime.setText(mSearchStartTime+" - "+mSearchEndTime);
+            mRoom.setText(mSearchRoomName);
+            mDay.setOnClickListener(this);
+            mTime.setOnClickListener(this);
+            mRoom.setOnClickListener(this);
+        }
         mMeetingBeans = ConferenceDbUtils.getMeetingBySessions(mSessionBeans);
         mClasses = ConferenceDbUtils.getAllClasses();
-        mDay = (TextView) view.findViewById(R.id.session_day);
-        mTime = (TextView) view.findViewById(R.id.session_time);
-        mRoom = (TextView) view.findViewById(R.id.session_room);
-        mTitle = (TextView) getActivity().findViewById(R.id.title_text);
-        mTvNoDataTips = (TextView) view.findViewById(R.id.tv_tips);
-        mResultsTips = (TextView) view.findViewById(R.id.tips_results);
-        mLvSearchResult = (ListView) view.findViewById(R.id.lv_search_result);
-        mDay.setText(mSearchDay.subSequence(5, 10));
-        mTime.setText(mSearchStartTime+" - "+mSearchEndTime);
-        mRoom.setText(mSearchRoomName);
-        mDay.setOnClickListener(this);
-        mTime.setOnClickListener(this);
-        mRoom.setOnClickListener(this);
+
         mSessionList.addAll(ConferenceDbUtils.getAllSession());
         if(mSessionBeans.size() == 0) {
             mTvNoDataTips.setVisibility(View.VISIBLE);
@@ -99,6 +117,7 @@ public class SearchResultActionFragment extends BaseFragment implements View.OnC
             mResultsTips.setVisibility(View.GONE);
         }else {
             mResultsTips.setVisibility(View.VISIBLE);
+            mResultsTips.setText(String.format(getString(R.string.retrieval_results),mSessionBeans.size()));
             mAdapter = new SearchResultAdapter(getActivity(), mSessionBeans, mMeetingBeans, mClasses);
             mLvSearchResult.setAdapter(mAdapter);
         }
@@ -113,8 +132,6 @@ public class SearchResultActionFragment extends BaseFragment implements View.OnC
         });
         return view;
     }
-
-
 
     /**
      * 获取Meeting在session中的位置
@@ -151,12 +168,14 @@ public class SearchResultActionFragment extends BaseFragment implements View.OnC
                 mTvNoDataTips.setVisibility(View.GONE);
                 mLvSearchResult.setVisibility(View.VISIBLE);
                 mDay.setVisibility(View.GONE);
+                mSessionDayCard.setVisibility(View.GONE);
                 mSearchDay = "";
                 mSessionBeans = ConferenceDbUtils.getSessionByTimeAndRoom(mSearchDay,mSearchRoom,mSearchStartTime,mSearchEndTime);
                 mAdapter = new SearchResultAdapter(getActivity(), mSessionBeans, mMeetingBeans, mClasses);
                 mLvSearchResult.setAdapter(mAdapter);
                 if(AppApplication.systemLanguage == 1){
                     mTitle.setText("检索结果("+mSessionBeans.size()+")");
+                    mResultsTips.setText(String.format(getString(R.string.retrieval_results),mSessionBeans.size()));
                 }else{
                     mTitle.setText("Search result("+mSessionBeans.size()+")");
                 }
@@ -166,6 +185,7 @@ public class SearchResultActionFragment extends BaseFragment implements View.OnC
                 mTvNoDataTips.setVisibility(View.GONE);
                 mLvSearchResult.setVisibility(View.VISIBLE);
                 mTime.setVisibility(View.GONE);
+                mSessionTimeCard.setVisibility(View.GONE);
                 mSearchStartTime = "06:00";
                 mSearchEndTime = "24:00";
                 mSessionBeans = ConferenceDbUtils.getSessionByTimeAndRoom(mSearchDay,mSearchRoom,mSearchStartTime,mSearchEndTime);
@@ -173,6 +193,7 @@ public class SearchResultActionFragment extends BaseFragment implements View.OnC
                 mLvSearchResult.setAdapter(mAdapter);
                 if(AppApplication.systemLanguage == 1){
                     mTitle.setText("检索结果("+mSessionBeans.size()+")");
+                    mResultsTips.setText(String.format(getString(R.string.retrieval_results),mSessionBeans.size()));
                 }else{
                     mTitle.setText("Search result("+mSessionBeans.size()+")");
                 }
@@ -181,12 +202,14 @@ public class SearchResultActionFragment extends BaseFragment implements View.OnC
                 mTvNoDataTips.setVisibility(View.GONE);
                 mLvSearchResult.setVisibility(View.VISIBLE);
                 mRoom.setVisibility(View.GONE);
+                mSessionRoomCard.setVisibility(View.GONE);
                 mSearchRoom = "";
                 mSessionBeans = ConferenceDbUtils.getSessionByTimeAndRoom(mSearchDay,mSearchRoom,mSearchStartTime,mSearchEndTime);
                 mAdapter = new SearchResultAdapter(getActivity(), mSessionBeans, mMeetingBeans, mClasses);
                 mLvSearchResult.setAdapter(mAdapter);
                 if(AppApplication.systemLanguage == 1){
                     mTitle.setText("检索结果("+mSessionBeans.size()+")");
+                    mResultsTips.setText(String.format(getString(R.string.retrieval_results),mSessionBeans.size()));
                 }else{
                     mTitle.setText("Search result("+mSessionBeans.size()+")");
                 }

@@ -45,6 +45,7 @@ import com.umeng.analytics.MobclickAgent;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.litepal.util.Const;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -79,8 +80,6 @@ public class SplashActivity extends BaseActivity {
     private static final int CREATEDB_TRUE = 0;
     private static final int CREATEDB_FALSE = 1;
     private ConferenceDb.OnUpdateInfoListener mUpdateListener;
-    //初始数据库版本
-    private static final int DATABASE_VERSION = 3;
 
     private int mDbVersion = 0;
 
@@ -270,7 +269,7 @@ public class SplashActivity extends BaseActivity {
         final boolean firstlocal = SharePreferenceUtils.getAppBoolean(Constants.DB_frist,true);
         if (AppApplication.instance().NetWorkIsOpen()) {
             //最开始先上传会议ID,返回会议状态
-            CHYHttpClientUsage.getInstanse().doQueryShenHe(Constants.conId + "", new JsonHttpResponseHandler() {
+            CHYHttpClientUsage.getInstanse().doQueryShenHe(Constants.getConId() + "", new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     super.onSuccess(statusCode, headers, response);
@@ -472,8 +471,8 @@ public class SplashActivity extends BaseActivity {
                     InputStream zipIn = getResources().openRawResource(R.raw.data1);
                     FileUtils.unZip(zipIn, filespath);
                     ConferenceDb.createDB(filespath, 0, mUpdateListener);
-                    SharePreferenceUtils.saveAppInt(Constants.PREFERENCE_DB_VERSION, DATABASE_VERSION);
-                    mDbVersion = DATABASE_VERSION;
+                    SharePreferenceUtils.saveAppInt(Constants.PREFERENCE_DB_VERSION, Constants.DATA_VERSION);
+                    mDbVersion = Constants.DATA_VERSION;
                 }
             }
 
@@ -484,17 +483,16 @@ public class SplashActivity extends BaseActivity {
 
             @Override
             protected void postWork() {
-                int conId = Constants.conId;
+                int conId = Constants.getConId();
                 int type = AppApplication.conType;
                 String token = SharePreferenceUtils.getAppString("incongress_token");
 
                 //检查更新数据
-                CHYHttpClientUsage.getInstanse().doGetInitData(conId, mDbVersion, type, appversion, token, new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
+                CHYHttpClientUsage.getInstanse().doGetInitData(conId, mDbVersion, type, appversion, token, 1,new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                         super.onSuccess(statusCode, headers, response);
-                        String value = response.toString();
-                        AppApplication.conBean = JsonParser.parseIncongress(value);
+                        AppApplication.conBean = JsonParser.parseIncongress(response);
 
                         zipList = AppApplication.conBean.getVersionList();
                         if (AppApplication.conBean.getClient().equals("1")) {

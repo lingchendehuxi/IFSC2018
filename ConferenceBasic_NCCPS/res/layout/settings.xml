@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="29dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="11dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:text="@string/notify_setting"
+                android:textColor="@color/black_login_text"
+                android:textSize="14sp" />
+            <com.android.incongress.cd.conference.widget.button.ToggleButton
+                android:id="@+id/tog_button"
+                android:layout_width="54dp"
+                android:layout_height="30dp"
+                android:layout_gravity="right"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginRight="24dp"
+            android:text="@string/notify_tip"
+            android:textColor="@color/unselect_color"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <View
+        style="@style/edite_line"
+        android:layout_marginTop="16dp" />
+
+    <RelativeLayout
+        android:id="@+id/rl_clear"
+        android:layout_width="match_parent"
+        android:layout_height="57dp"
+        android:paddingLeft="29dp"
+        android:background="@drawable/rounded_corners"
+        android:clickable="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/clear_cache"
+            android:textColor="@color/black_login_text"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/iv_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/me_next" />
+
+        <TextView
+            android:id="@+id/memory_of"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="22dp"
+            android:layout_toLeftOf="@id/iv_next"
+            android:text="@string/home_setting"
+            android:textColor="@color/unselect_color"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+
+    <View style="@style/edite_line" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="57dp"
+        android:paddingLeft="29dp"
+        android:background="@drawable/rounded_corners"
+        android:visibility="gone"
+        android:clickable="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/privacy_policy"
+            android:textColor="@color/black_login_text"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/me_next" />
+
+    </RelativeLayout>
+
+    <View style="@style/edite_line"
+        android:visibility="gone"/>
+    <RelativeLayout
+        android:id="@+id/rl_login_out"
+        android:layout_width="match_parent"
+        android:layout_height="57dp"
+        android:paddingLeft="29dp"
+        android:background="@drawable/rounded_corners"
+        android:clickable="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/logout"
+            android:textColor="@color/black_login_text"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/me_next" />
+
+    </RelativeLayout>
+
+    <View style="@style/edite_line" />
+</LinearLayout>

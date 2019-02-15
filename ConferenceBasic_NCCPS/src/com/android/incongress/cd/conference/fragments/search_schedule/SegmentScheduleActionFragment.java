@@ -5,27 +5,35 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.android.incongress.cd.conference.HomeActivity;
 import com.android.incongress.cd.conference.adapters.SearchRoomAdapter;
-import com.android.incongress.cd.conference.adapters.SearchTimeAdapter;
 import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.BaseFragment;
 import com.android.incongress.cd.conference.beans.SearchRoomBean;
-import com.android.incongress.cd.conference.beans.SearchTimeBean;
 import com.android.incongress.cd.conference.model.Class;
 import com.android.incongress.cd.conference.model.ConferenceDbUtils;
 import com.android.incongress.cd.conference.model.Session;
 import com.android.incongress.cd.conference.utils.DensityUtil;
 import com.android.incongress.cd.conference.utils.DialogUtil;
-import com.android.incongress.cd.conference.widget.LWheelDialog;
+import com.android.incongress.cd.conference.utils.PicUtils;
+import com.android.incongress.cd.conference.utils.ToastUtils;
+import com.android.incongress.cd.conference.widget.PickerView;
 import com.android.incongress.cd.conference.widget.SpaceItemDecoration;
+import com.android.incongress.cd.conference.widget.StatusBarUtil;
+import com.android.incongress.cd.conference.widget.blws.PolyvKeyBoardUtils;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 
 import java.text.SimpleDateFormat;
@@ -37,17 +45,15 @@ import java.util.List;
  * Created by Jacky on 2016/3/8.
  * 检索meeting
  */
-public class SegmentScheduleActionFragment extends BaseFragment {
-    private RecyclerView mRvTime, mRvRoom;
-    private LinearLayoutManager mLayoutManager;
+public class SegmentScheduleActionFragment extends BaseFragment implements View.OnClickListener {
+    private RecyclerView mRvRoom;
     private GridLayoutManager mGridLayoutManager;
-    private SearchTimeAdapter mTimeAdapter;
     private List<Class> mRoomsList;
     private SearchRoomAdapter mRoomAdapter;
-    private List<String> mSessionDaysList= new ArrayList<>();
-    private TextView mTvCurrentTime;
+    private List<String> mSessionDaysList = new ArrayList<>();
+    private TextView mTvCurrentTime, mIvReset;
 
-    private ImageView mIvReset, mIvPrev, mIvLast;
+    private ImageView mIvPrev, mIvLast;
     private int mCurrentTimePosition = 0;
     private DialogUtil dialogUtil;
 
@@ -61,85 +67,63 @@ public class SegmentScheduleActionFragment extends BaseFragment {
     //查询条件 结束时间
     private String mCurrentSearchEndTime = "12:00";
 
-    private TextView mTvStartSearch;
+    private TextView mTvStartSearch, tv_cancel;
     private ProgressBar mProgressBar;
+
+    private PickerView minute_from, second_from, minute_to, second_to;
+    private String s_minute_from, s_second_from, s_minute_to, s_second_to;
+    private boolean isCustomTime = false;
+    private View custom_time;
+    private LinearLayout ll_am, ll_pm, ll_ev;
+    private EditText et_search;
+    //参数为了在切换到activity返回后，fragment重新设置导航栏字体颜色
+    private boolean isBackView = true;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        StatusBarUtil.setStatusBarDarkTheme(getActivity(),true);
         View view = inflater.inflate(R.layout.fragment_segment_schedule, container, false);
-        mRvTime = (RecyclerView) view.findViewById(R.id.rv_time);
-        mIvReset = (ImageView) view.findViewById(R.id.iv_reset);
-        mIvPrev = (ImageView) view.findViewById(R.id.iv_prev);
-        mIvLast = (ImageView) view.findViewById(R.id.iv_last);
-        mTvCurrentTime = (TextView) view.findViewById(R.id.tv_current_time);
-        mTvStartSearch = (TextView) view.findViewById(R.id.tv_start_search);
-        mProgressBar = (ProgressBar) view.findViewById(R.id.progressbar);
+        initView(view);
         mCurrentSearchRoomName = getActivity().getResources().getString(R.string.search_all_class);
         dialogUtil = new DialogUtil();
-        mLayoutManager = new LinearLayoutManager(getActivity());
-        mLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        mTimeAdapter = new SearchTimeAdapter(getActivity(), DensityUtil.getScreenSize(getActivity()));
-        mRvTime.setAdapter(mTimeAdapter);
-        mRvTime.setLayoutManager(mLayoutManager);
-        mTimeAdapter.setOnItemClickListener(new SearchTimeAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, SearchTimeBean data) {
-                int position = data.getPosition();
 
-                if(position == 0) {
-                    mCurrentSearchStartTime = "08:00";
-                    mCurrentSearchEndTime = "12:00";
-                }else if(position == 1) {
-                    mCurrentSearchStartTime = "12:00";
-                    mCurrentSearchEndTime = "18:00";
-                } else if(position == 2) {
-                    mCurrentSearchStartTime = "18:00";
-                    mCurrentSearchEndTime = "20:00";
-                }else if (position == 3) {
-                    dialogUtil.getWheelDialog(getActivity(), LWheelDialog.LWheelDialogType.ALL, null, new LWheelDialog.OnCheckedListener() {
-                        @Override
-                        public void onCheckedClicked(String time) {
-                            String[] times = time.split("-");
-                            String s1 = times[0];
-                            String s2 = times[1];
-                            int res = s2.compareTo(s1);
-                            if(res>0) {
-                                mTimeAdapter.setCustomTime(time);
-                                mCurrentSearchStartTime = s1;
-                                mCurrentSearchEndTime =s2 ;
-                                dialogUtil.diss();
-                            }else{
-                                mTimeAdapter.resetSearch();
-                                Toast.makeText(getActivity(), R.string.search_time,Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-                }
-            }
-        });
 
-        mRvRoom = (RecyclerView) view.findViewById(R.id.rv_room);
         mGridLayoutManager = new GridLayoutManager(getActivity(), 3, LinearLayoutManager.VERTICAL, false);
         mRvRoom.setLayoutManager(mGridLayoutManager);
 
         getRoomsInfo();
         getTimeInfo();
 
-        onClickListener();
-
         mRoomAdapter = new SearchRoomAdapter(getActivity(), mRoomsList);
         mRvRoom.setAdapter(mRoomAdapter);
         mRvRoom.addItemDecoration(new SpaceItemDecoration(DensityUtil.dip2px(getActivity(), 3)));
         mCurrentSearchDay = mSessionDaysList.get(mCurrentTimePosition);
-
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");// HH:mm:ss
+//获取当前时间
+        Date date = new Date(System.currentTimeMillis());
+        if (mSessionDaysList.contains(simpleDateFormat.format(date))) {
+            for (int i = 0; i < mSessionDaysList.size(); i++) {
+                if (simpleDateFormat.format(date).equals(mSessionDaysList.get(i))) {
+                    String[] timeStrings = mSessionDaysList.get(i).split("-");
+                    mTvCurrentTime.setText(timeStrings[1] + "月" + timeStrings[2] + "日");
+                    mCurrentSearchDay = mSessionDaysList.get(i);
+                    setArrowColor(i);
+                }
+            }
+        }
+        mProgressBar.setVisibility(View.GONE);
+        initButtonState();
+        ll_am.performClick();
+        initPicker(view);
         mRoomAdapter.setOnItemClickListener(new SearchRoomAdapter.OnItemClickListener() {
             @Override
             public void doOnItemClick(View v, SearchRoomBean data) {
                 if (data == null) {
                     mCurrentSearchRoom = "";
-                    if(AppApplication.systemLanguage == 1){
+                    if (AppApplication.systemLanguage == 1) {
                         mCurrentSearchRoomName = "所有会议室";
-                    }else{
+                    } else {
                         mCurrentSearchRoomName = "All";
                     }
                 } else {
@@ -148,69 +132,131 @@ public class SegmentScheduleActionFragment extends BaseFragment {
                 }
             }
         });
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");// HH:mm:ss
-//获取当前时间
-        Date date = new Date(System.currentTimeMillis());
-        if(mSessionDaysList.contains(simpleDateFormat.format(date))){
-            for (int i = 0;i<mSessionDaysList.size();i++){
-                if(simpleDateFormat.format(date).equals(mSessionDaysList.get(i))){
-                    mTvCurrentTime.setText(mSessionDaysList.get(i).subSequence(5, 10));
-                    mCurrentSearchDay = mSessionDaysList.get(i);
-                    setArrowColor(i);
+        et_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                String mSearchString = textView.getText().toString().trim();
+                if (actionId == EditorInfo.IME_ACTION_SEARCH ||
+                        (keyEvent != null && keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+                    if (TextUtils.isEmpty(mSearchString)) {
+                        ToastUtils.showShorToast("请先输入搜索内容");
+                        return true;
+                    }
+                    PolyvKeyBoardUtils.closeKeybord(et_search, getActivity());
+                    action(SearchResultActionFragment.getSearchInstance(mSearchString), getString(R.string.search_search_result_title), false, false, false);
+                    return true;
                 }
+                return false;
             }
-        }
-        mProgressBar.setVisibility(View.GONE);
-
+        });
         return view;
     }
 
-    private void onClickListener() {
-        mIvReset.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mRoomAdapter.resetSearch();
-                mTimeAdapter.resetSearch();
-                mTvCurrentTime.setText(mSessionDaysList.get(mCurrentTimePosition = 0).subSequence(5, 10));
+    private void initPicker(View view) {
+        minute_from = view.findViewById(R.id.minute_from);
+        second_from = view.findViewById(R.id.second_from);
+        minute_to = view.findViewById(R.id.minute_to);
+        second_to = view.findViewById(R.id.second_to);
+        List<String> dataF = new ArrayList<>();
+        List<String> dataT = new ArrayList<>();
+        List<String> secondsF = new ArrayList<>();
+        List<String> secondsT = new ArrayList<>();
+        for (int i = 8; i < 21; i++) {
+            if(i<10){
+                dataF.add("0" + i);
+                dataT.add("0" + i);
+            }else {
+                dataF.add("" + i);
+                dataT.add("" + i);
+            }
 
-                //重置搜索条件
-                mCurrentSearchDay = mSessionDaysList.get(mCurrentTimePosition);
-                mCurrentSearchRoom = "";
-                mCurrentSearchStartTime = "08:00";
-                mCurrentSearchEndTime = "12:00";
+        }
+        for (int i = 0; i < 6; i++) {
+            secondsF.add( i + "0");
+            secondsT.add( i + "0");
+        }
+        minute_from.setData(dataF);
+        s_minute_from = minute_from.getText();
+        minute_from.setOnSelectListener(new PickerView.onSelectListener() {
+
+            @Override
+            public void onSelect(String text) {
+                s_minute_from = text;
+                mCurrentSearchStartTime = s_minute_from + ":" + s_second_from;
+                mCurrentSearchEndTime = s_minute_to + ":" + s_second_to;
             }
         });
+        second_from.setData(secondsF);
+        s_second_from = second_from.getText();
+        second_from.setOnSelectListener(new PickerView.onSelectListener() {
 
-        mIvLast.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                if (mCurrentTimePosition == mSessionDaysList.size() - 1) {
-                    return;
+            public void onSelect(String text) {
+                s_second_from = text;
+                mCurrentSearchStartTime = s_minute_from + ":" + s_second_from;
+                mCurrentSearchEndTime = s_minute_to + ":" + s_second_to;
+            }
+        });
+        minute_to.setData(dataT);
+        s_minute_to = minute_to.getText();
+        minute_to.setOnSelectListener(new PickerView.onSelectListener() {
+
+            @Override
+            public void onSelect(String text) {
+                s_minute_to = text;
+                mCurrentSearchStartTime = s_minute_from + ":" + s_second_from;
+                mCurrentSearchEndTime = s_minute_to + ":" + s_second_to;
+            }
+        });
+        second_to.setData(secondsT);
+        s_second_to = second_to.getText();
+        second_to.setOnSelectListener(new PickerView.onSelectListener() {
+
+            @Override
+            public void onSelect(String text) {
+                s_second_to = text;
+                mCurrentSearchStartTime = s_minute_from + ":" + s_second_from;
+                mCurrentSearchEndTime = s_minute_to + ":" + s_second_to;
+            }
+        });
+        PickerView[] views = new PickerView[]{minute_from, minute_to, second_from, second_to};
+        for (int i = 0; i < views.length; i++) {
+            views[i].setOnTouchViewListener(new PickerView.onTouchViewListener() {
+                @Override
+                public void onTouchView() {
+                    initButtonState();
+                    custom_time.setBackground(getResources().getDrawable(R.drawable.bg_segment_selected));
+                    mCurrentSearchStartTime = s_minute_from + ":" + s_second_from;
+                    mCurrentSearchEndTime = s_minute_to + ":" + s_second_to;
+                    isCustomTime = true;
                 }
-                mTvCurrentTime.setText(mSessionDaysList.get(++mCurrentTimePosition).subSequence(5, 10));
-                mCurrentSearchDay = mSessionDaysList.get(mCurrentTimePosition);
-                setArrowColor(mCurrentTimePosition);
-            }
-        });
+            });
+        }
+    }
 
-        mIvPrev.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mCurrentTimePosition == 0) {
-                    return;
-                }
-                mTvCurrentTime.setText(mSessionDaysList.get(--mCurrentTimePosition).subSequence(5, 10));
-                mCurrentSearchDay = mSessionDaysList.get(mCurrentTimePosition);
-                setArrowColor(mCurrentTimePosition);
-            }
-        });
-
-        mTvStartSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                doSearchQuery(mCurrentSearchDay, mCurrentSearchRoom,mCurrentSearchRoomName, mCurrentSearchStartTime, mCurrentSearchEndTime);
-            }
-        });
+    private void initView(View view) {
+        mIvReset = view.findViewById(R.id.iv_reset);
+        mIvPrev = view.findViewById(R.id.iv_prev);
+        mIvLast = view.findViewById(R.id.iv_last);
+        mTvCurrentTime = view.findViewById(R.id.tv_current_time);
+        mTvStartSearch = view.findViewById(R.id.tv_start_search);
+        mProgressBar = view.findViewById(R.id.progressbar);
+        ll_am = view.findViewById(R.id.ll_am);
+        ll_pm = view.findViewById(R.id.ll_pm);
+        ll_ev = view.findViewById(R.id.ll_ev);
+        custom_time = view.findViewById(R.id.custom_time);
+        tv_cancel = view.findViewById(R.id.tv_cancel);
+        et_search = view.findViewById(R.id.et_search);
+        mRvRoom = view.findViewById(R.id.rv_room);
+        ll_am.setOnClickListener(this);
+        ll_ev.setOnClickListener(this);
+        ll_pm.setOnClickListener(this);
+        mIvReset.setOnClickListener(this);
+        mIvLast.setOnClickListener(this);
+        custom_time.setOnClickListener(this);
+        tv_cancel.setOnClickListener(this);
+        mTvStartSearch.setOnClickListener(this);
+        mIvPrev.setOnClickListener(this);
     }
 
     /**
@@ -229,35 +275,147 @@ public class SegmentScheduleActionFragment extends BaseFragment {
         List<Session> allSession = ConferenceDbUtils.getAllSession();
         for (int i = 0; i < allSession.size(); i++) {
             Session session = allSession.get(i);
-            if(mSessionDaysList.size()>0) {
-                if(!(mSessionDaysList.get(mSessionDaysList.size()-1).equals(session.getSessionDay()))) {
+            if (mSessionDaysList.size() > 0) {
+                if (!(mSessionDaysList.get(mSessionDaysList.size() - 1).equals(session.getSessionDay()))) {
                     mSessionDaysList.add(session.getSessionDay());
                 }
-            }else {
+            } else {
                 mSessionDaysList.add(session.getSessionDay());
             }
         }
-
-        mTvCurrentTime.setText(mSessionDaysList.get(0).subSequence(5, 10));
+        String[] timeStrings = mSessionDaysList.get(0).split("-");
+        mTvCurrentTime.setText(timeStrings[1] + "月" + timeStrings[2] + "日");
+        setArrowColor(0);
     }
 
     private void setArrowColor(int position) {
-        if (position == 0) {
-            mIvPrev.setImageResource(R.drawable.left_arrow);
-            mIvLast.setImageResource(R.drawable.right_arrow_clickable);
-        } else if (position == (mSessionDaysList.size() - 1)) {
-            mIvPrev.setImageResource(R.drawable.left_arrow_clickable);
-            mIvLast.setImageResource(R.drawable.right_arrow);
-        } else {
-            mIvPrev.setImageResource(R.drawable.left_arrow_clickable);
-            mIvLast.setImageResource(R.drawable.right_arrow_clickable);
+        if (mSessionDaysList.size() == 1) {
+            PicUtils.setImageViewColor(mIvPrev, R.color.line_color);
+            PicUtils.setImageViewColor(mIvLast, R.color.line_color);
+            return;
+        }
+        if (position == mSessionDaysList.size() - 1) {
+            PicUtils.setImageViewColor(mIvPrev, R.color.theme_color);
+            PicUtils.setImageViewColor(mIvLast, R.color.line_color);
+        } else if (position < mSessionDaysList.size() - 1) {
+            if (position == 0) {
+                PicUtils.setImageViewColor(mIvPrev, R.color.line_color);
+                PicUtils.setImageViewColor(mIvLast, R.color.theme_color);
+            } else {
+                PicUtils.setImageViewColor(mIvPrev, R.color.theme_color);
+                PicUtils.setImageViewColor(mIvLast, R.color.theme_color);
+            }
         }
     }
 
     /**
      * 根据查询条件进行查询
      */
-    private void doSearchQuery(String searchDay, String searchRoom,String searchRoomName ,String searchStartTime, String searchEndTime) {
-        action(SearchResultActionFragment.getInstance(searchDay,searchRoom,searchRoomName,searchStartTime,searchEndTime), getString(R.string.search_search_result_title),false,false, false);
+    private void doSearchQuery(String searchDay, String searchRoom, String searchRoomName, String searchStartTime, String searchEndTime) {
+        action(SearchResultActionFragment.getInstance(searchDay, searchRoom, searchRoomName, searchStartTime, searchEndTime), getString(R.string.search_search_result_title), false, false, false);
+    }
+
+    //刷新重置按钮颜色(置灰)
+    private void initButtonState() {
+        ll_ev.setBackground(getResources().getDrawable(R.drawable.bg_segment_unselected));
+        ll_am.setBackground(getResources().getDrawable(R.drawable.bg_segment_unselected));
+        ll_pm.setBackground(getResources().getDrawable(R.drawable.bg_segment_unselected));
+        custom_time.setBackground(getResources().getDrawable(R.drawable.bg_segment_unselected));
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.ll_am:
+                initButtonState();
+                ll_am.setBackground(getResources().getDrawable(R.drawable.bg_segment_selected));
+                mCurrentSearchStartTime = "08:00";
+                mCurrentSearchEndTime = "12:00";
+                isCustomTime = false;
+                break;
+            case R.id.ll_pm:
+                initButtonState();
+                ll_pm.setBackground(getResources().getDrawable(R.drawable.bg_segment_selected));
+                mCurrentSearchStartTime = "12:00";
+                mCurrentSearchEndTime = "18:00";
+                isCustomTime = false;
+                break;
+            case R.id.ll_ev:
+                initButtonState();
+                ll_ev.setBackground(getResources().getDrawable(R.drawable.bg_segment_selected));
+                mCurrentSearchStartTime = "18:00";
+                mCurrentSearchEndTime = "20:00";
+                isCustomTime = false;
+                break;
+            case R.id.tv_cancel:
+                ((HomeActivity) getActivity()).performBackClick();
+                break;
+            //重置搜索
+            case R.id.iv_reset:
+                mRoomAdapter.resetSearch();
+                initButtonState();
+                ll_am.setBackground(getResources().getDrawable(R.drawable.bg_segment_selected));
+                //重置搜索条件
+                mCurrentSearchDay = mSessionDaysList.get(mCurrentTimePosition);
+                mCurrentSearchRoom = "";
+                mCurrentSearchStartTime = "08:00";
+                mCurrentSearchEndTime = "12:00";
+                break;
+            //跳转下个内容
+            case R.id.iv_last:
+                if (mCurrentTimePosition == mSessionDaysList.size() - 1) {
+                    return;
+                }
+                String[] timeStrings = mSessionDaysList.get(++mCurrentTimePosition).split("-");
+                mTvCurrentTime.setText(timeStrings[1] + "月" + timeStrings[2] + "日");
+                mCurrentSearchDay = mSessionDaysList.get(mCurrentTimePosition);
+                setArrowColor(mCurrentTimePosition);
+                break;
+            //回退上一个日期
+            case R.id.iv_prev:
+                if (mCurrentTimePosition == 0) {
+                    return;
+                }
+                String[] timeStrings2 = mSessionDaysList.get(--mCurrentTimePosition).split("-");
+                mTvCurrentTime.setText(timeStrings2[1] + "月" + timeStrings2[2] + "日");
+                mCurrentSearchDay = mSessionDaysList.get(mCurrentTimePosition);
+                setArrowColor(mCurrentTimePosition);
+                break;
+            //去搜索相关内容
+            case R.id.tv_start_search:
+                if (isCustomTime) {
+                    if (Integer.parseInt(s_minute_to) > Integer.parseInt(s_minute_from)) {
+                        doSearchQuery(mCurrentSearchDay, mCurrentSearchRoom, mCurrentSearchRoomName, mCurrentSearchStartTime, mCurrentSearchEndTime);
+                    } else if (Integer.parseInt(s_minute_to) == Integer.parseInt(s_minute_from)) {
+                        if (Integer.parseInt(s_second_to) > Integer.parseInt(s_second_from)) {
+                            doSearchQuery(mCurrentSearchDay, mCurrentSearchRoom, mCurrentSearchRoomName, mCurrentSearchStartTime, mCurrentSearchEndTime);
+                        } else {
+                            ToastUtils.showShorToast(R.string.search_time);
+                        }
+                    } else {
+                        ToastUtils.showShorToast(R.string.search_time);
+                    }
+                } else {
+                    doSearchQuery(mCurrentSearchDay, mCurrentSearchRoom, mCurrentSearchRoomName, mCurrentSearchStartTime, mCurrentSearchEndTime);
+                }
+                break;
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(!isBackView){
+            StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
+        }
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        isBackView = hidden;
+        if(!hidden){
+            StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
+        }
     }
 }

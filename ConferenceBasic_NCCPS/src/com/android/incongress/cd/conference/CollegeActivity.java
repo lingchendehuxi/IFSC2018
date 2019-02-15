@@ -38,6 +38,7 @@ import com.android.incongress.cd.conference.utils.NetWorkUtils;
 import com.android.incongress.cd.conference.utils.ShareUtils;
 import com.android.incongress.cd.conference.widget.IncongressTextView;
 import com.android.incongress.cd.conference.widget.SharePopupWindow;
+import com.android.incongress.cd.conference.widget.StatusBarUtil;
 import com.android.incongress.cd.conference.widget.VideoEnabledWebChromeClient;
 import com.android.incongress.cd.conference.widget.VideoEnabledWebView;
 import com.bm.library.PhotoView;
@@ -68,7 +69,7 @@ public class CollegeActivity extends BaseActivity {
     private boolean IsNetWorkOpen;
 
     private ImageView mIvBack, mIvClose;
-    private IncongressTextView mIvTitle;
+    private TextView mIvTitle;
     private ImageView mIvShare;
     private LinearLayout mPb_loading;
     private RelativeLayout include;
@@ -85,7 +86,14 @@ public class CollegeActivity extends BaseActivity {
     public static void startCitCollegeActivity(Context context, String title, String url) {
         Intent intent = new Intent();
         intent.setClass(context, CollegeActivity.class);
-        intent.putExtra(EXTRA_URL, url);
+        if(url.endsWith(".mp4")){
+            intent.putExtra(EXTRA_URL, url);
+        }else {
+            if(!url.contains("?")){
+                url = url +"?";
+            }
+            intent.putExtra(EXTRA_URL,url+"&appVersion="+Constants.APP_VERSION+"&appType=2"+"&userId=" + AppApplication.userId + "&userType=" + AppApplication.userType + "&lan=" + AppApplication.getSystemLanuageCode() + "&fromWhere=" + Constants.getFromWhere() + "&conId=" + Constants.getConId());
+        }
         intent.putExtra(EXTRA_TITLE, title);
         context.startActivity(intent);
     }
@@ -93,7 +101,14 @@ public class CollegeActivity extends BaseActivity {
     public static void startCitCollegeActivity(Context context, String title, String url, int type) {
         Intent intent = new Intent();
         intent.setClass(context, CollegeActivity.class);
-        intent.putExtra(EXTRA_URL, url);
+        if(url.endsWith(".mp4")){
+            intent.putExtra(EXTRA_URL, url);
+        }else {
+            if(!url.contains("?")){
+                url = url +"?";
+            }
+            intent.putExtra(EXTRA_URL,url+"&appVersion="+Constants.APP_VERSION+"&appType=2"+"&userId=" + AppApplication.userId + "&userType=" + AppApplication.userType + "&lan=" + AppApplication.getSystemLanuageCode() + "&fromWhere=" + Constants.getFromWhere() + "&conId=" + Constants.getConId());
+        }
         intent.putExtra(EXTRA_TITLE, title);
         intent.putExtra("type", type);
         context.startActivity(intent);
@@ -113,7 +128,7 @@ public class CollegeActivity extends BaseActivity {
         }
         mIvBack = (ImageView) findViewById(R.id.title_back);
         mIvClose = (ImageView) findViewById(R.id.title_close);
-        mIvTitle = (IncongressTextView) findViewById(R.id.title_text);
+        mIvTitle = findViewById(R.id.title_text);
         mIvTitle.setText(mTitle);
         mIvShare = (ImageView) findViewById(R.id.iv_share);
 
@@ -189,10 +204,10 @@ public class CollegeActivity extends BaseActivity {
             @Override
             public void onReceivedTitle(WebView view, String title) {
                 super.onReceivedTitle(view, title);
-                if (title.contains("app.incongress.cn/webapp/discussion/")) {
-                    shareTitle = "";
-                    mIvTitle.setText("");
-                } else {
+                if (title.contains("app.incongress.cn/webapp/discussion/")||title.contains("https://")) {
+                    shareTitle = mTitle;
+                    mIvTitle.setText(mTitle);
+                } else if(!title.contains("letv")){
                     shareTitle = title;
                     mIvTitle.setText(title);
                 }
@@ -382,6 +397,10 @@ public class CollegeActivity extends BaseActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+        }
+        @JavascriptInterface
+        public void h5GoApp(){
+            finish();
         }
     }
 

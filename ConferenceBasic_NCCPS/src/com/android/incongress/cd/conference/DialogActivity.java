@@ -18,7 +18,7 @@ import butterknife.BindView;
 
 public class DialogActivity extends BaseActivity {
 
-    private String imgUrl,linkUrl,adName;
+    private String imgUrl, linkUrl, adName;
     private int time;
 
     @BindView(R.id.dialog_img)
@@ -36,28 +36,23 @@ public class DialogActivity extends BaseActivity {
         imgUrl = getIntent().getStringExtra("imgUrl");
         linkUrl = getIntent().getStringExtra("linkUrl");
         adName = getIntent().getStringExtra("alertAdName");
-        time = getIntent().getIntExtra("time",0);
-        WindowManager wm = (WindowManager)this.getSystemService(Context.WINDOW_SERVICE);
-        ViewGroup.LayoutParams lp=imageView.getLayoutParams();
-        lp.width= (int)(wm.getDefaultDisplay().getWidth()*0.6);
-        lp.height = (int)(wm.getDefaultDisplay().getWidth()*0.6/3*4);
+        time = getIntent().getIntExtra("time", 0);
+        WindowManager wm = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
+        ViewGroup.LayoutParams lp = imageView.getLayoutParams();
+        lp.width = (int) (wm.getDefaultDisplay().getWidth() * 0.6);
+        lp.height = (int) (wm.getDefaultDisplay().getWidth() * 0.6 / 3 * 4);
         imageView.setLayoutParams(lp);
-        PicUtils.loadImageUrl(DialogActivity.this,imgUrl,imageView);
+        PicUtils.loadImageUrl(DialogActivity.this, imgUrl, imageView);
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(linkUrl.contains("?")) {
-                    linkUrl = linkUrl + "&userId=" + AppApplication.userId + "&userType=" + AppApplication.userType + "&lan=" + AppApplication.getSystemLanuageCode();
-                }else {
-                    linkUrl = linkUrl + "?userId=" + AppApplication.userId + "&userType=" + AppApplication.userType + "&lan=" + AppApplication.getSystemLanuageCode();
-                }
-                CollegeActivity.startCitCollegeActivity(DialogActivity.this,adName, linkUrl);
+                CollegeActivity.startCitCollegeActivity(DialogActivity.this, adName, linkUrl);
                 handler.sendEmptyMessage(1);
             }
         });
-        if(time != 0){
-            handler.sendEmptyMessageDelayed(1,time*1000);
+        if (time != 0) {
+            handler.sendEmptyMessageDelayed(1, time * 1000);
         }
         imageBlack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,7 +61,8 @@ public class DialogActivity extends BaseActivity {
             }
         });
     }
-    Handler handler = new Handler(){
+
+    Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
