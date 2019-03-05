@@ -17,13 +17,13 @@ import java.lang.Override;
 public class ParticipantLoginActivity_ViewBinding<T extends ParticipantLoginActivity> implements Unbinder {
   protected T target;
 
-  private View view2131296758;
+  private View view2131296760;
 
   private View view2131296381;
 
   private View view2131296516;
 
-  private View view2131296853;
+  private View view2131296855;
 
   public ParticipantLoginActivity_ViewBinding(final T target, Finder finder, Object source) {
     this.target = target;
@@ -36,7 +36,7 @@ public class ParticipantLoginActivity_ViewBinding<T extends ParticipantLoginActi
     target.mobileTips = finder.findRequiredViewAsType(source, R.id.mobile_tips, "field 'mobileTips'", TextView.class);
     view = finder.findRequiredView(source, R.id.ll_ccode, "field 'mLlCode' and method 'dismissCCode'");
     target.mLlCode = finder.castView(view, R.id.ll_ccode, "field 'mLlCode'", LinearLayout.class);
-    view2131296758 = view;
+    view2131296760 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -62,7 +62,7 @@ public class ParticipantLoginActivity_ViewBinding<T extends ParticipantLoginActi
       }
     });
     view = finder.findRequiredView(source, R.id.login, "method 'login'");
-    view2131296853 = view;
+    view2131296855 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -85,14 +85,14 @@ public class ParticipantLoginActivity_ViewBinding<T extends ParticipantLoginActi
     target.mIvCodeTips = null;
     target.mTvCodeTips = null;
 
-    view2131296758.setOnClickListener(null);
-    view2131296758 = null;
+    view2131296760.setOnClickListener(null);
+    view2131296760 = null;
     view2131296381.setOnClickListener(null);
     view2131296381 = null;
     view2131296516.setOnClickListener(null);
     view2131296516 = null;
-    view2131296853.setOnClickListener(null);
-    view2131296853 = null;
+    view2131296855.setOnClickListener(null);
+    view2131296855 = null;
 
     this.target = null;
   }

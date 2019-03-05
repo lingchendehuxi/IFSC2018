@@ -14,11 +14,11 @@ import java.lang.Override;
 public class ChooseIdentityActivity_ViewBinding<T extends ChooseIdentityActivity> implements Unbinder {
   protected T target;
 
-  private View view2131296982;
+  private View view2131296984;
 
-  private View view2131296987;
+  private View view2131296989;
 
-  private View view2131296988;
+  private View view2131296990;
 
   public ChooseIdentityActivity_ViewBinding(final T target, Finder finder, Object source) {
     this.target = target;
@@ -26,7 +26,7 @@ public class ChooseIdentityActivity_ViewBinding<T extends ChooseIdentityActivity
     View view;
     target.mRradioGroup = finder.findRequiredViewAsType(source, R.id.rg_group, "field 'mRradioGroup'", RadioGroup.class);
     view = finder.findRequiredView(source, R.id.rb_paticipant, "method 'onParticipant'");
-    view2131296982 = view;
+    view2131296984 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -34,7 +34,7 @@ public class ChooseIdentityActivity_ViewBinding<T extends ChooseIdentityActivity
       }
     });
     view = finder.findRequiredView(source, R.id.rb_unregister_one, "method 'OnUnRegisterOne'");
-    view2131296987 = view;
+    view2131296989 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -42,7 +42,7 @@ public class ChooseIdentityActivity_ViewBinding<T extends ChooseIdentityActivity
       }
     });
     view = finder.findRequiredView(source, R.id.rb_unregister_two, "method 'OnUnRegisterTwo'");
-    view2131296988 = view;
+    view2131296990 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -58,12 +58,12 @@ public class ChooseIdentityActivity_ViewBinding<T extends ChooseIdentityActivity
 
     target.mRradioGroup = null;
 
-    view2131296982.setOnClickListener(null);
-    view2131296982 = null;
-    view2131296987.setOnClickListener(null);
-    view2131296987 = null;
-    view2131296988.setOnClickListener(null);
-    view2131296988 = null;
+    view2131296984.setOnClickListener(null);
+    view2131296984 = null;
+    view2131296989.setOnClickListener(null);
+    view2131296989 = null;
+    view2131296990.setOnClickListener(null);
+    view2131296990 = null;
 
     this.target = null;
   }

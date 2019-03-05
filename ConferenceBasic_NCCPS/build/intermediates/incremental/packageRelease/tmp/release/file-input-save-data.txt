@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Thu Feb 28 18:48:55 CST 2019
+#Tue Mar 05 15:41:02 CST 2019
 5.base=F\:\\modify\\IFSC2018\\ConferenceBasic_NCCPS\\build\\intermediates\\transforms\\mergeJniLibs\\release\\0
 22.path=lib/armeabi/libijkplayer.so
 32.set=NATIVE_RESOURCE

@@ -16,11 +16,11 @@ import java.lang.Override;
 public class AdvertisesActivity_ViewBinding<T extends AdvertisesActivity> implements Unbinder {
   protected T target;
 
+  private View view2131296591;
+
   private View view2131296590;
 
-  private View view2131296589;
-
-  private View view2131297398;
+  private View view2131297401;
 
   public AdvertisesActivity_ViewBinding(final T target, Finder finder, Object source) {
     this.target = target;
@@ -29,7 +29,7 @@ public class AdvertisesActivity_ViewBinding<T extends AdvertisesActivity> implem
     target.rlCardRoot = finder.findRequiredViewAsType(source, R.id.rl_card_root, "field 'rlCardRoot'", RelativeLayout.class);
     view = finder.findRequiredView(source, R.id.imageView_front, "field 'mIvFrontAD' and method 'onFrontClick'");
     target.mIvFrontAD = finder.castView(view, R.id.imageView_front, "field 'mIvFrontAD'", ImageView.class);
-    view2131296590 = view;
+    view2131296591 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -38,7 +38,7 @@ public class AdvertisesActivity_ViewBinding<T extends AdvertisesActivity> implem
     });
     view = finder.findRequiredView(source, R.id.imageView_back, "field 'mIvBackAD' and method 'onBackClick'");
     target.mIvBackAD = finder.castView(view, R.id.imageView_back, "field 'mIvBackAD'", ImageView.class);
-    view2131296589 = view;
+    view2131296590 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -47,7 +47,7 @@ public class AdvertisesActivity_ViewBinding<T extends AdvertisesActivity> implem
     });
     view = finder.findRequiredView(source, R.id.tv_skip, "field 'mBtSkip' and method 'onSkipCLick'");
     target.mBtSkip = finder.castView(view, R.id.tv_skip, "field 'mBtSkip'", TextView.class);
-    view2131297398 = view;
+    view2131297401 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -66,12 +66,12 @@ public class AdvertisesActivity_ViewBinding<T extends AdvertisesActivity> implem
     target.mIvBackAD = null;
     target.mBtSkip = null;
 
+    view2131296591.setOnClickListener(null);
+    view2131296591 = null;
     view2131296590.setOnClickListener(null);
     view2131296590 = null;
-    view2131296589.setOnClickListener(null);
-    view2131296589 = null;
-    view2131297398.setOnClickListener(null);
-    view2131297398 = null;
+    view2131297401.setOnClickListener(null);
+    view2131297401 = null;
 
     this.target = null;
   }
