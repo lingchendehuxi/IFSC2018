@@ -115,7 +115,6 @@ public class QRCodeCaptureActivity extends BaseActivity {
         MobclickAgent.onPageStart(Constants.ACTIVITY_SCANE);
     }
 
-
     @Override
     protected void onPause() {
         super.onPause();

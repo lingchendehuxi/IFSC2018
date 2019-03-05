@@ -20,7 +20,7 @@ public class ConferencedDownloadDetailActivity_ViewBinding<T extends Conferenced
 
   private View view2131296360;
 
-  private View view2131296622;
+  private View view2131296623;
 
   public ConferencedDownloadDetailActivity_ViewBinding(final T target, Finder finder, Object source) {
     this.target = target;
@@ -50,7 +50,7 @@ public class ConferencedDownloadDetailActivity_ViewBinding<T extends Conferenced
       }
     });
     view = finder.findRequiredView(source, R.id.iv_back, "method 'onBackClick'");
-    view2131296622 = view;
+    view2131296623 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -76,8 +76,8 @@ public class ConferencedDownloadDetailActivity_ViewBinding<T extends Conferenced
     view2131296363 = null;
     view2131296360.setOnClickListener(null);
     view2131296360 = null;
-    view2131296622.setOnClickListener(null);
-    view2131296622 = null;
+    view2131296623.setOnClickListener(null);
+    view2131296623 = null;
 
     this.target = null;
   }
