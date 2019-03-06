@@ -358,6 +358,7 @@ public class Constants {
     public static final String APPNAME = "CIT";
 
     //初始数据库版本
+    public static final int PROJECT_ID = 1;     //这个代表一个项目，如 1代表cit 2代表csccm。。。
     public static final int DATA_VERSION = 258;
     public static final int APP_VERSION = 41;
     /** 参会易下载地址(根据产品不同地址不同) **/

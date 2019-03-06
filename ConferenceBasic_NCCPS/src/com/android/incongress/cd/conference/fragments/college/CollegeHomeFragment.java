@@ -3,9 +3,13 @@ package com.android.incongress.cd.conference.fragments.college;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -54,6 +58,8 @@ import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,6 +85,7 @@ public class CollegeHomeFragment extends BaseFragment implements XRecyclerView.L
     //参数为了在切换到activity返回后，fragment重新设置导航栏字体颜色
     private boolean isBackView = true;
     private FrameLayout fl_search;
+    private static final int EDIT_OK = 104;
 
     @Override
     public void onAttach(Context context) {
@@ -152,9 +159,53 @@ public class CollegeHomeFragment extends BaseFragment implements XRecyclerView.L
                 return false;
             }
         });
+        //修改输入法按钮
+        et_search.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int countA) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                //直接进行搜索
+                mSearchString = s.toString();
+                if (!TextUtils.isEmpty(mSearchString)) {
+                    try {
+                        mSearchString = URLEncoder.encode(mSearchString, Constants.ENCODING_UTF8);
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                    myHandler.sendEmptyMessageDelayed(EDIT_OK, 200);
+                }else {
+                    mSearchString = "";
+                    videoList.clear();
+                    mVideoAdapter.notifyDataSetChanged();
+                }
+            }
+        });
         loadLocalDate();
         return view;
     }
+    //此handler用于监听editText输入完成 和Runnable配合使用 输入完成刷新搜索
+    private Handler myHandler = new Handler() {
+        @Override
+        public void dispatchMessage(Message msg) {
+            super.dispatchMessage(msg);
+            if (msg.what == EDIT_OK) {
+                hideShurufa();
+                ll_date_select.setVisibility(View.GONE);
+                PolyvKeyBoardUtils.closeKeybord(et_search, getActivity());
+                mViewPager.setVisibility(View.GONE);
+                fl_search.setVisibility(View.VISIBLE);
+                getSearchVideoData("-1",true);
+            }
+        }
+    };
 
     //无网络的时候加载本地数据
     private void loadLocalDate() {
@@ -382,6 +433,9 @@ public class CollegeHomeFragment extends BaseFragment implements XRecyclerView.L
      * @param lastId
      */
     private void getSearchVideoData(final String lastId, final boolean isNew) {
+        if(TextUtils.isEmpty(mSearchString)){
+            return;
+        }
         CHYHttpClientUsage.getInstanse().doGetSearchCollegeTitle(mSearchString, lastId, new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
 
             @Override

@@ -488,7 +488,7 @@ public class SplashActivity extends BaseActivity {
                 String token = SharePreferenceUtils.getAppString("incongress_token");
 
                 //检查更新数据
-                CHYHttpClientUsage.getInstanse().doGetInitData(conId, mDbVersion, type, appversion, token, 1,new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
+                CHYHttpClientUsage.getInstanse().doGetInitData(conId, mDbVersion, type, appversion, token, Constants.PROJECT_ID,new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                         super.onSuccess(statusCode, headers, response);

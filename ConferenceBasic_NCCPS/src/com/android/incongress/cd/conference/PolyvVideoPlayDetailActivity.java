@@ -130,7 +130,7 @@ public class PolyvVideoPlayDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //分享
                 ShareUtils.shareTextWithUrl(PolyvVideoPlayDetailActivity.this, content.getText().toString(), "CIT学院",
-                        Constants.CIT_SHARE_URI + dataId + "&conId=" + Constants.getConId() + "&isShare=1", null);
+                        Constants.CIT_SHARE_URI + dataId + "&conId=" + Constants.getConId() +"&fromWhere=" + Constants.getFromWhere()+ "&isShare=1", null);
             }
         });
     }

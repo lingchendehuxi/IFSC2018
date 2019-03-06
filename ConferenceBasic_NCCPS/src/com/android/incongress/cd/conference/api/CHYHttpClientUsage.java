@@ -1264,17 +1264,18 @@ public class CHYHttpClientUsage {
     public void doGetCollegeTitle(JsonHttpResponseHandler responseHandler) {
         RequestParams params = new RequestParams();
         params.put("method", "getModelListByConId");
-        params.put("conId", Constants.getConId());
+        params.put("totalConId", Constants.PROJECT_ID);
         CHYHttpClient.postExamTable(params, responseHandler);
     }
 
     public void doGetSearchCollegeTitle(String searchString, String lastId, JsonHttpResponseHandler responseHandler) {
         RequestParams params = new RequestParams();
         params.put("method", "getDataListByConIdAndSearchString");
-        params.put("conId", Constants.getConId());
+        params.put("totalConId", Constants.PROJECT_ID);
         params.put("searchString", StringUtils.utf8Encode(searchString));
         params.put("lastId", lastId);
         params.put("row", 10);
+        params.put("lan", AppApplication.getSystemLanuageCode());
         CHYHttpClient.postExamTable(params, responseHandler);
     }
 

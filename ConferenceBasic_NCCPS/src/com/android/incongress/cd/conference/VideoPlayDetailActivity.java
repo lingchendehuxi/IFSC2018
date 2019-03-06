@@ -162,7 +162,7 @@ public class VideoPlayDetailActivity extends AppCompatActivity implements OnVide
     public void onVideoControlClick(int type) {
         //分享
         ShareUtils.shareTextWithUrl(VideoPlayDetailActivity.this, content.getText().toString(), "CIT学院",
-                Constants.CIT_SHARE_URI + dataId + "&conId=" + Constants.getConId() + "&isShare=1", null);
+                Constants.CIT_SHARE_URI + dataId + "&conId=" + Constants.getConId() +"&fromWhere=" + Constants.getFromWhere()+ "&isShare=1", null);
     }
 
     @Override
