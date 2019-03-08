@@ -86,7 +86,7 @@ public class RegisterActivity extends BaseActivity {
             public void onClick(View v) {
                 String mobile = mCetMobile.getText().toString().trim();
                 if (StringUtils.isEmpty(mobile)) {
-                    ToastUtils.showShorToast(getString(R.string.phone_can_not_empty));
+                    ToastUtils.showToast(getString(R.string.phone_can_not_empty));
                     return;
                 }
                 if(AppApplication.systemLanguage == 1) {
@@ -95,7 +95,7 @@ public class RegisterActivity extends BaseActivity {
                     if(Pattern.matches( "^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*\\.[a-zA-Z0-9]{2,6}$", mobile)){
                         RegisterConfirmActivity.startActivity(RegisterActivity.this, mobile);
                     }else{
-                        ToastUtils.showShorToast(getString(R.string.phone_can_not_empty));
+                        ToastUtils.showToast(getString(R.string.phone_can_not_empty));
                     }
                 }
             }

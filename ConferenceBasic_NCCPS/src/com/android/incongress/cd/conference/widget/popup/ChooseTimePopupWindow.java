@@ -44,7 +44,7 @@ public class ChooseTimePopupWindow extends PopupWindow {
         setFocusable(true);
         setTouchable(true);
         setOutsideTouchable(true); //外部可以点击
-        setBackgroundDrawable(new BitmapDrawable());;//点击外部消失
+        setBackgroundDrawable(new BitmapDrawable());//点击外部消失
         setTouchInterceptor(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {

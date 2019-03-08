@@ -113,7 +113,7 @@ public class FlowLayout extends ViewGroup
         int lineWidth = 0;
         int lineHeight = 0;
 
-        List<View> lineViews = new ArrayList<View>();
+        List<View> lineViews = new ArrayList<>();
 
         int cCount = getChildCount();
 

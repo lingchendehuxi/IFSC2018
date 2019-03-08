@@ -329,7 +329,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     String familyName = mEtFamilyName.getText().toString();
                     String givenName = mEtGivenName.getText().toString();
                     if (!StringUtils.isAllNotEmpty( mobile, confirmCode)) {
-                        ToastUtils.showShorToast(getString(R.string.login_info_empty));
+                        ToastUtils.showToast(getString(R.string.login_info_empty));
                     } else {
 //                      doLogin(givenName, mobile, confirmCode, Constants.LanguageEnglish);
                         doLoginbyEmail(mobile, confirmCode, AppApplication.getSystemLanuageCode());
@@ -394,7 +394,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                ToastUtils.showShorToast("服务器开小差了，请稍后重试");
+                ToastUtils.showToast("服务器开小差了，请稍后重试");
             }
 
             @Override
@@ -424,7 +424,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         sendBroadcast(loginIntent);
                         finish();
                     } else {
-                        ToastUtils.showShorToast(response.getString("msg"));
+                        ToastUtils.showToast(response.getString("msg"));
                     }
 
                 } catch (JSONException e) {
@@ -454,7 +454,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 if (JSONCatch.parseInt("state", response) == 0) {
                     showDialog(msg, null);
                 } else {
-                    ToastUtils.showShorToast(getString(R.string.success_send_regist_code));
+                    ToastUtils.showToast(getString(R.string.success_send_regist_code));
                 }
             }
 
@@ -467,7 +467,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
-                ToastUtils.showShorToast(getString(R.string.server_error));
+                ToastUtils.showToast(getString(R.string.server_error));
             }
         });
     }
@@ -565,7 +565,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     }).show();
                     break;
                     //直接跳转
-                    //ToastUtils.showShorToast("检测到您手机没有安装微信，请安装后使用该功能");
+                    //ToastUtils.showToast("检测到您手机没有安装微信，请安装后使用该功能");
 
                 }
 
@@ -679,7 +679,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
-                ToastUtils.showShorToast(getString(R.string.server_error));
+                ToastUtils.showToast(getString(R.string.server_error));
             }
         });
     }
@@ -700,7 +700,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                ToastUtils.showShorToast("服务器开小差了，请稍后重试");
+                ToastUtils.showToast("服务器开小差了，请稍后重试");
             }
 
             @Override
@@ -736,7 +736,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         finish();
 
                     } else {
-                        ToastUtils.showShorToast(response.getString("msg"));
+                        ToastUtils.showToast(response.getString("msg"));
                     }
 
                 } catch (JSONException e) {

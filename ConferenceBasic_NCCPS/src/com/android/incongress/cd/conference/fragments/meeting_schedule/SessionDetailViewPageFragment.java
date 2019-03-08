@@ -471,17 +471,17 @@ public class SessionDetailViewPageFragment extends BaseFragment implements View.
         lightOff();
     }
 
-    private Handler MyHandler = new Handler() {
+    private Handler MyHandler = new Handler(new Handler.Callback() {
         @Override
-        public void dispatchMessage(Message msg) {
-            super.dispatchMessage(msg);
-            if (msg.what == SHOWWHAT && getActivity() != null) {
+        public boolean handleMessage(Message message) {
+            if (message.what == SHOWWHAT && getActivity() != null) {
                 Animation animation = AnimationUtils.loadAnimation(getActivity(), R.anim.alpha_in);
                 mll_bottom_session.startAnimation(animation);
                 mll_bottom_session.setVisibility(View.VISIBLE);
             }
+            return false;
         }
-    };
+    }) ;
 
     @Override
     public void onClick(View view) {

@@ -141,7 +141,7 @@ public class PhotoAlbumDetailFragment extends BaseFragment implements GalleryFin
                             //发帖
                             openPopupWindow();
                         }else {
-                            ToastUtils.showShorToast("参会者上传照片，请前往\"参会者空间\"");
+                            ToastUtils.showToast("参会者上传照片，请前往\"参会者空间\"");
                         }
                     }
                 }
@@ -275,9 +275,9 @@ public class PhotoAlbumDetailFragment extends BaseFragment implements GalleryFin
                         try {
                             int state =response.getInt("state");
                             if(state == 1) {
-                                ToastUtils.showShorToast("上传成功，等待检查");
+                                ToastUtils.showToast("上传成功，等待检查");
                             }else {
-                                ToastUtils.showShorToast("上传失败");
+                                ToastUtils.showToast("上传失败");
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -289,6 +289,6 @@ public class PhotoAlbumDetailFragment extends BaseFragment implements GalleryFin
 
     @Override
     public void onHanlderFailure(int requestCode, String errorMsg) {
-        ToastUtils.showShorToast(getString(R.string.choose_photo_fail));
+        ToastUtils.showToast(getString(R.string.choose_photo_fail));
     }
 }

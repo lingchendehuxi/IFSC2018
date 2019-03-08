@@ -2,11 +2,11 @@ package com.android.incongress.cd.conference.fragments.college;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.android.incongress.cd.conference.CollegeActivity;
 import com.android.incongress.cd.conference.LoginActivity;
@@ -15,7 +15,7 @@ import com.android.incongress.cd.conference.VideoPlayDetailActivity;
 import com.android.incongress.cd.conference.adapters.CollegeCourseBookAdapter;
 import com.android.incongress.cd.conference.api.CHYHttpClientUsage;
 import com.android.incongress.cd.conference.base.AppApplication;
-import com.android.incongress.cd.conference.base.BaseFragment;
+import com.android.incongress.cd.conference.base.BaseActivity;
 import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.beans.BookCoursePlayBean;
 import com.android.incongress.cd.conference.beans.BookDetailBean;
@@ -23,7 +23,6 @@ import com.android.incongress.cd.conference.save.SharePreferenceUtils;
 import com.android.incongress.cd.conference.utils.JSONCatch;
 import com.android.incongress.cd.conference.utils.NetWorkUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
-import com.android.incongress.cd.conference.widget.StatusBarUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
@@ -43,7 +42,7 @@ import cz.msebera.android.httpclient.Header;
 /**
  * Created by Jacky on 2016/2/1.
  */
-public class CollegeCourseBookFragment extends BaseFragment implements CollegeCourseBookAdapter.OnItemClick, XRecyclerView.LoadingListener {
+public class CollegeCourseBookActivity extends BaseActivity implements CollegeCourseBookAdapter.OnItemClick, XRecyclerView.LoadingListener {
     private XRecyclerView xRecyclerView;
     private CollegeCourseBookAdapter mCourseAdapter;
     private String mCurrentSessionId;
@@ -52,49 +51,47 @@ public class CollegeCourseBookFragment extends BaseFragment implements CollegeCo
     private List<BookCoursePlayBean.VideoArrayBean> listVideo = new ArrayList<>();
     private static final String BUNDLE_BOOK_SESSIONID = "book_session_id";
     private static final String BUNDLE_BOOK_TYPE = "book_type";
+    private LinearLayout title_back_panel;
+    private TextView title_text;
 
 
-    public static CollegeCourseBookFragment getInstance(String sessionId, int mType) {
-        CollegeCourseBookFragment fragment = new CollegeCourseBookFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString(BUNDLE_BOOK_SESSIONID, sessionId);
-        bundle.putInt(BUNDLE_BOOK_TYPE, mType);
-        fragment.setArguments(bundle);
-
-        return fragment;
+    @Override
+    protected void setContentView() {
+        mCurrentSessionId = getIntent().getStringExtra(BUNDLE_BOOK_SESSIONID);
+        mType = getIntent().getIntExtra(BUNDLE_BOOK_TYPE,0);
+        setContentView(R.layout.fragment_college_book_list);
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        try {
-            mCurrentSessionId = getArguments().getString(BUNDLE_BOOK_SESSIONID);
-            mType = getArguments().getInt(BUNDLE_BOOK_TYPE);
-        } catch (Exception e) {
-            e.printStackTrace();
+    protected void initViewsAction() {
+        xRecyclerView = findViewById(R.id.x_recycler);
+        title_text = findViewById(R.id.title_text);
+        title_back_panel = findViewById(R.id.title_back_panel);
+        if(mType == 100){
+           title_text.setText(getText(R.string.meeting_video_reservation));
+        }else {
+            title_text.setText(getText(R.string.meeting_video_play));
         }
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_college_book_list, null);
-        xRecyclerView = view.findViewById(R.id.x_recycler);
-        xRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        xRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         xRecyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
         xRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallRotate);
         xRecyclerView.setArrowImageView(R.drawable.iconfont_downgrey);
-        mCourseAdapter = new CollegeCourseBookAdapter(listBook, listVideo, getActivity(), mType, CollegeCourseBookFragment.this);
+        mCourseAdapter = new CollegeCourseBookAdapter(listBook, listVideo, this, mType, CollegeCourseBookActivity.this);
         xRecyclerView.setAdapter(mCourseAdapter);
         xRecyclerView.setLoadingListener(this);
         xRecyclerView.setLoadingMoreEnabled(false);
+        title_back_panel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         loadLocalDate();
-        return view;
     }
 
     //无网络的时候加载本地数据
     private void loadLocalDate() {
-        if (!NetWorkUtils.isNetworkConnected(getActivity())) {
+        if (!NetWorkUtils.isNetworkConnected(this)) {
 
             listBook.clear();
             listVideo.clear();
@@ -106,7 +103,7 @@ public class CollegeCourseBookFragment extends BaseFragment implements CollegeCo
 
     @Override
     public void onRefresh() {
-        if (!NetWorkUtils.isNetworkConnected(getActivity())) {
+        if (!NetWorkUtils.isNetworkConnected(this)) {
             xRecyclerView.refreshComplete();
             ToastUtils.showToast(getString(R.string.connect_network));
             return;
@@ -142,7 +139,7 @@ public class CollegeCourseBookFragment extends BaseFragment implements CollegeCo
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
                 xRecyclerView.refreshComplete();
-                ToastUtils.showShorToast("获取信息失败，请联系管理员");
+                ToastUtils.showToast("获取信息失败，请联系管理员");
             }
         });
     }
@@ -167,7 +164,7 @@ public class CollegeCourseBookFragment extends BaseFragment implements CollegeCo
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
                 xRecyclerView.refreshComplete();
-                ToastUtils.showShorToast("获取信息失败，请联系管理员");
+                ToastUtils.showToast("获取信息失败，请联系管理员");
             }
         });
     }
@@ -180,18 +177,18 @@ public class CollegeCourseBookFragment extends BaseFragment implements CollegeCo
                 super.onSuccess(statusCode, headers, response);
                 if ("1".equals(JSONCatch.parseString("state", response))) {
                     listBook.get(position).setYuyue("1");
-                    ToastUtils.showShorToast("预约成功");
+                    ToastUtils.showToast("预约成功");
 
                     mCourseAdapter.notifyDataSetChanged();
                 } else {
-                    ToastUtils.showShorToast("预约失败");
+                    ToastUtils.showToast("预约失败");
                 }
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
-                ToastUtils.showShorToast("获取信息失败，请联系管理员");
+                ToastUtils.showToast("获取信息失败，请联系管理员");
             }
         });
     }
@@ -201,7 +198,7 @@ public class CollegeCourseBookFragment extends BaseFragment implements CollegeCo
     public void onItemClicking(String topic, int type, int position) {
         if (type == 100) {
             if (!AppApplication.isUserLogIn()) {
-                startActivity(new Intent(getActivity(), LoginActivity.class));
+                startActivity(new Intent(this, LoginActivity.class));
                 return;
             }
             orderCourse(topic, position);
@@ -209,38 +206,29 @@ public class CollegeCourseBookFragment extends BaseFragment implements CollegeCo
             if (listVideo.get(position).getVideoType() == 3) {
                 String[] string = listVideo.get(position).getTitle().split(",");
                 if (AppApplication.systemLanguage == 1) {
-                    CollegeActivity.startCitCollegeActivity(getActivity(), string[0], listVideo.get(position).getVideoUrl());
+                    CollegeActivity.startCitCollegeActivity(this, string[0], listVideo.get(position).getVideoUrl());
                 } else {
-                    CollegeActivity.startCitCollegeActivity(getActivity(), string[1], listVideo.get(position).getVideoUrl());
+                    CollegeActivity.startCitCollegeActivity(this, string[1], listVideo.get(position).getVideoUrl());
                 }
             } else if(listVideo.get(position).getVideoType() == 2){
-                Intent intent = new Intent(getActivity(), VideoPlayDetailActivity.class);
+                Intent intent = new Intent(this, VideoPlayDetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("video_play_bean", listVideo.get(position));
                 intent.putExtras(bundle);
-                getActivity().startActivity(intent);
+                this.startActivity(intent);
             }else if(listVideo.get(position).getVideoType() == 1){
-                Intent intent = new Intent(getActivity(), PolyvVideoPlayDetailActivity.class);
+                Intent intent = new Intent(this, PolyvVideoPlayDetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("video_play_bean", listVideo.get(position));
                 intent.putExtras(bundle);
-                getActivity().startActivity(intent);
+                this.startActivity(intent);
             }
-        }
-    }
-
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if (!hidden) {
-            StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
         }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
         //预约的
         if(mType == 100){
             MobclickAgent.onPageStart(Constants.ACTIVITY_COLLEGE_ORDER);

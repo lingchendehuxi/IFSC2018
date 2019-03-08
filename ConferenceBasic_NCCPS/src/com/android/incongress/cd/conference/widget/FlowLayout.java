@@ -114,7 +114,7 @@ public class FlowLayout extends ViewGroup {
         int cCount = getChildCount();
 
         //存储每一行所有的childView
-        List<View> lineViews = new ArrayList<View>();
+        List<View> lineViews = new ArrayList<>();
         for(int i=0; i<cCount; i++) {
             View child = getChildAt(i);
 

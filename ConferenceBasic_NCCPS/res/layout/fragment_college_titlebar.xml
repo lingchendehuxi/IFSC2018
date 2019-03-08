@@ -36,5 +36,6 @@
         android:layout_marginRight="10dp"
         android:src="@drawable/icon_share"
         android:padding="10dp"
+        android:visibility="invisible"
         android:tint="@color/white" />
 </LinearLayout>

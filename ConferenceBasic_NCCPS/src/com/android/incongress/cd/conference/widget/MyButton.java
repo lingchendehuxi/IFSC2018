@@ -3,13 +3,14 @@ package com.android.incongress.cd.conference.widget;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
 import android.widget.Button;
 
 /**
  * Created by Jacky on 2016/1/28.
  */
-public class MyButton extends Button {
+public class MyButton extends AppCompatButton {
 
     public MyButton(Context context) {
         super(context);

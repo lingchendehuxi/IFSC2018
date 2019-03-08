@@ -92,7 +92,7 @@ public class PosterQuestionFragment extends BaseFragment {
                             intent.putExtras(bundle);
                             getActivity().startActivity(intent);
                         }else {
-                            ToastUtils.showShorToast("未找到该电子壁报，可能已被删除");
+                            ToastUtils.showToast("未找到该电子壁报，可能已被删除");
                         }
                     }
                 });
@@ -134,7 +134,7 @@ public class PosterQuestionFragment extends BaseFragment {
                             mLastPosterQuestionId = mQuestions.get(mQuestions.size() - 1).getSceneShowId();
                         }
                     } else {
-                        ToastUtils.showShorToast("没有更多数据了哦");
+                        ToastUtils.showToast("没有更多数据了哦");
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

@@ -11,25 +11,25 @@ import com.loopj.android.http.RequestParams;
  */
 public class CHYHttpClient {
     //----------------------  接口地址1  测试-------------------------
-    //测试服务器
+    /*//测试服务器
     private static final String BASE_URL = "http://incongress.cn:8090/Conferences/chyApiHttps.do"; //新接口地址都在这里面，因为Https的关系 测试服
     //新添加的服务器地址 包括壁报、
     private static final String BASE_NEW_URL = "http://incongress.cn:8090/chyNewApi.do?";//"http://incongress.cn:8090/chyNewApi.do?"
     //测试服务器
     public static final String BASE_URL2 = "http://incongress.cn:8090/Conferences/conferencesHttps.do?";
     //测试服务器
-    public static final String BASE_URL_COLEGE = "http://incongress.cn:8090";
+    public static final String BASE_URL_COLEGE = "http://incongress.cn:8090";*/
     //新添加本地服务器
     private static final String BASE_LOCAL= "http://192.168.0.157/consWebapp.do?";//"http://incongress.cn:8090/chyNewApi.do?"
     //----------------------  接口地址2   正式-------------------------
-    /*//正式服务器
+    //正式服务器
     private static final String BASE_URL = "http://app.incongress.cn/Conferences/chyApiHttps.do?"; //新接口地址都在这里面，因为Https的关系 测试服
     //正式 包括壁报、
     private static final String BASE_NEW_URL = "http://app.incongress.cn/chyNewApi.do?";//"http://incongress.cn:8090/chyNewApi.do?"
     //正式服务器
     public static final String BASE_URL2 = "http://app.incongress.cn/Conferences/conferencesHttps.do?";
     //正式服务器
-    public static final String BASE_URL_COLEGE = "http://app.incongress.cn";*/
+    public static final String BASE_URL_COLEGE = "http://app.incongress.cn";
 
     private static final int TIME_OUT = 0;
 

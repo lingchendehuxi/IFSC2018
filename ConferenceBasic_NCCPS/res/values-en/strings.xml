@@ -404,7 +404,7 @@ Before first use, you’ll need to download the latest conference data. Afterwar
 \nThis APP is being released by Incongress.
 \nPlease send any feedback or inquires to service@incongress.net</string>
 
-    <string name="positive_button">ok</string>
+    <string name="positive_button">OK</string>
     <string name="negative_button">cancel</string>
     <string name="session_take_note">Note</string>
     <string name="save">Save</string>
@@ -563,7 +563,7 @@ Before first use, you’ll need to download the latest conference data. Afterwar
     <string name="reset">reset</string>
     <string name="search">search</string>
     <!--包名修改的部分-->
-    <string name="share_info">CIT Infomation</string>
+    <string name="share_info">CIT Information</string>
     <string name="party_guide">Meeting Guide</string>
     <!--首页-->
     <string name="system_notify">SYSTEM NOTIFY</string>

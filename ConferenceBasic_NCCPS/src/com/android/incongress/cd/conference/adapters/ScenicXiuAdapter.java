@@ -682,7 +682,7 @@ public class ScenicXiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     } else {
                         String tips = response.getString("msg");
                         if (!StringUtils.isEmpty(tips))
-                            ToastUtils.showShorToast(tips);
+                            ToastUtils.showToast(tips);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -692,7 +692,7 @@ public class ScenicXiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             @Override
             public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
-                ToastUtils.showShorToast("服务器开小差了，请稍后重试");
+                ToastUtils.showToast("服务器开小差了，请稍后重试");
             }
         });
     }

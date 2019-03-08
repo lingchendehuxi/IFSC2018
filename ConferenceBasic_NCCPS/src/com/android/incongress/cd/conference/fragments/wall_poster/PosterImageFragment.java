@@ -3,6 +3,7 @@ package com.android.incongress.cd.conference.fragments.wall_poster;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -43,17 +44,19 @@ public class PosterImageFragment extends BaseActivity {
     private LinearLayout mLlAskQuestion;
     private TextView title;
 
-    private Handler mHandler = new Handler() {
-        public void handleMessage(android.os.Message msg) {
-            int result = msg.what;
+    private Handler mHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message message) {
+            int result = message.what;
             if (result == MSG_PRAISE_SUCCESS) {
                 mIsPraise = true;
-                ToastUtils.showShorToast("点赞成功");
+                ToastUtils.showToast("点赞成功");
                 mIvPraise.setImageResource(R.drawable.postter_zan);
                 ConferenceDbUtils.addPraisePoster(mBean.getPosterId() + "");
             }
+            return false;
         }
-    };
+    }) ;
 
     private String mPicUrl;
 
@@ -146,7 +149,7 @@ public class PosterImageFragment extends BaseActivity {
             @Override
             public void onClick(View v) {
                 if (mIsPraise) {
-                    ToastUtils.showShorToast("已经点赞成功哦");
+                    ToastUtils.showToast("已经点赞成功哦");
                 } else {
                     doPraise(mBean.getPosterId() + "");
                 }

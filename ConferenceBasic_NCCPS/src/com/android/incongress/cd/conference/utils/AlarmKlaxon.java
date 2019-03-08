@@ -80,11 +80,12 @@ public class AlarmKlaxon extends Service {
     // Internal messages
     private static final int KILLER = 1;
     private static final int FOCUSCHANGE = 2;
-    private Handler mHandler = new Handler() {
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
+    private Handler mHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message message) {
+            switch (message.what) {
                 case KILLER:
-                    Alert bean = (Alert) msg.obj;
+                    Alert bean = (Alert) message.obj;
                     stop();
                     stopSelf();
                     int times = SharePreferenceUtils.getAppInt(AlermClock.KEY_TIMES, 2);
@@ -98,7 +99,7 @@ public class AlarmKlaxon extends Service {
                     }
                     break;
                 case FOCUSCHANGE:
-                    switch (msg.arg1) {
+                    switch (message.arg1) {
                         case AudioManager.AUDIOFOCUS_LOSS:
 
                             if (!mPlaying && mMediaPlayer != null) {
@@ -127,8 +128,9 @@ public class AlarmKlaxon extends Service {
                     break;
 
             }
+            return false;
         }
-    };
+    });
 
     private PhoneStateListener mPhoneStateListener = new PhoneStateListener() {
         @Override
@@ -218,7 +220,7 @@ public class AlarmKlaxon extends Service {
      * @param note
      */
     private void showView(final Context context, final Alert note) {
-        final WindowManager wm = (WindowManager) context.getSystemService("window");
+        final WindowManager wm = (WindowManager) context.getSystemService(context.WINDOW_SERVICE);
         WindowManager.LayoutParams wmParams = new WindowManager.LayoutParams();
         DisplayMetrics dm = new DisplayMetrics();
         wm.getDefaultDisplay().getMetrics(dm);

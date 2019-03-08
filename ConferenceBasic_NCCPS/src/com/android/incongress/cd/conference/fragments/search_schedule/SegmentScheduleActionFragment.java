@@ -139,7 +139,7 @@ public class SegmentScheduleActionFragment extends BaseFragment implements View.
                 if (actionId == EditorInfo.IME_ACTION_SEARCH ||
                         (keyEvent != null && keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
                     if (TextUtils.isEmpty(mSearchString)) {
-                        ToastUtils.showShorToast("请先输入搜索内容");
+                        ToastUtils.showToast("请先输入搜索内容");
                         return true;
                     }
                     PolyvKeyBoardUtils.closeKeybord(et_search, getActivity());
@@ -390,10 +390,10 @@ public class SegmentScheduleActionFragment extends BaseFragment implements View.
                         if (Integer.parseInt(s_second_to) > Integer.parseInt(s_second_from)) {
                             doSearchQuery(mCurrentSearchDay, mCurrentSearchRoom, mCurrentSearchRoomName, mCurrentSearchStartTime, mCurrentSearchEndTime);
                         } else {
-                            ToastUtils.showShorToast(R.string.search_time);
+                            ToastUtils.showToast(R.string.search_time);
                         }
                     } else {
-                        ToastUtils.showShorToast(R.string.search_time);
+                        ToastUtils.showToast(R.string.search_time);
                     }
                 } else {
                     doSearchQuery(mCurrentSearchDay, mCurrentSearchRoom, mCurrentSearchRoomName, mCurrentSearchStartTime, mCurrentSearchEndTime);

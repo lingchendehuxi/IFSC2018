@@ -139,7 +139,7 @@ public class NewExhibitorsActionFragment extends BaseFragment {
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
-                ToastUtils.showShorToast("获取信息失败，请联系管理员");
+                ToastUtils.showToast("获取信息失败，请联系管理员");
             }
         });
     }

@@ -57,6 +57,7 @@ public class PolyvVideoPlayDetailActivity extends AppCompatActivity {
     private TextView videoErrorContent;
     private TextView videoErrorRetry;
     private PolyvPlayerPreviewView firstStartView;
+    private RelativeLayout rl_video_top;
     private int dataId;
 
     @Override
@@ -76,6 +77,7 @@ public class PolyvVideoPlayDetailActivity extends AppCompatActivity {
         sec_author = findViewById(R.id.sec_author);
         title_address = findViewById(R.id.title_address);
         content = findViewById(R.id.content);
+        rl_video_top = findViewById(R.id.rl_video_top);
         view_layout = findViewById(R.id.view_layout);
         polyv_video_view = findViewById(R.id.polyv_video_view);
         polyv_player_media_controller = findViewById(R.id.polyv_player_media_controller);
@@ -84,35 +86,67 @@ public class PolyvVideoPlayDetailActivity extends AppCompatActivity {
         videoErrorLayout = findViewById(R.id.video_error_layout);
         videoErrorContent = findViewById(R.id.video_error_content);
         videoErrorRetry = findViewById(R.id.video_error_retry);
+        title_share.setVisibility(Constants.COLLEGE_HOME_SHARE?View.VISIBLE:View.INVISIBLE);
+        title_back.setVisibility(View.VISIBLE);
         initViewsAction();
     }
 
 
     private void initViewsAction() {
         if (videoBean != null) {
-            if (!TextUtils.isEmpty(videoBean.getVideoUrl())) {
-                setPolyvConfig(videoBean.getVideoUrl());
+            if (!TextUtils.isEmpty(videoBean.getVideoId())) {
+                setPolyvConfig(videoBean.getVideoId());
             }
             dataId = videoBean.getDataId();
             StringUtils.setTextShow(author, videoBean.getSpeakerName());
             StringUtils.setTextShow(sec_author, videoBean.getRoleName());
             StringUtils.setTextShow(title_address, videoBean.getClassesName());
-            StringUtils.setCommaTextShow(content, videoBean.getTitle());
+            if (!TextUtils.isEmpty(videoBean.getTitle())) {
+                String title = videoBean.getTitle();
+                int splitLength = title.indexOf(",");
+                if (AppApplication.systemLanguage == 1) {
+                    content.setText(title.substring(0,splitLength));
+                    polyv_player_media_controller.tv_title.setText(title.substring(0,splitLength));
+                } else {
+                    if(splitLength != 0){
+                        content.setText(title.substring(splitLength-1,title.length()));
+                        polyv_player_media_controller.tv_title.setText(title.substring(splitLength-1,title.length()));
+                    }else {
+                        content.setText("");
+                        polyv_player_media_controller.tv_title.setText("");
+                    }
+                }
+            }
             if (!TextUtils.isEmpty(videoBean.getSpeakerImg())) {
                 PicUtils.loadCircleImage(PolyvVideoPlayDetailActivity.this, videoBean.getSpeakerImg(), cir_head);
             } else {
                 cir_head.setImageResource(R.drawable.professor_default);
             }
         } else if (videoPlayBean != null) {
-            if (!TextUtils.isEmpty(videoPlayBean.getVideoUrl())) {
-                setPolyvConfig(videoPlayBean.getVideoUrl());
+            if (!TextUtils.isEmpty(videoPlayBean.getVideoId())) {
+                setPolyvConfig(videoPlayBean.getVideoId());
             }
             dataId = videoPlayBean.getDataId();
             StringUtils.setTextShow(author, videoPlayBean.getSpeakerName());
             StringUtils.setTextShow(sec_author, videoPlayBean.getRoleName());
             StringUtils.setTextShow(title_address, videoPlayBean.getClassesName());
             author.setText(videoPlayBean.getAuthor());
-            StringUtils.setCommaTextShow(content, videoPlayBean.getTitle());
+            if (!TextUtils.isEmpty(videoPlayBean.getTitle())) {
+                String title = videoPlayBean.getTitle();
+                int splitLength = title.indexOf(",");
+                if (AppApplication.systemLanguage == 1) {
+                    content.setText(title.substring(0,splitLength));
+                    polyv_player_media_controller.tv_title.setText(title.substring(0,splitLength));
+                } else {
+                    if(splitLength != 0){
+                        content.setText(title.substring(splitLength-1,title.length()));
+                        polyv_player_media_controller.tv_title.setText(title.substring(splitLength-1,title.length()));
+                    }else {
+                        content.setText("");
+                        polyv_player_media_controller.tv_title.setText("");
+                    }
+                }
+            }
             if (!TextUtils.isEmpty(videoPlayBean.getSpeakerImg())) {
                 PicUtils.loadCircleImage(PolyvVideoPlayDetailActivity.this, videoPlayBean.getSpeakerImg(), cir_head);
             } else {
@@ -263,9 +297,10 @@ public class PolyvVideoPlayDetailActivity extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
         // Checks the orientation of the screen
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            title_back.setVisibility(View.GONE);
+            rl_video_top.setVisibility(View.GONE);
             polyv_player_media_controller.iv_land.performClick();
         } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            rl_video_top.setVisibility(View.VISIBLE);
         }
     }
 

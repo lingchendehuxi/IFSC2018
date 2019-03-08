@@ -131,7 +131,7 @@ public class CommentPopupWindow extends BasePopupWindow implements View.OnClickL
                         e.printStackTrace();
                     }
                     if (StringUtils.isEmpty(content)) {
-                        ToastUtils.showShorToast(R.string.comment_no_empty);
+                        ToastUtils.showToast(R.string.comment_no_empty);
                     } else {
                         CHYHttpClientUsage.getInstanse().doSceneShowComment(sceneShowId, AppApplication.userId + "", AppApplication.userType + "", content, parentId, mJsonHttp);
                         dismiss();

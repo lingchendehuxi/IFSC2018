@@ -163,7 +163,7 @@ public class MakePostActionFragment extends BaseFragment implements GalleryFinal
                     FunctionConfig config = new FunctionConfig.Builder().setMutiSelectMaxSize(9 - mPhotosPath.size()).setFilter(mPhotosPath).build();
                     GalleryFinal.openGalleryMuti(REQUEST_CODE_GALLERY, config, MakePostActionFragment.this);
                 } else {
-                    ToastUtils.showShorToast(getString(R.string.post_photo_more_than_max));
+                    ToastUtils.showToast(getString(R.string.post_photo_more_than_max));
                 }
             }
         });
@@ -175,7 +175,7 @@ public class MakePostActionFragment extends BaseFragment implements GalleryFinal
                 if (mPhotosPath.size() < 9) {
                     GalleryFinal.openCamera(REQUEST_CODE_CAMERA, MakePostActionFragment.this);
                 } else {
-                    ToastUtils.showShorToast(getString(R.string.post_photo_more_than_max));
+                    ToastUtils.showToast(getString(R.string.post_photo_more_than_max));
                 }
             }
         });
@@ -315,7 +315,7 @@ public class MakePostActionFragment extends BaseFragment implements GalleryFinal
 
     @Override
     public void onHanlderFailure(int requestCode, String errorMsg) {
-        ToastUtils.showShorToast(getString(R.string.choose_photo_fail));
+        ToastUtils.showToast(getString(R.string.choose_photo_fail));
     }
 
 }

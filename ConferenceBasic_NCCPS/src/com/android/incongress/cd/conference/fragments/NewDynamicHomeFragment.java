@@ -360,7 +360,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
             Gson gson = new Gson();
             String iconSort = JSONCatch.parseString("iconSort", obj);
             mRow = gson.fromJson(iconSort, Row.class);
-            if(mRow.getRows().size()<=3){
+            if (mRow.getRows().size() <= 3) {
                 zk.setVisibility(View.GONE);
             }
             fixedSize = 0;
@@ -392,7 +392,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
                     ViewGroup.LayoutParams lp = mTopADImg.getLayoutParams();
                     lp.height = (int) (widthMax / bl);
                     mTopADImg.setLayoutParams(lp);
-                } else if(i!=0){
+                } else if (i != 0) {
                     LinearLayout linearLayout;
                     if (i < mRow.getRows().size() - 1) {
                         linearLayout = getHorizontalLinearLayout(true);
@@ -405,19 +405,19 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
                         innerLinearLayout.addView(addTextAndImage(rowBean, Float.parseFloat(rowBean.getWidth().replace("%", "")), innerLinearLayout));
                         innerLinearLayout.setTag(rowBean);
                         innerLinearLayout.setOnClickListener(this);
-                        Log.d("sgqTest", "inner: "+ActivityUtils.getViewHeight(innerLinearLayout));
+                        Log.d("sgqTest", "inner: " + ActivityUtils.getViewHeight(innerLinearLayout));
                         linearLayout.addView(innerLinearLayout);
                     }
-                    if(i == 1 || i == 2){
-                        fixedSize = fixedSize +ActivityUtils.getViewHeight(linearLayout)+43;
+                    if (i == 1 || i == 2) {
+                        fixedSize = fixedSize + ActivityUtils.getViewHeight(linearLayout) + 43;
                     }
 
-                    Log.d("sgqTest", "fixedSize: "+ActivityUtils.getViewHeight(linearLayout));
+                    Log.d("sgqTest", "fixedSize: " + ActivityUtils.getViewHeight(linearLayout));
                     mLlConstainer.addView(linearLayout);
                 }
             }
             priSize = ActivityUtils.getViewHeight(mLlConstainer);
-            Log.d("sgqTest", "priSize: "+priSize);
+            Log.d("sgqTest", "priSize: " + priSize);
             setHeightAnimator(priSize);
             mHandler.sendEmptyMessageDelayed(1, 2000);
         } catch (Exception e) {
@@ -607,7 +607,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
                 return view;
             }
         } else {
-            ToastUtils.showShorToast("iconCode解析出错...");
+            ToastUtils.showToast("iconCode解析出错...");
             return null;
         }
     }
@@ -839,7 +839,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
                         goSchedulePreview();
                         break;
                     default:
-                        ToastUtils.showShorToast("未找到该模块，请尝试更新数据包");
+                        ToastUtils.showToast("未找到该模块，请尝试更新数据包");
                         break;
                 }
             } else {
@@ -850,18 +850,18 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
                     url = rowBean.getNewModel();
                 }
 
-                if(url.contains("appOpenCheckLogin")){
-                    if(AppApplication.isUserLogIn()){
+                if (url.contains("appOpenCheckLogin")) {
+                    if (AppApplication.isUserLogIn()) {
                         if (AppApplication.systemLanguage == 1) {
                             CollegeActivity.startCitCollegeActivity(getActivity(), rowBean.getIconName(), url);
                         } else {
                             CollegeActivity.startCitCollegeActivity(getActivity(), rowBean.getIconEnName(), url);
                         }
-                    }else {
-                        Intent intent = new Intent(getActivity(),LoginActivity.class);
+                    } else {
+                        Intent intent = new Intent(getActivity(), LoginActivity.class);
                         getActivity().startActivity(intent);
                     }
-                }else {
+                } else {
                     if (AppApplication.systemLanguage == 1) {
                         CollegeActivity.startCitCollegeActivity(getActivity(), rowBean.getIconName(), url);
                     } else {
@@ -1010,7 +1010,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
         if (AppApplication.instance().NetWorkIsOpen()) {
             ImageView searchView = (ImageView) CommonUtils.initView(getActivity(), R.layout.title_right_image);
             searchView.setImageResource(R.drawable.icon_share);
-            PicUtils.setImageViewColor(searchView,R.color.back_color);
+            PicUtils.setImageViewColor(searchView, R.color.back_color);
             searchView.setVisibility(Constants.PARTY_GUIDE_SHARE ? View.VISIBLE : View.GONE);
             OnlyWebViewActionFragment fragment = OnlyWebViewActionFragment.getInstance(getActivity().getString(Constants.get_MEETING_GUIDE(), Constants.getConId(), AppApplication.getSystemLanuageCode()));
             fragment.setRightView(searchView);
@@ -1139,6 +1139,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
         Intent intent = new Intent(getActivity(), CaptureActivity.class);
         getActivity().startActivityForResult(intent, HomeActivity.REQUEST_SCANE);
     }
+
     /**
      * 扫一扫
      */
@@ -1194,7 +1195,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
                 LoginActivity.startLoginActivity(getActivity(), LoginActivity.TYPE_PROFESSOR, "", "", "", "");
                 return;
             } else if (AppApplication.facultyId == -1) {
-                ToastUtils.showShorToast(R.string.secretary_module_not_available);
+                ToastUtils.showToast(R.string.secretary_module_not_available);
                 return;
             }
 
@@ -1235,17 +1236,17 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
         }
     }
 
-    private Handler mHandler = new Handler() {
+    private Handler mHandler = new Handler(new Handler.Callback() {
         @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
+        public boolean handleMessage(Message message) {
+            switch (message.what) {
                 case 1:
                     zk.performClick();
                     break;
             }
+            return false;
         }
-    };
+    });
 
     private ValueAnimator createDropAnimator(final View v, int start, int end) {
         ValueAnimator animator = ValueAnimator.ofInt(start, end);
@@ -1265,7 +1266,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
     @Override
     public void onResume() {
         super.onResume();
-        if(!isBackView){
+        if (!isBackView) {
             StatusBarUtil.setStatusBarDarkTheme(getActivity(), false);
         }
         MobclickAgent.onPageStart(Constants.FRAGMENT_DYNAMICHOME);
@@ -1283,6 +1284,6 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
         valueAnimator.setDuration(1500);
         valueAnimator.start();
         currentSize = height;
-        Log.d("sgqTest", "currentSize: "+currentSize);
+        Log.d("sgqTest", "currentSize: " + currentSize);
     }
 }

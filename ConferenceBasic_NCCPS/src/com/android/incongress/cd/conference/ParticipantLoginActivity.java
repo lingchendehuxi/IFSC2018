@@ -214,7 +214,7 @@ public class ParticipantLoginActivity extends BaseActivity {
                         }
                     });*/
         } else {
-            ToastUtils.showShorToast(R.string.login_empty_tips);
+            ToastUtils.showToast(R.string.login_empty_tips);
         }
     }
 

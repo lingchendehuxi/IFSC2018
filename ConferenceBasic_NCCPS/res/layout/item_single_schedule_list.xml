@@ -4,6 +4,7 @@
     android:background="@color/white"
     android:gravity="center_vertical"
     android:orientation="vertical">
+
     <View
         android:layout_width="match_parent"
         android:layout_height="5dp"
@@ -46,6 +47,7 @@
             android:textSize="@dimen/text_size_small" />
 
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="5dp"

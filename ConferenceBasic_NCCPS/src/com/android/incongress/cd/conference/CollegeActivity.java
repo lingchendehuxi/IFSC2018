@@ -86,13 +86,13 @@ public class CollegeActivity extends BaseActivity {
     public static void startCitCollegeActivity(Context context, String title, String url) {
         Intent intent = new Intent();
         intent.setClass(context, CollegeActivity.class);
-        if(url.endsWith(".mp4")){
+        if (url.endsWith(".mp4")) {
             intent.putExtra(EXTRA_URL, url);
-        }else {
-            if(!url.contains("?")){
-                url = url +"?";
+        } else {
+            if (!url.contains("?")) {
+                url = url + "?";
             }
-            intent.putExtra(EXTRA_URL,url+"&appVersion="+Constants.APP_VERSION+"&appType=2"+"&userId=" + AppApplication.userId + "&userType=" + AppApplication.userType + "&lan=" + AppApplication.getSystemLanuageCode() + "&fromWhere=" + Constants.getFromWhere() + "&conId=" + Constants.getConId());
+            intent.putExtra(EXTRA_URL, url + "&appVersion=" + Constants.APP_VERSION + "&appType=2" + "&userId=" + AppApplication.userId + "&userType=" + AppApplication.userType + "&lan=" + AppApplication.getSystemLanuageCode() + "&fromWhere=" + Constants.getFromWhere() + "&conId=" + Constants.getConId());
         }
         intent.putExtra(EXTRA_TITLE, title);
         context.startActivity(intent);
@@ -101,13 +101,13 @@ public class CollegeActivity extends BaseActivity {
     public static void startCitCollegeActivity(Context context, String title, String url, int type) {
         Intent intent = new Intent();
         intent.setClass(context, CollegeActivity.class);
-        if(url.endsWith(".mp4")){
+        if (url.endsWith(".mp4")) {
             intent.putExtra(EXTRA_URL, url);
-        }else {
-            if(!url.contains("?")){
-                url = url +"?";
+        } else {
+            if (!url.contains("?")) {
+                url = url + "?";
             }
-            intent.putExtra(EXTRA_URL,url+"&appVersion="+Constants.APP_VERSION+"&appType=2"+"&userId=" + AppApplication.userId + "&userType=" + AppApplication.userType + "&lan=" + AppApplication.getSystemLanuageCode() + "&fromWhere=" + Constants.getFromWhere() + "&conId=" + Constants.getConId());
+            intent.putExtra(EXTRA_URL, url + "&appVersion=" + Constants.APP_VERSION + "&appType=2" + "&userId=" + AppApplication.userId + "&userType=" + AppApplication.userType + "&lan=" + AppApplication.getSystemLanuageCode() + "&fromWhere=" + Constants.getFromWhere() + "&conId=" + Constants.getConId());
         }
         intent.putExtra(EXTRA_TITLE, title);
         intent.putExtra("type", type);
@@ -204,10 +204,10 @@ public class CollegeActivity extends BaseActivity {
             @Override
             public void onReceivedTitle(WebView view, String title) {
                 super.onReceivedTitle(view, title);
-                if (title.contains("app.incongress.cn/webapp/discussion/")||title.contains("https://")) {
+                if (title.contains("app.incongress.cn/webapp/discussion/") || title.contains("https://")) {
                     shareTitle = mTitle;
                     mIvTitle.setText(mTitle);
-                } else if(!title.contains("letv")){
+                } else if (!title.contains("letv")) {
                     shareTitle = title;
                     mIvTitle.setText(title);
                 }
@@ -398,18 +398,18 @@ public class CollegeActivity extends BaseActivity {
                 e.printStackTrace();
             }
         }
+
         @JavascriptInterface
-        public void h5GoApp(){
+        public void h5GoApp() {
             finish();
         }
     }
 
     private String mImgUrl;
-    Handler hand = new Handler() {
+    Handler hand = new Handler(new Handler.Callback() {
         @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
+        public boolean handleMessage(Message message) {
+            switch (message.what) {
                 case 1:
                     mPhotoView.setVisibility(View.VISIBLE);
                     Glide.with(CollegeActivity.this).load(mImgUrl).into(new SimpleTarget<GlideDrawable>() {
@@ -420,8 +420,9 @@ public class CollegeActivity extends BaseActivity {
                     });
                     break;
             }
+            return false;
         }
-    };
+    });
 
     @Override
     public void onBackPressed() {

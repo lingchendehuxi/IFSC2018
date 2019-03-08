@@ -356,19 +356,19 @@ public class ScenicXiuFragment extends BaseFragment implements View.OnClickListe
         videoErrorContent.setText(message);
     }
 
-    Handler handler = new Handler() {
+    Handler handler = new Handler(new Handler.Callback() {
         @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
+        public boolean handleMessage(Message message) {
+            switch (message.what) {
                 case 1:
                     mIvMakepost.setVisibility(View.VISIBLE);
                     first = false;
                     startHeartBeat();
                     break;
             }
+            return false;
         }
-    };
+    }) ;
 
     /**
      * 开始心跳
@@ -473,7 +473,7 @@ public class ScenicXiuFragment extends BaseFragment implements View.OnClickListe
                     } else {
                         mRecyclerView.loadMoreComplete();
                         if ("0".equals(mIsMore)) {
-                            ToastUtils.showShorToast(getString(R.string.incongress_send_no_more_data));
+                            ToastUtils.showToast(getString(R.string.incongress_send_no_more_data));
                             mRecyclerView.setLoadingMoreEnabled(false);
                             return;
                         }
@@ -485,7 +485,7 @@ public class ScenicXiuFragment extends BaseFragment implements View.OnClickListe
                 } else {
                     if ("0".equals(JSONCatch.parseString("pageState",response)) && mDatas.size() != 0) {
                         mRecyclerView.loadMoreComplete();
-                        ToastUtils.showShorToast(getString(R.string.incongress_send_no_more_data));
+                        ToastUtils.showToast(getString(R.string.incongress_send_no_more_data));
                         mRecyclerView.setLoadingMoreEnabled(false);
                         return;
                     }
@@ -501,7 +501,7 @@ public class ScenicXiuFragment extends BaseFragment implements View.OnClickListe
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
                 mRecyclerView.reset();
-                ToastUtils.showShorToast("获取信息失败，请联系管理员");
+                ToastUtils.showToast("获取信息失败，请联系管理员");
             }
         });
     }

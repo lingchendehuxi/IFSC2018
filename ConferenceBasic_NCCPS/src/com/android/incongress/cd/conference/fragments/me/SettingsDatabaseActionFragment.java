@@ -190,7 +190,7 @@ public class SettingsDatabaseActionFragment extends BaseFragment {
                                 handler.sendMessage(Message.obtain(handler, MSG_DOWNLOADING_ZIP, index, zipList.size()));
                             } else {
                                 handler.sendEmptyMessage(MSG_DOWNLOADED);
-                                ConferenceDb.createDB(filespath, CREATEDB_TRUE ,mUpdateListener);
+                                ConferenceDb.createDB(filespath, CREATEDB_TRUE, mUpdateListener);
                                 handler.sendEmptyMessage(MSG_FINISH);
                             }
                         }
@@ -201,23 +201,24 @@ public class SettingsDatabaseActionFragment extends BaseFragment {
         }
     }
 
-    Handler handler = new Handler() {
+    Handler handler = new Handler(new Handler.Callback() {
         private int total = 0;
 
         private int now = 0;
 
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
+        @Override
+        public boolean handleMessage(Message message) {
+            switch (message.what) {
                 case MSG_NEW_FILE:
-                    now = msg.arg1;
-                    total = msg.arg2;
+                    now = message.arg1;
+                    total = message.arg2;
                     mTv.setText(getString(R.string.splash_downloading, downloadPercent + "") + "%");
                     mPb.setVisibility(View.INVISIBLE);
                     mPbh.setVisibility(View.VISIBLE);
                     break;
                 case MSG_DOWNLOADING:
-                    if (msg.arg1 != downloadPercent) {
-                        downloadPercent = msg.arg1;
+                    if (message.arg1 != downloadPercent) {
+                        downloadPercent = message.arg1;
                         mTv.setText(getString(R.string.splash_downloading, downloadPercent + "") + "%");
                         mPb.setVisibility(View.INVISIBLE);
                         mPbh.setVisibility(View.VISIBLE);
@@ -225,8 +226,8 @@ public class SettingsDatabaseActionFragment extends BaseFragment {
                     }
                     break;
                 case MSG_DOWNLOADING_ZIP:
-                    int curent = msg.arg1;
-                    int totalsize = msg.arg2;
+                    int curent = message.arg1;
+                    int totalsize = message.arg2;
                     downloadPercent = Math.round(curent * 100.0f / (total - 1) * 1.0f + 0.5f);
                     if (downloadPercent > 100) {
                         downloadPercent = 100;
@@ -242,7 +243,7 @@ public class SettingsDatabaseActionFragment extends BaseFragment {
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
-                                ConferenceDb.createDB(filespath, CREATEDB_TRUE ,mUpdateListener);
+                                ConferenceDb.createDB(filespath, CREATEDB_TRUE, mUpdateListener);
                                 handler.sendEmptyMessage(MSG_FINISH);
                             }
                         });
@@ -310,9 +311,9 @@ public class SettingsDatabaseActionFragment extends BaseFragment {
                 default:
                     break;
             }
-
+            return false;
         }
-    };
+    });
 
     public void onDestroy() {
         super.onDestroy();

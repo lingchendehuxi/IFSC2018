@@ -3,6 +3,7 @@ package com.android.incongress.cd.conference.widget.phonecode;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
@@ -14,7 +15,7 @@ import com.mobile.incongress.cd.conference.basic.csccm.R;
  * Created by weijing on 2017-08-21 14:43.
  */
 
-public class CountDownButton extends TextView {
+public class CountDownButton extends AppCompatTextView {
 
     /**
      * 提示文字
@@ -60,12 +61,10 @@ public class CountDownButton extends TextView {
         super(context, attrs, defStyleAttr);
     }
 
-    private Handler mHandler = new Handler() {
+    private Handler mHandler = new Handler(new Handler.Callback() {
         @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-
-            switch (msg.what) {
+        public boolean handleMessage(Message message) {
+            switch (message.what) {
                 case MSG_WHAT_START:
 //                    Log.e("l", mLastMillis + "");
                     if (mLastMillis > 0) {
@@ -77,8 +76,9 @@ public class CountDownButton extends TextView {
                     }
                     break;
             }
+            return false;
         }
-    };
+    });
 
 
     /**
@@ -102,7 +102,7 @@ public class CountDownButton extends TextView {
                 setClickable(usable);
                 setTextColor(getResources().getColor(unusableColorId));
             }
-            setText("("+mLastMillis / 1000 + "秒)" );
+            setText("(" + mLastMillis / 1000 + "秒)");
         }
 
     }

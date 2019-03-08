@@ -149,7 +149,7 @@ public class MyQuestionAnswerFragment extends BaseFragment {
                             @Override
                             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                                 super.onFailure(statusCode, headers, throwable, errorResponse);
-                                ToastUtils.showShorToast("服务器开小差了，请稍后重试");
+                                ToastUtils.showToast("服务器开小差了，请稍后重试");
                             }
 
                             @Override
@@ -159,13 +159,13 @@ public class MyQuestionAnswerFragment extends BaseFragment {
                                 try {
                                     int state = response.getInt("state");
                                     if (state == 1) {
-                                        ToastUtils.showShorToast("提问成功");
+                                        ToastUtils.showToast("提问成功");
                                         InputMethodManager imm = (InputMethodManager)
                                                 getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                                         imm.hideSoftInputFromWindow(mEtQuestion.getWindowToken(), 0);
                                         performback();
                                     } else {
-                                        ToastUtils.showShorToast("提问失败，请稍后重试");
+                                        ToastUtils.showToast("提问失败，请稍后重试");
                                     }
                                 } catch (Exception e) {
                                     e.printStackTrace();
@@ -173,7 +173,7 @@ public class MyQuestionAnswerFragment extends BaseFragment {
                             }
                         });
             } else {
-                ToastUtils.showShorToast("提问不许为空");
+                ToastUtils.showToast("提问不许为空");
             }
 
         } catch (UnsupportedEncodingException e) {
@@ -197,7 +197,7 @@ public class MyQuestionAnswerFragment extends BaseFragment {
             if (!StringUtils.isEmpty(content)) {
 
                 if (StringUtils.isEmpty(email)) {
-                    ToastUtils.showShorToast("请输入您的email地址");
+                    ToastUtils.showToast("请输入您的email地址");
                 } else {
                     CHYHttpClientUsage.getInstanse().doCreatePosterQuestion(Constants.getConId(), AppApplication.userId, AppApplication.userType, posterTitle, content,
                             mPosterId, authorName, email, new JsonHttpResponseHandler() {
@@ -216,7 +216,7 @@ public class MyQuestionAnswerFragment extends BaseFragment {
                                 @Override
                                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                                     super.onFailure(statusCode, headers, throwable, errorResponse);
-                                    ToastUtils.showShorToast("服务器开小差了，请稍后重试");
+                                    ToastUtils.showToast("服务器开小差了，请稍后重试");
                                 }
 
                                 @Override
@@ -225,12 +225,12 @@ public class MyQuestionAnswerFragment extends BaseFragment {
                                     try {
                                         int state = response.getInt("state");
                                         if (state == 1) {
-                                            ToastUtils.showShorToast("提问成功");
+                                            ToastUtils.showToast("提问成功");
                                             InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                                             imm.hideSoftInputFromWindow(mEtQuestion.getWindowToken(), 0);
                                             performback();
                                         } else {
-                                            ToastUtils.showShorToast("提问失败，请稍后重试");
+                                            ToastUtils.showToast("提问失败，请稍后重试");
                                         }
                                     } catch (Exception e) {
                                         e.printStackTrace();
@@ -239,7 +239,7 @@ public class MyQuestionAnswerFragment extends BaseFragment {
                             });
                 }
             } else {
-                ToastUtils.showShorToast("提问不许为空");
+                ToastUtils.showToast("提问不许为空");
             }
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();

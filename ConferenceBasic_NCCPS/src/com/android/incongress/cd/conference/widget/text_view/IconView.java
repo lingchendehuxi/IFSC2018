@@ -2,10 +2,11 @@ package com.android.incongress.cd.conference.widget.text_view;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-public class IconView extends TextView {
+public class IconView extends AppCompatTextView {
     public IconView(Context context) {
         super(context);
         init(context);

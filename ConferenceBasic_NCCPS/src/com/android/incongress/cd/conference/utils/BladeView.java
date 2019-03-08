@@ -9,8 +9,6 @@ import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -134,10 +132,6 @@ public class BladeView extends View {
             }
         }
     };
-
-    public boolean onTouchEvent(MotionEvent event) {
-        return super.onTouchEvent(event);
-    }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
         mOnItemClickListener = listener;

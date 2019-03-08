@@ -77,8 +77,8 @@ public class Constants {
     public static final String FRAGMENT_QUESTIONLIST = "提问列表页面";// questionListFragment
     public static final String FRAGMENT_MAKEQUESTION = "提问页面";// makeQuestionFragment
 
-    public static final String FRAGMENT_POSTER = "壁报模块"; // posterFragment
-    public static final String FRAGMENT_POSTERDETAIL = "壁报详情模块";// posterDetailFragment
+    public static final String FRAGMENT_POSTER = "壁报集"; // posterFragment
+    public static final String FRAGMENT_POSTERDETAIL = "壁报详情_标题";// posterDetailFragment
 
     public static final String ACTIVITY_COLLEGE = "学院页面";// collegeActivity
     public static final String ACTIVITY_COLLEGE_PLAY = "学院页面，播放";// collegeActivity
@@ -394,7 +394,7 @@ public class Constants {
     //首页消息和视频如果没有数据，就不会显示
     //分享界面
     //CIT学院的分享
-    public static boolean COLLEGE_HOME_SHARE = false;
+    public static boolean COLLEGE_HOME_SHARE = true;
     //获取conId
     public static final int getConId() {
         return SharePreferenceUtils.getAppInt(Constants.CONID,Constants.conId);

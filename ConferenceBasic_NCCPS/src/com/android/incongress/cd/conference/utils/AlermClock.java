@@ -108,7 +108,7 @@ public class AlermClock {
         //Toast.makeText(AppApplication.getContext(), timeString, Toast.LENGTH_LONG).show();
         Log.d("test", "calculateNextAlert " + timeString);
         if (alertBean.getTime() < now) {
-            ToastUtils.showShorToast("日程时间已过");
+            ToastUtils.showToast("日程时间已过");
             Log.d("test", "calculateNextAlert: 删除闹钟"+alertBean.getTime());
             System.out.println("-----delete delete delete -----");
             deleteClock(alertBean);

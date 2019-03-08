@@ -85,9 +85,9 @@ public class MakeQuestionActivity extends BaseActivity {
 
                 if(StringUtils.isEmpty(email)) {
                     if(AppApplication.getSystemLanuageCode()=="cn"){
-                        ToastUtils.showShorToast("请输入您的email地址");
+                        ToastUtils.showToast("请输入您的email地址");
                     }else{
-                        ToastUtils.showShorToast("Please enter your email");
+                        ToastUtils.showToast("Please enter your email");
                     }
                 }else{
                     CHYHttpClientUsage.getInstanse().doCreatePosterQuestion(Constants.getConId(), AppApplication.userId, AppApplication.userType, posterTitle, content,
@@ -107,7 +107,7 @@ public class MakeQuestionActivity extends BaseActivity {
                                 @Override
                                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                                     super.onFailure(statusCode, headers, throwable, errorResponse);
-                                    ToastUtils.showShorToast("服务器开小差了，请稍后重试");
+                                    ToastUtils.showToast("服务器开小差了，请稍后重试");
                                 }
 
                                 @Override
@@ -117,15 +117,15 @@ public class MakeQuestionActivity extends BaseActivity {
                                         int state = response.getInt("state");
                                         if (state == 1) {
                                             if(AppApplication.getSystemLanuageCode()=="cn"){
-                                                ToastUtils.showShorToast("提问成功");
+                                                ToastUtils.showToast("提问成功");
                                             }else{
-                                                ToastUtils.showShorToast("Question success");
+                                                ToastUtils.showToast("Question success");
                                             }
                                             InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                                             imm.hideSoftInputFromWindow(mEtQuestion.getWindowToken(), 0);
                                             finish();
                                         } else {
-                                            ToastUtils.showShorToast("提问失败，请稍后重试\n"+response.getString("msg"));
+                                            ToastUtils.showToast("提问失败，请稍后重试\n"+response.getString("msg"));
                                         }
                                     } catch (Exception e) {
                                         e.printStackTrace();
@@ -135,9 +135,9 @@ public class MakeQuestionActivity extends BaseActivity {
                 }
             } else {
                 if(AppApplication.getSystemLanuageCode()=="cn"){
-                    ToastUtils.showShorToast("提问不许为空");
+                    ToastUtils.showToast("提问不许为空");
                 }else{
-                    ToastUtils.showShorToast("Question are not empty");
+                    ToastUtils.showToast("Question are not empty");
                 }
             }
         } catch (UnsupportedEncodingException e) {

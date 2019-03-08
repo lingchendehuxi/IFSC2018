@@ -541,7 +541,7 @@ public class HistoryPostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                         ((TextView) view).setText(response.getInt("laudCount") + "人点赞");
                     } else {
                         String tips = response.getString("msg");
-                        ToastUtils.showShorToast(tips);
+                        ToastUtils.showToast(tips);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -551,7 +551,7 @@ public class HistoryPostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             @Override
             public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
-                ToastUtils.showShorToast("服务器开小差了，请稍后重试");
+                ToastUtils.showToast("服务器开小差了，请稍后重试");
             }
         });
     }

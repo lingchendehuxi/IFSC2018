@@ -206,11 +206,10 @@ public class OnlyWebViewActionFragment extends BaseFragment {
         mOnlyWebview.reload();
     }
 
-    Handler hand = new Handler() {
+    Handler hand = new Handler(new Handler.Callback() {
         @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
+        public boolean handleMessage(Message message) {
+            switch (message.what) {
                 case 1:
                     mPhotoView.setVisibility(View.VISIBLE);
                     Glide.with(getActivity()).load(mImgUrl).placeholder(R.drawable.default_load_bg).into(new SimpleTarget<GlideDrawable>() {
@@ -221,8 +220,9 @@ public class OnlyWebViewActionFragment extends BaseFragment {
                     });
                     break;
             }
+            return false;
         }
-    };
+    }) ;
 
     @Override
     public void onResume() {

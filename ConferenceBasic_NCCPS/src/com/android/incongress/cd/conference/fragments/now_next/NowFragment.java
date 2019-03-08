@@ -108,7 +108,7 @@ public class NowFragment extends BaseFragment {
                     mRoomPopupWindow.showPopupWindowBelowView(mLlTimeRoom);
                 } else {
                     if (mRoomPopupWindow.getCurrentClass().size() == 0) {
-                        ToastUtils.showLongToast("请选择至少一个会议室");
+                        ToastUtils.showToast("请选择至少一个会议室");
                     } else {
                         SharePreferenceUtils.saveAppBoolean("popup", true);
                         mRoomPopupWindow.dismiss();

@@ -66,7 +66,7 @@ public class MyMeetingNoteEditorActivity extends BaseActivity {
                 notes.setCreatetime(time);
                 notes.setUpdatetime(time);
                 ConferenceDbUtils.updateOneNote(notes);
-                ToastUtils.showShorToast(getString(R.string.note_save_success));
+                ToastUtils.showToast(getString(R.string.note_save_success));
                 finish();
             }
         });

@@ -207,7 +207,7 @@ public class MyMessageListFragment extends BaseFragment implements XRecyclerView
                         } else {
                             mRecyclerView.loadMoreComplete();
                         }
-                        ToastUtils.showShorToast(getString(R.string.no_more_date));
+                        ToastUtils.showToast(getString(R.string.no_more_date));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

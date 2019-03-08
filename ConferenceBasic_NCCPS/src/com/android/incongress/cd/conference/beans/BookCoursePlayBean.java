@@ -65,6 +65,15 @@ public class BookCoursePlayBean{
         private String speakerName;
         private String speakerImg;
         private String roleName;
+        private String videoId;
+
+        public String getVideoId() {
+            return videoId;
+        }
+
+        public void setVideoId(String videoId) {
+            this.videoId = videoId;
+        }
 
         public int getVideoType() {
             return videoType;

@@ -1,50 +1,35 @@
 package com.android.incongress.cd.conference;
 
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.media.Image;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.android.incongress.cd.conference.api.CHYHttpClientUsage;
-import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.BaseActivity;
 import com.android.incongress.cd.conference.base.Constants;
-import com.android.incongress.cd.conference.fragments.me.ModifyInfoFragment;
 import com.android.incongress.cd.conference.save.ParseUser;
 import com.android.incongress.cd.conference.save.SharePreferenceUtils;
 import com.android.incongress.cd.conference.utils.JSONCatch;
 import com.android.incongress.cd.conference.utils.MyLogger;
 import com.android.incongress.cd.conference.utils.PicUtils;
-import com.android.incongress.cd.conference.utils.StringUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
 import com.android.incongress.cd.conference.widget.CircleImageView;
 import com.android.incongress.cd.conference.widget.ClearEditText;
 import com.android.incongress.cd.conference.widget.IconChoosePopupWindow;
-import com.android.incongress.cd.conference.widget.phonecode.CountDownButton;
-import com.android.incongress.cd.conference.widget.phonecode.FocusPhoneCode;
 import com.android.incongress.cd.conference.widget.popup.InputMethodUtils;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
-import com.umeng.socialize.UMShareAPI;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -198,7 +183,7 @@ public class LoginForUpdateInfoActivity extends BaseActivity implements GalleryF
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                ToastUtils.showShorToast("服务器开小差了，请稍后重试");
+                ToastUtils.showToast("服务器开小差了，请稍后重试");
             }
 
             @Override
@@ -249,7 +234,7 @@ public class LoginForUpdateInfoActivity extends BaseActivity implements GalleryF
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                ToastUtils.showShorToast("服务器开小差了，请稍后重试");
+                ToastUtils.showToast("服务器开小差了，请稍后重试");
             }
 
             @Override
@@ -339,7 +324,7 @@ public class LoginForUpdateInfoActivity extends BaseActivity implements GalleryF
 
     @Override
     public void onHanlderFailure(int requestCode, String errorMsg) {
-        ToastUtils.showShorToast(getString(R.string.choose_photo_fail));
+        ToastUtils.showToast(getString(R.string.choose_photo_fail));
     }
 
     private void doUploadFile(String userId, String userType, File uploadFile) {
@@ -382,15 +367,14 @@ public class LoginForUpdateInfoActivity extends BaseActivity implements GalleryF
 
     }
 
-    private Handler mHandler = new Handler() {
+    private Handler mHandler = new Handler(new Handler.Callback() {
         @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
+        public boolean handleMessage(Message message) {
             if (mIsOpen == false) {
-                return;
+                return false;
             }
 
-            int target = msg.what;
+            int target = message.what;
             if (target == UPLOAD_IMGURL_SUCCESS) {
                 SharePreferenceUtils.saveUserString(Constants.USER_IMG, mUploadFilePath);
 
@@ -398,8 +382,9 @@ public class LoginForUpdateInfoActivity extends BaseActivity implements GalleryF
                     mUploadFilePath = mUploadFilePath.replaceFirst("s", "");
                 PicUtils.loadCircleImage(LoginForUpdateInfoActivity.this, mUploadFilePath, iv_head);
             }
+            return false;
         }
-    };
+    });
 
     /**
      * 内容区域变量

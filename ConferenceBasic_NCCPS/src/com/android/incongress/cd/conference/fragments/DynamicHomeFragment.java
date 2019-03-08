@@ -123,10 +123,10 @@ public class DynamicHomeFragment extends BaseFragment implements View.OnClickLis
     private void setAdImageView(String filepath, ImageView imageview) {
         File file = new File(filepath);
         if (file != null) {
-            PicUtils.loadImageFile(getContext(),file,imageview);
+            PicUtils.loadImageFile(getContext(), file, imageview);
             int width = getActivity().getWindowManager().getDefaultDisplay().getWidth();
-            ViewGroup.LayoutParams lp=imageview.getLayoutParams();
-            lp.height= (int) (width*0.17);
+            ViewGroup.LayoutParams lp = imageview.getLayoutParams();
+            lp.height = (int) (width * 0.17);
             imageview.setLayoutParams(lp);
         }
     }
@@ -267,12 +267,10 @@ public class DynamicHomeFragment extends BaseFragment implements View.OnClickLis
             mSecretaryView.setVisibility(View.GONE);
     }
 
-    private Handler mHandler = new Handler() {
+    private Handler mHandler = new Handler(new Handler.Callback() {
         @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            int target = msg.what;
-
+        public boolean handleMessage(Message message) {
+            int target = message.what;
             if (target == HANDLER_NUMS) {
                 if (mIvHdSession != null) {
                     if (mXchdCount > 0) {
@@ -310,8 +308,9 @@ public class DynamicHomeFragment extends BaseFragment implements View.OnClickLis
                     }
                 }
             }
+            return false;
         }
-    };
+    });
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -395,7 +394,7 @@ public class DynamicHomeFragment extends BaseFragment implements View.OnClickLis
                     LinearLayout.LayoutParams picLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
                     picLp.setMargins(spMargin, 0, spMargin, 0);
                     imageView.setLayoutParams(picLp);
-                    PicUtils.loadImageUrl(getContext(),picBean.getIconUrl(),imageView);
+                    PicUtils.loadImageUrl(getContext(), picBean.getIconUrl(), imageView);
                     imageView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -412,12 +411,12 @@ public class DynamicHomeFragment extends BaseFragment implements View.OnClickLis
                     linearLayout.addView(imageView);
                     String imgSize = picBean.getImgSize();
                     String[] wh = imgSize.split(",");
-                    int width =  Integer.parseInt(wh[0]);
-                    int height =  Integer.parseInt(wh[1]);
-                    double bl = width/height;
+                    int width = Integer.parseInt(wh[0]);
+                    int height = Integer.parseInt(wh[1]);
+                    double bl = width / height;
                     int widthMax = getActivity().getWindowManager().getDefaultDisplay().getWidth();
-                    ViewGroup.LayoutParams lp=imageView.getLayoutParams();
-                    lp.height= (int) (widthMax/bl);
+                    ViewGroup.LayoutParams lp = imageView.getLayoutParams();
+                    lp.height = (int) (widthMax / bl);
                     imageView.setLayoutParams(lp);
                 } else {
                     for (int j = 0; j < bean.getObj().size(); j++) {
@@ -433,7 +432,7 @@ public class DynamicHomeFragment extends BaseFragment implements View.OnClickLis
 
                 mLlConstainer.addView(linearLayout);
 
-                if (i == 0 && bean.getObj().get(0).getIconCode().equals(PICTURE + "")){
+                if (i == 0 && bean.getObj().get(0).getIconCode().equals(PICTURE + "")) {
                     //加入专家秘书的模块
                     //将专家秘书放入其中
                     mSecretaryView = LayoutInflater.from(getActivity()).inflate(R.layout.part_secretary, mLlConstainer, false);
@@ -544,8 +543,8 @@ public class DynamicHomeFragment extends BaseFragment implements View.OnClickLis
     private LinearLayout getInnerLinearLayout(float weight) {
         LinearLayout linearLayout = new LinearLayout(getActivity());
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT);
-        if(weight == 50) {
-            weight = (float)(weight + 1.5);
+        if (weight == 50) {
+            weight = (float) (weight + 1.5);
         }
         lp.weight = weight;
 
@@ -591,7 +590,7 @@ public class DynamicHomeFragment extends BaseFragment implements View.OnClickLis
                 if (TextUtils.isEmpty(bean.getIconUrl())) {
                     ivLogo.setImageDrawable(ImageColorChangeUtils.changeIconColor(getActivity(), iconDefaultId, Color.parseColor(bean.getIconFontColor())));
                 } else {
-                    PicUtils.loadImageUrl(getContext(),bean.getIconUrl(),ivLogo);
+                    PicUtils.loadImageUrl(getContext(), bean.getIconUrl(), ivLogo);
                 }
 
                 setCountNum(bean, tvMsgNum, ivInteractive);
@@ -615,13 +614,13 @@ public class DynamicHomeFragment extends BaseFragment implements View.OnClickLis
                 if (TextUtils.isEmpty(bean.getIconUrl())) {
                     ivLogo.setImageResource(iconDefaultId);
                 } else {
-                    PicUtils.loadImageUrl(getContext(),bean.getIconUrl(),ivLogo);
+                    PicUtils.loadImageUrl(getContext(), bean.getIconUrl(), ivLogo);
                 }
                 setCountNum(bean, tvMsgNum, ivInteractive);
                 return view;
             }
         } else {
-            ToastUtils.showShorToast("iconCode解析出错...");
+            ToastUtils.showToast("iconCode解析出错...");
             return null;
         }
     }
@@ -695,9 +694,9 @@ public class DynamicHomeFragment extends BaseFragment implements View.OnClickLis
 //                }else{
 //                }
                 String url = rowBean.getNewModel();
-                if(url.contains("?")) {
+                if (url.contains("?")) {
                     url = url + "&userId=" + AppApplication.userId + "&userType=" + AppApplication.userType + "&lan=" + AppApplication.getSystemLanuageCode();
-                }else {
+                } else {
                     url = url + "?userId=" + AppApplication.userId + "&userType=" + AppApplication.userType + "&lan=" + AppApplication.getSystemLanuageCode();
                 }
                 if (AppApplication.systemLanguage == 1) {
@@ -770,7 +769,7 @@ public class DynamicHomeFragment extends BaseFragment implements View.OnClickLis
                     case PICTURE:
                         if (!TextUtils.isEmpty(rowBean.getNewUrl())) {
                             if (AppApplication.systemLanguage == 1) {
-                                CollegeActivity.startCitCollegeActivity(getActivity(),  rowBean.getIconName(), rowBean.getNewUrl());
+                                CollegeActivity.startCitCollegeActivity(getActivity(), rowBean.getIconName(), rowBean.getNewUrl());
                             } else {
                                 CollegeActivity.startCitCollegeActivity(getActivity(), rowBean.getIconEnName(), rowBean.getNewUrl());
                             }
@@ -795,7 +794,7 @@ public class DynamicHomeFragment extends BaseFragment implements View.OnClickLis
                         goPhotoAlbum();
                         break;
                     default:
-                        ToastUtils.showShorToast("未找到该模块，请尝试更新数据包");
+                        ToastUtils.showToast("未找到该模块，请尝试更新数据包");
                         break;
                 }
             }
@@ -937,7 +936,7 @@ public class DynamicHomeFragment extends BaseFragment implements View.OnClickLis
         searchView.setImageResource(R.drawable.icon_share);
         MeetingGuideFragment meetingGuideFragment = new MeetingGuideFragment();
         meetingGuideFragment.setRightView(searchView);
-        action(meetingGuideFragment, R.string.home_meetingguide, searchView,false, false, false);
+        action(meetingGuideFragment, R.string.home_meetingguide, searchView, false, false, false);
     }
 
     /**
@@ -954,12 +953,12 @@ public class DynamicHomeFragment extends BaseFragment implements View.OnClickLis
      * 提问模块
      */
     private void goQuestions() {
-        if(AppApplication.isUserLogIn()) {
+        if (AppApplication.isUserLogIn()) {
             action(new MeetingQuestionFragment(), R.string.question, false, false, false);
-        }else {
+        } else {
             LoginActivity.startLoginActivity(getActivity(), LoginActivity.TYPE_NORMAL, "", "", "", "");
         }
-       // action(new QuestionsFragment(), R.string.question, false, false, false);
+        // action(new QuestionsFragment(), R.string.question, false, false, false);
     }
 
     /**
@@ -994,18 +993,21 @@ public class DynamicHomeFragment extends BaseFragment implements View.OnClickLis
     private void goExhibitor() {
         action(new ExhibitorsActionFragment(), R.string.home_exhibitors, false, false, false);
     }
+
     /**
-     *照片墙
+     * 照片墙
      */
     private void goPhotoAlbum() {
-        action(new PhotoAlbumFragment(), "照片墙", false,false, false);
+        action(new PhotoAlbumFragment(), "照片墙", false, false, false);
     }
+
     /**
      * 班车
      */
     private void goBus() {
         action(new MeetingBusRemindAllFragment(), "班车提醒", false, false, false);
     }
+
     /**
      * 我(个人中心)
      */
@@ -1086,7 +1088,7 @@ public class DynamicHomeFragment extends BaseFragment implements View.OnClickLis
                 LoginActivity.startLoginActivity(getActivity(), LoginActivity.TYPE_PROFESSOR, "", "", "", "");
                 return;
             } else if (AppApplication.facultyId == -1) {
-                ToastUtils.showShorToast(R.string.secretary_module_not_available);
+                ToastUtils.showToast(R.string.secretary_module_not_available);
                 return;
             }
 

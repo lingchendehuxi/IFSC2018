@@ -97,7 +97,7 @@ public class AnswerQuestionActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 if(StringUtils.isEmpty(mEtAnswer.getText().toString())) {
-                    ToastUtils.showShorToast(getString(R.string.enter_content));
+                    ToastUtils.showToast(getString(R.string.enter_content));
                     return;
                 }
 
@@ -115,10 +115,10 @@ public class AnswerQuestionActivity extends BaseActivity {
                          try {
                              int state = response.getInt("state");
                              if(state == 1) {
-                                 ToastUtils.showShorToast(getString(R.string.succcess_reply));
+                                 ToastUtils.showToast(getString(R.string.succcess_reply));
                                  AnswerQuestionActivity.this.finish();
                              }else {
-                                 ToastUtils.showShorToast(getString(R.string.fail_reply));
+                                 ToastUtils.showToast(getString(R.string.fail_reply));
                              }
                          }catch (Exception e) {
                              e.printStackTrace();

@@ -45,17 +45,8 @@ public class ToastUtils {
         oneTime=twoTime;
     }
 
-
-    public static void showShorToast(String msg) {
+    public static void showToast(int msg) {
         Toast.makeText(AppApplication.getInstance().getContext(), msg, Toast.LENGTH_SHORT).show();
-    }
-
-    public static void showShorToast(int msg) {
-        Toast.makeText(AppApplication.getInstance().getContext(), msg, Toast.LENGTH_SHORT).show();
-    }
-
-    public static void showLongToast(String msg) {
-        Toast.makeText(AppApplication.getInstance().getContext(), msg, Toast.LENGTH_LONG).show();
     }
 
     //通知框中间

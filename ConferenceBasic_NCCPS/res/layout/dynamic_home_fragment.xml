@@ -10,7 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_gravity="top"
-        android:layout_weight="0"
         android:adjustViewBounds="true"
         android:contentDescription="@string/iamge_content_description"
         android:scaleType="fitXY" />
@@ -20,23 +19,17 @@
         android:layout_height="match_parent"
         android:fillViewport="true">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:padding="2dp">
 
-            <RelativeLayout
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/ll_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="2dp">
-                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:id="@+id/ll_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="6dp"
-                    android:orientation="vertical"/>
-            </RelativeLayout>
-        </LinearLayout>
-
+                android:layout_marginTop="6dp"
+                android:orientation="vertical" />
+        </RelativeLayout>
     </ScrollView>
 </LinearLayout>

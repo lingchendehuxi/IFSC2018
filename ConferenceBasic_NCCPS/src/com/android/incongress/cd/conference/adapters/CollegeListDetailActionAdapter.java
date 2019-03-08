@@ -1,7 +1,6 @@
 package com.android.incongress.cd.conference.adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,17 +10,11 @@ import android.widget.TextView;
 
 import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.beans.CollegeListDetailBean;
-import com.android.incongress.cd.conference.fragments.college.CollegeCourseBookFragment;
-import com.android.incongress.cd.conference.model.Class;
-import com.android.incongress.cd.conference.model.ConferenceDbUtils;
 import com.android.incongress.cd.conference.model.Meeting;
-import com.android.incongress.cd.conference.model.Session;
-import com.android.incongress.cd.conference.utils.DateUtil;
 import com.android.incongress.cd.conference.widget.stick_header.StickyListHeadersAdapter;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 

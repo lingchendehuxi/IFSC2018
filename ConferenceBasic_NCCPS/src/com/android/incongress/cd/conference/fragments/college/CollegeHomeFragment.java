@@ -75,7 +75,7 @@ public class CollegeHomeFragment extends BaseFragment implements XRecyclerView.L
     private ArrayList<String> mSessionDaysList = new ArrayList<>();
     private ArrayList<String> mSessionIDsList = new ArrayList<>();
     private TextView mTitle;
-    private ImageView title_back, iv_share;
+    private ImageView title_back;
     private LinearLayout ll_date_select;
     private int mCurrentPage = 0;
     private EditText et_search;
@@ -102,7 +102,6 @@ public class CollegeHomeFragment extends BaseFragment implements XRecyclerView.L
         mTitle = view.findViewById(R.id.title_text);
         ll_date_select = view.findViewById(R.id.ll_date_select);
         et_search = view.findViewById(R.id.et_search);
-        iv_share = view.findViewById(R.id.iv_share);
         initSearchView(view);
         cacheManager = CacheManager.getInstance().open(CACHE_COLLEGE_TITLE, 1);
         mTitle.setText(getString(R.string.home_cit_college));
@@ -115,18 +114,11 @@ public class CollegeHomeFragment extends BaseFragment implements XRecyclerView.L
                 InputMethodUtils.hideSoftInput(getContext(), et_search);
                 if (mViewPager.getVisibility() == View.VISIBLE) {
                     ((HomeActivity) getActivity()).performBackClick();
-                }else {
+                } else {
                     fl_search.setVisibility(View.GONE);
                     ll_date_select.setVisibility(View.VISIBLE);
                     mViewPager.setVisibility(View.VISIBLE);
                 }
-            }
-        });
-        iv_share.setVisibility(Constants.COLLEGE_HOME_SHARE ? View.VISIBLE : View.INVISIBLE);
-        iv_share.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //此处为分享
             }
         });
         et_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -136,7 +128,7 @@ public class CollegeHomeFragment extends BaseFragment implements XRecyclerView.L
                 if (actionId == EditorInfo.IME_ACTION_SEND ||
                         (keyEvent != null && keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
                     if (TextUtils.isEmpty(mSearchString)) {
-                        ToastUtils.showShorToast("请先输入搜索内容");
+                        ToastUtils.showToast("请先输入搜索内容");
                         return false;
                     }
                     switch (keyEvent.getAction()) {
@@ -150,7 +142,7 @@ public class CollegeHomeFragment extends BaseFragment implements XRecyclerView.L
                             PolyvKeyBoardUtils.closeKeybord(et_search, getActivity());
                             mViewPager.setVisibility(View.GONE);
                             fl_search.setVisibility(View.VISIBLE);
-                            getSearchVideoData("-1",true);
+                            getSearchVideoData("-1", true);
                             return true;
                         default:
                             return true;
@@ -181,7 +173,7 @@ public class CollegeHomeFragment extends BaseFragment implements XRecyclerView.L
                         e.printStackTrace();
                     }
                     myHandler.sendEmptyMessageDelayed(EDIT_OK, 200);
-                }else {
+                } else {
                     mSearchString = "";
                     videoList.clear();
                     mVideoAdapter.notifyDataSetChanged();
@@ -191,21 +183,22 @@ public class CollegeHomeFragment extends BaseFragment implements XRecyclerView.L
         loadLocalDate();
         return view;
     }
+
     //此handler用于监听editText输入完成 和Runnable配合使用 输入完成刷新搜索
-    private Handler myHandler = new Handler() {
+    private Handler myHandler = new Handler(new Handler.Callback() {
         @Override
-        public void dispatchMessage(Message msg) {
-            super.dispatchMessage(msg);
-            if (msg.what == EDIT_OK) {
+        public boolean handleMessage(Message message) {
+            if (message.what == EDIT_OK) {
                 hideShurufa();
                 ll_date_select.setVisibility(View.GONE);
                 PolyvKeyBoardUtils.closeKeybord(et_search, getActivity());
                 mViewPager.setVisibility(View.GONE);
                 fl_search.setVisibility(View.VISIBLE);
-                getSearchVideoData("-1",true);
+                getSearchVideoData("-1", true);
             }
+            return false;
         }
-    };
+    });
 
     //无网络的时候加载本地数据
     private void loadLocalDate() {
@@ -354,7 +347,7 @@ public class CollegeHomeFragment extends BaseFragment implements XRecyclerView.L
                         mSessionIDsList.add(bean.getItemArray().get(i).getItemId());
                     }
                 } else {
-                    ToastUtils.showShorToast("状态码错误");
+                    ToastUtils.showToast("状态码错误");
                     return;
                 }
                 //获取title成功后操作
@@ -374,7 +367,7 @@ public class CollegeHomeFragment extends BaseFragment implements XRecyclerView.L
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
-                ToastUtils.showShorToast("获取信息失败，请联系管理员");
+                ToastUtils.showToast("获取信息失败，请联系管理员");
             }
 
         });
@@ -397,7 +390,7 @@ public class CollegeHomeFragment extends BaseFragment implements XRecyclerView.L
             ToastUtils.showToast(getString(R.string.connect_network));
             return;
         }
-        getSearchVideoData("-1",false);
+        getSearchVideoData("-1", false);
     }
 
     @Override
@@ -407,7 +400,7 @@ public class CollegeHomeFragment extends BaseFragment implements XRecyclerView.L
             ToastUtils.showToast(getString(R.string.connect_network));
             return;
         }
-        getSearchVideoData(mLastId,false);
+        getSearchVideoData(mLastId, false);
     }
 
     private void initSearchView(View view) {
@@ -433,7 +426,7 @@ public class CollegeHomeFragment extends BaseFragment implements XRecyclerView.L
      * @param lastId
      */
     private void getSearchVideoData(final String lastId, final boolean isNew) {
-        if(TextUtils.isEmpty(mSearchString)){
+        if (TextUtils.isEmpty(mSearchString)) {
             return;
         }
         CHYHttpClientUsage.getInstanse().doGetSearchCollegeTitle(mSearchString, lastId, new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
@@ -453,7 +446,7 @@ public class CollegeHomeFragment extends BaseFragment implements XRecyclerView.L
                     } else {
                         xRecyclerView.loadMoreComplete();
                         if ("0".equals(mIsMore)) {
-                            ToastUtils.showShorToast(getString(R.string.incongress_send_no_more_data));
+                            ToastUtils.showToast(getString(R.string.incongress_send_no_more_data));
                             xRecyclerView.setLoadingMoreEnabled(false);
                             return;
                         }
@@ -464,13 +457,13 @@ public class CollegeHomeFragment extends BaseFragment implements XRecyclerView.L
                     mLastId = String.valueOf(bean.getVideoArray().get(bean.getVideoArray().size() - 1).getDataId());
                     mIsMore = bean.getIsNextPage();
                 } else {
-                    if(isNew){
+                    if (isNew) {
                         videoList.clear();
                         mVideoAdapter.notifyDataSetChanged();
                     }
                     if ("0".equals(bean.getIsNextPage()) && videoList.size() != 0 && !isNew) {
                         xRecyclerView.loadMoreComplete();
-                        ToastUtils.showShorToast(getString(R.string.incongress_send_no_more_data));
+                        ToastUtils.showToast(getString(R.string.incongress_send_no_more_data));
                         xRecyclerView.setLoadingMoreEnabled(false);
                         return;
                     }
@@ -484,7 +477,7 @@ public class CollegeHomeFragment extends BaseFragment implements XRecyclerView.L
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
-                ToastUtils.showShorToast("获取信息失败，请联系管理员");
+                ToastUtils.showToast("获取信息失败，请联系管理员");
             }
         });
     }

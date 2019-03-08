@@ -97,7 +97,7 @@ public class PhotoAlbumGridAdapter extends BaseAdapter {
                 }
 
                 if(photoWallArrayBean.getIsLaud() == 1) {
-                    ToastUtils.showLongToast("已经点赞完成");
+                    ToastUtils.showToast("已经点赞完成");
                     return;
                 }
 
@@ -114,7 +114,7 @@ public class PhotoAlbumGridAdapter extends BaseAdapter {
                                 photoWallArrayBean.setIsLaud(1);
                             }else {
                                 holder.ivLaud.setImageResource(R.drawable.photo_praise);
-                                ToastUtils.showShorToast("点赞失败，请重新尝试");
+                                ToastUtils.showToast("点赞失败，请重新尝试");
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

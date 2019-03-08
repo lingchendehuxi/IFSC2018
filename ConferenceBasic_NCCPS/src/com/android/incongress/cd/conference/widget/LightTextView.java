@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.support.v7.widget.AppCompatTextView;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
@@ -12,7 +13,7 @@ import android.widget.TextView;
 
 import com.android.incongress.cd.conference.base.AppApplication;
 
-public class LightTextView extends TextView {
+public class LightTextView extends AppCompatTextView {
 
     private int mLineY;
     private int mViewWidth;

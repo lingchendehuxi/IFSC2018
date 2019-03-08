@@ -94,7 +94,7 @@ public class QuestionsFragment extends BaseFragment implements View.OnClickListe
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ToastUtils.showShorToast("我要进行文字搜索");
+                    ToastUtils.showToast("我要进行文字搜索");
                 }
             });
     }

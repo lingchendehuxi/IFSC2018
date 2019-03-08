@@ -251,7 +251,7 @@ public class WxForLoginActivity extends BaseActivity implements View.OnClickList
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                ToastUtils.showShorToast("服务器开小差了，请稍后重试");
+                ToastUtils.showToast("服务器开小差了，请稍后重试");
             }
 
             @Override
@@ -299,7 +299,7 @@ public class WxForLoginActivity extends BaseActivity implements View.OnClickList
                 if (JSONCatch.parseInt("state", response) == 0) {
                     showDialog(msg, null);
                 } else {
-                    ToastUtils.showShorToast(getString(R.string.success_send_regist_code));
+                    ToastUtils.showToast(getString(R.string.success_send_regist_code));
                 }
             }
 
@@ -312,7 +312,7 @@ public class WxForLoginActivity extends BaseActivity implements View.OnClickList
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
-                ToastUtils.showShorToast(getString(R.string.server_error));
+                ToastUtils.showToast(getString(R.string.server_error));
             }
         });
     }

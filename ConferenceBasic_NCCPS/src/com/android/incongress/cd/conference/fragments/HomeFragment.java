@@ -129,10 +129,9 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
         File fileTop = new File(pathTop);
         if (fileTop.exists()) {
-            PicUtils.loadImageFile(getContext(),new File(fileTop.getAbsolutePath()),mIvADTop);
+            PicUtils.loadImageFile(getContext(), new File(fileTop.getAbsolutePath()), mIvADTop);
         }
     }
-
 
 
     private MessageStationBroadCast mMsgBroadcast;
@@ -151,12 +150,10 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         MobclickAgent.onPause(getActivity());
     }
 
-    private Handler mHandler = new Handler() {
+    private Handler mHandler = new Handler(new Handler.Callback() {
         @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            int target = msg.what;
-
+        public boolean handleMessage(Message message) {
+            int target = message.what;
             if (target == HANDLER_NUMS) {
 //                if (mXchdCount > 0) {
 //                    mIvHdSessionOnTips.setVisibility(View.VISIBLE);
@@ -166,15 +163,16 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
                 if (mMessageCount > 0) {
                     mTvMsgNums.setVisibility(View.VISIBLE);
-                    if(mMessageCount< 99) {
+                    if (mMessageCount < 99) {
                         mTvMsgNums.setText(mMessageCount + "");
-                    }else {
-                        mTvMsgNums.setText(99+"");
+                    } else {
+                        mTvMsgNums.setText(99 + "");
                     }
                 }
             }
+            return false;
         }
-    };
+    });
 
     @Override
     public void onClick(View v) {
@@ -253,23 +251,23 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
      * 专家行程
      */
     private void goSecretaryTrip() {
-        if(AppApplication.facultyId != -1) {
+        if (AppApplication.facultyId != -1) {
             MobclickAgent.onEvent(getActivity(), Constants.EVENT_ID_FACULTY_TRIP);
             WebViewContainerActivity.startWebViewContainerActivity(getActivity(),
                     getString(R.string.secretary_trip, AppApplication.getSystemLanuageCode()), getString(R.string.home_icon_professor_trip));
-        }else{
-            ToastUtils.showShorToast(R.string.only_professor_can_use);
+        } else {
+            ToastUtils.showToast(R.string.only_professor_can_use);
         }
     }
 
     /**
      * 在线注册
      */
-    private void goRegisterOnline(){
-        if(AppApplication.systemLanguage == 1) {
+    private void goRegisterOnline() {
+        if (AppApplication.systemLanguage == 1) {
             WebViewContainerActivity.startWebViewContainerActivity(getActivity(),
                     getString(R.string.reg_online_cn), getString(R.string.home_icon_reg_online));
-        }else {
+        } else {
             WebViewContainerActivity.startWebViewContainerActivity(getActivity(),
                     getString(R.string.reg_online_en), getString(R.string.home_icon_reg_online));
         }
@@ -282,7 +280,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     }
 
     private void goNow() {
-        action(new NowFragment(),R.string.home_now,false,false,false);
+        action(new NowFragment(), R.string.home_now, false, false, false);
     }
 
     private void goNext() {
@@ -371,9 +369,9 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 //        view.findViewById(R.id.ll_next).setOnClickListener(this);
         mIvADTop.setOnClickListener(this);
 
-        if(AppApplication.systemLanguage == 1) {
+        if (AppApplication.systemLanguage == 1) {
             applyFont(getActivity(), view.findViewById(R.id.home_root), "fonts/home_ch.ttf");
-        }else {
+        } else {
             applyFont(getActivity(), view.findViewById(R.id.home_root), "fonts/home_en.ttf");
         }
     }
@@ -400,10 +398,10 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
             }
 
             if (AppApplication.userType == Constants.TYPE_USER_VISITOR) {
-                LoginActivity.startLoginActivity(getActivity(), LoginActivity.TYPE_PROFESSOR,"","","","");
+                LoginActivity.startLoginActivity(getActivity(), LoginActivity.TYPE_PROFESSOR, "", "", "", "");
                 return;
             } else if (AppApplication.facultyId == -1) {
-                ToastUtils.showShorToast("您不是主席团成员，无法使用该模块");
+                ToastUtils.showToast("您不是主席团成员，无法使用该模块");
                 return;
             }
 
@@ -645,7 +643,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     private void goCollege() {
 
         MobclickAgent.onEvent(getActivity(), Constants.EVENT_ID_COLLEGE);
-        CollegeActivity.startCitCollegeActivity(getActivity(), getString(R.string.home_cit_college), getString(Constants.get_CIT_COLLEGE(),Constants.getConId(),AppApplication.getSystemLanuageCode(),AppApplication.userId, AppApplication.userType));
+        CollegeActivity.startCitCollegeActivity(getActivity(), getString(R.string.home_cit_college), getString(Constants.get_CIT_COLLEGE(), Constants.getConId(), AppApplication.getSystemLanuageCode(), AppApplication.userId, AppApplication.userType));
     }
 
     /**
@@ -657,6 +655,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
     /**
      * 循环设置字体格式
+     *
      * @param context
      * @param root
      * @param fontName
@@ -670,7 +669,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
             } else if (root instanceof TextView)
                 ((TextView) root).setTypeface(Typeface.createFromAsset(context.getAssets(), fontName));
         } catch (Exception e) {
-           LogUtils.println(String.format("Error occured when trying to apply %s font for %s view", fontName, root));
+            LogUtils.println(String.format("Error occured when trying to apply %s font for %s view", fontName, root));
             e.printStackTrace();
         }
     }

@@ -27,23 +27,24 @@ public class ImageLoaderForPhotoChoose {
     private Semaphore mSemaphoreThreadPool;
 
     private void init(int threadCount, Type type) {
-        mPoolThread = new Thread(){
+        mPoolThread = new Thread() {
             @Override
             public void run() {
                 Looper.prepare();
-                mPoolThreadHandler = new Handler() {
+                mPoolThreadHandler = new Handler(new Handler.Callback() {
                     @Override
-                    public void handleMessage(Message msg) {
+                    public boolean handleMessage(Message message) {
                         //线程池去取出一个任务进行执行
                         mThreadPool.execute(getTask());
 
-                        try{
+                        try {
                             mSemaphoreThreadPool.acquire();
-                        }catch (InterruptedException e) {
+                        } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
+                        return false;
                     }
-                };
+                });
                 //释放一个信号量
                 mSemaphorePoolThreadHandler.release();
                 Looper.loop();
@@ -52,13 +53,13 @@ public class ImageLoaderForPhotoChoose {
 
         mPoolThread.start();
 
-        int maxMemory = (int)Runtime.getRuntime().maxMemory();
-        int cacheMemory = maxMemory/8;
+        int maxMemory = (int) Runtime.getRuntime().maxMemory();
+        int cacheMemory = maxMemory / 8;
 
-        mLruCache = new LruCache<String, Bitmap>(cacheMemory){
+        mLruCache = new LruCache<String, Bitmap>(cacheMemory) {
             @Override
             protected int sizeOf(String key, Bitmap value) {
-                return value.getRowBytes()*value.getHeight();
+                return value.getRowBytes() * value.getHeight();
             }
         };
 
@@ -71,17 +72,18 @@ public class ImageLoaderForPhotoChoose {
 
     /**
      * 从任务队列取出一个方法
+     *
      * @return
      */
     private Runnable getTask() {
-        if(mType == Type.FIFO) {
+        if (mType == Type.FIFO) {
             return mTaskQueue.removeFirst();
-        }else{
+        } else {
             return mTaskQueue.removeLast();
         }
     }
 
-    private ImageLoaderForPhotoChoose(){
+    private ImageLoaderForPhotoChoose() {
         init(DEFAULT_THREAD_COUNT, Type.LIFO);
     }
 
@@ -92,12 +94,13 @@ public class ImageLoaderForPhotoChoose {
     /**
      * 单例
      * 效率的提升，避免同时到达new代码，生成多个对象。懒加载的一种方式
+     *
      * @return
      */
-    public static ImageLoaderForPhotoChoose getInstance(){
-        if(mInstance == null) {
+    public static ImageLoaderForPhotoChoose getInstance() {
+        if (mInstance == null) {
             synchronized ((ImageLoaderForPhotoChoose.class)) {
-                if(mInstance == null) {
+                if (mInstance == null) {
                     mInstance = new ImageLoaderForPhotoChoose();
                 }
             }
@@ -108,12 +111,13 @@ public class ImageLoaderForPhotoChoose {
     /**
      * 单例
      * 效率的提升，避免同时到达new代码，生成多个对象。懒加载的一种方式
+     *
      * @return
      */
-    public static ImageLoaderForPhotoChoose getInstance(int threadCount, Type type){
-        if(mInstance == null) {
+    public static ImageLoaderForPhotoChoose getInstance(int threadCount, Type type) {
+        if (mInstance == null) {
             synchronized ((ImageLoaderForPhotoChoose.class)) {
-                if(mInstance == null) {
+                if (mInstance == null) {
                     mInstance = new ImageLoaderForPhotoChoose(threadCount, type);
                 }
             }
@@ -154,42 +158,44 @@ public class ImageLoaderForPhotoChoose {
     private Handler mUIHandler;
 
 
-    public enum Type{
-        FIFO,LIFO;
+    public enum Type {
+        FIFO, LIFO;
     }
 
 
     /**
      * 根据path为Imageview设置图片
+     *
      * @param path
      * @param imageView
      */
     public void loadImage(final String path, final ImageView imageView) {
         imageView.setTag(path);
 
-        if(mUIHandler == null) {
-            mUIHandler = new Handler() {
+        if (mUIHandler == null) {
+            mUIHandler = new Handler(new Handler.Callback() {
                 @Override
-                public void handleMessage(Message msg) {
+                public boolean handleMessage(Message message) {
                     //获取得到的图片，为Image回调设置图片
-                    ImgBeanHolder holder = (ImgBeanHolder)msg.obj;
+                    ImgBeanHolder holder = (ImgBeanHolder) message.obj;
                     Bitmap bm = holder.bitmap;
                     ImageView imageView = holder.imageView;
                     String path = holder.path;
 
-                    if(imageView.getTag().toString().equals(path)) {
+                    if (imageView.getTag().toString().equals(path)) {
                         imageView.setImageBitmap(bm);
                     }
+                    return false;
                 }
-            };
+            });
         }
 
         //根据path在缓存中获取bitmap
         Bitmap bm = getBitmapFromLruCache(path);
-        if(bm!=null) {
+        if (bm != null) {
             refreshBitmap(path, imageView, bm);
-        }else {
-            addTask(new Runnable(){
+        } else {
+            addTask(new Runnable() {
                 @Override
                 public void run() {
                     //加载图片
@@ -220,24 +226,26 @@ public class ImageLoaderForPhotoChoose {
 
     /**
      * 将图片加入LruCache
+     *
      * @param path
      * @param bmp
      */
     private void addBitmapToLruCache(String path, Bitmap bmp) {
-        if(getBitmapFromLruCache(path) == null) {
-            if(bmp != null)
-                 mLruCache.put(path, bmp);
+        if (getBitmapFromLruCache(path) == null) {
+            if (bmp != null)
+                mLruCache.put(path, bmp);
         }
     }
 
     /**
      * 根据图片需要显示的宽和高对图片进行压缩
+     *
      * @param path
      * @param width
      * @param height
      * @return
      */
-    protected  Bitmap decodeSampledBitmapFromPath(String path, int width, int height) {
+    protected Bitmap decodeSampledBitmapFromPath(String path, int width, int height) {
         //获取图片的宽和高，不加载到内存中
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
@@ -247,13 +255,14 @@ public class ImageLoaderForPhotoChoose {
 
         //使用获取到的inSampleSize再次解析图片
         options.inJustDecodeBounds = false;
-        Bitmap bmp = BitmapFactory.decodeFile(path,options);
+        Bitmap bmp = BitmapFactory.decodeFile(path, options);
         return bmp;
     }
 
 
     /**
      * 根据图片的宽高和需要的宽高进行比较，得到适当的压缩比
+     *
      * @param options
      * @param reqWidth
      * @param reqHeight
@@ -265,11 +274,11 @@ public class ImageLoaderForPhotoChoose {
 
         int inSampleSize = 1;
 
-        if(width>reqWidth || height>reqHeight) {
-            int widthRadio = Math.round(width*1.0f/reqWidth);
-            int heightRadeo = Math.round(height*1.0f/reqHeight);
+        if (width > reqWidth || height > reqHeight) {
+            int widthRadio = Math.round(width * 1.0f / reqWidth);
+            int heightRadeo = Math.round(height * 1.0f / reqHeight);
 
-            inSampleSize = Math.max(widthRadio,heightRadeo);
+            inSampleSize = Math.max(widthRadio, heightRadeo);
         }
 
         return inSampleSize;
@@ -278,33 +287,33 @@ public class ImageLoaderForPhotoChoose {
     protected ImageSize getImageViewSize(ImageView imageView) {
         ImageSize imageSize = new ImageSize();
 
-        DisplayMetrics displayMetrics= imageView.getContext().getResources().getDisplayMetrics();
+        DisplayMetrics displayMetrics = imageView.getContext().getResources().getDisplayMetrics();
 
         ViewGroup.LayoutParams lp = imageView.getLayoutParams();
         int width = imageView.getWidth();//获取imageview的实际宽度
 
-        if(width <= 0) {
+        if (width <= 0) {
             width = lp.width;//获取Imageview在layout中申明的宽度
         }
 
-        if(width <= 0) {
+        if (width <= 0) {
             width = getImageViewFieldValue(imageView, "mMaxWidth");//检查最大值
         }
 
-        if(width <=0) {
+        if (width <= 0) {
             width = displayMetrics.widthPixels; //最后没有办法了，只能为屏幕的宽度
         }
 
         int height = imageView.getHeight();//获取imageview的实际宽度
-        if(height <= 0) {
+        if (height <= 0) {
             height = lp.height;//获取Imageview在layout中申明的宽度
         }
 
-        if(height <= 0) {
+        if (height <= 0) {
             height = getImageViewFieldValue(imageView, "mMaxHeight");//检查最大值
         }
 
-        if(height <=0) {
+        if (height <= 0) {
             height = displayMetrics.heightPixels; //最后没有办法了，只能为屏幕的宽度
         }
         imageSize.height = height;
@@ -318,14 +327,15 @@ public class ImageLoaderForPhotoChoose {
         int height;
     }
 
-    private synchronized  void addTask(Runnable runnable) {
+    private synchronized void addTask(Runnable runnable) {
         mTaskQueue.add(runnable);
 
         try {
-            if(mPoolThreadHandler == null) {
-                mSemaphorePoolThreadHandler.acquire();;
+            if (mPoolThreadHandler == null) {
+                mSemaphorePoolThreadHandler.acquire();
+                ;
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -334,6 +344,7 @@ public class ImageLoaderForPhotoChoose {
 
     /**
      * 根据path在缓存中获取bitmap
+     *
      * @param path
      * @return
      */
@@ -349,6 +360,7 @@ public class ImageLoaderForPhotoChoose {
 
     /**
      * 通过反射获取ImageView的某个值
+     *
      * @param obj
      * @param fieldName
      * @return
@@ -362,10 +374,10 @@ public class ImageLoaderForPhotoChoose {
 
             int fieldValue = field.getInt(obj);
 
-            if(fieldValue >0 && fieldValue < Integer.MAX_VALUE) {
+            if (fieldValue > 0 && fieldValue < Integer.MAX_VALUE) {
                 value = fieldValue;
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

@@ -113,7 +113,7 @@ public class ChooseRomPopupWindow extends BasePopupWindow {
                 @Override
                 public void onClick(View v) {
                    if(getCurrentClass().size()==0){
-                       ToastUtils.showLongToast("请选择至少一个会议室");
+                       ToastUtils.showToast("请选择至少一个会议室");
                    }else{
                        SharePreferenceUtils.saveAppBoolean("popup",true);
                        dismiss();

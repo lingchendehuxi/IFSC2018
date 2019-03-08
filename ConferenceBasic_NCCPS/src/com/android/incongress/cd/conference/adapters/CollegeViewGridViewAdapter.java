@@ -52,17 +52,7 @@ public class CollegeViewGridViewAdapter extends RecyclerView.Adapter<RecyclerVie
         FastOnLineBean.VideoArrayBean bean = mVideoList.get(position);
         StringUtils.setTextShow(((MyViewHolder) holder).video_show_time,bean.getOpenTime());
         StringUtils.setCommaTextShow(((MyViewHolder) holder).video_title,bean.getTitle());
-        StringUtils.setTextShow(((MyViewHolder) holder).video_time,bean.getSpeakerName());
-        /*if(bean.getTime()!= null&&!TextUtils.isEmpty(bean.getTime())){
-            String[] times = bean.getTime().split(" ");
-            if(times.length>1){
-                if(AppApplication.systemLanguage == 1){
-                    ((MyViewHolder) holder).video_time.setText(bean.getTime());
-                }else {
-                    ((MyViewHolder) holder).video_time.setText(DateUtil.getDateFormatEnglish(times[0])+" "+times[1]);
-                }
-            }
-        }*/
+        StringUtils.setTextShow(((MyViewHolder) holder).video_time,bean.getSpeakerName().replaceAll(","," "));
         PicUtils.loadImageUrl(mContext,bean.getVideoImage(),((MyViewHolder) holder).iv_background);
         ((MyViewHolder) holder).ll_video_item.setOnClickListener(new View.OnClickListener() {
             @Override

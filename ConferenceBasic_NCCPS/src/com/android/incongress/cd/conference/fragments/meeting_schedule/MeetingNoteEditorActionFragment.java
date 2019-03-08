@@ -70,7 +70,7 @@ public class MeetingNoteEditorActionFragment extends BaseFragment implements OnC
             ConferenceDbUtils.updateOneNote(mNotes);
         }
 
-        ToastUtils.showShorToast(getString(R.string.note_save_success));
+        ToastUtils.showToast(getString(R.string.note_save_success));
         HomeActivity activity = (HomeActivity) getActivity();
         activity.perfromBackPressTitleEntry();
         activity.hideShurufa();

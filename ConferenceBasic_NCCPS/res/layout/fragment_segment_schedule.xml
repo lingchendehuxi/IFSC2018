@@ -29,10 +29,10 @@
             android:layout_width="35dp"
             android:layout_height="25dp"
             android:layout_marginRight="@dimen/margin_30"
+            android:adjustViewBounds="true"
             android:paddingLeft="@dimen/margin_20"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
-            android:adjustViewBounds="true"
             android:scaleType="centerInside"
             android:src="@drawable/left_arrow" />
 
@@ -52,10 +52,10 @@
             android:layout_height="25dp"
             android:layout_marginLeft="@dimen/margin_30"
             android:adjustViewBounds="true"
-            android:scaleType="centerInside"
-            android:paddingRight="@dimen/margin_20"
             android:paddingTop="5dp"
+            android:paddingRight="@dimen/margin_20"
             android:paddingBottom="5dp"
+            android:scaleType="centerInside"
             android:src="@drawable/right_arrow_clickable" />
     </LinearLayout>
 
@@ -95,6 +95,7 @@
                 android:id="@+id/minute_from"
                 android:layout_width="@dimen/picker_width"
                 android:layout_height="120dp" />
+
             <TextView
                 android:id="@+id/textF"
                 android:layout_width="wrap_content"
@@ -102,6 +103,7 @@
                 android:layout_toRightOf="@id/minute_from"
                 android:gravity="center"
                 android:text=":" />
+
             <com.android.incongress.cd.conference.widget.PickerView
                 android:id="@+id/second_from"
                 android:layout_width="@dimen/picker_width"
@@ -121,6 +123,7 @@
                 android:layout_width="@dimen/picker_width"
                 android:layout_height="120dp"
                 android:layout_toRightOf="@id/textView" />
+
             <TextView
                 android:id="@+id/textT"
                 android:layout_width="wrap_content"
@@ -233,40 +236,33 @@
         android:layout_weight="1"
         android:scrollbars="none">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-            <FrameLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/margin_20"
+                android:layout_marginTop="@dimen/layout_margin"
+                android:layout_marginRight="@dimen/margin_20"
+                android:background="@color/white"
+                android:gravity="center"
+                android:padding="3dp">
 
-                <RelativeLayout
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_room"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/margin_20"
-                    android:layout_marginTop="@dimen/layout_margin"
-                    android:layout_marginRight="@dimen/margin_20"
-                    android:background="@color/white"
-                    android:gravity="center"
-                    android:padding="3dp">
+                    android:background="@color/white" />
+            </RelativeLayout>
 
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/rv_room"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@color/white" />
-                </RelativeLayout>
-
-                <ProgressBar
-                    android:id="@+id/progressbar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center" />
-            </FrameLayout>
-        </LinearLayout>
-
+            <ProgressBar
+                android:id="@+id/progressbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+        </FrameLayout>
     </ScrollView>
 
     <LinearLayout

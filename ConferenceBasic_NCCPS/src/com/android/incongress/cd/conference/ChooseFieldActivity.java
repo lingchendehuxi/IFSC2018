@@ -49,7 +49,7 @@ public class ChooseFieldActivity extends BaseActivity {
             }
             finish();
         }else {
-            ToastUtils.showShorToast("请选择至少一个领域");
+            ToastUtils.showToast("请选择至少一个领域");
         }
     }
 

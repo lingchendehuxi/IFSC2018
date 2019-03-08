@@ -36,9 +36,9 @@ public abstract class SectionedBaseAdapter extends BaseAdapter implements Pinned
 
     public SectionedBaseAdapter() {
         super();
-        mSectionCache = new SparseArray<Integer>();
-        mSectionPositionCache = new SparseArray<Integer>();
-        mSectionCountCache = new SparseArray<Integer>();
+        mSectionCache = new SparseArray<>();
+        mSectionPositionCache = new SparseArray<>();
+        mSectionCountCache = new SparseArray<>();
         mCount = -1;
         mSectionCount = -1;
     }

@@ -74,7 +74,7 @@ public class ProfessorQuestionActionFragment extends BaseFragment {
             @Override
             public void onItemClick(View view, SceneShowArrayBean question) {
                 if(question.getIsHuiFu() == 1){
-                    ToastUtils.showShorToast("已经回复过了");
+                    ToastUtils.showToast("已经回复过了");
                     return;
                 }
 

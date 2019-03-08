@@ -154,9 +154,10 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
     private static final int DYNAMIC_POSITION = 1; //动态首页
     private static final int STATIC_POSITION = 2;   //静态首页
 
-    protected Handler mPdHandler = new Handler() {
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
+    protected Handler mPdHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message message) {
+            switch (message.what) {
                 case MSG_DISMISS_AD:
                     hideAdAndSkip();
                     break;
@@ -171,8 +172,9 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
                     }
                     break;
             }
+            return false;
         }
-    };
+    });
 
     public void performBackClick() {
         mBackButton.performClick();
@@ -310,9 +312,9 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
 // 日志输出
         android.util.Log.d("sgqtest", "Test DeviceId : " + testDeviceId);
         //这里对41版本强制删除用户信息，重新登录
-        if(!SharePreferenceUtils.getAppBoolean("force_login",false) && Constants.APP_VERSION == 41){
-            SharePreferenceUtils.saveAppBoolean("force_login",true);
-            umengDeleteOauth(this,SHARE_MEDIA.WEIXIN);
+        if (!SharePreferenceUtils.getAppBoolean("force_login", false) && Constants.APP_VERSION == 41) {
+            SharePreferenceUtils.saveAppBoolean("force_login", true);
+            umengDeleteOauth(this, SHARE_MEDIA.WEIXIN);
             ParseUser.clearUserInfo(this);
         }
     }
@@ -1129,7 +1131,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
                                 @Override
                                 public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                                     super.onFailure(statusCode, headers, responseString, throwable);
-                                    ToastUtils.showShorToast("获取失败");
+                                    ToastUtils.showToast("获取失败");
                                 }
 
                                 @Override
@@ -1148,7 +1150,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
                                         intent.putExtras(bundle);
                                         startActivity(intent);
                                     } else {
-                                        ToastUtils.showShorToast("未找到该电子壁报，可能已被删除");
+                                        ToastUtils.showToast("未找到该电子壁报，可能已被删除");
                                     }
                                 }
                             });
@@ -1180,7 +1182,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
                         intent.setData(url);
                         startActivity(intent);
                     } else {
-                        ToastUtils.showShorToast(result);
+                        ToastUtils.showToast(result);
                     }
 
                 }
@@ -1197,7 +1199,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
 
     public List<MindBookFragment.ManagerNewLister> getMyBookClick() {
         if (listLister.size() == 0) {
-            ToastUtils.showShorToast("对象为空");
+            ToastUtils.showToast("对象为空");
             return null;
         }
         return listLister;

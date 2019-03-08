@@ -2,13 +2,14 @@ package com.android.incongress.cd.conference.widget;
 import android.content.Context;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.support.v7.widget.AppCompatEditText;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.EditText;
 
-public class ClearEditText extends EditText {
+public class ClearEditText extends AppCompatEditText {
     private final String TAG = "ClearEditText";
     private Drawable dRight;
     private Rect rBounds;

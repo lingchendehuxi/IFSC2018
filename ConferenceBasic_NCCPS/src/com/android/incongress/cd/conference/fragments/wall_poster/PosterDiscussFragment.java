@@ -194,13 +194,10 @@ public class PosterDiscussFragment extends BaseActivity implements OnClickListen
         });
     }
 
-    private Handler mhandler = new Handler() {
-        // dismissDialog();
-
+    private Handler mhandler = new Handler(new Handler.Callback() {
         @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
+        public boolean handleMessage(Message message) {
+            switch (message.what) {
                 case MSG_SUCCESS:
                     mPageIndex++;
                     mAdapter.setContent(mList);
@@ -256,9 +253,9 @@ public class PosterDiscussFragment extends BaseActivity implements OnClickListen
                 default:
                     break;
             }
-
+            return false;
         }
-    };
+    });
 
     @Override
     protected void setContentView() {

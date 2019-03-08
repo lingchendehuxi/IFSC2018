@@ -110,7 +110,7 @@ public class RegisterConfirmActivity extends BaseActivity {
             public void onClick(View v) {
                 String confirmCode = mCetConfirm.getText().toString().trim();
                 if(confirmCode.length()<6){
-                    ToastUtils.showShorToast("Password should not be less than 6 digits.");
+                    ToastUtils.showToast("Password should not be less than 6 digits.");
                     return;
                 }
                 if(AppApplication.systemLanguage == 1) {
@@ -121,7 +121,7 @@ public class RegisterConfirmActivity extends BaseActivity {
                         e.printStackTrace();
                     }
                     if (!StringUtils.isAllNotEmpty(name, mMobile, confirmCode)) {
-                        ToastUtils.showShorToast(getString(R.string.complete_your_info));
+                        ToastUtils.showToast(getString(R.string.complete_your_info));
                     } else {
                         doMobileRegister(name,"", "", mMobile,confirmCode,Constants.LanguageChinese);
                     }
@@ -130,7 +130,7 @@ public class RegisterConfirmActivity extends BaseActivity {
                     String givenName = mCetGivenName.getText().toString();
 
                     if (!StringUtils.isAllNotEmpty(givenName, mMobile, confirmCode)) {
-                        ToastUtils.showShorToast(getString(R.string.complete_your_info));
+                        ToastUtils.showToast(getString(R.string.complete_your_info));
                     } else {
                         doEmailRegister("",givenName, familyName, mMobile, confirmCode, Constants.LanguageEnglish);
                     }
@@ -183,7 +183,7 @@ public class RegisterConfirmActivity extends BaseActivity {
                     if (state == 0) {
                         showDialog(msg, null);
                     } else {
-                        ToastUtils.showShorToast(getString(R.string.success_send_regist_code));
+                        ToastUtils.showToast(getString(R.string.success_send_regist_code));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -199,7 +199,7 @@ public class RegisterConfirmActivity extends BaseActivity {
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
-                ToastUtils.showShorToast(getString(R.string.server_error));
+                ToastUtils.showToast(getString(R.string.server_error));
             }
         });
     }
@@ -214,7 +214,7 @@ public class RegisterConfirmActivity extends BaseActivity {
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
-                ToastUtils.showShorToast(getString(R.string.server_error));
+                ToastUtils.showToast(getString(R.string.server_error));
             }
 
             @Override
@@ -264,7 +264,7 @@ public class RegisterConfirmActivity extends BaseActivity {
                         loginIntent.setAction(LoginActivity.LOGIN_ACTION);
                         sendBroadcast(loginIntent);
 
-                        ToastUtils.showShorToast(getString(R.string.register_success));
+                        ToastUtils.showToast(getString(R.string.register_success));
                     }
 
 
@@ -292,7 +292,7 @@ public class RegisterConfirmActivity extends BaseActivity {
                 @Override
                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                     super.onFailure(statusCode, headers, throwable, errorResponse);
-                    ToastUtils.showShorToast(getString(R.string.server_error));
+                    ToastUtils.showToast(getString(R.string.server_error));
                 }
 
                 @Override
@@ -339,7 +339,7 @@ public class RegisterConfirmActivity extends BaseActivity {
                             loginIntent.setAction(LoginActivity.LOGIN_ACTION);
                             sendBroadcast(loginIntent);
 
-                            ToastUtils.showShorToast(getString(R.string.register_success));
+                            ToastUtils.showToast(getString(R.string.register_success));
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

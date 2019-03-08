@@ -87,31 +87,23 @@ public class SettingsVersion extends BaseFragment {
     }
 
 
-    Handler handler = new Handler() {
-        private int total = 0;
-
-        private int now = 0;
-
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
+    Handler handler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message message) {
+            switch (message.what) {
 
                 case MSG_NEW_FILE:
-                    now = msg.arg1;
-                    total = msg.arg2;
                     mTv.setText(getString(R.string.splash_downloading, downloadPercent + "") + "%");
                     break;
-
                 case MSG_DOWNLOADING:
-                    if (msg.arg1 != downloadPercent) {
-                        downloadPercent = msg.arg1;
+                    if (message.arg1 != downloadPercent) {
+                        downloadPercent = message.arg1;
                         mTv.setText(getString(R.string.splash_downloading, downloadPercent + "") + "%");
                         mPb.setVisibility(View.INVISIBLE);
                         mPbh.setVisibility(View.VISIBLE);
                         mPbh.setProgress(downloadPercent);
                     }
                     break;
-
-
                 case MSG_FINISH:
                     System.out.println("-----finish finish finish----");
                     mPb.setVisibility(View.GONE);
@@ -136,9 +128,9 @@ public class SettingsVersion extends BaseFragment {
                 default:
                     break;
             }
-
+            return false;
         }
-    };
+    });
 
     private void UpdateApk() {
         try {

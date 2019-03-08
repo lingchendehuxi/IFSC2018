@@ -62,11 +62,11 @@ public class DialogActivity extends BaseActivity {
         });
     }
 
-    Handler handler = new Handler() {
+    Handler handler = new Handler(new Handler.Callback() {
         @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
+        public boolean handleMessage(Message message) {
             finish();
+            return false;
         }
-    };
+    });
 }

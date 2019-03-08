@@ -53,27 +53,25 @@ public class HdSessionActionFragment extends BaseFragment {
     //参数为了在切换到activity返回后，fragment重新设置导航栏字体颜色
     private boolean isBackView = true;
 
-    private Handler mHandler = new Handler() {
+    private Handler mHandler = new Handler(new Handler.Callback() {
         @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-
-            int target = msg.what;
-
+        public boolean handleMessage(Message message) {
+            int target = message.what;
             if (target == 1) {
                 mAdapter.notifySessionBeans();
             } else {
-                ToastUtils.showShorToast(mEmptyMsg);
+                ToastUtils.showToast(mEmptyMsg);
             }
             mAsrlSessions.setRefreshing(false);
+            return false;
         }
-    };
+    });
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        StatusBarUtil.setStatusBarDarkTheme(getActivity(),true);
+        StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
         View view = inflater.inflate(R.layout.fragment_hd_session, null);
 
         mRcvSession = (RecyclerView) view.findViewById(R.id.rcv_sessions);
@@ -100,7 +98,7 @@ public class HdSessionActionFragment extends BaseFragment {
         });
         mAsrlSessions.autoRefresh();
 
-      showGuideInfo();
+        showGuideInfo();
         return view;
     }
 
@@ -182,7 +180,7 @@ public class HdSessionActionFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        if(!isBackView){
+        if (!isBackView) {
             StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
         }
     }
@@ -191,7 +189,7 @@ public class HdSessionActionFragment extends BaseFragment {
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         isBackView = hidden;
-        if(!hidden){
+        if (!hidden) {
             StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
         }
     }

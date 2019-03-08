@@ -98,7 +98,7 @@ public class SpeakerDetailFragment extends BaseFragment {
         if (mMeetings.size() != 0) {
             new MyAsyncTask().execute();
         } else {
-            ToastUtils.showShorToast(getString(R.string.faculty_no_assignments));
+            ToastUtils.showToast(getString(R.string.faculty_no_assignments));
 
         }
 
@@ -178,7 +178,7 @@ public class SpeakerDetailFragment extends BaseFragment {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtils.showShorToast("这里要去掉这个提问功能");
+                ToastUtils.showToast("这里要去掉这个提问功能");
 //                if (AppApplication.userType== Constants.TYPE_USER_VISITOR) {
 ////                    LoginActivity.startLoginActivity(getActivity(), LoginActivity.TYPE_NORMAL, "", "", "" , "");
 //                    ChooseIdentityActivity.startChooseIdentityActivity(getActivity());

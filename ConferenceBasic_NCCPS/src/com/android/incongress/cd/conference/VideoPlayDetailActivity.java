@@ -66,13 +66,14 @@ public class VideoPlayDetailActivity extends AppCompatActivity implements OnVide
         mController.setLoadingType(ConstantKeys.Loading.LOADING_QQ);
         mController.setBackVisible(View.VISIBLE);
         mController.setTopVisibility(true);
+        mController.setShareVisibity(Constants.COLLEGE_HOME_SHARE);
         mController.setOnVideoBackListener(this);
         mController.setOnVideoControlListener(this);
         mController.mTop.setPadding(DensityUtil.dip2px(this, 10), DensityUtil.dip2px(this, 17), DensityUtil.dip2px(this, 10), 0);
         if (videoBean != null) {
             dataId = videoBean.getDataId();
-            StringUtils.setTextShow(author, videoBean.getSpeakerName());
-            StringUtils.setTextShow(sec_author, videoBean.getRoleName());
+            StringUtils.setTextShow(author, videoBean.getSpeakerName().replaceAll(","," "));
+            StringUtils.setTextShow(sec_author, videoBean.getRoleName().replaceAll(","," "));
             StringUtils.setTextShow(title_address, videoBean.getClassesName());
             if (!TextUtils.isEmpty(videoBean.getTitle())) {
                 String title = videoBean.getTitle();

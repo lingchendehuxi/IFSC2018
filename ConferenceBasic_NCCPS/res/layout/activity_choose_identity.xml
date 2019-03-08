@@ -1,69 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/login_bg"
+    android:gravity="center"
     android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android" >
+    android:padding="@dimen/layout_padding">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/please_choose_your_identity"
+        android:textColor="@color/theme_color"
+        android:textSize="@dimen/text_size_media"
+        android:visibility="gone" />
 
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RadioGroup
+        android:id="@+id/rg_group"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/login_bg"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="@dimen/layout_padding">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:text="@string/please_choose_your_identity"
-            android:textColor="@color/theme_color"
-            android:textSize="@dimen/text_size_media" />
-
-        <RadioGroup
-            android:id="@+id/rg_group"
+        <RadioButton
+            android:id="@+id/rb_paticipant"
+            style="@style/Widget.RadioButtonR"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/layout_padding"
+            android:gravity="start"
+            android:padding="@dimen/layout_padding"
+            android:text="@string/identity_participant"
+            android:textSize="@dimen/text_size_large" />
 
-            <RadioButton
-                android:id="@+id/rb_paticipant"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="start"
-                style="@style/Widget.RadioButtonR"
-                android:layout_marginTop="@dimen/layout_padding"
-                android:padding="@dimen/layout_padding"
-                android:text="@string/identity_participant"
-                android:textSize="@dimen/text_size_large" />
+        <RadioButton
+            android:id="@+id/rb_unregister_one"
+            style="@style/Widget.RadioButtonR"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/layout_padding"
+            android:button="@null"
+            android:checked="false"
+            android:gravity="start"
+            android:padding="@dimen/layout_padding"
+            android:text="@string/identity_not_register_and_paid_first"
+            android:textSize="@dimen/text_size_large" />
 
-            <RadioButton
-                style="@style/Widget.RadioButtonR"
-                android:id="@+id/rb_unregister_one"
-                android:layout_width="match_parent"
-                android:checked="false"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/layout_padding"
-                android:gravity="start"
-                android:button="@null"
-                android:padding="@dimen/layout_padding"
-                android:text="@string/identity_not_register_and_paid_first"
-                android:textSize="@dimen/text_size_large" />
+        <RadioButton
+            android:id="@+id/rb_unregister_two"
+            style="@style/Widget.RadioButtonR"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/layout_padding"
+            android:button="@null"
+            android:checked="false"
+            android:gravity="start"
+            android:padding="@dimen/layout_padding"
+            android:text="@string/identity_not_register_and_paid_second"
+            android:textSize="@dimen/text_size_large" />
 
-            <RadioButton
-                style="@style/Widget.RadioButtonR"
-                android:id="@+id/rb_unregister_two"
-                android:layout_width="match_parent"
-                android:checked="false"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/layout_padding"
-                android:gravity="start"
-                android:button="@null"
-                android:padding="@dimen/layout_padding"
-                android:text="@string/identity_not_register_and_paid_second"
-                android:textSize="@dimen/text_size_large" />
-
-        </RadioGroup>
-    </LinearLayout>
+    </RadioGroup>
 </LinearLayout>

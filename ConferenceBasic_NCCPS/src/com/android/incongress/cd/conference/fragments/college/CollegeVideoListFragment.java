@@ -158,7 +158,7 @@ public class CollegeVideoListFragment extends BaseFragment implements XRecyclerV
                 FastOnLineBean bean = new Gson().fromJson(response.toString(), new TypeToken<FastOnLineBean>() {
                 }.getType());
                 refreshViewState();
-                if (bean.getVideoArray().size() != 0) {
+                if (bean.getVideoArray()!=null&&bean.getVideoArray().size() != 0) {
                     //刷新进来
                     if ("-1".equals(lastId)) {
                         cacheManager.saveString(CACHE_COLLEGE_VIDEO,response.toString());
@@ -169,7 +169,7 @@ public class CollegeVideoListFragment extends BaseFragment implements XRecyclerV
                     } else {
                         xRecyclerView.loadMoreComplete();
                         if ("0".equals(mIsMore)) {
-                            ToastUtils.showShorToast(getString(R.string.incongress_send_no_more_data));
+                            ToastUtils.showToast(getString(R.string.incongress_send_no_more_data));
                             xRecyclerView.setLoadingMoreEnabled(false);
                             return;
                         }
@@ -183,7 +183,7 @@ public class CollegeVideoListFragment extends BaseFragment implements XRecyclerV
                     if ("0".equals(bean.getIsNextPage())) {
                         xRecyclerView.loadMoreComplete();
                         xRecyclerView.refreshComplete();
-                        ToastUtils.showShorToast(getString(R.string.incongress_send_no_more_data));
+                        ToastUtils.showToast(getString(R.string.incongress_send_no_more_data));
                         xRecyclerView.setLoadingMoreEnabled(false);
                         return;
                     }
@@ -196,7 +196,7 @@ public class CollegeVideoListFragment extends BaseFragment implements XRecyclerV
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
-                ToastUtils.showShorToast("获取信息失败，请联系管理员");
+                ToastUtils.showToast("获取信息失败，请联系管理员");
             }
         });
     }
@@ -224,7 +224,7 @@ public class CollegeVideoListFragment extends BaseFragment implements XRecyclerV
                     } else {
                         xRecyclerView.loadMoreComplete();
                         if ("0".equals(mIsMore)) {
-                            ToastUtils.showShorToast(getString(R.string.incongress_send_no_more_data));
+                            ToastUtils.showToast(getString(R.string.incongress_send_no_more_data));
                             xRecyclerView.setLoadingMoreEnabled(false);
                             return;
                         }
@@ -237,7 +237,7 @@ public class CollegeVideoListFragment extends BaseFragment implements XRecyclerV
                 } else {
                     if ("0".equals(bean.getIsNextPage())&&videoList.size()!=0) {
                         xRecyclerView.loadMoreComplete();
-                        ToastUtils.showShorToast(getString(R.string.incongress_send_no_more_data));
+                        ToastUtils.showToast(getString(R.string.incongress_send_no_more_data));
                         xRecyclerView.setLoadingMoreEnabled(false);
                         return;
                     }
@@ -252,7 +252,7 @@ public class CollegeVideoListFragment extends BaseFragment implements XRecyclerV
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
-                ToastUtils.showShorToast("获取信息失败，请联系管理员");
+                ToastUtils.showToast("获取信息失败，请联系管理员");
             }
         });
     }

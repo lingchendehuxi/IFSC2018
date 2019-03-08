@@ -81,9 +81,10 @@ public class PosterFragment extends BaseFragment {
 
     private EditText mSearchEditText;
     private ImageView mCancelImage;
-    private LinearLayout mLl_sort,ll_search_part,ll_tips;
+    private LinearLayout mLl_sort, ll_search_part, ll_tips;
     private ImageView mBackTop;
-    private TextView mNetWorkError, mNoDate, tv_black_bg;;
+    private TextView mNetWorkError, mNoDate, tv_black_bg;
+    ;
 
     private boolean IsNetWorkOpen = true;
     private List<DZBBBean.ArrayBean> allBeans = new ArrayList<>();
@@ -97,7 +98,7 @@ public class PosterFragment extends BaseFragment {
     private static final int MSG_TOAST_NO_MORE_DATA = 3;
     private static final int MSG_DONE = 4;
     private static final int EDIT_OK = 104;
-    private int toolbarHeight,mCurrentFiled = -1;
+    private int toolbarHeight, mCurrentFiled = -1;
 
     private static float ScreenHeightLPercent = 0.35f;
     private static float ScreenHeightHPercent = 0.45f;
@@ -108,7 +109,7 @@ public class PosterFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        if(!isBackView){
+        if (!isBackView) {
             StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
         }
         hideShurufa();
@@ -124,16 +125,17 @@ public class PosterFragment extends BaseFragment {
     /**
      * 提醒
      */
-    private TextView mTvTips,tv_type;
+    private TextView mTvTips, tv_type;
     //此handler应用于监听数据加载
-    private Handler mHandler = new Handler() {
-        public void handleMessage(android.os.Message msg) {
-            int result = msg.what;
+    private Handler mHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message message) {
+            int result = message.what;
 
             if (result == MSG_REFRESH) {
                 currentPage = 0;
                 getDZBBList(true);
-                if(mAdapter!=null){
+                if (mAdapter != null) {
                     mAdapter.notifyDataSetChanged();
                 }
             } else if (result == MSG_DONE) {
@@ -142,24 +144,25 @@ public class PosterFragment extends BaseFragment {
             } else if (result == MSG_TOAST_NO_MORE_DATA) {
                 Toast.makeText(AppApplication.getContext(), R.string.no_more_data, Toast.LENGTH_SHORT).show();
             }
+            return false;
         }
-    };
+    });
     //此handler用于监听editText输入完成 和Runnable配合使用 输入完成刷新搜索
-    private Handler myHandler = new Handler() {
+    private Handler myHandler = new Handler(new Handler.Callback() {
         @Override
-        public void dispatchMessage(Message msg) {
-            super.dispatchMessage(msg);
-            if (msg.what == EDIT_OK) {
+        public boolean handleMessage(Message message) {
+            if (message.what == EDIT_OK) {
                 hideShurufa();
                 currentPage = 0;
                 getDZBBList(true);
             }
+            return false;
         }
-    };
+    });
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        StatusBarUtil.setStatusBarDarkTheme(getActivity(),true);
+        StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
         View view = inflater.inflate(R.layout.electronic_bb, null);
 
         mRecyclerView = view.findViewById(R.id.xr_dzbb);
@@ -232,7 +235,7 @@ public class PosterFragment extends BaseFragment {
                     float scale = (float) (mDistanceY - toolbarHeight) / toolbarHeight;
                     float alpha = scale;
                     mBackTop.setAlpha(alpha);
-                }else {
+                } else {
                     mBackTop.setAlpha(0.0f);
                 }
 
@@ -367,9 +370,9 @@ public class PosterFragment extends BaseFragment {
      * 获取电子壁报数据
      */
     private void getDZBBList(final boolean isFresh) {
-        if(isFresh){
+        if (isFresh) {
             currentPage = 0;
-        }else {
+        } else {
             currentPage++;
         }
         CHYHttpClientUsage.getInstanse().doGetWallPoster(currentPage, mSearchString, mCurrentFiled, new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
@@ -378,7 +381,7 @@ public class PosterFragment extends BaseFragment {
                 super.onSuccess(statusCode, headers, response);
                 DZBBBean bean = new Gson().fromJson(response.toString(), new TypeToken<DZBBBean>() {
                 }.getType());
-                if(isFresh){
+                if (isFresh) {
                     allBeans.clear();
                 }
                 if (bean.getArray().size() > 0) {
@@ -390,10 +393,10 @@ public class PosterFragment extends BaseFragment {
                 } else if (bean.getArray().size() == 0) {
                     if (allBeans.size() == 0) {
                         mRecyclerView.setVisibility(View.GONE);
-                        if(TextUtils.isEmpty(mSearchString)){
+                        if (TextUtils.isEmpty(mSearchString)) {
                             mNoDate.setVisibility(View.GONE);
                             ll_tips.setVisibility(View.VISIBLE);
-                        }else {
+                        } else {
                             mNoDate.setVisibility(View.VISIBLE);
                             ll_tips.setVisibility(View.GONE);
                         }
@@ -423,6 +426,7 @@ public class PosterFragment extends BaseFragment {
             }
         });
     }
+
     /**
      * 获取电子壁报类型
      */
@@ -435,7 +439,7 @@ public class PosterFragment extends BaseFragment {
                 BBFiledTypeBean bean = new Gson().fromJson(response.toString(), new TypeToken<BBFiledTypeBean>() {
                 }.getType());
                 newSessionDaysList.addAll(bean.getClassArray());
-                if(newSessionDaysList.size() == 0){
+                if (newSessionDaysList.size() == 0) {
                     ToastUtils.showToast("没有数据");
                     return;
                 }
@@ -445,22 +449,23 @@ public class PosterFragment extends BaseFragment {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
-                ToastUtils.showShorToast("获取信息失败，请联系管理员");
+                ToastUtils.showToast("获取信息失败，请联系管理员");
             }
 
         });
     }
 
     private ChooseBBPopupWindow popupWindow;
-    private  ListAdapter listAdapter;
+    private ListAdapter listAdapter;
     private RelativeLayout rl_layout;
     private ArrayList<BBFiledTypeBean.ClassArrayBean> newSessionDaysList = new ArrayList<>();
+
     //创建popupwindow
-    private void initPopupWindow(){
+    private void initPopupWindow() {
         popupWindow = new ChooseBBPopupWindow(getActivity());
         final ListView listView = popupWindow.getmListView();
         listView.setVerticalScrollBarEnabled(false);
-        listAdapter = new ListAdapter(getActivity(),newSessionDaysList);
+        listAdapter = new ListAdapter(getActivity(), newSessionDaysList);
         listView.setAdapter(listAdapter);
         int totalHeight = 0;
         for (int i = 0; i < listAdapter.getCount(); i++) {
@@ -468,9 +473,9 @@ public class PosterFragment extends BaseFragment {
             listItem.measure(0, 0); //计算子项View 的宽高 //统计所有子项的总高度
             totalHeight += listItem.getMeasuredHeight() + listView.getDividerHeight();
         }
-        if(DensityUtil.getScreenSize(getActivity())[1]<=1920){
+        if (DensityUtil.getScreenSize(getActivity())[1] <= 1920) {
             fixHeight = DensityUtil.getScreenSize(getActivity())[1] * ScreenHeightLPercent;
-        }else {
+        } else {
             fixHeight = DensityUtil.getScreenSize(getActivity())[1] * ScreenHeightHPercent;
         }
         if (totalHeight > fixHeight) {
@@ -499,13 +504,15 @@ public class PosterFragment extends BaseFragment {
         tv_black_bg.setVisibility(View.VISIBLE);
         lightOff(tv_black_bg);
         //popupWindow.showAsDropDown(view);
-        popupWindow.showAsDropDown(ll_search_part,(int)(DensityUtil.getScreenSize(getActivity())[0]*0.1),0);
+        popupWindow.showAsDropDown(ll_search_part, (int) (DensityUtil.getScreenSize(getActivity())[0] * 0.1), 0);
     }
+
     class ListAdapter extends BaseAdapter {
         ArrayList<BBFiledTypeBean.ClassArrayBean> listBeans;
         public Context context;
         public LayoutInflater layoutInflater;
-        public ListAdapter (Context context,ArrayList<BBFiledTypeBean.ClassArrayBean> listBeans){
+
+        public ListAdapter(Context context, ArrayList<BBFiledTypeBean.ClassArrayBean> listBeans) {
             this.context = context;
             this.listBeans = listBeans;
             layoutInflater = LayoutInflater.from(context);
@@ -529,17 +536,18 @@ public class PosterFragment extends BaseFragment {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             PosterFragment.ListAdapter.MyTimeHold myHold;
-            if(convertView == null){
-                convertView = layoutInflater.inflate(R.layout.my_centertextview,null);
+            if (convertView == null) {
+                convertView = layoutInflater.inflate(R.layout.my_centertextview, null);
                 myHold = new PosterFragment.ListAdapter.MyTimeHold();
                 myHold.tv_time = convertView.findViewById(R.id.tv_time);
                 convertView.setTag(myHold);
-            }else {
+            } else {
                 myHold = (PosterFragment.ListAdapter.MyTimeHold) convertView.getTag();
             }
             myHold.tv_time.setText(listBeans.get(position).getFieldName());
             return convertView;
         }
+
         class MyTimeHold {
             TextView tv_time;
         }
@@ -549,7 +557,7 @@ public class PosterFragment extends BaseFragment {
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         isBackView = hidden;
-        if(!hidden){
+        if (!hidden) {
             StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
         }
     }

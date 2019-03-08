@@ -71,7 +71,7 @@ public class PolyvPlayerMediaController extends PolyvBaseMediaController impleme
     //横屏的切屏按钮，横屏的播放/暂停按钮,横屏的返回按钮，设置按钮，分享按钮，弹幕开关
     public ImageView iv_port, iv_play_land, iv_finish, iv_set, iv_share, iv_dmswitch;
     // 横屏的显示播放进度控件,视频的标题,选择播放速度按钮，选择码率按钮
-    private TextView tv_curtime_land, tv_tottime_land, tv_title, tv_speed, tv_bit;
+    public TextView tv_curtime_land, tv_tottime_land, tv_title, tv_speed, tv_bit;
     // 横屏的进度条
     private PolyvTickSeekBar sb_play_land;
     /**
@@ -152,10 +152,10 @@ public class PolyvPlayerMediaController extends PolyvBaseMediaController impleme
     private PolyvTickTips tickTips;
 
     //用于处理控制栏的显示状态
-    private Handler handler = new Handler() {
+    private Handler handler = new Handler(new Handler.Callback() {
         @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
+        public boolean handleMessage(Message message) {
+            switch (message.what) {
                 case HIDE:
                     hide();
                     break;
@@ -163,8 +163,9 @@ public class PolyvPlayerMediaController extends PolyvBaseMediaController impleme
                     showProgress();
                     break;
             }
+            return false;
         }
-    };
+    }) ;
 
     // 更新显示的播放进度，以及暂停/播放按钮
     private void showProgress() {

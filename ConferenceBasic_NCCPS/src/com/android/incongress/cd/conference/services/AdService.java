@@ -30,11 +30,12 @@ public class AdService extends Service {
     //下方广告显示在bottomList的位置
     private int alternateBottom = 0;
     private Runnable mRunnable;
-    public Handler mPdHandler = new Handler() {
-        public void handleMessage(Message msg) {
-
+    public Handler mPdHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message message) {
+            return false;
         }
-    };
+    });
 
     @Override
     public IBinder onBind(Intent intent) {

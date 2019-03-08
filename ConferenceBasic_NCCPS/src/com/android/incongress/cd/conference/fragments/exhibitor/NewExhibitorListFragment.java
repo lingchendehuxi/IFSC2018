@@ -149,7 +149,7 @@ public class NewExhibitorListFragment extends BaseFragment implements XRecyclerV
                     } else {
                         ll_tips.setVisibility(View.GONE);
                         if (bean.getArray().size() == 0) {
-                            ToastUtils.showShorToast(getString(R.string.no_more_date));
+                            ToastUtils.showToast(getString(R.string.no_more_date));
                             mRecyclerView.setLoadingMoreEnabled(false);
                         } else {
                             mRecyclerView.setLoadingMoreEnabled(true);
@@ -168,14 +168,14 @@ public class NewExhibitorListFragment extends BaseFragment implements XRecyclerV
                     } else {
                         mRecyclerView.loadMoreComplete();
                     }
-                    ToastUtils.showShorToast(getString(R.string.no_more_date));
+                    ToastUtils.showToast(getString(R.string.no_more_date));
                 }
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
-                ToastUtils.showShorToast("获取信息失败，请联系管理员");
+                ToastUtils.showToast("获取信息失败，请联系管理员");
             }
         });
     }

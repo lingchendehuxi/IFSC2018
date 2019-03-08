@@ -1,5 +1,6 @@
 package com.android.incongress.cd.conference.fragments.college;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -40,7 +41,7 @@ import cz.msebera.android.httpclient.Header;
 public class CollegeListDetailActionFragment extends BaseFragment implements CollegeListDetailActionAdapter.CollegeOnItemOnclicking {
     private StickyListHeadersListView mStickLVSpeaker;
     private CollegeListDetailActionAdapter mScheduleListAdapter;
-    private String mCurrentCollegeDay = "",stringModelId;
+    private String mCurrentCollegeDay = "", stringModelId;
     private int mCurrentCollegeType;
     private XRefreshView refreshView;
 
@@ -62,13 +63,13 @@ public class CollegeListDetailActionFragment extends BaseFragment implements Col
     private static final String CACHE_COLLEGE_BOOK_DETAIL = "college_book_detail_list";
     private DiskLruCacheUtil mDiskLruCacheUtil;
 
-    public static CollegeListDetailActionFragment getInstance(String meetingDay, int mDataType,String stringModelId,String cache_dir) {
+    public static CollegeListDetailActionFragment getInstance(String meetingDay, int mDataType, String stringModelId, String cache_dir) {
         CollegeListDetailActionFragment fragment = new CollegeListDetailActionFragment();
         Bundle bundle = new Bundle();
         bundle.putString(BUNDLE_COLLEGE_DAY, meetingDay);
         bundle.putInt(BUNDLE_COLLEGE_TYPE, mDataType);
         bundle.putString(BUNDLE_COLLEGE_MODEL_ID, stringModelId);
-        bundle.putString(BUNDLE_CACHE_ID,cache_dir+"_"+stringModelId);
+        bundle.putString(BUNDLE_CACHE_ID, cache_dir + "_" + stringModelId);
         fragment.setArguments(bundle);
 
         return fragment;
@@ -82,8 +83,8 @@ public class CollegeListDetailActionFragment extends BaseFragment implements Col
             mCurrentCollegeType = getArguments().getInt(BUNDLE_COLLEGE_TYPE);
             cache_dir = getArguments().getString(BUNDLE_CACHE_ID);
             stringModelId = getArguments().getString(BUNDLE_COLLEGE_MODEL_ID);
-            cacheManager = CacheManager.getInstance().open(CACHE_COLLEGE_DATA_DETAIL+cache_dir, 1);
-            mDiskLruCacheUtil = new DiskLruCacheUtil(getActivity(),CACHE_COLLEGE_BOOK_DETAIL+cache_dir);
+            cacheManager = CacheManager.getInstance().open(CACHE_COLLEGE_DATA_DETAIL + cache_dir, 1);
+            mDiskLruCacheUtil = new DiskLruCacheUtil(getActivity(), CACHE_COLLEGE_BOOK_DETAIL + cache_dir);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -140,9 +141,9 @@ public class CollegeListDetailActionFragment extends BaseFragment implements Col
             ll_tips.setVisibility(View.GONE);
             String stringJson = "";
             if (mCurrentCollegeType == BOOKTYPE) {
-                stringJson = mDiskLruCacheUtil.getStringCache(CACHE_COLLEGE_BOOK_DETAIL+cache_dir);
+                stringJson = mDiskLruCacheUtil.getStringCache(CACHE_COLLEGE_BOOK_DETAIL + cache_dir);
             } else if (mCurrentCollegeType == VIDEOTYPE) {
-                stringJson = cacheManager.getString(CACHE_COLLEGE_DATA_DETAIL+cache_dir);
+                stringJson = cacheManager.getString(CACHE_COLLEGE_DATA_DETAIL + cache_dir);
             }
             if (!TextUtils.isEmpty(stringJson)) {
                 listBean.clear();
@@ -151,7 +152,7 @@ public class CollegeListDetailActionFragment extends BaseFragment implements Col
                 for (int i = 0; i < bean.getClassArray().size(); i++) {
                     listBean.addAll(bean.getClassArray().get(i).getSessionArray());
                 }
-                if(listBean.size() ==0){
+                if (listBean.size() == 0) {
                     ToastUtils.showToast(getString(R.string.connect_network));
                     mPbLoading.setVisibility(View.GONE);
                     return;
@@ -179,19 +180,19 @@ public class CollegeListDetailActionFragment extends BaseFragment implements Col
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-                cacheManager.saveString(CACHE_COLLEGE_DATA_DETAIL+cache_dir, response.toString());
+                cacheManager.saveString(CACHE_COLLEGE_DATA_DETAIL + cache_dir, response.toString());
                 listBean.clear();
                 CollegeListDetailBean bean = new Gson().fromJson(response.toString(), new TypeToken<CollegeListDetailBean>() {
                 }.getType());
-                if ("1".equals(bean.getState())&&bean.getClassArray()!=null) {
+                if ("1".equals(bean.getState()) && bean.getClassArray() != null) {
                     for (int i = 0; i < bean.getClassArray().size(); i++) {
                         listBean.addAll(bean.getClassArray().get(i).getSessionArray());
                     }
-                    if(listBean.size()>0){
+                    if (listBean.size() > 0) {
                         ll_tips.setVisibility(View.GONE);
                         mScheduleListAdapter = new CollegeListDetailActionAdapter(getActivity(), listBean, bean.getClassArray(), CollegeListDetailActionFragment.this, VIDEOTYPE);
                         mStickLVSpeaker.setAdapter(mScheduleListAdapter);
-                    }else {
+                    } else {
                         ll_tips.setVisibility(View.VISIBLE);
                     }
                     mPbLoading.setVisibility(View.GONE);
@@ -206,18 +207,18 @@ public class CollegeListDetailActionFragment extends BaseFragment implements Col
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
                 refreshView.stopRefresh(false);
-                ToastUtils.showShorToast("获取信息失败，请联系管理员");
+                ToastUtils.showToast("获取信息失败，请联系管理员");
             }
         });
     }
 
     //获取当年当日可预约的课件
     private void getCollegeBookDetailList() {
-        CHYHttpClientUsage.getInstanse().doGetCollegeBookDetailList(mCurrentCollegeDay, Constants.getConId()+"", new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
+        CHYHttpClientUsage.getInstanse().doGetCollegeBookDetailList(mCurrentCollegeDay, Constants.getConId() + "", new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-                mDiskLruCacheUtil.put(CACHE_COLLEGE_BOOK_DETAIL+cache_dir, response.toString());
+                mDiskLruCacheUtil.put(CACHE_COLLEGE_BOOK_DETAIL + cache_dir, response.toString());
                 listBean.clear();
                 CollegeListDetailBean bean = new Gson().fromJson(response.toString(), new TypeToken<CollegeListDetailBean>() {
                 }.getType());
@@ -226,11 +227,11 @@ public class CollegeListDetailActionFragment extends BaseFragment implements Col
                     for (int i = 0; i < bean.getClassArray().size(); i++) {
                         listBean.addAll(bean.getClassArray().get(i).getSessionArray());
                     }
-                    if(listBean.size()>0){
+                    if (listBean.size() > 0) {
                         ll_tips.setVisibility(View.GONE);
                         mScheduleListAdapter = new CollegeListDetailActionAdapter(getActivity(), listBean, bean.getClassArray(), CollegeListDetailActionFragment.this, BOOKTYPE);
                         mStickLVSpeaker.setAdapter(mScheduleListAdapter);
-                    }else {
+                    } else {
                         ll_tips.setVisibility(View.VISIBLE);
                     }
                     mPbLoading.setVisibility(View.GONE);
@@ -244,20 +245,17 @@ public class CollegeListDetailActionFragment extends BaseFragment implements Col
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
                 refreshView.stopRefresh(false);
-                ToastUtils.showShorToast("获取信息失败，请联系管理员");
+                ToastUtils.showToast("获取信息失败，请联系管理员");
             }
         });
     }
 
     @Override
     public void onItemOnclick(String sessionId, int mType) {
-        if(mType == BOOKTYPE){
-            action(CollegeCourseBookFragment.getInstance(sessionId, mType), R.string.meeting_video_reservation, false, false, false);
-            StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
-        }else {
-            action(CollegeCourseBookFragment.getInstance(sessionId, mType), R.string.meeting_video_play, false, false, false);
-            StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
-        }
+        Intent intent = new Intent(getActivity(), CollegeCourseBookActivity.class);
+        intent.putExtra("book_session_id", sessionId);
+        intent.putExtra("book_type", mType);
+        startActivity(intent);
     }
 
     @Override

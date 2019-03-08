@@ -153,7 +153,7 @@ public class MyMeetingQuestionsAdapter extends RecyclerView.Adapter<RecyclerView
 
             public void onClick(View v) {
                 if(isShow == 1) {
-                    ToastUtils.showShorToast("不能重复分享哦");
+                    ToastUtils.showToast("不能重复分享哦");
                 }else {
                     CHYHttpClientUsage.getInstanse().doShareMeetingQuestion(Constants.getConId(), sceneShowId, AppApplication.getSystemLanuageCode(), 1, new JsonHttpResponseHandler(){
                         @Override

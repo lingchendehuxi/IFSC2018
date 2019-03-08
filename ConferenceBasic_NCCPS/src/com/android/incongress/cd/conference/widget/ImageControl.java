@@ -3,11 +3,12 @@ package com.android.incongress.cd.conference.widget;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
+import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.ImageView;
 
-public class ImageControl extends ImageView {
+public class ImageControl extends AppCompatImageView {
 	public ImageControl(Context context) {
 		super(context);
 	}

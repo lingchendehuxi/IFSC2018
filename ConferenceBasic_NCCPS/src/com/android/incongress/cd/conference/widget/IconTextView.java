@@ -3,6 +3,7 @@ package com.android.incongress.cd.conference.widget;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
@@ -10,7 +11,7 @@ import android.widget.TextView;
  * Created by Jacky on 2017/1/4.
  */
 
-public class IconTextView extends TextView {
+public class IconTextView extends AppCompatTextView {
     public IconTextView(Context context) {
         super(context);
         initIconFont(context);

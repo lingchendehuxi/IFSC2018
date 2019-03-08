@@ -259,7 +259,7 @@ public class ScenicXiuCommentActivity extends BaseActivity implements View.OnCli
                                 } else {
                                     String tips = response.getString("msg");
                                     if (!StringUtils.isEmpty(tips))
-                                        ToastUtils.showShorToast(tips);
+                                        ToastUtils.showToast(tips);
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();

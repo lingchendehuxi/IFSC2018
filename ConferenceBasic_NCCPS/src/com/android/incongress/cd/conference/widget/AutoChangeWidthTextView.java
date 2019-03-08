@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.widget.TextView;
@@ -11,7 +12,7 @@ import android.widget.TextView;
 /**
  * Created by Jacky on 2016/4/15.
  */
-public class AutoChangeWidthTextView extends TextView {
+public class AutoChangeWidthTextView extends AppCompatTextView {
     // Attributes
     private Paint testPaint;
     private float cTextSize;

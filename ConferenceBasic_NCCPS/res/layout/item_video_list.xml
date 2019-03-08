@@ -63,7 +63,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="3dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="10dp"
         android:textColor="@color/unselect_color"
         android:textSize="12sp" />
 </LinearLayout>

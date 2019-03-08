@@ -114,15 +114,14 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
     private String mUploadFilePath = "";
     private IconChoosePopupWindow mIconChoosePopupWindow;
 
-    private Handler mHandler = new Handler() {
+    private Handler mHandler = new Handler(new Handler.Callback() {
         @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
+        public boolean handleMessage(Message message) {
             if (mIsOpen == false) {
-                return;
+                return false;
             }
 
-            int target = msg.what;
+            int target = message.what;
             /*if (target == HANDLE_TIEZI_COUNT) {
                 if (mTieZiCount > 0) {
                     mBtTieZi.setText(getString(R.string.mymeeting_tiezi) + " " + mTieZiCount);
@@ -143,8 +142,9 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
                     mUploadFilePath = mUploadFilePath.replaceFirst("s", "");
                 Glide.with(getActivity()).load(mUploadFilePath).transform(new CircleTransform(getActivity())).into(mCivHeadIcon);
             }
+            return false;
         }
-    };
+    }) ;
 
     @Override
     public void onClick(View v) {
@@ -415,7 +415,7 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
 
     @Override
     public void onHanlderFailure(int requestCode, String errorMsg) {
-        ToastUtils.showShorToast(getString(R.string.choose_photo_fail));
+        ToastUtils.showToast(getString(R.string.choose_photo_fail));
     }
 
     @Override
@@ -496,7 +496,7 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
                     @Override
                     public void onDragStateChanged(int dragState, Badge badge, View targetView) {
                         if(dragState == STATE_SUCCEED){
-                            ToastUtils.showShorToast("消除成功");
+                            ToastUtils.showToast("消除成功");
                         }
                     }
                 });

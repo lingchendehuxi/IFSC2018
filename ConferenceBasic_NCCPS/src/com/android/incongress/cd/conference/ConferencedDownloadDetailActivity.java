@@ -112,7 +112,7 @@ public class ConferencedDownloadDetailActivity extends BaseActivity {
                     @Override
                     protected void postWork() {
                         dismissProgressBar();
-                        ToastUtils.showShorToast(mDeleteSucees ? "删除成功" : "删除失败");
+                        ToastUtils.showToast(mDeleteSucees ? "删除成功" : "删除失败");
                         if(mDeleteSucees) {
                             ConferenceDbUtils.updateConferenceExistStatus(mConferenceId, 0);
                             EventBus.getDefault().post(new HomeActivity.UpdateConferenceEvent(mConferenceId,false, false));
@@ -253,7 +253,7 @@ public class ConferencedDownloadDetailActivity extends BaseActivity {
     }
 
     private void goErrorAndFinish() {
-        ToastUtils.showLongToast("数据出错...");
+        ToastUtils.showToast("数据出错...");
         finish();
     }
 
@@ -293,7 +293,7 @@ public class ConferencedDownloadDetailActivity extends BaseActivity {
 
                     @Override
                     public void onFailure(int statusCode, Header[] headers, Throwable throwable, File file) {
-                        ToastUtils.showShorToast("下载失败");
+                        ToastUtils.showToast("下载失败");
                         dismissProgressBar();
                     }
 
@@ -332,7 +332,7 @@ public class ConferencedDownloadDetailActivity extends BaseActivity {
 
                 @Override
                 protected void postWork() {
-                    ToastUtils.showShorToast("下载成功");
+                    ToastUtils.showToast("下载成功");
 
                     EventBus.getDefault().post(new HomeActivity.UpdateConferenceEvent(mConferenceId,true, false));
                     dismissProgressBar();

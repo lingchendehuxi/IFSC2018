@@ -41,7 +41,7 @@ import cn.finalteam.galleryfinal.FunctionConfig;
 import cn.finalteam.galleryfinal.GalleryFinal;
 import cn.finalteam.galleryfinal.model.PhotoInfo;
 
-public class ModifyInfoFragment extends BaseFragment implements View.OnClickListener ,GalleryFinal.OnHanlderResultCallback {
+public class ModifyInfoFragment extends BaseFragment implements View.OnClickListener, GalleryFinal.OnHanlderResultCallback {
     private RelativeLayout rl_head;
     /**
      * 页面是否处于打开状态
@@ -60,6 +60,7 @@ public class ModifyInfoFragment extends BaseFragment implements View.OnClickList
     private String mUploadFilePath = "";
     private IconChoosePopupWindow mIconChoosePopupWindow;
     private CircleImageView iv_head;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -74,15 +75,15 @@ public class ModifyInfoFragment extends BaseFragment implements View.OnClickList
         rl_mobile.setOnClickListener(this);
         RelativeLayout rl_wx_mobile = view.findViewById(R.id.rl_wx_mobile);
         rl_wx_mobile.setOnClickListener(this);
-        if(!TextUtils.isEmpty(Constants.USER_IMG)){
-            PicUtils.loadCircleImage(getActivity(),SharePreferenceUtils.getUser(Constants.USER_IMG),iv_head);
+        if (!TextUtils.isEmpty(Constants.USER_IMG)) {
+            PicUtils.loadCircleImage(getActivity(), SharePreferenceUtils.getUser(Constants.USER_IMG), iv_head);
         }
         return view;
     }
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.rl_head:
                 if (AppApplication.isUserLogIn()) {
                     initPopupWindow();
@@ -95,7 +96,7 @@ public class ModifyInfoFragment extends BaseFragment implements View.OnClickList
                 break;
             case R.id.rl_name:
                 //跳转到编辑信息界面
-                action(EditInfoFragment.getInstance(getString(R.string.modify_name),"name"),null);
+                action(EditInfoFragment.getInstance(getString(R.string.modify_name), "name"), null);
                 break;
             case R.id.rl_mobile:
                 break;
@@ -136,6 +137,7 @@ public class ModifyInfoFragment extends BaseFragment implements View.OnClickList
             }
         });
     }
+
     @Override
     public void onHanlderSuccess(int reqeustCode, List<PhotoInfo> resultList) {
         if (mIconChoosePopupWindow != null && mIconChoosePopupWindow.isShowing())
@@ -161,8 +163,9 @@ public class ModifyInfoFragment extends BaseFragment implements View.OnClickList
 
     @Override
     public void onHanlderFailure(int requestCode, String errorMsg) {
-        ToastUtils.showShorToast(getString(R.string.choose_photo_fail));
+        ToastUtils.showToast(getString(R.string.choose_photo_fail));
     }
+
     private void doUploadFile(String userId, String userType, File uploadFile) {
 
         try {
@@ -200,24 +203,25 @@ public class ModifyInfoFragment extends BaseFragment implements View.OnClickList
         }
 
     }
-    private Handler mHandler = new Handler() {
+
+    private Handler mHandler = new Handler(new Handler.Callback() {
         @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
+        public boolean handleMessage(Message message) {
             if (mIsOpen == false) {
-                return;
+                return false;
             }
 
-            int target = msg.what;
+            int target = message.what;
             if (target == UPLOAD_IMGURL_SUCCESS) {
                 SharePreferenceUtils.saveUserString(Constants.USER_IMG, mUploadFilePath);
 
                 if (mUploadFilePath.contains("https:"))
                     mUploadFilePath = mUploadFilePath.replaceFirst("s", "");
-                PicUtils.loadCircleImage(getContext(),mUploadFilePath,iv_head);
+                PicUtils.loadCircleImage(getContext(), mUploadFilePath, iv_head);
             }
+            return false;
         }
-    };
+    });
 
     @Override
     public void onHiddenChanged(boolean hidden) {

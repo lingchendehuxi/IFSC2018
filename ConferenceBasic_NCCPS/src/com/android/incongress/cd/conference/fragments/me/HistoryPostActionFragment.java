@@ -48,14 +48,13 @@ public class HistoryPostActionFragment extends BaseFragment {
     private LinkedList<ScenicXiuBean> mDownBeans = new LinkedList<ScenicXiuBean>();
     private TextView mTvTips;
 
-    private Handler mHandler = new Handler() {
+    private Handler mHandler = new Handler(new Handler.Callback() {
         @Override
-        public void handleMessage(Message msg) {
+        public boolean handleMessage(Message message) {
             if (mIsOpen == false) {
-                return;
+                return false;
             }
-
-            int target = msg.what;
+            int target = message.what;
             if (target == 0) {
                 mBtLoadAgain.setVisibility(View.GONE);
                 mTvTips.setVisibility(View.GONE);
@@ -82,17 +81,18 @@ public class HistoryPostActionFragment extends BaseFragment {
                     mBtLoadAgain.setVisibility(View.VISIBLE);
                 }
             } else if (target == 3) {
-                if(mDownBeans.size() != 0) {
+                if (mDownBeans.size() != 0) {
                     mAdapter.tellNoMoreDate();
                 }
             } else if (target == 4) {
                 getDownData("-1");
-            } else if(target == 6) {
+            } else if (target == 6) {
                 mTvTips.setVisibility(View.VISIBLE);
                 mAutoSwipeRefreshLayout.setRefreshing(false);
             }
+            return false;
         }
-    };
+    });
 
     public HistoryPostActionFragment() {
     }
@@ -128,7 +128,7 @@ public class HistoryPostActionFragment extends BaseFragment {
         mRcvPost.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                if(mDownBeans.size()>0) {
+                if (mDownBeans.size() > 0) {
                     LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
                     if (newState == recyclerView.SCROLL_STATE_IDLE) {
                         int lastVisibleItem = manager.findLastCompletelyVisibleItemPosition();
@@ -166,11 +166,12 @@ public class HistoryPostActionFragment extends BaseFragment {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    mDownBeans = gson.fromJson(jsonArray, new TypeToken<LinkedList<ScenicXiuBean>>() {}.getType());
+                    mDownBeans = gson.fromJson(jsonArray, new TypeToken<LinkedList<ScenicXiuBean>>() {
+                    }.getType());
 
-                    if(mDownBeans.size() == 0) {
+                    if (mDownBeans.size() == 0) {
                         mHandler.sendEmptyMessage(6);
-                    }else {
+                    } else {
                         mHandler.sendEmptyMessage(0);
                     }
 
@@ -183,10 +184,12 @@ public class HistoryPostActionFragment extends BaseFragment {
                         e.printStackTrace();
                     }
                     List<ScenicXiuBean> temp = new LinkedList<ScenicXiuBean>();
-                    temp = (LinkedList<ScenicXiuBean>) gson.fromJson(jsonArray, new TypeToken<LinkedList<ScenicXiuBean>>() {}.getType());
-                    if(temp.size() == 0) {
-                    }else {
-                        mDownBeans.addAll((LinkedList<ScenicXiuBean>) gson.fromJson(jsonArray, new TypeToken<LinkedList<ScenicXiuBean>>() {}.getType()));
+                    temp = (LinkedList<ScenicXiuBean>) gson.fromJson(jsonArray, new TypeToken<LinkedList<ScenicXiuBean>>() {
+                    }.getType());
+                    if (temp.size() == 0) {
+                    } else {
+                        mDownBeans.addAll((LinkedList<ScenicXiuBean>) gson.fromJson(jsonArray, new TypeToken<LinkedList<ScenicXiuBean>>() {
+                        }.getType()));
                         mHandler.sendEmptyMessage(1);
                     }
                 }
