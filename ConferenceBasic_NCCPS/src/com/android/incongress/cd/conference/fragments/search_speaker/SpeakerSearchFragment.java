@@ -23,6 +23,7 @@ import com.android.incongress.cd.conference.adapters.FacultySearchAdapter;
 import com.android.incongress.cd.conference.adapters.MettingCommunitySpeakerAdapter;
 import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.BaseFragment;
+import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.beans.MeetingBean_new;
 import com.android.incongress.cd.conference.fragments.search_schedule.SearchFacultyDetailFragment;
 import com.android.incongress.cd.conference.model.Class;
@@ -40,6 +41,7 @@ import com.android.incongress.cd.conference.utils.PinnedHeaderListView;
 import com.android.incongress.cd.conference.utils.StringUtils;
 import com.android.incongress.cd.conference.widget.StatusBarUtil;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -97,9 +99,16 @@ public class SpeakerSearchFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        MobclickAgent.onPageStart(Constants.FRAGMENT_SPEARK_SEARCH);
         if(!isBackView){
             StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(Constants.FRAGMENT_SPEARK_SEARCH);
     }
 
     @Override

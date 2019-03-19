@@ -20,7 +20,6 @@ import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.android.incongress.cd.conference.LoginActivity;
 import com.android.incongress.cd.conference.adapters.MeetingWithSpeakerAdapter;
 import com.android.incongress.cd.conference.adapters.SpeakerTagAdapter;
 import com.android.incongress.cd.conference.base.AppApplication;
@@ -29,7 +28,6 @@ import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.beans.AlertBean;
 import com.android.incongress.cd.conference.beans.FacultyBean;
 import com.android.incongress.cd.conference.beans.MeetingBean_new;
-import com.android.incongress.cd.conference.fragments.question.MakeQuestionFragment;
 import com.android.incongress.cd.conference.fragments.search_speaker.SpeakerDetailFragment;
 import com.android.incongress.cd.conference.model.Alert;
 import com.android.incongress.cd.conference.model.Class;
@@ -52,6 +50,7 @@ import com.android.incongress.cd.conference.widget.StatusBarUtil;
 import com.android.incongress.cd.conference.widget.flow_layout.FlowLayout;
 import com.android.incongress.cd.conference.widget.flow_layout.TagFlowLayout;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -414,7 +413,7 @@ public class SessionDetailPageFragment extends BaseFragment implements View.OnCl
                         Alert alert = ConferenceDbUtils.getAlertByAlertId(mSessionBean.getClassesId());
                         if (alert != null) {
                             Log.d("sgqTest", "doWhenMeetingAlarmClicked: 删除session闹钟");
-                            ConferenceDbUtils.deleteAlert(alert);
+                            AlermClock.disableClock(alert);
                         }
                     }
                 }
@@ -450,7 +449,7 @@ public class SessionDetailPageFragment extends BaseFragment implements View.OnCl
 
         @Override
         protected Void doInBackground(Void... params) {
-            mSessionBean = ConferenceDbUtils.getSessionBySessionId(mSessionid + "");
+            //mSessionBean = ConferenceDbUtils.getSessionBySessionId(mSessionid + "");
             mClassBean = ConferenceDbUtils.findClassByClassId(mSessionBean.getClassesId());
             mClasses = ConferenceDbUtils.getAllClasses();
             mRoleListAll = ConferenceDbUtils.getAllRoles();
@@ -642,7 +641,7 @@ public class SessionDetailPageFragment extends BaseFragment implements View.OnCl
         alertbean.setRoom(mClassBean.getClassesCode());
         alertbean.setStart(mSessionBean.getStartTime());
         alertbean.setTitle(mSessionBean.getSessionName() + "#@#" + mSessionBean.getSessionNameEN());
-        alertbean.setType(AlertBean.TYPE_SESSTION);
+        alertbean.setType(AlertBean.TYPE_SESSTION); //5代表session提醒
 
         ConferenceDbUtils.addAlert(alertbean);
 
@@ -655,7 +654,7 @@ public class SessionDetailPageFragment extends BaseFragment implements View.OnCl
     private void unEnableSessionClick() {
         Alert alertForSession = ConferenceDbUtils.getAlertByAlertId(mSessionBean.getClassesId());
         if (alertForSession != null) {
-            ConferenceDbUtils.deleteAlert(alertForSession);
+            AlermClock.disableClock(alertForSession);
         }
     }
 
@@ -665,6 +664,18 @@ public class SessionDetailPageFragment extends BaseFragment implements View.OnCl
         if(!hidden){
             StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
         }
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        mSessionBean = ConferenceDbUtils.getSessionBySessionId(mSessionid + "");
+        MobclickAgent.onPageStart(Constants.FRAGMENT_SESSIONDETAIL+mSessionBean.getSessionName());
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(Constants.FRAGMENT_SESSIONDETAIL+mSessionBean.getSessionName());
     }
 
     private UpdateReceiver updateReceiver;

@@ -396,4 +396,48 @@ public class StringUtils {
             }
         }
     }
+    //多个字符串替换  针对LiveListInfoFragment中使用  ""[] {}替换为空
+    public static String getNewString(String string){
+        StringBuilder builder = new StringBuilder();
+        char[] chars = string.toCharArray();
+        for(Character ch :chars){
+            if('"'==ch||'['==ch||']'==ch||'{'==ch||'}'==ch){
+            }else if(':' == ch){
+                builder.append(ch);
+                builder.append(" ");
+            }else {
+                builder.append(ch);
+            }
+        }
+        String[] strings = builder.toString().split(",");
+        builder.delete(0,builder.toString().length());
+        for(int i = 0;i<strings.length;i++){
+            if(strings[i].contains(":")){
+                if(i != 0){
+                    builder.append("\n");
+                }
+                builder.append(strings[i]);
+            }else {
+                builder.append(",");
+                builder.append(strings[i]);
+            }
+        }
+        return builder.toString();
+    }
+    //根据中英文获取字段
+    public static String getNeedString(String stringTitle){
+        if(!TextUtils.isEmpty(stringTitle)){
+            String[] strings = stringTitle.split("#@#");
+            if(strings.length>1){
+                if(AppApplication.systemLanguage ==1){
+                    return strings[0];
+                }else {
+                    return strings[1];
+                }
+            }
+            return stringTitle;
+        }else {
+            return "";
+        }
+    }
 }

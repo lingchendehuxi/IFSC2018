@@ -6,10 +6,6 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.os.Bundle;
-import android.os.SystemClock;
-import android.preference.PreferenceManager;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.android.incongress.cd.conference.AlarmActivity;
@@ -17,15 +13,12 @@ import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.beans.BusRemindBean;
 import com.android.incongress.cd.conference.beans.SessionBean;
 import com.android.incongress.cd.conference.model.Alert;
-import com.android.incongress.cd.conference.model.Session;
-import com.google.zxing.common.detector.MathUtils;
 
-import org.litepal.crud.DataSupport;
+import org.litepal.LitePal;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -195,7 +188,7 @@ public class AlarmUtils {
 
 
     public static List<BusRemindBean> getAllBusRemind() {
-        List<BusRemindBean> reminds = DataSupport.findAll(BusRemindBean.class);
+        List<BusRemindBean> reminds = LitePal.findAll(BusRemindBean.class);
         if (reminds != null)
             return reminds;
         else
@@ -211,7 +204,7 @@ public class AlarmUtils {
      * @return
      */
     public static boolean findBusRemindByBusInfoIdAndTime(int busInfoId, int isStartOrBack) {
-        List<BusRemindBean> busRemindBeen = DataSupport.where("busInfoId = " + busInfoId + " and isStartOrBack = " + isStartOrBack).find(BusRemindBean.class);
+        List<BusRemindBean> busRemindBeen = LitePal.where("busInfoId = " + busInfoId + " and isStartOrBack = " + isStartOrBack).find(BusRemindBean.class);
 
         if (busRemindBeen != null && busRemindBeen.size() > 0)
             return true;
@@ -226,7 +219,7 @@ public class AlarmUtils {
      * @return
      */
     public static void deleteBusResmindByBusInfoIdAndTime(int busInfoId, int isStartOrBack) {
-        List<BusRemindBean> busRemindBeenList = DataSupport.where("busInfoId = " + busInfoId + " and isStartOrBack = " + isStartOrBack).find(BusRemindBean.class);
+        List<BusRemindBean> busRemindBeenList = LitePal.where("busInfoId = " + busInfoId + " and isStartOrBack = " + isStartOrBack).find(BusRemindBean.class);
 
         if(busRemindBeenList != null && busRemindBeenList.size() > 0) {
             for (int i = 0; i < busRemindBeenList.size(); i++) {

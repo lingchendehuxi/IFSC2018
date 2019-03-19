@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="28dp"
+        android:layout_marginRight="28dp"
+        android:textColor="@color/black_login_text"
+        android:textSize="14sp" />
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="@dimen/margin_20"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="@dimen/margin_20"
+        app:cardElevation="0dp"
+        app:cardCornerRadius="8dp">
+
+        <ImageView
+            android:id="@+id/iv_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/video_come_start_bg" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="33dp"
+            android:layout_marginRight="33dp"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/living_icon"/>
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="这是一场盛大的演出"
+                android:textColor="@color/white"
+                android:textSize="21sp" />
+
+
+
+            <ImageView
+                android:id="@+id/iv_play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/play_large" />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

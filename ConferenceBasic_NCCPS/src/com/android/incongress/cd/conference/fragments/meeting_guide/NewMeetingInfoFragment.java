@@ -15,10 +15,12 @@ import android.widget.TextView;
 
 import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.BaseFragment;
+import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.model.ConferenceDbUtils;
 import com.android.incongress.cd.conference.model.Map;
 import com.android.incongress.cd.conference.widget.StatusBarUtil;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 
@@ -161,9 +163,16 @@ public class NewMeetingInfoFragment extends BaseFragment implements CompoundButt
     @Override
     public void onResume() {
         super.onResume();
+        MobclickAgent.onPageStart(Constants.FRAGMENT_MEETINGMAPINFO);
         if(!isBackView){
             StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(Constants.FRAGMENT_MEETINGMAPINFO);
     }
 
     @Override

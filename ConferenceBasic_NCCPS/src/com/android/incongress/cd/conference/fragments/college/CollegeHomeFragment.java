@@ -86,12 +86,15 @@ public class CollegeHomeFragment extends BaseFragment implements XRecyclerView.L
     private boolean isBackView = true;
     private FrameLayout fl_search;
     private static final int EDIT_OK = 104;
+    private static String TITLE_NAME = "title_name";
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
+    public static CollegeHomeFragment getInstance(String titleName){
+        CollegeHomeFragment fragment = new CollegeHomeFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(TITLE_NAME,titleName);
+        fragment.setArguments(bundle);
+        return fragment;
     }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -104,7 +107,7 @@ public class CollegeHomeFragment extends BaseFragment implements XRecyclerView.L
         et_search = view.findViewById(R.id.et_search);
         initSearchView(view);
         cacheManager = CacheManager.getInstance().open(CACHE_COLLEGE_TITLE, 1);
-        mTitle.setText(getString(R.string.home_cit_college));
+        mTitle.setText(getArguments().getString(TITLE_NAME));
         title_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -172,7 +175,10 @@ public class CollegeHomeFragment extends BaseFragment implements XRecyclerView.L
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
                     }
-                    myHandler.sendEmptyMessageDelayed(EDIT_OK, 200);
+                    if(myHandler.hasMessages(EDIT_OK)){
+                        myHandler.removeMessages(EDIT_OK);
+                    }
+                    myHandler.sendEmptyMessageDelayed(EDIT_OK, 1000);
                 } else {
                     mSearchString = "";
                     videoList.clear();
@@ -311,7 +317,7 @@ public class CollegeHomeFragment extends BaseFragment implements XRecyclerView.L
             StatusBarUtil.setStatusBarDarkTheme(getActivity(), false);
         }
         getActivity().findViewById(R.id.title_back_panel).setVisibility(View.VISIBLE);
-        MobclickAgent.onPageStart(Constants.ACTIVITY_COLLEGE);
+        MobclickAgent.onPageStart(Constants.FRAGMENT_COLLEGEFRAGMENT);
     }
 
 
@@ -319,7 +325,7 @@ public class CollegeHomeFragment extends BaseFragment implements XRecyclerView.L
     public void onPause() {
         super.onPause();
         getActivity().findViewById(R.id.title_back_panel).setVisibility(View.VISIBLE);
-        MobclickAgent.onPageEnd(Constants.ACTIVITY_COLLEGE);
+        MobclickAgent.onPageEnd(Constants.FRAGMENT_COLLEGEFRAGMENT);
     }
 
     @Override

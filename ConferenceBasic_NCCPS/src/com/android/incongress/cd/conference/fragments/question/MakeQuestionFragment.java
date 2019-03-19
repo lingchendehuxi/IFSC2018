@@ -247,15 +247,4 @@ public class MakeQuestionFragment extends BaseFragment {
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onPageStart(Constants.FRAGMENT_MAKEQUESTION);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPageEnd(Constants.FRAGMENT_MAKEQUESTION);
-    }
 }

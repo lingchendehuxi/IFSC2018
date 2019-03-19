@@ -350,7 +350,7 @@ public class SessionDetailViewPageFragment extends BaseFragment implements View.
                         }else {
                             Alert alert = ConferenceDbUtils.getAlertByAlertId(meeting.getMeetingId());
                             if(alert!=null){
-                                ConferenceDbUtils.deleteAlert(alert);
+                                AlermClock.disableClock(alert);
                             }
                         }
                     }
@@ -515,18 +515,6 @@ public class SessionDetailViewPageFragment extends BaseFragment implements View.
                 action(fragment, R.string.meeting_schedule_note, myView, false, false, false);
                 break;
         }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onPageStart(Constants.FRAGMENT_SESSIONDETAIL);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPageEnd(Constants.FRAGMENT_SESSIONDETAIL);
     }
 
     @Override

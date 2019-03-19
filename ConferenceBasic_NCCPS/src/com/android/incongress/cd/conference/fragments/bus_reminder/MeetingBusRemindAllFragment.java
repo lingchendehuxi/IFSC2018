@@ -21,6 +21,7 @@ import com.android.incongress.cd.conference.widget.StatusBarUtil;
 import com.google.gson.Gson;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
+import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
 
@@ -143,9 +144,16 @@ public class MeetingBusRemindAllFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        MobclickAgent.onPageStart(Constants.ACTIVITY_BUS_REMIND);
         if(!isBackView){
             StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(Constants.ACTIVITY_BUS_REMIND);
     }
 
     @Override

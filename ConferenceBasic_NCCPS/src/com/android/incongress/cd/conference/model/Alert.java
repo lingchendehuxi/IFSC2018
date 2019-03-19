@@ -3,7 +3,7 @@ package com.android.incongress.cd.conference.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import org.litepal.crud.DataSupport;
+import org.litepal.crud.LitePalSupport;
 
 import java.io.Serializable;
 
@@ -12,20 +12,29 @@ import java.io.Serializable;
  * 声明： Alert主要用于闹钟，idenId是闹钟唯一标识，relativeid是meeting和session的关联标识
  * meeting 使用meetID,session使用classID 为唯一标识
  */
-public class Alert extends DataSupport {
+public class Alert extends LitePalSupport {
     private int id;//提醒id
     private String date;//提醒时间
     private String repeatdistance;//提醒间隔
     private String repeattimes;//提醒次数
     private int enable;//提醒可用 0不可用 1为可用
     private String title;//提醒内容
-    private int type;//提醒类型 0会议 1为发言
+    private int type;//提醒类型 0会议 1为发言 2代表直播
     private String relativeid;//提醒关联ID 关联sessionid或meetingid；
     private String start;
     private String end;
     private String room;
     private long time;
     private int idenId;
+    private String liveUrl; //添加了一个直播的链接
+
+    public String getLiveUrl() {
+        return liveUrl;
+    }
+
+    public void setLiveUrl(String liveUrl) {
+        this.liveUrl = liveUrl;
+    }
 
     public int getIdenId() {
         return idenId;

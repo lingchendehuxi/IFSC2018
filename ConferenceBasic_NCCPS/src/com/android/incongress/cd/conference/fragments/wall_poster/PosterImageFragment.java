@@ -18,6 +18,7 @@ import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.beans.DZBBBean;
 import com.android.incongress.cd.conference.model.ConferenceDbUtils;
 import com.android.incongress.cd.conference.utils.PicUtils;
+import com.android.incongress.cd.conference.utils.StringUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
 import com.android.incongress.cd.conference.widget.IncongressTextView;
 import com.android.incongress.cd.conference.widget.StatusBarUtil;
@@ -76,13 +77,13 @@ public class PosterImageFragment extends BaseActivity {
     @Override
     public void onResume() {
         super.onResume();
-        MobclickAgent.onPageStart(Constants.FRAGMENT_POSTERDETAIL);
+        MobclickAgent.onPageStart(Constants.FRAGMENT_POSTERDETAIL+StringUtils.getNeedString(mBean.getPosterTitle()));
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        MobclickAgent.onPageEnd(Constants.FRAGMENT_POSTERDETAIL);
+        MobclickAgent.onPageEnd(Constants.FRAGMENT_POSTERDETAIL+StringUtils.getNeedString(mBean.getPosterTitle()));
     }
 
     @Override

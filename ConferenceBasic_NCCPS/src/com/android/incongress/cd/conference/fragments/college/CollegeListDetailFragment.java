@@ -54,7 +54,7 @@ public class CollegeListDetailFragment extends BaseFragment {
     private static String BUNDLE_COLLEGE_MODEL_ID = "collegeModelID";
     private static String BUNDLE_CACHE_ID = "collegeCacheID";
     //缓存
-    private CacheManager cacheManager, cacheManager2;
+    private CacheManager cacheManager2;
     private static final String CACHE_COLLEGE_DATA_TITLE = "college_data_title_list";//college_data_title_list
     private static final String CACHE_COLLEGE_BOOK_TITLE = "college_book_title_list";
     private DiskLruCacheUtil mDiskLruCacheUtil;
@@ -96,7 +96,7 @@ public class CollegeListDetailFragment extends BaseFragment {
     //无网络的时候加载本地数据
     private void loadLocalDate() {
         if (!NetWorkUtils.isNetworkConnected(getActivity())) {
-            String stringJson = "";
+            String stringJson ;
             if ("book".equals(stringYear)) {
                 stringJson = cacheManager2.getString(CACHE_COLLEGE_BOOK_TITLE+cacheId);
             } else {

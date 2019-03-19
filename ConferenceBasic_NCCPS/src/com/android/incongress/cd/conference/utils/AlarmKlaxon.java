@@ -95,7 +95,7 @@ public class AlarmKlaxon extends Service {
                             bean.setRepeattimes(String.valueOf(++currentTimes));
                             AlermClock.calculateSnoothAlert(bean);
                         } else
-                            AlermClock.deleteClock(bean);
+                            AlermClock.disableClock(bean);
                     }
                     break;
                 case FOCUSCHANGE:
@@ -277,7 +277,7 @@ public class AlarmKlaxon extends Service {
                     note.setRepeattimes(String.valueOf(++currentTimes));
                     AlermClock.calculateSnoothAlert(note);
                 } else
-                    AlermClock.deleteClock(note);
+                    AlermClock.disableClock(note);
             }
         });
         submit.setOnClickListener(new OnClickListener() {
@@ -286,7 +286,7 @@ public class AlarmKlaxon extends Service {
             public void onClick(View v) {
                 wm.removeView(layout);
                 stop();
-                AlermClock.deleteClock(note);
+                AlermClock.disableClock(note);
                 disableKiller();
                 stopSelf();
 

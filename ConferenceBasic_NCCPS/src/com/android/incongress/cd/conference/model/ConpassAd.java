@@ -1,12 +1,12 @@
 package com.android.incongress.cd.conference.model;
 
-import org.litepal.crud.DataSupport;
+import org.litepal.crud.LitePalSupport;
 
 /**
  * Created by Jacky on 2016/11/29.
  */
 
-public class ConpassAd extends DataSupport {
+public class ConpassAd extends LitePalSupport {
     private String adUrl;
     private String gotoUrl;
 

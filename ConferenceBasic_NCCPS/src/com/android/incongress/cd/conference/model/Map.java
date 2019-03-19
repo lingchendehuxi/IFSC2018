@@ -1,12 +1,12 @@
 package com.android.incongress.cd.conference.model;
 
 import org.litepal.annotation.Column;
-import org.litepal.crud.DataSupport;
+import org.litepal.crud.LitePalSupport;
 
 /**
  * Created by Jacky on 2016/7/25.
  */
-public class Map extends DataSupport {
+public class Map extends LitePalSupport {
     private int conferencesmapId;// 地图编号
     private int conferencesId;// 参会议编号
     private String mapRemark;// 地图楼层 显示名字

@@ -23,10 +23,10 @@ import java.util.List;
 public class NewExhibitorListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mContext;
-    private List<ExhibitorListInfoBean.ArrayBean> mBeans;
+    private List<ExhibitorListInfoBean.ResultBean> mBeans;
     private LayoutInflater mInflater;
 
-    public NewExhibitorListAdapter(Context mContext, List<ExhibitorListInfoBean.ArrayBean> mBeans) {
+    public NewExhibitorListAdapter(Context mContext, List<ExhibitorListInfoBean.ResultBean> mBeans) {
         this.mContext = mContext;
         this.mBeans = mBeans;
         this.mInflater = LayoutInflater.from(mContext);
@@ -49,22 +49,22 @@ public class NewExhibitorListAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
-        ExhibitorListInfoBean.ArrayBean bean = mBeans.get(position);
+        ExhibitorListInfoBean.ResultBean bean = mBeans.get(position);
         if (holder.getItemViewType() == 0) {
             ((ViewHolder) holder).tv_conner.setText(bean.getLocation());
-            ((ViewHolder) holder).tv_title.setText(bean.getName());
+            ((ViewHolder) holder).tv_title.setText(bean.getTitle());
             ((ViewHolder) holder).tv_context.setText(bean.getContent());
             StringUtils.setTextShow(((ViewHolder) holder).tv_context, bean.getContent());
-            if (TextUtils.isEmpty(bean.getLogoUrl())) {
+            if (TextUtils.isEmpty(bean.getLogoImg())) {
                 ((ViewHolder) holder).iv_img.setVisibility(View.GONE);
             } else {
-                PicUtils.loadImageUrl(mContext, bean.getLogoUrl(), ((ViewHolder) holder).iv_img);
+                PicUtils.loadImageUrl(mContext, bean.getLogoImg(), ((ViewHolder) holder).iv_img);
             }
         } else {
-            if (TextUtils.isEmpty(bean.getLogoUrl())) {
+            if (TextUtils.isEmpty(bean.getLogoImg())) {
                 ((ViewHolder2) holder).iv_img.setVisibility(View.GONE);
             } else {
-                PicUtils.loadImageUrl(mContext, bean.getLogoUrl(), ((ViewHolder2) holder).iv_img);
+                PicUtils.loadImageUrl(mContext, bean.getLogoImg(), ((ViewHolder2) holder).iv_img);
             }
         }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -76,15 +76,18 @@ public class NewExhibitorListAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     @Override
-    public int getItemViewType(int position) {
-        return mBeans.get(position).getIsTop();
-    }
-
-    @Override
     public int getItemCount() {
         return mBeans.size();
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        if(mBeans.get(position).getType() == 3){
+            return 0;
+        }else {
+            return 1;
+        }
+    }
 
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView tv_conner, tv_title, tv_context;

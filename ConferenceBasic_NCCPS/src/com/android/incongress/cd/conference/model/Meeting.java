@@ -1,12 +1,11 @@
 package com.android.incongress.cd.conference.model;
 
-import org.litepal.annotation.Column;
-import org.litepal.crud.DataSupport;
+import org.litepal.crud.LitePalSupport;
 
 /**
  * Created by Jacky on 2016/7/25.
  */
-public class Meeting extends DataSupport {
+public class Meeting extends LitePalSupport {
 
     /**
      * meetingId : 170360

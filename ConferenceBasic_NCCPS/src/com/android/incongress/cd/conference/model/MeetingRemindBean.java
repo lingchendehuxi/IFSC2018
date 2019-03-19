@@ -1,12 +1,12 @@
 package com.android.incongress.cd.conference.model;
 
-import org.litepal.crud.DataSupport;
+import org.litepal.crud.LitePalSupport;
 
 /**
  * Created by Jacky on 2017/5/23.
  */
 
-public class MeetingRemindBean extends DataSupport {
+public class MeetingRemindBean extends LitePalSupport {
     private String sessionName;
     private int sessionGroupId;
     private String sesionStartTime;

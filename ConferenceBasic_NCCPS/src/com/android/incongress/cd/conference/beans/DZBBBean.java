@@ -45,7 +45,7 @@ public class DZBBBean{
 		public ArrayBean(){
 			super();
 		}
-		public ArrayBean(int posterId, String posterCode, String author, int fieldId, String field, String posterTitle, String url, String point, int readCount, String posterPicUrl, int disCount) {
+		public ArrayBean(int posterId, String posterCode, String author, String fieldId, String field, String posterTitle, String url, String point, int readCount, String posterPicUrl, int disCount) {
 			this.posterId = posterId;
 			this.posterCode = posterCode;
 			this.author = author;
@@ -77,7 +77,7 @@ public class DZBBBean{
 		private int posterId;
 		private String posterCode;
 		private String author;
-		private int fieldId;
+		private String fieldId;
 		private String field;
 		private String posterTitle;
 		private String url;
@@ -110,11 +110,11 @@ public class DZBBBean{
 			this.author = author;
 		}
 
-		public int getFieldId() {
+		public String getFieldId() {
 			return fieldId;
 		}
 
-		public void setFieldId(int fieldId) {
+		public void setFieldId(String fieldId) {
 			this.fieldId = fieldId;
 		}
 

@@ -16,6 +16,7 @@ import com.android.incongress.cd.conference.model.Class;
 import com.android.incongress.cd.conference.model.ConferenceDbUtils;
 import com.android.incongress.cd.conference.model.Meeting;
 import com.android.incongress.cd.conference.model.Session;
+import com.android.incongress.cd.conference.utils.AlermClock;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 
 import java.util.ArrayList;
@@ -123,7 +124,7 @@ public class MyScheduleDetailAdapter extends BaseAdapter {
 
                 Alert tempAlert = ConferenceDbUtils.getAlertByAlertId(temp.getClassesId());
                 if (tempAlert != null) {
-                    ConferenceDbUtils.deleteAlert(tempAlert);
+                    AlermClock.disableClock(tempAlert);
                 }
 
                 List<Integer> positionToRemove = new ArrayList<>();

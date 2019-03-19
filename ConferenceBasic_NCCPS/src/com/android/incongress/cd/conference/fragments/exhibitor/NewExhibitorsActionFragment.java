@@ -1,4 +1,7 @@
 package com.android.incongress.cd.conference.fragments.exhibitor;
+/**
+ * 参展商的首页
+ */
 
 import android.os.Build;
 import android.os.Bundle;
@@ -6,16 +9,11 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.android.incongress.cd.conference.HomeActivity;
-import com.android.incongress.cd.conference.adapters.MindInfoAdapter;
 import com.android.incongress.cd.conference.adapters.NewExhibitorActionAdapter;
 import com.android.incongress.cd.conference.api.CHYHttpClientUsage;
 import com.android.incongress.cd.conference.base.BaseFragment;
 import com.android.incongress.cd.conference.base.Constants;
-import com.android.incongress.cd.conference.beans.ExhibitorListInfoBean;
 import com.android.incongress.cd.conference.beans.ExhibitorTitleBean;
 import com.android.incongress.cd.conference.utils.JSONCatch;
 import com.android.incongress.cd.conference.utils.ToastUtils;
@@ -31,11 +29,9 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 import com.umeng.analytics.MobclickAgent;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -54,14 +50,14 @@ public class NewExhibitorsActionFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.new_exhibitors_action_fragment, null);
         mViewPager = view.findViewById(R.id.viewpager);
         tab_layout = view.findViewById(R.id.tab_layout);
-        initView(view);
+        initView();
         tab_layout.setIndicatorWidth(24);
         getTopTitle();
 
         return view;
     }
 
-    private void initView(View view) {
+    private void initView() {
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -96,13 +92,13 @@ public class NewExhibitorsActionFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
-        MobclickAgent.onPageStart(Constants.FRAGMENT_MESSAGESTATION);
+        MobclickAgent.onPageStart(Constants.FRAGMENT_EXHIBITORS);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        MobclickAgent.onPageEnd(Constants.FRAGMENT_MESSAGESTATION);
+        MobclickAgent.onPageEnd(Constants.FRAGMENT_EXHIBITORS);
     }
 
     @Override

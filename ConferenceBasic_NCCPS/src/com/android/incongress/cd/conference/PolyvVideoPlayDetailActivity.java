@@ -175,7 +175,7 @@ public class PolyvVideoPlayDetailActivity extends AppCompatActivity {
         if (polyv_video_view != null) {
             polyv_video_view.pause();
         }
-        MobclickAgent.onPageEnd(Constants.ACTIVITY_COLLEGE_PLAY_BLWS);
+        MobclickAgent.onPageEnd(Constants.FRAGMENT_COLLEGEFRAGMENT_DETIAL);
     }
 
     //保利威视视频配置
@@ -315,6 +315,6 @@ public class PolyvVideoPlayDetailActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        MobclickAgent.onPageStart(Constants.ACTIVITY_COLLEGE_PLAY_BLWS);
+        MobclickAgent.onPageStart(Constants.FRAGMENT_COLLEGEFRAGMENT_DETIAL);
     }
 }

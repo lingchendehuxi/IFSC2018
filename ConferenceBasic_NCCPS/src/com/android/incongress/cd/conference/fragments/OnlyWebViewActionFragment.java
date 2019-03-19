@@ -32,6 +32,7 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 所有和webview的类都是用该类,通过传入bundle  mUrl建立相应的webview即可
@@ -202,6 +203,7 @@ public class OnlyWebViewActionFragment extends BaseFragment {
     @Override
     public void onPause() {
         super.onPause();
+        MobclickAgent.onPageEnd(Constants.FRAGMENT_MEETINGGUIDE);
         clearCache();
         mOnlyWebview.reload();
     }
@@ -227,6 +229,7 @@ public class OnlyWebViewActionFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        MobclickAgent.onPageStart(Constants.FRAGMENT_MEETINGGUIDE);
         if(!isBackView){
             StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
         }

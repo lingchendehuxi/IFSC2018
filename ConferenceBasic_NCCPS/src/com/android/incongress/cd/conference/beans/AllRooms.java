@@ -1,12 +1,13 @@
 package com.android.incongress.cd.conference.beans;
 
-import org.litepal.crud.DataSupport;
+import org.litepal.crud.LitePalSupport;
 
 /**
  * Created by Admin on 2018/5/17.
  */
 
-public class AllRooms extends DataSupport {
+public class AllRooms extends LitePalSupport {
+    private int id;
     private int classesCapacity;
     private String classesCode;
 
@@ -17,6 +18,14 @@ public class AllRooms extends DataSupport {
     private String mapName;
     private String classCodeEn;
     private boolean select;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public boolean isSelect() {
         return select;

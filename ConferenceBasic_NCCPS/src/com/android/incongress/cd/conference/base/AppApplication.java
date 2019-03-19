@@ -39,6 +39,7 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.PlatformConfig;
 
+import org.litepal.LitePal;
 import org.litepal.LitePalApplication;
 
 import java.io.File;
@@ -119,6 +120,7 @@ public class AppApplication extends LitePalApplication {
         super.onCreate();
         instance = this;
         mContext = this;
+        LitePal.initialize(this);
 
 //        OkHttpFinalConfiguration.Builder okhttpBuilder = new OkHttpFinalConfiguration.Builder();
 //        OkHttpFinal.getInstance().init(okhttpBuilder.build());

@@ -16,42 +16,17 @@
 
 package com.android.incongress.cd.conference.utils;
 
-import com.android.incongress.cd.conference.AlarmActivity;
-import com.android.incongress.cd.conference.HomeActivity;
-import com.android.incongress.cd.conference.base.AppApplication;
-import com.android.incongress.cd.conference.beans.AlertBean;
-import com.android.incongress.cd.conference.model.Alert;
-import com.mobile.incongress.cd.conference.basic.csccm.R;
-
 import android.app.AlertDialog;
-import android.app.KeyguardManager;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.ContentUris;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.BroadcastReceiver;
-import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.graphics.PixelFormat;
-import android.os.Parcel;
-import android.os.PowerManager;
 import android.os.Vibrator;
-import android.preference.PreferenceManager;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import java.util.Locale;
+import com.android.incongress.cd.conference.HomeActivity;
+import com.android.incongress.cd.conference.base.AppApplication;
+import com.mobile.incongress.cd.conference.basic.csccm.R;
 
 /**
  * Glue class: connects AlarmAlert IntentReceiver to AlarmAlert

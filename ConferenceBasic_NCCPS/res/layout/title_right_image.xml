@@ -3,6 +3,7 @@
     android:id="@+id/iv_right_imageview"
     android:layout_width="match_parent"
     android:paddingTop="25dp"
+    android:tint="@color/back_color"
     android:layout_height="match_parent"
     android:orientation="vertical"
     />

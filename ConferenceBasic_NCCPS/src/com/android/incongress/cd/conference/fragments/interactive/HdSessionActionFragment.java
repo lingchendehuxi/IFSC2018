@@ -28,6 +28,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
+import com.umeng.analytics.MobclickAgent;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
 import org.json.JSONException;
@@ -180,9 +181,16 @@ public class HdSessionActionFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        MobclickAgent.onPageStart(Constants.FRAGMENT_INTERACTION);
         if (!isBackView) {
             StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(Constants.FRAGMENT_INTERACTION);
     }
 
     @Override

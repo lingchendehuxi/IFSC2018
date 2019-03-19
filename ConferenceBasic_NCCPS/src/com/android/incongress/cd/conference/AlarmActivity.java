@@ -1,26 +1,15 @@
 package com.android.incongress.cd.conference;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
-import android.media.MediaPlayer;
-import android.os.Bundle;
 import android.os.Vibrator;
-import android.provider.AlarmClock;
-import android.util.Log;
 
 import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.BaseActivity;
-import com.android.incongress.cd.conference.beans.BusRemindBean;
-import com.android.incongress.cd.conference.model.Alert;
-import com.android.incongress.cd.conference.utils.AlarmUtils;
-import com.android.incongress.cd.conference.utils.AlermClock;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
-
-import java.util.List;
 
 public class AlarmActivity extends BaseActivity {
     //MediaPlayer alarmMusic;
@@ -86,7 +75,7 @@ public class AlarmActivity extends BaseActivity {
                         }).show();
                 break;
             case 3:
-                final String newTitle = getIntent().getStringExtra("liveName");
+                final String newTitle = getIntent().getStringExtra("title");
                 final String url = getIntent().getStringExtra("liveUrl");
                 String liveName;
                 if (newTitle.contains("#@#")) {
@@ -94,7 +83,7 @@ public class AlarmActivity extends BaseActivity {
                         liveName = newTitle.split("#@#")[0];
                         final String finalLiveName = liveName;
                         new AlertDialog.Builder(AlarmActivity.this).setCancelable(false).setTitle("直播提醒")
-                                .setMessage("您预约的直播会议 - " + newTitle + " - 已经开始，请前往观看直播。")
+                                .setMessage("您预约的直播会议 - " + finalLiveName + " - 已经开始，请前往观看直播。")
                                 .setPositiveButton("确定", new OnClickListener() {
 
                                     @Override
@@ -114,7 +103,7 @@ public class AlarmActivity extends BaseActivity {
                         liveName = newTitle.split("#@#")[1];
                         final String finalLiveName = liveName;
                         new AlertDialog.Builder(AlarmActivity.this).setCancelable(false).setTitle("Reminder")
-                                .setMessage("The live you reserved has begun " + newTitle + ". Please click \"Yes\" and enjoy it.")
+                                .setMessage("The live you reserved has begun " + finalLiveName + ". Please click \"Yes\" and enjoy it.")
                                 .setPositiveButton("Yes", new OnClickListener() {
 
                                     @Override

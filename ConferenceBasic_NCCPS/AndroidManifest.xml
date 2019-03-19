@@ -66,9 +66,17 @@
         android:label="@string/app_name"
         android:largeHeap="true"
         android:theme="@style/AppBaseTheme">
+        <!--适配大屏-->
         <meta-data
             android:name="android.max_aspect"
             android:value="2.1" />
+        <!--今日头条适配方法-->
+        <meta-data
+            android:name="design_width_in_dp"
+            android:value="360"/>
+        <meta-data
+            android:name="design_height_in_dp"
+            android:value="640"/>
         <!-- 配置 -->
         <!-- <meta-data -->
         <!-- android:name="com.android.incongress.cd.conference.utils.glide.SimpleGlideModule" -->
@@ -113,6 +121,11 @@
         </activity>
         <activity
             android:name="com.android.incongress.cd.conference.fragments.cit_live.CitLiveFragment"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="com.android.incongress.cd.conference.fragments.cit_live.CitLiveActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" />

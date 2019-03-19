@@ -1,9 +1,8 @@
 package com.android.incongress.cd.conference.fragments.me;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,25 +10,22 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.incongress.cd.conference.HomeActivity;
-import com.android.incongress.cd.conference.WebViewContainerActivity;
-import com.android.incongress.cd.conference.adapters.MessageStationAdapter;
 import com.android.incongress.cd.conference.adapters.MindBookListAdapter;
 import com.android.incongress.cd.conference.api.CHYHttpClientUsage;
 import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.BaseFragment;
 import com.android.incongress.cd.conference.base.Constants;
-import com.android.incongress.cd.conference.beans.CollegeListDetailBean;
-import com.android.incongress.cd.conference.beans.MessageBean;
+import com.android.incongress.cd.conference.beans.AlertBean;
+import com.android.incongress.cd.conference.beans.LiveInfoBean;
 import com.android.incongress.cd.conference.beans.MyOrderCourse;
-import com.android.incongress.cd.conference.fragments.DynamicHomeFragment;
+import com.android.incongress.cd.conference.model.Alert;
 import com.android.incongress.cd.conference.model.ConferenceDbUtils;
+import com.android.incongress.cd.conference.model.LiveForOrderInfo;
 import com.android.incongress.cd.conference.model.Meeting;
 import com.android.incongress.cd.conference.save.SharePreferenceUtils;
-import com.android.incongress.cd.conference.utils.JSONCatch;
-import com.android.incongress.cd.conference.utils.LogUtils;
-import com.android.incongress.cd.conference.utils.StringUtils;
+import com.android.incongress.cd.conference.utils.AlermClock;
+import com.android.incongress.cd.conference.utils.NetWorkUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
-import com.android.incongress.cd.conference.widget.StatusBarUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
@@ -38,8 +34,6 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 import com.umeng.analytics.MobclickAgent;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -57,9 +51,9 @@ public class MyMindBookListFragment extends BaseFragment implements MindBookFrag
 
     protected XRecyclerView mRecyclerView;
     private LinearLayout ll_tips;
-    private int mCurrentPage = 1;
     private static final String BUNDLE_TIME = "order_title";
     private List<Meeting> mMeetingBeans = new ArrayList<>();
+    private List<LiveForOrderInfo> mLiveBeans = new ArrayList<>();
     private TextView tv_tips;
     private String mTitle;
 
@@ -118,13 +112,74 @@ public class MyMindBookListFragment extends BaseFragment implements MindBookFrag
     public void onRefresh() {
         //刷新
         if (mTitle.equals(getString(R.string.schedule))) {
+            if(!NetWorkUtils.isNetworkConnected(getActivity())){
+                mRecyclerView.refreshComplete();
+                ToastUtils.showToast(getString(R.string.nowifi));
+                return;
+            }
             getMyOrderCourse();
         } else if (mTitle.equals(getString(R.string.question_meeting))) {
             getMyDaySchedule();
-        } else {
+        } else if(mTitle.equals(getString(R.string.live))){
+            getMyLive();
+        }else {
             ll_tips.setVisibility(View.VISIBLE);
             mRecyclerView.refreshComplete();
         }
+    }
+    //获取我的直播
+    private void getMyLive() {
+        mOrderBeans.clear();
+        mLiveBeans = ConferenceDbUtils.getLivesByOrder();
+        for (int i = 0; i < mLiveBeans.size(); i++) {
+            LiveForOrderInfo liveBean = mLiveBeans.get(i);
+            MyOrderCourse.ArrayBean arrayBean = new MyOrderCourse.ArrayBean();
+            arrayBean.setType(4);
+            arrayBean.setTime(liveBean.getSessionDay()+" "+liveBean.getTime());
+            arrayBean.setTopic(liveBean.getSessionGroupName());
+            mOrderBeans.add(arrayBean);
+        }
+        if (mOrderBeans.size() == 0) {
+            ll_tips.setVisibility(View.VISIBLE);
+        } else {
+            ll_tips.setVisibility(View.GONE);
+            mAdapter.notifyDataSetChanged();
+        }
+        mRecyclerView.refreshComplete();
+    }
+    //删除我的预约直播
+    private void deleteMyLive(int position) {
+        LiveForOrderInfo Beans = ConferenceDbUtils.getLiveBean(mLiveBeans.get(position).getSessionGroupId());
+        //添加需要删除的闹钟提醒
+        Alert alertbean = new Alert();
+        if (!TextUtils.isEmpty(Beans.getStartTime()) && !TextUtils.isEmpty(Beans.getTime())) {
+            String[] timeString = Beans.getTime().split("-");
+            alertbean.setDate(Beans.getSessionDay());
+            alertbean.setStart(timeString[0]);
+            alertbean.setEnd(timeString[1]);
+        } else {
+            ToastUtils.showToast("直播时间不正确，请联系管理员");
+            return;
+        }
+        alertbean.setEnable(1);
+        alertbean.setRelativeid(String.valueOf(Beans.getSessionGroupId()));
+        alertbean.setRepeatdistance("5");
+        alertbean.setRepeattimes("0");
+        alertbean.setRoom(Beans.getLiveClassesName());
+        alertbean.setIdenId(Beans.getSessionGroupId());
+        alertbean.setTitle(Beans.getSessionGroupName());
+        alertbean.setLiveUrl(Beans.getLiveUrl());
+        alertbean.setType(AlertBean.TYPE_LIVE); //3代表直播
+        AlermClock.disableAlert(AppApplication.getContext(),alertbean);
+        Beans.delete();
+        mOrderBeans.remove(position);
+        mAdapter.notifyDataSetChanged();
+        ToastUtils.showToast("删除成功");
+        ll_tips.setVisibility(View.GONE);
+        if(mOrderBeans.size() == 0){
+            ll_tips.setVisibility(View.VISIBLE);
+        }
+
     }
 
     //获取我的日程
@@ -152,8 +207,21 @@ public class MyMindBookListFragment extends BaseFragment implements MindBookFrag
     private void CancelMySchedule(int position){
         mMeetingBeans.clear();
         mMeetingBeans = ConferenceDbUtils.getMeetingsByAttention("1");
-        mMeetingBeans.get(position).setAttention(0);
-        if(mMeetingBeans.get(position).save()){
+        Meeting meeting = mMeetingBeans.get(position);
+        Alert alertbean = new Alert();
+        alertbean.setDate(meeting.getMeetingDay());
+        alertbean.setEnable(1);
+        alertbean.setEnd(meeting.getEndTime());
+        alertbean.setRelativeid(String.valueOf(meeting.getSessionGroupId()));
+        alertbean.setRepeatdistance("5");
+        alertbean.setRepeattimes("0");
+        alertbean.setIdenId(meeting.getMeetingId());
+        alertbean.setStart(meeting.getStartTime());
+        alertbean.setTitle(meeting.getTopic() + "#@#" + meeting.getTopicEn());
+        alertbean.setType(AlertBean.TYPE_MEETING);
+        AlermClock.disableAlert(AppApplication.getContext(),alertbean);
+        meeting.setAttention(0);
+        if(meeting.save()){
             mOrderBeans.remove(position);
             mAdapter.notifyDataSetChanged();
             ll_tips.setVisibility(View.GONE);
@@ -231,6 +299,8 @@ public class MyMindBookListFragment extends BaseFragment implements MindBookFrag
             deleteMyOrderCourse(mOrderBeans.get(position).getTopic(), position);
         }else if(mTitle.equals(getString(R.string.question_meeting))){
             CancelMySchedule(position);
+        }else if(mTitle.equals(getString(R.string.live))){
+            deleteMyLive(position);
         }
     }
 

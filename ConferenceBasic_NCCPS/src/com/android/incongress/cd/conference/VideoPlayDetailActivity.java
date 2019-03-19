@@ -143,7 +143,11 @@ public class VideoPlayDetailActivity extends AppCompatActivity implements OnVide
         if (videoPlay != null) {
             videoPlay.pause();
         }
-        MobclickAgent.onPageEnd(Constants.ACTIVITY_COLLEGE_PLAY_BDY);
+        if(videoBean!=null){
+            MobclickAgent.onPageEnd(Constants.FRAGMENT_COLLEGEFRAGMENT_DETIAL+StringUtils.getNeedString(videoBean.getTitle()));
+        }else if(videoPlayBean!=null){
+            MobclickAgent.onPageEnd(Constants.FRAGMENT_COLLEGEFRAGMENT_DETIAL+StringUtils.getNeedString(videoPlayBean.getTitle()));
+        }
     }
 
     @Override
@@ -169,6 +173,10 @@ public class VideoPlayDetailActivity extends AppCompatActivity implements OnVide
     @Override
     protected void onResume() {
         super.onResume();
-        MobclickAgent.onPageStart(Constants.ACTIVITY_COLLEGE_PLAY_BDY);
+        if(videoBean!=null){
+            MobclickAgent.onPageStart(Constants.FRAGMENT_COLLEGEFRAGMENT_DETIAL+StringUtils.getNeedString(videoBean.getTitle()));
+        }else if(videoPlayBean!=null){
+            MobclickAgent.onPageStart(Constants.FRAGMENT_COLLEGEFRAGMENT_DETIAL+StringUtils.getNeedString(videoPlayBean.getTitle()));
+        }
     }
 }

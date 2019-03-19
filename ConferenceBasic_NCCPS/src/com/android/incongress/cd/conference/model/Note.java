@@ -1,14 +1,14 @@
 package com.android.incongress.cd.conference.model;
 
 import org.litepal.annotation.Column;
-import org.litepal.crud.DataSupport;
+import org.litepal.crud.LitePalSupport;
 
 import java.io.Serializable;
 
 /**
  * Created by Jacky on 2016/7/25.
  */
-public class Note extends DataSupport  implements Serializable{
+public class Note extends LitePalSupport  implements Serializable{
     private String title;
     private String date;
     private String start;

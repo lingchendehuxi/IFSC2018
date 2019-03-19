@@ -1,12 +1,12 @@
 package com.android.incongress.cd.conference.model;
 
 import org.litepal.annotation.Column;
-import org.litepal.crud.DataSupport;
+import org.litepal.crud.LitePalSupport;
 
 /**
  * Created by Jacky on 2016/7/25.
  */
-public class Ad extends DataSupport {
+public class Ad extends LitePalSupport {
 
     /**
      * adId : 1777
@@ -135,7 +135,7 @@ public class Ad extends DataSupport {
         this.viewLevel = viewLevel;
     }
 
-    public static class CreateTimeBean extends DataSupport{
+    public static class CreateTimeBean extends LitePalSupport{
         private int date;
         private int day;
         private int hours;

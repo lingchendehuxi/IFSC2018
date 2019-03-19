@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <litepal>
-    <dbname value="conference_csccm"></dbname>
+    <dbname value="conference_cit"></dbname>
     <version value="1"></version>
 
     <list>
@@ -28,6 +28,7 @@
         <mapping class="com.android.incongress.cd.conference.beans.MyFieldBean"></mapping>
         <mapping class="com.android.incongress.cd.conference.beans.BusRemindBean"></mapping>
         <mapping class="com.android.incongress.cd.conference.model.MeetingRemindBean"></mapping>
+        <mapping class="com.android.incongress.cd.conference.model.LiveForOrderInfo"></mapping>
     </list>
 
 </litepal>

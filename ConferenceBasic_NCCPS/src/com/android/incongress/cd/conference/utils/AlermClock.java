@@ -4,10 +4,8 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.text.format.DateFormat;
 import android.util.Log;
 
@@ -16,7 +14,6 @@ import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.beans.AlertBean;
 import com.android.incongress.cd.conference.model.Alert;
 import com.android.incongress.cd.conference.model.ConferenceDbUtils;
-import com.android.incongress.cd.conference.model.Meeting;
 import com.android.incongress.cd.conference.save.SharePreferenceUtils;
 
 import java.text.ParseException;
@@ -27,7 +24,7 @@ import java.util.List;
 
 public class AlermClock {
 
-    public static final String INTENT_ALERT = "com.android.incongress.cd.conference.alarm_start";
+    public static final String INTENT_ALERT = AppApplication.getContext().getPackageName()+"alarm_start";
     private final static String DM12 = "E h:mm aa";
     private final static String DM24 = "E k:mm";
     public static final String KEY_BEFORE = "before";
@@ -35,6 +32,7 @@ public class AlermClock {
     public static final String KEY_DISTANCE = "distance";
     public static final String KEY_ENABLE = "enable";
     public static final String KEY_CONVER = "com.android.project";
+    private static final String KEY_DATA = "content://calendar/calendar_alerts/1";
 
     final static String M24 = "kk:mm";
 
@@ -45,19 +43,12 @@ public class AlermClock {
         }
         calculateNextAlert(alertBean);
     }
-
+    //删除闹钟类，取消闹钟提醒
     public static void disableClock(Alert alertBean) {
         if (alertBean == null) {
             return;
         }
         disableAlert(AppApplication.getContext(), alertBean);
-        ConferenceDbUtils.deleteAlert(alertBean);
-    }
-    //删除Session闹钟
-    public static void deleteClock(Alert alertBean) {
-        if (alertBean == null) {
-            return;
-        }
         ConferenceDbUtils.deleteAlert(alertBean);
     }
 
@@ -67,13 +58,13 @@ public class AlermClock {
         List<Alert> lists = ConferenceDbUtils.getAllAlert();
         for (int i = 0; i < lists.size(); i++) {
             alarm = lists.get(i);
-            alarm.setTime(calculateAlarm(alarm.getDate(),alarm.getStart()).getTimeInMillis());
+            alarm.setTime(calculateAlarm(alarm.getDate(),alarm.getStart(),alarm.getType()).getTimeInMillis());
             Calendar c = Calendar.getInstance();
             c.setTimeInMillis(alarm.getTime());
             //String timeString = CommonUtils.fortmatDate(c.getTime());
             //Toast.makeText(context, timeString, Toast.LENGTH_LONG).show();
             if (alarm.getTime() < now) {
-                deleteClock(alarm);
+                disableClock(alarm);
             }
             enableAlert(context, alarm, alarm.getTime());
         }
@@ -85,8 +76,8 @@ public class AlermClock {
         List<Alert> lists = ConferenceDbUtils.getAllAlert();
         for (int i = 0; i < lists.size(); i++) {
             Alert bean = lists.get(i);
-            if (now > calculateAlarm(bean.getDate(),bean.getStart()).getTimeInMillis()) {
-                deleteClock(bean);
+            if (now > calculateAlarm(bean.getDate(),bean.getStart(),bean.getType()).getTimeInMillis()) {
+                disableClock(bean);
             }
         }
     }
@@ -101,7 +92,7 @@ public class AlermClock {
     //session添加闹钟
     public static void calculateNextAlert(Alert alertBean) {
         long now = System.currentTimeMillis();
-        alertBean.setTime(calculateAlarm(alertBean.getDate(),alertBean.getStart()).getTimeInMillis());
+        alertBean.setTime(calculateAlarm(alertBean.getDate(),alertBean.getStart(),alertBean.getType()).getTimeInMillis());
         Calendar c = Calendar.getInstance();
         c.setTimeInMillis(alertBean.getTime());
         String timeString = CommonUtils.fortmatDate(c.getTime());
@@ -111,7 +102,7 @@ public class AlermClock {
             ToastUtils.showToast("日程时间已过");
             Log.d("test", "calculateNextAlert: 删除闹钟"+alertBean.getTime());
             System.out.println("-----delete delete delete -----");
-            deleteClock(alertBean);
+            disableClock(alertBean);
             return;
         }
         enableAlert(AppApplication.getContext(), alertBean, alertBean.getTime());
@@ -140,7 +131,7 @@ public class AlermClock {
         return c;
     }
 
-    static Calendar calculateAlarm(String date,String start) {
+    static Calendar calculateAlarm(String date,String start,int type) {
 
         // start with now
         Calendar c = Calendar.getInstance();
@@ -165,7 +156,11 @@ public class AlermClock {
             c.set(Calendar.MONTH, monthAndDate.getMonth());
             c.set(Calendar.DAY_OF_MONTH, monthAndDate.getDate());
             int before = SharePreferenceUtils.getAppInt(AlermClock.KEY_BEFORE, 5);
-            c.add(Calendar.MINUTE, -before);
+            if(type == AlertBean.TYPE_LIVE){
+                c.add(Calendar.MINUTE, 0);
+            }else {
+                c.add(Calendar.MINUTE, -before);
+            }
             return c;
         } catch (ParseException e) {
 
@@ -183,14 +178,17 @@ public class AlermClock {
         AlarmManager am = (AlarmManager)
                 context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context,AlarmActivity.class);
-        intent.putExtra("type",5);
+        intent.putExtra("type",alarm.getType());
         intent.putExtra("date",alarm.getDate());
         intent.putExtra("title",alarm.getTitle());
         intent.putExtra("start",alarm.getStart());
         intent.putExtra("end",alarm.getEnd());
         intent.putExtra("room",alarm.getRoom());
+        if(alarm.getType() == AlertBean.TYPE_LIVE){
+            intent.putExtra("liveUrl",alarm.getLiveUrl());
+        }
         PendingIntent sender = PendingIntent.getActivity(
-                AppApplication.getContext(), alarm.getId(), intent, 0);
+                AppApplication.getContext(), alarm.getIdenId(), intent, PendingIntent.FLAG_CANCEL_CURRENT);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             am.setExact(AlarmManager.RTC_WAKEUP, atTimeInMillis, sender);
         }else {
@@ -206,13 +204,27 @@ public class AlermClock {
     /**
      * Disables alert in AlarmManger and StatusBar.
      */
-    static void disableAlert(Context context, Alert mbean) {
+    public static void disableAlert(Context context, Alert mbean) {
         AlarmManager am = (AlarmManager)
                 context.getSystemService(Context.ALARM_SERVICE);
-        PendingIntent sender = PendingIntent.getBroadcast(
-                AppApplication.getContext(), mbean.getId(), new Intent(INTENT_ALERT),
-                PendingIntent.FLAG_CANCEL_CURRENT);
-        am.cancel(sender);
+        Intent intent = new Intent(context,AlarmActivity.class);
+        intent.putExtra("type",mbean.getType());
+        intent.putExtra("date",mbean.getDate());
+        intent.putExtra("title",mbean.getTitle());
+        intent.putExtra("start",mbean.getStart());
+        intent.putExtra("end",mbean.getEnd());
+        intent.putExtra("room",mbean.getRoom());
+        if(mbean.getType() == AlertBean.TYPE_LIVE){
+            intent.putExtra("liveUrl",mbean.getLiveUrl());
+        }
+        PendingIntent sender = PendingIntent.getActivity(
+                AppApplication.getContext(), mbean.getIdenId(), intent,
+                PendingIntent.FLAG_NO_CREATE);
+        if(sender!=null){
+            am.cancel(sender);
+        }else {
+            Log.d("sgqTest", "disableAlert: ");
+        }
     }
 
     private static String formatDayAndTime(final Context context, Calendar c) {

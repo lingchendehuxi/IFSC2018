@@ -1,8 +1,10 @@
 package com.android.incongress.cd.conference.fragments;
 
 import android.animation.ValueAnimator;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
@@ -47,6 +49,7 @@ import com.android.incongress.cd.conference.fragments.college.CollegeHomeFragmen
 import com.android.incongress.cd.conference.fragments.exhibitor.ExhibitorsActionFragment;
 import com.android.incongress.cd.conference.fragments.exhibitor.NewExhibitorsActionFragment;
 import com.android.incongress.cd.conference.fragments.interactive.HdSessionActionFragment;
+import com.android.incongress.cd.conference.fragments.live.LiveFragment;
 import com.android.incongress.cd.conference.fragments.me.PersonCenterFragment;
 import com.android.incongress.cd.conference.fragments.meeting_guide.NewMeetingInfoFragment;
 import com.android.incongress.cd.conference.fragments.meeting_schedule.MeetingScheduleListActionFragment;
@@ -66,6 +69,7 @@ import com.android.incongress.cd.conference.fragments.search_speaker.SpeakerSear
 import com.android.incongress.cd.conference.fragments.wall_poster.PosterFragment;
 import com.android.incongress.cd.conference.model.Ad;
 import com.android.incongress.cd.conference.model.ConferenceDbUtils;
+import com.android.incongress.cd.conference.save.SharePreferenceUtils;
 import com.android.incongress.cd.conference.utils.ActivityUtils;
 import com.android.incongress.cd.conference.utils.ArrayUtils;
 import com.android.incongress.cd.conference.utils.CommonUtils;
@@ -75,6 +79,7 @@ import com.android.incongress.cd.conference.utils.JSONCatch;
 import com.android.incongress.cd.conference.utils.MyLogger;
 import com.android.incongress.cd.conference.utils.PicUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
+import com.android.incongress.cd.conference.utils.cache.CacheClearUtils;
 import com.android.incongress.cd.conference.widget.StatusBarUtil;
 import com.android.incongress.cd.conference.widget.zxing.activity.CaptureActivity;
 import com.android.incongress.cd.conference.widget.zxing.activity.QRCodeCaptureActivity;
@@ -83,6 +88,7 @@ import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 import com.umeng.analytics.MobclickAgent;
+import com.zyp.cardview.YcCardView;
 
 import org.apache.http.util.EncodingUtils;
 import org.json.JSONArray;
@@ -105,7 +111,8 @@ import cz.msebera.android.httpclient.Header;
  */
 
 public class NewDynamicHomeFragment extends BaseFragment implements View.OnClickListener {
-    private LinearLayout mLlConstainer, marquee_layout;
+    private LinearLayout mLlConstainer;
+    private YcCardView marquee_layout;
     private ViewFlipper mMarqueeView;
     private Row mRow;
     private RecyclerView mRecyclerView;
@@ -171,7 +178,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
         zk = Constants.HOME_CLICK_POSITION_INNER ? (ImageView) view.findViewById(R.id.zk_inner_button) : (ImageView) view.findViewById(R.id.zk_button);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.courseware_recycler);
         mRecyclerView.setFocusable(false);
-        marquee_layout = (LinearLayout) view.findViewById(R.id.marquee_layout);
+        marquee_layout = view.findViewById(R.id.marquee_layout);
         courseware_text = (LinearLayout) view.findViewById(R.id.courseware_layout);
         mMarqueeView = (ViewFlipper) view.findViewById(R.id.viewflipper);
 
@@ -684,14 +691,13 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
                     case PROGRAM:
                         /*Intent intent = new Intent(getActivity(),MainMyActivity.class);
                         startActivity(intent);*/
-                        /*//看日程
-                        if (AppApplication.systemLanguage == 1) {
+                        //看日程
+                        /*if (AppApplication.systemLanguage == 1) {
                             goLookSchedule(rowBean.getIconName());
                         } else {
                             goLookSchedule(rowBean.getIconEnName());
                         }*/
-                        goQRScane();
-
+                        goLive();
                         break;
                     case SEARCH:
                         //差日程
@@ -741,7 +747,12 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
                         break;
                     case DEMAND:
                         //学院
-                        goCollege();
+                        if (AppApplication.systemLanguage == 1) {
+                            goCollege(rowBean.getIconName());
+                        } else {
+                            goCollege(rowBean.getIconEnName());
+                        }
+                        //goLive();
                         break;
                     case EXHIBITORS:
                         //参展商
@@ -835,6 +846,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
                             goVenuepicture(rowBean.getIconEnName());
                         }
                         break;
+                    //日程预览图
                     case SCHEDULE_PREVIEW:
                         goSchedulePreview();
                         break;
@@ -933,10 +945,17 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
     }
 
     /**
-     * 直播
+     * 老直播
+     */
+    private void goOldLive() {
+        getActivity().startActivity(new Intent(getActivity(), CitLiveFragment.class));
+    }
+
+    /**
+     * 新直播
      */
     private void goLive() {
-        getActivity().startActivity(new Intent(getActivity(), CitLiveFragment.class));
+        action(new LiveFragment(), R.string.live, false, false, false);
     }
 
     /**
@@ -1020,6 +1039,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
         }
     }
 
+    //场馆图
     private void goVenuepicture(String title) {
         action(new NewMeetingInfoFragment(), title, false, false, false);
     }
@@ -1080,6 +1100,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
         View scane = CommonUtils.initView(this.getActivity(), R.layout.title_right_image);
         ((ImageView) scane).setImageResource(R.drawable.scane_scane);
         PosterFragment post = new PosterFragment();
+        post.setRightView(scane);
         action(post, title, scane, false, false, false);
     }
 
@@ -1099,7 +1120,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
     }
 
     /**
-     * 班车
+     * 班车提醒
      */
     private void goBus(String title) {
         action(new MeetingBusRemindAllFragment(), title, false, false, false);
@@ -1115,13 +1136,12 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
     /**
      * 学院
      */
-    private void goCollege() {
-        CollegeHomeFragment collegeHomeFragment = new CollegeHomeFragment();
+    private void goCollege(String titleName) {
         /*View titleView = CommonUtils.initView(getActivity(), R.layout.title_segment);
         searchFragment.setCenterView(titleView);*/
         //goQuestions("提问");
         //只有日程搜索
-        action(collegeHomeFragment, null);
+        action(CollegeHomeFragment.getInstance(titleName), null);
         //action(searchFragment, title, searchView, false, false, false);
     }
 
@@ -1135,9 +1155,22 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
     /**
      * 扫一扫
      */
-    private void goScane() {
-        Intent intent = new Intent(getActivity(), CaptureActivity.class);
-        getActivity().startActivityForResult(intent, HomeActivity.REQUEST_SCANE);
+    public void goScane() {
+        if (!SharePreferenceUtils.getAppBoolean(Constants.QRCODE_SCAN_SWITCH, false)) {
+            SharePreferenceUtils.saveAppBoolean(Constants.QRCODE_SCAN_SWITCH, true);
+            AlertDialog.Builder builder2 = new AlertDialog.Builder(getActivity());
+            builder2.setTitle(R.string.qr_code_title).setMessage(R.string.qr_code_tips).setPositiveButton(R.string.positive_button, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent intent = new Intent(getActivity(), CaptureActivity.class);
+                    getActivity().startActivityForResult(intent, HomeActivity.REQUEST_SCANE);
+                }
+            }).show();
+        } else {
+            Intent intent = new Intent(getActivity(), CaptureActivity.class);
+            getActivity().startActivityForResult(intent, HomeActivity.REQUEST_SCANE);
+        }
+
     }
 
     /**

@@ -592,7 +592,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 ll_login.setVisibility(View.VISIBLE);
                 ll_bottom_wx.setVisibility(View.GONE);
                 we_login.setVisibility(View.GONE);
-                countDownTextView.setCountDownMillis(30000);
+                countDownTextView.setCountDownMillis(60000);
                 countDownTextView.start();
                 tv_number_code.setText("验证码已发送   " + mUserMobile);
                 doGetSms(mUserMobile, Constants.LanguageChinese);

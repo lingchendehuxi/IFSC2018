@@ -1,13 +1,13 @@
 package com.android.incongress.cd.conference.beans;
 
-import org.litepal.crud.DataSupport;
+import org.litepal.crud.LitePalSupport;
 
 /**
  * Created by Jacky on 2016/12/7 0007.
  * 我的领域字段
  */
 
-public class MyFieldBean extends DataSupport {
+public class MyFieldBean extends LitePalSupport {
     private String fieldName;
     private int fieldState;
 

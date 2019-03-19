@@ -3,14 +3,14 @@ package com.android.incongress.cd.conference.model;
 import android.os.Parcelable;
 
 import org.litepal.annotation.Column;
-import org.litepal.crud.DataSupport;
+import org.litepal.crud.LitePalSupport;
 
 import java.io.Serializable;
 
 /**
  * Created by Jacky on 2016/7/25.
  */
-public class Session extends DataSupport implements Serializable {
+public class Session extends LitePalSupport implements Serializable {
 
     /**
      * sessionGroupId : 34143

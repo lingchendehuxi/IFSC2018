@@ -7,8 +7,9 @@ import java.io.Serializable;
 
 //大会提醒
 public class AlertBean implements Parcelable {
-	public final static int TYPE_SESSTION = 0;
-	public final static int TYPE_MEETING = 1;
+	public final static int TYPE_SESSTION = 5;
+	public final static int TYPE_MEETING = 5;
+	public final static int TYPE_LIVE = 3;
 	public final static int TYPE_DISABLE = 0;
 	public final static int TYPE_ENABLE = 1;
 

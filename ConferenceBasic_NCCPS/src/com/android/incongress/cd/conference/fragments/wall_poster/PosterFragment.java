@@ -10,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -38,9 +37,7 @@ import com.android.incongress.cd.conference.base.BaseFragment;
 import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.beans.BBFiledTypeBean;
 import com.android.incongress.cd.conference.beans.DZBBBean;
-import com.android.incongress.cd.conference.beans.MyOrderCourse;
-import com.android.incongress.cd.conference.data.JsonParser;
-import com.android.incongress.cd.conference.fragments.meeting_schedule.MeetingScheduleListActionFragment;
+import com.android.incongress.cd.conference.fragments.NewDynamicHomeFragment;
 import com.android.incongress.cd.conference.save.SharePreferenceUtils;
 import com.android.incongress.cd.conference.utils.DensityUtil;
 import com.android.incongress.cd.conference.utils.LogUtils;
@@ -49,7 +46,6 @@ import com.android.incongress.cd.conference.utils.ToastUtils;
 import com.android.incongress.cd.conference.utils.WrapContentLinearLayoutManager;
 import com.android.incongress.cd.conference.widget.StatusBarUtil;
 import com.android.incongress.cd.conference.widget.popup.ChooseBBPopupWindow;
-import com.android.incongress.cd.conference.widget.popup.ChooseTimePopupWindow;
 import com.android.incongress.cd.conference.widget.zxing.activity.CaptureActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -340,7 +336,10 @@ public class PosterFragment extends BaseFragment {
                             e.printStackTrace();
                         }
                     }
-                    myHandler.sendEmptyMessageDelayed(EDIT_OK, 200);
+                    if(myHandler.hasMessages(EDIT_OK)){
+                        myHandler.removeMessages(EDIT_OK);
+                    }
+                    myHandler.sendEmptyMessageDelayed(EDIT_OK, 1000);
                 }
             });
 
@@ -453,6 +452,17 @@ public class PosterFragment extends BaseFragment {
             }
 
         });
+    }
+    public void setRightView(View view) {
+        if (view != null) {
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), CaptureActivity.class);
+                    getActivity().startActivityForResult(intent, HomeActivity.REQUEST_SCANE);
+                }
+            });
+        }
     }
 
     private ChooseBBPopupWindow popupWindow;

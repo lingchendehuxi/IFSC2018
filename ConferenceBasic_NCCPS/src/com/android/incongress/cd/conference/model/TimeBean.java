@@ -1,11 +1,11 @@
 package com.android.incongress.cd.conference.model;
 
-import org.litepal.crud.DataSupport;
+import org.litepal.crud.LitePalSupport;
 
 /**
  * Created by Jacky on 2016/8/24.
  */
-public class TimeBean extends DataSupport {
+public class TimeBean extends LitePalSupport {
 
     /**
      * startTime : 8

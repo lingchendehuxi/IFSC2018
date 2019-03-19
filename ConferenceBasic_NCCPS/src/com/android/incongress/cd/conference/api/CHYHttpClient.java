@@ -11,28 +11,33 @@ import com.loopj.android.http.RequestParams;
  */
 public class CHYHttpClient {
     //----------------------  接口地址1  测试-------------------------
-    /*//测试服务器
-    private static final String BASE_URL = "http://incongress.cn:8090/Conferences/chyApiHttps.do"; //新接口地址都在这里面，因为Https的关系 测试服
-    //新添加的服务器地址 包括壁报、
-    private static final String BASE_NEW_URL = "http://incongress.cn:8090/chyNewApi.do?";//"http://incongress.cn:8090/chyNewApi.do?"
     //测试服务器
-    public static final String BASE_URL2 = "http://incongress.cn:8090/Conferences/conferencesHttps.do?";
-    //测试服务器
-    public static final String BASE_URL_COLEGE = "http://incongress.cn:8090";*/
+    public static final String BASE_URL = "http://incongress.cn:8090"; //新接口地址都在这里面，因为Https的关系 测试服
     //新添加本地服务器
-    private static final String BASE_LOCAL= "http://192.168.0.157/consWebapp.do?";//"http://incongress.cn:8090/chyNewApi.do?"
+    private static final String BASE_LOCAL= "http://192.168.0.153/chyNewApi.do?";//"http://incongress.cn:8090/chyNewApi.do?"
     //----------------------  接口地址2   正式-------------------------
     //正式服务器
-    private static final String BASE_URL = "http://app.incongress.cn/Conferences/chyApiHttps.do?"; //新接口地址都在这里面，因为Https的关系 测试服
-    //正式 包括壁报、
-    private static final String BASE_NEW_URL = "http://app.incongress.cn/chyNewApi.do?";//"http://incongress.cn:8090/chyNewApi.do?"
-    //正式服务器
-    public static final String BASE_URL2 = "http://app.incongress.cn/Conferences/conferencesHttps.do?";
-    //正式服务器
-    public static final String BASE_URL_COLEGE = "http://app.incongress.cn";
+//    public static final String BASE_URL = "http://app.incongress.cn";
 
+    /**
+     * 接口集合
+     */
+    //学院接口
+    private static final String BASE_EXAM_TABLE = "/Exam/data?";
+    //学院火速上线列表接口
+    private static final String BASE_FAST_ONLINE = "/sessiongroup.do?";
+    //二维码扫描、直播列表
+    private static final String BASE_LIVE_LIST = "/consWebapp.do?";
+    //壁报
+    public static final String BASE_POSTER_LIST = "/chyNewApi.do?";
+    //邮箱 登陆 信息修改
+    private static final String BASE_INFO_LOGIN = "/Conferences/conferencesHttps.do?";
+    //大部分老接口
+    private static final String BASE_COMMON_URL = "/Conferences/chyApiHttps.do?";
+
+
+    //此超时不生效，使用的是默认的10*1000
     private static final int TIME_OUT = 0;
-
     private static AsyncHttpClient client = getHttpClient();
 
     private static AsyncHttpClient getHttpClient() {
@@ -50,15 +55,17 @@ public class CHYHttpClient {
         client.setTimeout(TIME_OUT);
         client.post(getAbsoluteUrl(url), params, responseHandler);
     }
-
+    //大部分老接口
     public static void post(RequestParams params, JsonHttpResponseHandler responseHandler) {
         client.setTimeout(TIME_OUT);
-        client.post(BASE_URL, params, responseHandler);
+        client.post(BASE_URL+BASE_COMMON_URL, params, responseHandler);
     }
+    //壁报
     public static void postNew(RequestParams params, JsonHttpResponseHandler responseHandler) {
         client.setTimeout(TIME_OUT);
-        client.post(BASE_NEW_URL, params, responseHandler);
+        client.post(BASE_URL+BASE_POSTER_LIST, params, responseHandler);
     }
+    //仅仅为了测试本地
     public static void postLOCAL(RequestParams params, JsonHttpResponseHandler responseHandler) {
         client.setTimeout(TIME_OUT);
         client.post(BASE_LOCAL, params, responseHandler);
@@ -70,24 +77,29 @@ public class CHYHttpClient {
     //火速title上线方法名
     public static void postExamTable(RequestParams params, JsonHttpResponseHandler responseHandler) {
         client.setTimeout(TIME_OUT);
-        client.post(BASE_URL_COLEGE+Constants.BASE_EXAM_TABLE, params, responseHandler);
+        client.post(BASE_URL+BASE_EXAM_TABLE, params, responseHandler);
     }
     //火速上线方法
-    public static void postLocal_Other(RequestParams params, JsonHttpResponseHandler responseHandler) {
+    public static void postFastOnLine(RequestParams params, JsonHttpResponseHandler responseHandler) {
         client.setTimeout(TIME_OUT);
-        client.post(BASE_URL_COLEGE+Constants.BASE_LOCAL_LIST, params, responseHandler);
+        client.post(BASE_URL+BASE_FAST_ONLINE, params, responseHandler);
+    }
+    //直播列表 二维码
+    public static void postLiveList(RequestParams params, JsonHttpResponseHandler responseHandler) {
+        client.setTimeout(TIME_OUT);
+        client.post(BASE_URL+BASE_LIVE_LIST, params, responseHandler);
     }
 
     private static String getAbsoluteUrl(String methodName) {
         return BASE_URL + "?method=" + methodName;
     }
-
+    //邮箱 登陆等
     public static void post2(RequestParams params, JsonHttpResponseHandler responseHandler) {
         client.setTimeout(TIME_OUT);
-        client.post(BASE_URL2, params, responseHandler);
+        client.post(BASE_URL+BASE_INFO_LOGIN, params, responseHandler);
     }
     public static void postOther(RequestParams params, String method,JsonHttpResponseHandler responseHandler) {
         client.setTimeout(TIME_OUT);
-        client.post(BASE_URL2+method+"&", params, responseHandler);
+        client.post(BASE_URL+BASE_INFO_LOGIN+method+"&", params, responseHandler);
     }
 }

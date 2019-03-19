@@ -1,13 +1,13 @@
 package com.android.incongress.cd.conference.model;
 
-import org.litepal.crud.DataSupport;
+import org.litepal.crud.LitePalSupport;
 
 /**
  * Created by Jacky on 2016/11/27 0027.
  * 存储会议的id，以及对应的数据版本号
  */
 
-public class ConferenceData extends DataSupport {
+public class ConferenceData extends LitePalSupport {
     private int conferenceId;
     private int dataVersion;
 

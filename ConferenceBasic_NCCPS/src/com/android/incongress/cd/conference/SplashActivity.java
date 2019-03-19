@@ -475,6 +475,19 @@ public class SplashActivity extends BaseActivity {
                     ConferenceDb.createDB(filespath, 0, mUpdateListener);
                     SharePreferenceUtils.saveAppInt(Constants.PREFERENCE_DB_VERSION, Constants.DATA_VERSION);
                     mDbVersion = Constants.DATA_VERSION;
+                    SharePreferenceUtils.saveAppBoolean(Constants.DB_CLEAR,true);
+                }else {
+                    //这里是对当前版本进行一次数据库的转移，重新创建一个
+                    if(!SharePreferenceUtils.getAppBoolean(Constants.DB_CLEAR,false)){
+                        ConferenceDb.deleteAllClass();
+                        //第一次进行数据加载
+                        InputStream zipIn = getResources().openRawResource(R.raw.data1);
+                        FileUtils.unZip(zipIn, filespath);
+                        ConferenceDb.createDB(filespath, 0, mUpdateListener);
+                        SharePreferenceUtils.saveAppInt(Constants.PREFERENCE_DB_VERSION, Constants.DATA_VERSION);
+                        mDbVersion = Constants.DATA_VERSION;
+                        SharePreferenceUtils.saveAppBoolean(Constants.DB_CLEAR,true);
+                    }
                 }
             }
 

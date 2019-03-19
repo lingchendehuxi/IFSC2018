@@ -121,6 +121,7 @@ public class MyMessageListFragment extends BaseFragment implements XRecyclerView
         if(!NetWorkUtils.isNetworkConnected(getActivity())){
             mRecyclerView.refreshComplete();
             ll_tips.setVisibility(View.GONE);
+            mRecyclerView.refreshComplete();
             ToastUtils.showToast(getString(R.string.connect_network));
             return;
         }

@@ -196,7 +196,7 @@ public class MeetingWithSpeakerAdapter extends BaseAdapter {
                         alertbean.setIdenId(bean.getMeetingId());
                         alertbean.setStart(bean.getStartTime());
                         alertbean.setTitle(bean.getTopic() + "#@#" + bean.getTopicEn());
-                        alertbean.setType(AlertBean.TYPE_MEETING);
+                        alertbean.setType(AlertBean.TYPE_MEETING); //5代表会议提醒
 
                         alertbean.save();
                         AlermClock.addClock(alertbean);
@@ -204,7 +204,7 @@ public class MeetingWithSpeakerAdapter extends BaseAdapter {
                 }else {
                     Alert alert = ConferenceDbUtils.getAlertByAlertId(bean.getMeetingId());
                     if(alert!=null){
-                        ConferenceDbUtils.deleteAlert(alert);
+                        AlermClock.disableClock(alert);
                     }
                 }
 

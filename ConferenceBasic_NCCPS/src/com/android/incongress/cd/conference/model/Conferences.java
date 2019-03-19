@@ -1,11 +1,11 @@
 package com.android.incongress.cd.conference.model;
 
-import org.litepal.crud.DataSupport;
+import org.litepal.crud.LitePalSupport;
 
 /**
  * Created by Jacky on 2016/7/25.
  */
-public class Conferences extends DataSupport {
+public class Conferences extends LitePalSupport {
 
 
     /**

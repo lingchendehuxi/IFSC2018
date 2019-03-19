@@ -100,34 +100,6 @@ public class MeetingScheduleListActionFragment extends BaseFragment {
             }
         });
 
-        /*mTvTips.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlphaAnimation alphaAnimation = new AlphaAnimation(1f,0f);
-                alphaAnimation.setDuration(300);
-                alphaAnimation.setAnimationListener(new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        mTvTips.setVisibility(View.GONE);
-                        AppApplication.setSPBooleanValue(Constants.LOOK_SCHEDULE_TIPS, true);
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {
-
-                    }
-                });
-                mTvTips.startAnimation(alphaAnimation);
-            }
-        });
-
-        if(AppApplication.getSPBooleanValue(Constants.LOOK_SCHEDULE_TIPS)) {
-            mTvTips.setVisibility(View.GONE);
-        }*/
         getSessionDays();
         newSessionDaysList = getStringList();
         if(mSessionDaysList.size()!=0){

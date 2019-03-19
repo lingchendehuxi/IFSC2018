@@ -2,12 +2,14 @@ package com.android.incongress.cd.conference.model;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.beans.EsmoListBean;
 import com.android.incongress.cd.conference.beans.EsmosBean;
+import com.android.incongress.cd.conference.beans.LiveInfoBean;
 import com.android.incongress.cd.conference.save.SharePreferenceUtils;
 import com.android.incongress.cd.conference.utils.PinyinConverter;
 import com.google.gson.Gson;
@@ -17,7 +19,9 @@ import org.apache.http.util.EncodingUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.litepal.crud.DataSupport;
+import org.litepal.LitePal;
+import org.litepal.crud.LitePalSupport;
+import org.litepal.tablemanager.Connector;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -63,7 +67,7 @@ public class ConferenceDb {
     private static final int TIME = 12;
 
     public static void createEsmoDB(String path) {
-        DataSupport.deleteAll(EsmosBean.class);
+        LitePal.deleteAll(EsmosBean.class);
 
         FileInputStream is;
         File file;
@@ -109,23 +113,24 @@ public class ConferenceDb {
      * @param path
      */
     public static void createDB(String path, int postion, OnUpdateInfoListener listener) {
+        Connector.getDatabase();
         switch (postion) {
             case DELETE_DATA:
                 //删除数据库
                 try {
-                    DataSupport.deleteAll(Ad.class);
-                    DataSupport.deleteAll(Class.class);
-                    DataSupport.deleteAll(Conferences.class);
-                    DataSupport.deleteAll(Confield.class);
-                    DataSupport.deleteAll(Exhibitor.class);
-                    DataSupport.deleteAll(ExhibitorActivity.class); // 并没有被调用存值
-                    DataSupport.deleteAll(Map.class);
-                    DataSupport.deleteAll(Meeting.class);
-                    DataSupport.deleteAll(Role.class);
-                    DataSupport.deleteAll(Session.class);
-                    DataSupport.deleteAll(Speaker.class);
-                    DataSupport.deleteAll(Tips.class);
-                    DataSupport.deleteAll(TimeBean.class);
+                    LitePal.deleteAll(Ad.class);
+                    LitePal.deleteAll(Class.class);
+                    LitePal.deleteAll(Conferences.class);
+                    LitePal.deleteAll(Confield.class);
+                    LitePal.deleteAll(Exhibitor.class);
+                    LitePal.deleteAll(ExhibitorActivity.class); // 并没有被调用存值
+                    LitePal.deleteAll(Map.class);
+                    LitePal.deleteAll(Meeting.class);
+                    LitePal.deleteAll(Role.class);
+                    LitePal.deleteAll(Session.class);
+                    LitePal.deleteAll(Speaker.class);
+                    LitePal.deleteAll(Tips.class);
+                    LitePal.deleteAll(TimeBean.class);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -473,19 +478,19 @@ public class ConferenceDb {
         if (isUpdate) {
             //删除数据库
 
-            DataSupport.deleteAll(Ad.class);
-            DataSupport.deleteAll(Class.class);
-            DataSupport.deleteAll(Conferences.class);
-            DataSupport.deleteAll(Confield.class);
-            DataSupport.deleteAll(Exhibitor.class);
-            DataSupport.deleteAll(ExhibitorActivity.class);
-            DataSupport.deleteAll(Map.class);
-            DataSupport.deleteAll(Meeting.class);
-            DataSupport.deleteAll(Role.class);
-            DataSupport.deleteAll(Session.class);
-            DataSupport.deleteAll(Speaker.class);
-            DataSupport.deleteAll(Tips.class);
-            DataSupport.deleteAll(TimeBean.class);
+            LitePal.deleteAll(Ad.class);
+            LitePal.deleteAll(Class.class);
+            LitePal.deleteAll(Conferences.class);
+            LitePal.deleteAll(Confield.class);
+            LitePal.deleteAll(Exhibitor.class);
+            LitePal.deleteAll(ExhibitorActivity.class);
+            LitePal.deleteAll(Map.class);
+            LitePal.deleteAll(Meeting.class);
+            LitePal.deleteAll(Role.class);
+            LitePal.deleteAll(Session.class);
+            LitePal.deleteAll(Speaker.class);
+            LitePal.deleteAll(Tips.class);
+            LitePal.deleteAll(TimeBean.class);
         }
 
 
@@ -1045,6 +1050,28 @@ public class ConferenceDb {
             e.printStackTrace();
         }
         return jsonStr;
+    }
+    //删除数据库所有存储的类
+    public static void deleteAllClass(){
+        try {
+            LitePal.deleteAll(Ad.class);
+            LitePal.deleteAll(Class.class);
+            LitePal.deleteAll(Conferences.class);
+            LitePal.deleteAll(Confield.class);
+            LitePal.deleteAll(Exhibitor.class);
+            LitePal.deleteAll(ExhibitorActivity.class); // 并没有被调用存值
+            LitePal.deleteAll(Map.class);
+            LitePal.deleteAll(Meeting.class);
+            LitePal.deleteAll(Role.class);
+            LitePal.deleteAll(Session.class);
+            LitePal.deleteAll(Speaker.class);
+            LitePal.deleteAll(Tips.class);
+            LitePal.deleteAll(TimeBean.class);
+            LitePal.deleteAll(LiveForOrderInfo.class);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private OnUpdateInfoListener mInfoListener;

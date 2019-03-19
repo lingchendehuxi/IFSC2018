@@ -32,7 +32,7 @@
     <string name="home_icon_presidium">Faculty\nExclusive</string>
     <string name="home_newscenter">Media Center</string>
     <string name="home_community">Interactive\nChannel</string>
-    <string name="home_schedule">Detailed\nProgram</string>
+    <string name="home_schedule">Program</string>
     <string name="home_now">Now</string>
     <string name="home_next">Next</string>
     <string name="home_speakersearch">Faculty\nIndex</string>
@@ -71,9 +71,12 @@
     <string name="meeting_schedule_yj">Email</string>
     <string name="meeting_schedule_dx">Message</string>
     <string name="meeting_schedule_room_location">Location map</string>
-    <string name="meeting_schedule_detail_title">Program</string>
+    <string name="meeting_schedule_detail_title">Presentation</string>
     <string name="meeting_schedule_location">Location</string>
     <string name="meeting_schedule_alarm">Alarm</string>
+    <string name="orderLive">To reserve</string>
+    <string name="orderedLive">Reserved</string>
+    <string name="orderRelativeLiveHint">Upcoming</string>
 
     <!-- 我的笔记 -->
 
@@ -406,7 +409,7 @@ Before first use, you’ll need to download the latest conference data. Afterwar
 
     <string name="positive_button">OK</string>
     <string name="negative_button">cancel</string>
-    <string name="session_take_note">Note</string>
+    <string name="session_take_note">Take notes</string>
     <string name="save">Save</string>
     <string name="speaker_detial">Faculty List</string>
     <string name="login_first">Please login first</string>
@@ -422,7 +425,10 @@ Before first use, you’ll need to download the latest conference data. Afterwar
     <string name="complete_your_info">need complete info</string>
     <string name="server_error">something error in server</string>
     <string name="register_success">register success</string>
-    <string name="first_author">Author:</string>
+    <string name="first_author">Author: </string>
+    <string name="rating">Viewers Rating: </string>
+    <string name="point">Point</string>
+    <string name="views">View: </string>
     <string name="send">send</string>
     <string name="given_name">Given Name</string>
     <string name="family_name">Family Name</string>
@@ -536,10 +542,10 @@ Before first use, you’ll need to download the latest conference data. Afterwar
     <string name="get_again">regain</string>
     <string name="other_type_login">Third party account login</string>
     <!--个人中心界面-->
-    <string name="me_remind">remind</string>
-    <string name="me_quiz">quiz</string>
-    <string name="me_post">post</string>
-    <string name="me_note">note</string>
+    <string name="me_remind">My Reminder Alert</string>
+    <string name="me_quiz">My Q&amp;A</string>
+    <string name="me_post">My Posts</string>
+    <string name="me_note">My Notes</string>
     <string name="user_name">Nickname</string>
     <string name="mobile">mobile</string>
     <string name="delete">delete</string>
@@ -554,12 +560,12 @@ Before first use, you’ll need to download the latest conference data. Afterwar
     <string name="my_info">Person Info</string>
     <string name="head_img">head</string>
     <string name="settings_modify_info_title">Userinfo</string>
-    <string name="incongress_modify_person_info">Edit profile photo and nickname</string>
+    <string name="incongress_modify_person_info">Add your Profile Photo and Name</string>
     <!--会议部分-->
     <string name="seach_title_hint">Enter the meeting keyword and start searching quickly！</string>
     <string name="schedule_mind">schedule reminder</string>
     <string name="professor_ask">professor ask</string>
-    <string name="classes_map">classes map</string>
+    <string name="classes_map">Location</string>
     <string name="reset">reset</string>
     <string name="search">search</string>
     <!--包名修改的部分-->

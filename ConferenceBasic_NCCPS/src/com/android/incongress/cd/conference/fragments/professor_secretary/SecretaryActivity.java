@@ -13,9 +13,11 @@ import android.widget.TextView;
 import com.android.incongress.cd.conference.adapters.SecretaryFragmentAdapter;
 import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.BaseActivity;
+import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.beans.ActivityBean;
 import com.android.incongress.cd.conference.beans.SceneShowArrayBean;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
+import com.umeng.analytics.MobclickAgent;
 
 import java.io.Serializable;
 import java.util.List;
@@ -104,5 +106,17 @@ public class SecretaryActivity extends BaseActivity {
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
         mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(Constants.FRAGMENT_SECRETARY);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(Constants.FRAGMENT_SECRETARY);
     }
 }

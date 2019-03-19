@@ -64,11 +64,11 @@ public class DZBBAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         final DZBBBean.ArrayBean bean = mBeans.get(position);
 
         ((MViewHolder) holder).posterCode.setText(bean.getPosterCode());
-        ((MViewHolder) holder).conField.setText("均分：  "+bean.getPoint()+"分");
+        ((MViewHolder) holder).conField.setText(mContext.getString(R.string.rating)+bean.getPoint()+mContext.getString(R.string.point));
         ((MViewHolder) holder).title.setText(bean.getPosterTitle());
         PicUtils.loadImageUrl(mContext,bean.getUrl(),((MViewHolder) holder).poster_image_view);
-        ((MViewHolder) holder).author.setText(mContext.getString(R.string.first_author)+"  "+ bean.getAuthor());
-        ((MViewHolder) holder).jingxuan.setText("浏览：  "+bean.getReadCount());
+        ((MViewHolder) holder).author.setText(mContext.getString(R.string.first_author)+ bean.getAuthor());
+        ((MViewHolder) holder).jingxuan.setText(mContext.getString(R.string.views)+bean.getReadCount());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

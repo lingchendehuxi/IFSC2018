@@ -1,5 +1,6 @@
 package com.android.incongress.cd.conference.base;
 
+import com.android.incongress.cd.conference.api.CHYHttpClient;
 import com.android.incongress.cd.conference.save.SharePreferenceUtils;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 
@@ -55,13 +56,20 @@ public class Constants {
     public static final String FRAGMENT_SCENICXIU = "播客，现场秀";// scenicXiuFragment
     public static final String FRAGMENT_PERSONCENTER ="个人中心";// personCenterFragment
     public static final String FRAGMENT_MESSAGESTATION = "消息站";// messageStationFragment
-    public static final String FRAGMENT_MEETINGSCHEDULELIST = "看日程列表模式";// meetingScheduleListFragment
+    public static final String FRAGMENT_MEETINGSCHEDULELIST = "看日程";// meetingScheduleListFragment
     public static final String FRAGMENT_COLLEGETEXTLIST = "CIT学院文章列表模式";// CollegeListDetailFragment
-    public static final String FRAGMENT_MEETINGSCHEDULECALENDAR = "看日程日历模式";// meetingScheduleCanlendarFragment
-    public static final String FRAGMENT_SESSIONDETAIL = "日程详情页";// sessionDetailFragment
+    public static final String FRAGMENT_MEETINGSCHEDULECALENDAR = "日程一览图";// meetingScheduleCanlendarFragment
+    public static final String FRAGMENT_SESSIONDETAIL = "日程详情_";// sessionDetailFragment
+    public static final String FRAGMENT_NOWFRAGMENT = "正在进行";// nowFragment
+    public static final String FRAGMENT_NEXTFRAGMENT = "即将进行";// NextFragment
+    public static final String FRAGMENT_COLLEGEFRAGMENT = "课件";// CollegeHomeFragment
+    public static final String FRAGMENT_COLLEGEFRAGMENT_DETIAL = "课件详情_";// CollegeHomeFragment
+    public static final String FRAGMENT_SECRETARY = "专家秘书";// CollegeHomeFragment
+    public static final String FRAGMENT_INTERACTION = "现场互动";// HdSessionActionFragment
+
     public static final String FRAGMENT_SPEAKERDETAIL = "讲者详情页";// speakerDetailFragment
     public static final String FRAGMENT_LOCATIONMAP ="定位图页面"; // locationMapFragment
-    public static final String FRAGMENT_PHOTOALBUM ="照片墙界面";
+    public static final String FRAGMENT_PHOTOALBUM ="照片墙";
 
 
     public static final String FRAGMENT_SEARCHSCHEDULE = "查日程";// searchScheduleFragment
@@ -71,20 +79,20 @@ public class Constants {
     public static final String ACTIVITY_WEBVIEW = "网页";// webviewActivity
 
     public static final String FRAGMENT_MEETINGGUIDE = "参会指南";// meetingGuideFragment
-    public static final String FRAGMENT_MEETINGMAPINFO = "场馆图页面";// meetingMapInfoFragment
+    public static final String FRAGMENT_MEETINGMAPINFO = "场馆图";// meetingMapInfoFragment
 
-
-    public static final String FRAGMENT_QUESTIONLIST = "提问列表页面";// questionListFragment
-    public static final String FRAGMENT_MAKEQUESTION = "提问页面";// makeQuestionFragment
+    public static final String FRAGMENT_QUESTIONLIST = "提问";// QuestionSquarFragment
+    public static final String FRAGMENT_SPEARK_SEARCH = "讲者检索";// SpeakerSearchFragment
 
     public static final String FRAGMENT_POSTER = "壁报集"; // posterFragment
-    public static final String FRAGMENT_POSTERDETAIL = "壁报详情_标题";// posterDetailFragment
+    public static final String FRAGMENT_POSTERDETAIL = "壁报详情_";// posterDetailFragment
 
-    public static final String ACTIVITY_COLLEGE = "学院页面";// collegeActivity
+    public static final String FRAGMENT_LIVE = "直播"; // liveFragment
+    public static final String FRAGMENT_LIVE_DETAIL = "直播详情";// posterDetailFragment
+
     public static final String ACTIVITY_COLLEGE_PLAY = "学院页面，播放";// collegeActivity
     public static final String ACTIVITY_COLLEGE_ORDER = "学院页面，预约";// collegeActivity
-    public static final String ACTIVITY_COLLEGE_PLAY_BLWS = "学院页面，播放保利威视";// collegeActivity
-    public static final String ACTIVITY_COLLEGE_PLAY_BDY = "学院页面，播放百度云";// collegeActivity
+    public static final String ACTIVITY_BUS_REMIND = "班车提醒";// MeetingBusRemindAllFragment
 
     public static final String FRAGMENT_EXHIBITORS = "参展商";// exhibitorsFragment
     public static final String FRAGMENT_EXHIBITORSDETAIL = "参展商详情";// exhibitorDetailFragment
@@ -181,6 +189,7 @@ public class Constants {
     /** 检测数据库版本 **/
     public static final String PREFERENCE_DB_VERSION = "db_version";
     public static final String DB_frist = "local2";
+    public static final String DB_CLEAR = "db_clear";
     /** Compas首页版本号 **/
     public static final String COMPASS_VERSION = "compas_version";
 
@@ -245,8 +254,7 @@ public class Constants {
     private static final int CIT_COLLEGE_OFFICIAL = R.string.cit_college_url_official; /** CIT 学院 **/
     private static final int HdSession_QUESTION_LIST_OFFICIAL = R.string.hd_question_list_official; /** 提问列表 **/
     private static final  int MEETING_GUIDE_URL_OFFICIAL = R.string.meeting_guide_info_officiaol; /** 参会指南 **/
-    public static final String BASE_EXAM_TABLE = "/Exam/data?";
-    public static final String BASE_LOCAL_LIST = "/sessiongroup.do?";
+
 
     public static final String get_HOST() {
         if(isDebug)
@@ -344,6 +352,10 @@ public class Constants {
     public static final String MODEFIY_INFO_URI = "http://app.incongress.cn/modelH5/canhuizhuce/updateUser.jsp?";
     /*CIT学院的分享地址*/
     public static final String CIT_SHARE_URI = "http://app.incongress.cn/Exam/data?method=getDataByDataId&dataId=";
+    //关于扫一扫的第一次开关
+    public static final String QRCODE_SCAN_SWITCH = "qr_scan_switch";
+    //不是直播时，跳转的链接
+    public static final String NO_LIVE_URL = CHYHttpClient.BASE_URL+CHYHttpClient.BASE_POSTER_LIST+"method=getSMContentById&id=";
     /*所有功能的开关*/
 
     /** 广告广播 **/

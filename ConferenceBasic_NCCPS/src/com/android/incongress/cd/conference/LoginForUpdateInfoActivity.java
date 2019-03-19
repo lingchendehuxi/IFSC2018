@@ -91,10 +91,10 @@ public class LoginForUpdateInfoActivity extends BaseActivity implements GalleryF
         mobile = getIntent().getStringExtra(Constants.USER_MOBILE);
         userId = getIntent().getStringExtra(Constants.USER_ID);
         userType = getIntent().getStringExtra(Constants.USER_TYPE);
+        mUploadFilePath = SharePreferenceUtils.getUser(Constants.USER_IMG);
         if (TextUtils.isEmpty(userId)) {
             tv_title.setText(R.string.incongress_modify_person_info);
             title_tip.setVisibility(View.INVISIBLE);
-            mUploadFilePath = SharePreferenceUtils.getUser(Constants.USER_IMG);
         } else {
             tv_title.setText(R.string.incongress_fix_info);
             title_tip.setVisibility(View.VISIBLE);
@@ -215,6 +215,7 @@ public class LoginForUpdateInfoActivity extends BaseActivity implements GalleryF
             ToastUtils.showToast("请先上传头像");
             return;
         }
+        nickName = et_userName.getText().toString().trim();
         if (TextUtils.isEmpty(nickName)) {
             ToastUtils.showToast("请输入用户名");
             return;

@@ -1129,16 +1129,15 @@ public class CHYHttpClientUsage {
     }
 
     /**
-     * 根据posterId获取必报信息
+     * 根据posterId获取壁报信息
      *
-     * @param conId
      * @param posterId
      * @param lan
      */
-    public void doGetPosterByID(int conId, String posterId, String lan, JsonHttpResponseHandler jsonHttpResponseHandler) {
+    public void doGetPosterByID(String posterId, String lan, JsonHttpResponseHandler jsonHttpResponseHandler) {
         RequestParams params = new RequestParams();
         params.put("method", "getPosterById");
-        params.put("conferencesId", conId + "");
+        params.put("conferencesId", Constants.getConId());
         params.put("posterId", posterId + "");
         params.put("lan", lan);
 
@@ -1294,7 +1293,7 @@ public class CHYHttpClientUsage {
         params.put("lastId", lastId);
         params.put("row", Constants.MAXDATA);
         params.put("searchString", searchString);
-        CHYHttpClient.postLocal_Other(params, responseHandler);
+        CHYHttpClient.postFastOnLine(params, responseHandler);
     }
 
     /**
@@ -1357,7 +1356,7 @@ public class CHYHttpClientUsage {
     //预约课件
     public void doGetOrderCourse(String conId, String topic, String userId, JsonHttpResponseHandler responseHandler) {
         RequestParams params = new RequestParams();
-        params.put("method", "coursewareReservation");
+        params.put("method", "coursewareReservationNew");
         params.put("conId", conId);
         params.put("topic", StringUtils.utf8Encode(topic));
         params.put("userId", userId);
@@ -1397,6 +1396,16 @@ public class CHYHttpClientUsage {
         params.put("lastId", lastId);
         CHYHttpClient.postNew(params, responseHandler);
     }
+    //获取展商子信息
+    public void doGetExhibitorByListInfo(String row,int menuIndex,String lastIndex, JsonHttpResponseHandler responseHandler){
+        RequestParams params = new RequestParams();
+        params.put("method", "getExhibitorByMenu");
+        params.put("conId", Constants.getConId());
+        params.put("row", row);
+        params.put("menuIndex", menuIndex);
+        params.put("lastIndex", lastIndex);
+        CHYHttpClient.postNew(params, responseHandler);
+    }
     //获取展商详细信息
     public void doGetExhibitorDetailInfo(int exhibitorsId, JsonHttpResponseHandler responseHandler){
         RequestParams params = new RequestParams();
@@ -1411,7 +1420,46 @@ public class CHYHttpClientUsage {
         params.put("conId", "387");
         params.put("firstuserId", "204907");
         params.put("seconduserId", userId);
-        CHYHttpClient.postLOCAL(params, responseHandler);
+        CHYHttpClient.postLiveList(params, responseHandler);
+    }
+
+    /**
+     * 直播
+     * @param responseHandler
+     */
+    //获取会议室列表接口
+    public void doGetClassForMeetLive(JsonHttpResponseHandler responseHandler){
+        RequestParams params = new RequestParams();
+        params.put("method", "getClasses");
+        params.put("conId", 399);
+        CHYHttpClient.postLiveList(params, responseHandler);
+    }
+    //获取会议室对应直播列表接口
+    public void doGetClassForMeetLiveAddress(int classId,JsonHttpResponseHandler responseHandler){
+        RequestParams params = new RequestParams();
+        params.put("method", "getSessionListByClass");
+        params.put("conId", 399);
+        params.put("classId", classId);
+        CHYHttpClient.postLiveList(params, responseHandler);
+    }
+    //直播预约
+    public void doGetOrderLive(int sessionId,JsonHttpResponseHandler responseHandler){
+        RequestParams params = new RequestParams();
+        params.put("method", "liveYuyue");
+        params.put("conId", 399);
+        params.put("sessionId", sessionId);
+        params.put("userId", AppApplication.userId);
+        params.put("userType", AppApplication.userType);
+        CHYHttpClient.postLiveList(params, responseHandler);
+    }
+    //获取相关直播列表
+    public void doGetRelativeLive(int classId,JsonHttpResponseHandler responseHandler){
+        RequestParams params = new RequestParams();
+        params.put("method", "getSessionListByClassAll");
+        params.put("conId", 399);
+        params.put("classId", classId);
+        params.put("lan", AppApplication.getSystemLanuageCode());
+        CHYHttpClient.postLiveList(params, responseHandler);
     }
 
 }

@@ -1,12 +1,12 @@
 package com.android.incongress.cd.conference.model;
 
 import org.litepal.annotation.Column;
-import org.litepal.crud.DataSupport;
+import org.litepal.crud.LitePalSupport;
 
 /**
  * Created by Jacky on 2016/7/25.
  */
-public class Speaker extends DataSupport {
+public class Speaker extends LitePalSupport {
     private int id;
     private int speakerId;// 演讲者编号
     private int conferencesId;// 参会议编号

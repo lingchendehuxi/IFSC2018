@@ -1,12 +1,12 @@
 package com.android.incongress.cd.conference.beans;
 
-import org.litepal.crud.DataSupport;
+import org.litepal.crud.LitePalSupport;
 
 /**
  * Created by Admin on 2017/5/18.
  */
 
-public class BusRemindBean  extends DataSupport{
+public class BusRemindBean  extends LitePalSupport{
 
     /**
      * busInfoId : 29

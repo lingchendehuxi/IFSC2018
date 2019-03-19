@@ -88,6 +88,7 @@
     <color name="edit_hint_color">#FFA2A2A2</color>
     <color name="popup_bg">#8f000000</color>
     <!--stander-->
+    <color name="live_time_color">#8ab000</color>
     <color name="back_color">#292929</color>
     <color name="line_color">#eeeeee</color>
     <color name="unselect_color">#858585</color>

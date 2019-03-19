@@ -3,6 +3,7 @@ package com.android.incongress.cd.conference.utils;
 import com.android.incongress.cd.conference.base.AppApplication;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -281,6 +282,36 @@ public final class DateUtil {
         ToastUtils.showToast("时间格式错误");
         return "";
     }
-
+    //返回一个数组 天 时 分
+    public static Long[] getRemainsTime(String time){
+        Long[] strings = new Long[3];
+        try {
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            java.util.Date date=df.parse(time);
+            long l=date.getTime()-System.currentTimeMillis();
+            strings[0] = l/(24*60*60*1000);
+            strings[1] =(l/(60*60*1000)-strings[0]*24);
+            strings[2] =((l/(60*1000))-strings[0]*24*60-strings[1]*60);
+        }catch (ParseException e){
+            e.printStackTrace();
+        }
+        return strings;
+    }
+    //判断视频是否已经开始
+    public static boolean isStart(String time){
+        try {
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            java.util.Date date=df.parse(time);
+            return date.getTime()>=System.currentTimeMillis()?false:true;
+        }catch (ParseException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+    //用于处理时分秒 返回来时分 如：08:00:00 改为08:00
+    public static String getHourAndMinute(String string){
+        int position = string.lastIndexOf(":");
+        return string.substring(0,position);
+    }
 
 }

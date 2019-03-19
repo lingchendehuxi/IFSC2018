@@ -1,6 +1,6 @@
 package com.android.incongress.cd.conference.model;
 
-import org.litepal.crud.DataSupport;
+import org.litepal.crud.LitePalSupport;
 
 /**
  * Created by Jacky on 2016/11/24.
@@ -9,7 +9,7 @@ import org.litepal.crud.DataSupport;
  * {"client":"0","appVersion":"1.0.0","version":8,"backgroundUrl":"http:\/\/incongress.cn\/files\/esmo\/194\/cr1.png","zipUrl":"\/zip\/conpass_1\/data8.zip","state":1}
  */
 
-public class CompasBean extends DataSupport {
+public class CompasBean extends LitePalSupport {
 
     private String client;
     private String clientVersion;

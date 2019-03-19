@@ -46,6 +46,7 @@ import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
+import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
 
@@ -232,6 +233,13 @@ public class QuestionSquarFragment extends BaseFragment implements View.OnClickL
         if(!isBackView){
             StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
         }
+        MobclickAgent.onPageStart(Constants.FRAGMENT_QUESTIONLIST);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(Constants.FRAGMENT_QUESTIONLIST);
     }
 
     @Override

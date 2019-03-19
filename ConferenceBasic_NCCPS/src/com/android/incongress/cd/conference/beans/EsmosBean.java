@@ -1,11 +1,11 @@
 package com.android.incongress.cd.conference.beans;
 
-import org.litepal.crud.DataSupport;
+import org.litepal.crud.LitePalSupport;
 
 /**
  * Created by Jacky on 2016/11/24.
  */
-public class EsmosBean extends DataSupport {
+public class EsmosBean extends LitePalSupport {
     /**
      * backgroundUrl : http://incongress.cn/files/esmo/194/b1.png
      * conferencesAddress : 中国 厦门

@@ -5,11 +5,12 @@ import android.util.Log;
 import com.android.incongress.cd.conference.beans.ActivityBean;
 import com.android.incongress.cd.conference.beans.AlertBean;
 import com.android.incongress.cd.conference.beans.EsmosBean;
+import com.android.incongress.cd.conference.beans.LiveInfoBean;
 import com.android.incongress.cd.conference.beans.MyFieldBean;
 import com.android.incongress.cd.conference.data.ConferenceTableField;
 import com.android.incongress.cd.conference.utils.StringUtils;
 
-import org.litepal.crud.DataSupport;
+import org.litepal.LitePal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,22 +22,23 @@ import java.util.List;
 public class ConferenceDbUtils {
 
     public static Conferences getConference() {
-        return DataSupport.findAll(Conferences.class).get(0);
+        return LitePal.findAll(Conferences.class).get(0);
     }
 
     /**
      * 更新状态
+     *
      * @param fieldName
      * @param fieldState
      */
     public static void changeMyFieldState(String fieldName, int fieldState) {
-        List<MyFieldBean> myFieldBeens = DataSupport.where("fieldName = ?", fieldName).find(MyFieldBean.class);
-        if(myFieldBeens != null && myFieldBeens.size() > 0) {
+        List<MyFieldBean> myFieldBeens = LitePal.where("fieldName = ?", fieldName).find(MyFieldBean.class);
+        if (myFieldBeens != null && myFieldBeens.size() > 0) {
             //存在这条数据
             MyFieldBean myFieldBean = myFieldBeens.get(0);
             myFieldBean.setFieldState(fieldState);
             myFieldBean.save();
-        }else {
+        } else {
             MyFieldBean bean = new MyFieldBean();
             bean.setFieldName(fieldName);
             bean.setFieldState(fieldState);
@@ -46,16 +48,17 @@ public class ConferenceDbUtils {
 
     /**
      * 查询我是否有领域
+     *
      * @return
      */
     public static boolean isChooseMyField() {
-        List<MyFieldBean> myFieldBeens = DataSupport.findAll(MyFieldBean.class);
-        if(myFieldBeens == null || myFieldBeens.size() == 0) {
+        List<MyFieldBean> myFieldBeens = LitePal.findAll(MyFieldBean.class);
+        if (myFieldBeens == null || myFieldBeens.size() == 0) {
             return false;
-        }else {
+        } else {
             boolean isChooseMyField = false;
             for (int i = 0; i < myFieldBeens.size(); i++) {
-                if(myFieldBeens.get(i).isFieldState() == 1) {
+                if (myFieldBeens.get(i).isFieldState() == 1) {
                     isChooseMyField = true;
                     break;
                 }
@@ -68,15 +71,16 @@ public class ConferenceDbUtils {
 
     /**
      * 获取病症状态
+     *
      * @param fieldName
      */
     public static int getMyFieldState(String fieldName) {
         int fieldState = 0;
-        List<MyFieldBean> myFieldBeens = DataSupport.where("fieldName = ?", fieldName).find(MyFieldBean.class);
-        if(myFieldBeens != null && myFieldBeens.size() > 0) {
+        List<MyFieldBean> myFieldBeens = LitePal.where("fieldName = ?", fieldName).find(MyFieldBean.class);
+        if (myFieldBeens != null && myFieldBeens.size() > 0) {
             //存在这条数据
             fieldState = myFieldBeens.get(0).isFieldState();
-        }else {
+        } else {
             fieldState = 0;
         }
 
@@ -85,6 +89,7 @@ public class ConferenceDbUtils {
 
     /**
      * 添加一条大会信息
+     *
      * @param conferenceId
      * @param dataVersion
      */
@@ -96,14 +101,15 @@ public class ConferenceDbUtils {
     }
 
     /**
-     *更新大会的本地存储状态
+     * 更新大会的本地存储状态
+     *
      * @param conferenceId
      * @param isExist
      */
     public static boolean updateConferenceExistStatus(int conferenceId, int isExist) {
         EsmosBean data = null;
-        List<EsmosBean> datas = DataSupport.where("dataConferencesId = ?", conferenceId + "").find(EsmosBean.class);
-        if(datas != null && datas.size() > 0) {
+        List<EsmosBean> datas = LitePal.where("dataConferencesId = ?", conferenceId + "").find(EsmosBean.class);
+        if (datas != null && datas.size() > 0) {
             data = datas.get(0);
             data.setIsExist(isExist);
             return data.save();
@@ -113,14 +119,15 @@ public class ConferenceDbUtils {
     }
 
     /**
-     *更新大会的数据版本
+     * 更新大会的数据版本
+     *
      * @param conferenceId
      * @param dataVersion
      */
     public static boolean updateConferenceDataVersion(int conferenceId, int dataVersion) {
         ConferenceData data = null;
-        List<ConferenceData> datas = DataSupport.where("conferenceId = ?", conferenceId + "").find(ConferenceData.class);
-        if(datas != null && datas.size() > 0) {
+        List<ConferenceData> datas = LitePal.where("conferenceId = ?", conferenceId + "").find(ConferenceData.class);
+        if (datas != null && datas.size() > 0) {
             data = datas.get(0);
 
             data.setDataVersion(dataVersion);
@@ -132,13 +139,14 @@ public class ConferenceDbUtils {
 
     /**
      * 获取大会数据版本
+     *
      * @param conferenceId
      * @return
      */
     public static int getConferenceDataVersion(int conferenceId) {
         ConferenceData data = null;
-        List<ConferenceData> datas = DataSupport.where("conferenceId = ?", conferenceId + "").find(ConferenceData.class);
-        if(datas != null && datas.size() > 0) {
+        List<ConferenceData> datas = LitePal.where("conferenceId = ?", conferenceId + "").find(ConferenceData.class);
+        if (datas != null && datas.size() > 0) {
             data = datas.get(0);
             return data.getDataVersion();
         }
@@ -148,58 +156,65 @@ public class ConferenceDbUtils {
 
     /**
      * 从数据库中获取compas信息
+     *
      * @return
      */
     public static CompasBean getCompasInfo() {
-        return DataSupport.findFirst(CompasBean.class);
+        return LitePal.findFirst(CompasBean.class);
     }
 
     /**
      * 获取所有的Conpas广告
+     *
      * @return
      */
     public static List<ConpassAd> getAllConpassAds() {
-        return DataSupport.findAll(ConpassAd.class) ;
+        return LitePal.findAll(ConpassAd.class);
     }
 
     /**
      * 删除所有compas
+     *
      * @return
      */
     public static int deleteCompasInfo() {
-        return DataSupport.deleteAll(CompasBean.class);
+        return LitePal.deleteAll(CompasBean.class);
     }
 
     /**
      * 获取Compas首页的所有的会议或其他模块
+     *
      * @return
      */
     public static List<EsmosBean> getEsmoBeans() {
-        return DataSupport.findAll(EsmosBean.class);
+        return LitePal.findAll(EsmosBean.class);
     }
 
     /**
      * 根据conferenceId获取到一个esmo详情页的数据
+     *
      * @param conferenceId
      * @return
      */
     public static EsmosBean getEsmoById(int conferenceId) {
         EsmosBean bean = null;
-        List<EsmosBean> esmos = DataSupport.where("dataConferencesId = ?", conferenceId + "").find(EsmosBean.class);
-        if(esmos!= null && esmos.size() >0) {
+        List<EsmosBean> esmos = LitePal.where("dataConferencesId = ?", conferenceId + "").find(EsmosBean.class);
+        if (esmos != null && esmos.size() > 0) {
             bean = esmos.get(0);
         }
         return bean;
     }
+
     /**
      * 根据会议id返回一个优先级
+     *
      * @param classId
      * @return
      */
     public static int getClassOrder(String classId) {
         int priority = 0;
-        List<Class> mList = DataSupport.where("classesId = ?", classId + "").find(Class.class);
-        if(mList!= null && mList.size() >0) {
+        List<Class> mList = LitePal.where("classesId = ?", classId + "").find(Class.class);
+        if (mList != null && mList.size() > 0) {
             priority = mList.get(0).getLevel();
         }
         return priority;
@@ -211,8 +226,8 @@ public class ConferenceDbUtils {
     public static List<Class> getAllClasses() {
         List<Class> classes;
         try {
-            classes = DataSupport.findAll(Class.class);
-        }catch (Exception e) {
+            classes = LitePal.findAll(Class.class);
+        } catch (Exception e) {
             classes = null;
         }
         return classes;
@@ -221,12 +236,13 @@ public class ConferenceDbUtils {
 
     /**
      * 根据sesion查找对应的class
+     *
      * @return
      */
     public static Class findClassByClassId(int classId) {
         Class classTemp = null;
-        List<Class> classes = DataSupport.where("classesid = ?", classId+"").find(Class.class);
-        if(classes!= null && classes.size() >0) {
+        List<Class> classes = LitePal.where("classesid = ?", classId + "").find(Class.class);
+        if (classes != null && classes.size() > 0) {
             classTemp = classes.get(0);
         }
         return classTemp;
@@ -234,26 +250,28 @@ public class ConferenceDbUtils {
 
     /**
      * 根据facultyId查找所有的session
+     *
      * @return
      */
     public static List<Session> getSessionBySpeakerId(String speakerId) {
         List<Session> sessions = null;
         try {
-            sessions = DataSupport.where("facultyId like '"+speakerId+",%' or facultyId like '%,"+speakerId+",%' or facultyId like '%,"+speakerId+"' or facultyId = "+speakerId).find(Session.class);
-        }catch (Exception e) {
+            sessions = LitePal.where("facultyId like '" + speakerId + ",%' or facultyId like '%," + speakerId + ",%' or facultyId like '%," + speakerId + "' or facultyId = " + speakerId).find(Session.class);
+        } catch (Exception e) {
             e.printStackTrace();
             sessions = new ArrayList<>();
         }
         return sessions;
     }
+
     //根据标题查找对应的Session和meeting 并返回Alert对象
     public static void getAlertByTitle(Alert alertBean) {
         Log.d("sgqTest", "getAlertByTitle: 更新会议闹钟");
         List<Session> sessions;
         List<Meeting> meetings;
-        sessions = DataSupport.where("sessionName = ?", alertBean.getTitle()).find(Session.class);
-        meetings = DataSupport.where("topic = ?", alertBean.getTitle()).find(Meeting.class);
-        if(sessions!=null && sessions.size()>0){
+        sessions = LitePal.where("sessionName = ?", alertBean.getTitle()).find(Session.class);
+        meetings = LitePal.where("topic = ?", alertBean.getTitle()).find(Meeting.class);
+        if (sessions != null && sessions.size() > 0) {
             Session session = sessions.get(0);
             alertBean.setDate(session.getSessionDay());
             alertBean.setEnd(session.getEndTime());
@@ -263,7 +281,7 @@ public class ConferenceDbUtils {
             alertBean.setTitle(session.getSessionName() + "#@#" + session.getSessionNameEN());
             alertBean.setType(AlertBean.TYPE_SESSTION);
             alertBean.save();
-        } else if(meetings!=null && meetings.size()>0){
+        } else if (meetings != null && meetings.size() > 0) {
             Meeting meeting = meetings.get(0);
             alertBean.setDate(meeting.getMeetingDay());
             alertBean.setEnd(meeting.getEndTime());
@@ -273,7 +291,7 @@ public class ConferenceDbUtils {
             alertBean.setTitle(meeting.getTopic() + "#@#" + meeting.getTopicEn());
             alertBean.setType(AlertBean.TYPE_MEETING);
             alertBean.save();
-        }else {
+        } else {
             //如果更新去掉了，就删除这个对象
             alertBean.delete();
         }
@@ -281,13 +299,14 @@ public class ConferenceDbUtils {
 
     /**
      * 获取所有的session数据
+     *
      * @return
      */
     public static List<Session> getAllSession() {
         List<Session> sessions = null;
         try {
-            sessions = DataSupport.findAll(Session.class);
-        }catch (Exception e) {
+            sessions = LitePal.findAll(Session.class);
+        } catch (Exception e) {
             e.printStackTrace();
             sessions = new ArrayList<>();
         }
@@ -296,18 +315,19 @@ public class ConferenceDbUtils {
 
     /**
      * 根据sessionGroupId来查到所需要的session
+     *
      * @param sessionGroupId
      * @return
      */
     public static Session getSessionBySessionId(String sessionGroupId) {
         Session session = null;
         try {
-            List<Session> sessions = DataSupport.where("sessiongroupid = ? ", sessionGroupId).find(Session.class);
+            List<Session> sessions = LitePal.where("sessiongroupid = ? ", sessionGroupId).find(Session.class);
 
-            if(sessions!= null && sessions.size()>0) {
+            if (sessions != null && sessions.size() > 0) {
                 session = sessions.get(0);
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             session = new Session();
         }
@@ -316,13 +336,14 @@ public class ConferenceDbUtils {
 
     /**
      * 根据faculty来查找某一个session
+     *
      * @return
      */
     public static List<Session> getSessionByFaculty(String faculty) {
         List<Session> sessions = null;
         try {
-            sessions = DataSupport.where("facultyId like '"+faculty+",%' or facultyId like '%,"+faculty+",%' or facultyId like '%,"+faculty+"' or facultyId = "+faculty).find(Session.class);
-        }catch (Exception e) {
+            sessions = LitePal.where("facultyId like '" + faculty + ",%' or facultyId like '%," + faculty + ",%' or facultyId like '%," + faculty + "' or facultyId = " + faculty).find(Session.class);
+        } catch (Exception e) {
             e.printStackTrace();
             sessions = new ArrayList<>();
         }
@@ -331,48 +352,50 @@ public class ConferenceDbUtils {
     }
 
     /**
-     *
      * @param sessionName
      * @return
      */
-    public static List<Session> getSessionByName(String sessionName,boolean isEnglish) {
+    public static List<Session> getSessionByName(String sessionName, boolean isEnglish) {
         List<Session> sessions = null;
         try {
-            if(isEnglish)
-                sessions = DataSupport.where("sessionNameEN like '%"+sessionName+"%'").find(Session.class);
+            if (isEnglish)
+                sessions = LitePal.where("sessionNameEN like '%" + sessionName + "%'").find(Session.class);
             else
-                sessions = DataSupport.where("sessionName like '%"+ sessionName+"%'").find(Session.class);
-        }catch (Exception e) {
+                sessions = LitePal.where("sessionName like '%" + sessionName + "%'").find(Session.class);
+        } catch (Exception e) {
             e.printStackTrace();
             sessions = new ArrayList<>();
         }
 
         return sessions;
     }
-    public static List<Meeting> getMeetingByName(String meetingName,boolean isEnglish) {
+
+    public static List<Meeting> getMeetingByName(String meetingName, boolean isEnglish) {
         List<Meeting> sessions = null;
         try {
-            if(isEnglish)
-                sessions = DataSupport.where("topic like '%"+meetingName+"%'").find(Meeting.class);
+            if (isEnglish)
+                sessions = LitePal.where("topic like '%" + meetingName + "%'").find(Meeting.class);
             else
-                sessions = DataSupport.where("topicEn like '%"+ meetingName+"%'").find(Meeting.class);
-        }catch (Exception e) {
+                sessions = LitePal.where("topicEn like '%" + meetingName + "%'").find(Meeting.class);
+        } catch (Exception e) {
             e.printStackTrace();
             sessions = new ArrayList<>();
         }
 
         return sessions;
     }
+
     /**
      * 根据facultyId查找所有的meeting
+     *
      * @param faculty
      * @return
      */
     public static List<Meeting> getMeetingBySpeakerId(String faculty) {
         List<Meeting> meetings = null;
         try {
-            meetings = DataSupport.where("facultyId like '"+faculty+",%' or facultyId like '%,"+faculty+",%' or facultyId like '%,"+faculty+"' or facultyId = "+faculty).find(Meeting.class);
-        }catch (Exception e) {
+            meetings = LitePal.where("facultyId like '" + faculty + ",%' or facultyId like '%," + faculty + ",%' or facultyId like '%," + faculty + "' or facultyId = " + faculty).find(Meeting.class);
+        } catch (Exception e) {
             e.printStackTrace();
             meetings = new ArrayList<>();
         }
@@ -383,54 +406,58 @@ public class ConferenceDbUtils {
         List<Session> sessions = null;
         String sql = "1=1";
 
-        if(!StringUtils.isEmpty(searchDay)) {
+        if (!StringUtils.isEmpty(searchDay)) {
             sql = sql + " and " + ConferenceTableField.SESSION_SESSIONDAY + " = '" + searchDay + "'";
         }
-        if(!StringUtils.isEmpty(searchRoom)) {
+        if (!StringUtils.isEmpty(searchRoom)) {
             sql = sql + " and " + ConferenceTableField.SESSION_CLASSESID + " = '" + searchRoom + "'";
         }
-        if(!StringUtils.isEmpty(searchStartTime)) {
+        if (!StringUtils.isEmpty(searchStartTime)) {
             sql = sql + " and " + ConferenceTableField.SESSION_STARTTIME + " >= '" + searchStartTime + "'";
         }
-        if(!StringUtils.isEmpty(searchEndTime)) {
+        if (!StringUtils.isEmpty(searchEndTime)) {
             sql = sql + " and " + ConferenceTableField.SESSION_ENDTIME + " <= '" + searchEndTime + "'";
         }
 
         try {
-            sessions = DataSupport.where(sql).find(Session.class);
-        }catch (Exception e) {
+            sessions = LitePal.where(sql).find(Session.class);
+        } catch (Exception e) {
             e.printStackTrace();
             sessions = new ArrayList<>();
         }
 
         return sessions;
     }
+
     /**
      * 根据日期还有会议室获取session
+     *
      * @return
      */
-    public static List<Session> getDayClassSession(String searchRoom,String searchDay) {
+    public static List<Session> getDayClassSession(String searchRoom, String searchDay) {
         List<Session> sessions = null;
 
         String sql = "1=1";
-        if(!StringUtils.isEmpty(searchDay)) {
+        if (!StringUtils.isEmpty(searchDay)) {
             sql = sql + " and " + ConferenceTableField.SESSION_SESSIONDAY + " = '" + searchDay + "'";
         }
-        if(!StringUtils.isEmpty(searchRoom)) {
+        if (!StringUtils.isEmpty(searchRoom)) {
             sql = sql + " and " + ConferenceTableField.SESSION_CLASSESID + " = '" + searchRoom + "'";
         }
 
         try {
-            sessions = DataSupport.where(sql).find(Session.class);
-        }catch (Exception e) {
+            sessions = LitePal.where(sql).find(Session.class);
+        } catch (Exception e) {
             e.printStackTrace();
             sessions = new ArrayList<>();
         }
 
         return sessions;
     }
+
     /**
      * 根据会议室获取session
+     *
      * @return
      */
     public static List<Session> getSessionByRoom(String searchRoom) {
@@ -438,29 +465,31 @@ public class ConferenceDbUtils {
 
         String sql = "1=1";
 
-        if(!StringUtils.isEmpty(searchRoom)) {
+        if (!StringUtils.isEmpty(searchRoom)) {
             sql = sql + " and " + ConferenceTableField.SESSION_CLASSESID + " = '" + searchRoom + "'";
         }
 
         try {
-            sessions = DataSupport.where(sql).find(Session.class);
-        }catch (Exception e) {
+            sessions = LitePal.where(sql).find(Session.class);
+        } catch (Exception e) {
             e.printStackTrace();
             sessions = new ArrayList<>();
         }
 
         return sessions;
     }
+
     /**
      * 根据关键字获取session
+     *
      * @return
      */
     public static List<Session> getSessionBySearch(String searchString) {
         List<Session> sessions = null;
 
         try {
-            sessions = DataSupport.where("sessionName like ?", "%" + searchString + "%").find(Session.class);
-        }catch (Exception e) {
+            sessions = LitePal.where("sessionName like ?", "%" + searchString + "%").find(Session.class);
+        } catch (Exception e) {
             e.printStackTrace();
             sessions = new ArrayList<>();
         }
@@ -470,40 +499,43 @@ public class ConferenceDbUtils {
 
     public static List<Meeting> getMeetingBySessions(List<Session> sessions) {
         List<Meeting> meetings = new ArrayList<>();
-        if(sessions.size()>0) {
-            for(int i=0; i<sessions.size(); i++) {
+        if (sessions.size() > 0) {
+            for (int i = 0; i < sessions.size(); i++) {
                 Session bean = sessions.get(i);
-                meetings.addAll(ConferenceDbUtils.getMeetingBySessionGroupId(bean.getSessionGroupId()+""));
+                meetings.addAll(ConferenceDbUtils.getMeetingBySessionGroupId(bean.getSessionGroupId() + ""));
             }
         }
         return meetings;
     }
+
     /**
      * 根据sessionGroupId查找对应的meeting
+     *
      * @param sessionGroupId
      * @return
      */
     public static List<Meeting> getMeetingBySessionGroupId(String sessionGroupId) {
         List<Meeting> meetings = null;
         try {
-            meetings = DataSupport.where("sessiongroupid = ?", sessionGroupId).find(Meeting.class);
-        }catch (Exception e) {
+            meetings = LitePal.where("sessiongroupid = ?", sessionGroupId).find(Meeting.class);
+        } catch (Exception e) {
             e.printStackTrace();
             meetings = new ArrayList<>();
         }
 
-        return  meetings;
+        return meetings;
     }
 
     /**
      * 获取所有的role
+     *
      * @return
      */
     public static List<Role> getAllRoles() {
         List<Role> roles = null;
         try {
-            roles = DataSupport.findAll(Role.class);
-        }catch (Exception e) {
+            roles = LitePal.findAll(Role.class);
+        } catch (Exception e) {
             e.printStackTrace();
             roles = new ArrayList<>();
         }
@@ -512,17 +544,18 @@ public class ConferenceDbUtils {
 
     /**
      * 根据roleId获得对应的role对象
+     *
      * @param roleId
      * @return
      */
     public static Role getRoleById(String roleId) {
         Role role = null;
         try {
-            List<Role> roles = DataSupport.where("roleid = " + roleId).find(Role.class);
-            if(roles!= null && roles.size() >0) {
+            List<Role> roles = LitePal.where("roleid = " + roleId).find(Role.class);
+            if (roles != null && roles.size() > 0) {
                 role = roles.get(0);
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -530,15 +563,14 @@ public class ConferenceDbUtils {
     }
 
     /**
-     *
      * String sqlSession = "select * from " + ConferenceTables.TABLE_INCONGRESS_SESSION + " where sessionDay = '" + mSessionDaysList.get(i) + "'"
-     *                  + " order by " + ConferenceTableField.SESSION_CLASSESID + " ASC, " + ConferenceTableField.SESSION_STARTTIME + " ASC";
+     * + " order by " + ConferenceTableField.SESSION_CLASSESID + " ASC, " + ConferenceTableField.SESSION_STARTTIME + " ASC";
      */
     public static List<Session> getSessionsBySessionDayOrderByClassIdAndStartTime(String sessionDay) {
         List<Session> sessions = null;
         try {
-            sessions = DataSupport.where("sessionDay = '" + sessionDay + "' order by classesId ASC, startTime ASC").find(Session.class);
-        }catch (Exception e) {
+            sessions = LitePal.where("sessionDay = '" + sessionDay + "' order by classesId ASC, startTime ASC").find(Session.class);
+        } catch (Exception e) {
             e.printStackTrace();
             sessions = new ArrayList<>();
         }
@@ -547,21 +579,24 @@ public class ConferenceDbUtils {
 
     /**
      * 获取所有讲者对象
+     *
      * @return
      */
     public static List<Speaker> getAllSpeaker() {
         List<Speaker> speakers = null;
         try {
-            speakers = DataSupport.findAll(Speaker.class);
-        }catch (Exception e) {
+            speakers = LitePal.findAll(Speaker.class);
+        } catch (Exception e) {
             e.printStackTrace();
             speakers = new ArrayList<>();
         }
 
         return speakers;
     }
+
     /**
      * 根据speakerId获得对应的speaker对象
+     *
      * @param speakerId
      * @return
      */
@@ -569,11 +604,11 @@ public class ConferenceDbUtils {
 
         Speaker speaker = null;
         try {
-            List<Speaker> speakers = DataSupport.where("speakerid = " + speakerId).find(Speaker.class);
-            if(speakers!= null && speakers.size() >0) {
+            List<Speaker> speakers = LitePal.where("speakerid = " + speakerId).find(Speaker.class);
+            if (speakers != null && speakers.size() > 0) {
                 speaker = speakers.get(0);
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -582,18 +617,19 @@ public class ConferenceDbUtils {
 
     /**
      * 通过speakerName查询speaker
+     *
      * @param speakerName
      * @return
      */
-    public static List<Speaker> getSpeakerBySpeakerName(String speakerName,boolean isEnglish) {
+    public static List<Speaker> getSpeakerBySpeakerName(String speakerName, boolean isEnglish) {
         List<Speaker> speakers = null;
         try {
-            if(isEnglish) {
-                speakers = DataSupport.where("enName like '%"+speakerName+"%'").find(Speaker.class);
-            }else {
-                speakers = DataSupport.where("speakerName like '%"+speakerName+"%'").find(Speaker.class);
+            if (isEnglish) {
+                speakers = LitePal.where("enName like '%" + speakerName + "%'").find(Speaker.class);
+            } else {
+                speakers = LitePal.where("speakerName like '%" + speakerName + "%'").find(Speaker.class);
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             speakers = new ArrayList<>();
         }
@@ -602,13 +638,14 @@ public class ConferenceDbUtils {
 
     /**
      * 获取所有讲者对象
+     *
      * @return
      */
     public static List<Map> getAllMaps() {
         List<Map> maps = null;
         try {
-            maps = DataSupport.findAll(Map.class);
-        }catch (Exception e) {
+            maps = LitePal.findAll(Map.class);
+        } catch (Exception e) {
             e.printStackTrace();
             maps = new ArrayList<>();
         }
@@ -618,13 +655,14 @@ public class ConferenceDbUtils {
 
     /**
      * 获取所有的广告
+     *
      * @return
      */
     public static List<Ad> getAllAds() {
         List<Ad> ads = null;
         try {
-            ads = DataSupport.findAll(Ad.class);
-        }catch (Exception e) {
+            ads = LitePal.findAll(Ad.class);
+        } catch (Exception e) {
             e.printStackTrace();
             ads = new ArrayList<>();
         }
@@ -634,13 +672,14 @@ public class ConferenceDbUtils {
 
     /**
      * 获取酥油的参展商信息
+     *
      * @return
      */
     public static List<Exhibitor> getAllExhibitors() {
         List<Exhibitor> exhibitors = null;
         try {
-            exhibitors = DataSupport.findAll(Exhibitor.class);
-        }catch (Exception e) {
+            exhibitors = LitePal.findAll(Exhibitor.class);
+        } catch (Exception e) {
             e.printStackTrace();
             exhibitors = new ArrayList<>();
         }
@@ -649,13 +688,14 @@ public class ConferenceDbUtils {
 
     /**
      * 按照拼音顺序排序
+     *
      * @return
      */
     public static List<Speaker> getAllSpeakerWithOrder() {
         List<Speaker> speakers = null;
         try {
-            speakers = DataSupport.order("speakernamepingyin asc").find(Speaker.class);
-        }catch (Exception e) {
+            speakers = LitePal.order("speakernamepingyin asc").find(Speaker.class);
+        } catch (Exception e) {
             e.printStackTrace();
             speakers = new ArrayList<>();
         }
@@ -664,13 +704,14 @@ public class ConferenceDbUtils {
 
     /**
      * 获取所有的meeting
+     *
      * @return
      */
     public static List<Meeting> getAllMeeting() {
         List<Meeting> meetings = null;
         try {
-            meetings = DataSupport.findAll(Meeting.class);
-        }catch (Exception e) {
+            meetings = LitePal.findAll(Meeting.class);
+        } catch (Exception e) {
             e.printStackTrace();
             meetings = new ArrayList<>();
         }
@@ -679,37 +720,72 @@ public class ConferenceDbUtils {
 
     /**
      * 根据day获取所有的meeting
+     *
      * @return
      */
     public static List<Meeting> getMeetingsByTimeAndAttention(String time, String isAttention) {
         List<Meeting> meetings = null;
         try {
-            meetings = DataSupport.where("meetingDay = ? and attention = ?", time, isAttention).find(Meeting.class);
-        }catch (Exception e) {
+            meetings = LitePal.where("meetingDay = ? and attention = ?", time, isAttention).find(Meeting.class);
+        } catch (Exception e) {
             e.printStackTrace();
             meetings = new ArrayList<>();
         }
 
         return meetings;
     }
+
     /**
      * 根据关注获取所有的meeting
+     *
      * @return
      */
-    public static List<Meeting> getMeetingsByAttention( String isAttention) {
+    public static List<Meeting> getMeetingsByAttention(String isAttention) {
         List<Meeting> meetings = null;
         try {
-            meetings = DataSupport.where(" attention = ?", isAttention).find(Meeting.class);
-        }catch (Exception e) {
+            meetings = LitePal.where(" attention = ?", isAttention).find(Meeting.class);
+        } catch (Exception e) {
             e.printStackTrace();
             meetings = new ArrayList<>();
         }
 
         return meetings;
+    }
+
+    /**
+     * 获取所有预约的直播
+     *
+     * @return
+     */
+    public static List<LiveForOrderInfo> getLivesByOrder() {
+        List<LiveForOrderInfo> lives;
+        try {
+            lives = LitePal.findAll(LiveForOrderInfo.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+            lives = new ArrayList<>();
+        }
+
+        return lives;
+    }
+
+    /**
+     * 通过sessionGroupId获取对应的预约的直播
+     *
+     * @return
+     */
+    public static LiveForOrderInfo getLiveBean(int sessionGroupId) {
+        List<LiveForOrderInfo> lives;
+        List<LiveForOrderInfo> list = LitePal.where("sessionGroupId = ?", String.valueOf(sessionGroupId)).find(LiveForOrderInfo.class);
+        if (list != null && list.size() > 0) {
+            return list.get(0);
+        }
+        return null;
     }
 
     /**
      * 通过时间和关注与否获取的session列表
+     *
      * @param time
      * @param isAttention
      * @return
@@ -717,24 +793,26 @@ public class ConferenceDbUtils {
     public static List<Session> getSessionByTimeAndAttention(String time, String isAttention) {
         List<Session> sessions = null;
         try {
-            sessions = DataSupport.where("sessionday = ? and attention = ?", time, isAttention).find(Session.class);
-        }catch (Exception e) {
+            sessions = LitePal.where("sessionday = ? and attention = ?", time, isAttention).find(Session.class);
+        } catch (Exception e) {
             e.printStackTrace();
             sessions = new ArrayList<>();
         }
 
         return sessions;
     }
+
     /**
      * 通过关注与否获取的session列表
+     *
      * @param isAttention
      * @return
      */
     public static List<Session> getSessionByAttention(String isAttention) {
         List<Session> sessions = null;
         try {
-            sessions = DataSupport.where("attention = ?", isAttention).find(Session.class);
-        }catch (Exception e) {
+            sessions = LitePal.where("attention = ?", isAttention).find(Session.class);
+        } catch (Exception e) {
             e.printStackTrace();
             sessions = new ArrayList<>();
         }
@@ -744,13 +822,14 @@ public class ConferenceDbUtils {
 
     /**
      * 根据faculty来查找某一个会议
+     *
      * @return
      */
     public static List<Meeting> getMeetingByFaculty(String faculty) {
         List<Meeting> meetings = null;
         try {
-            meetings = DataSupport.where("facultyId like '"+faculty+",%' or facultyId like '%,"+faculty+",%' or facultyId like '%,"+faculty+"' or facultyId = "+faculty).find(Meeting.class);
-        }catch (Exception e) {
+            meetings = LitePal.where("facultyId like '" + faculty + ",%' or facultyId like '%," + faculty + ",%' or facultyId like '%," + faculty + "' or facultyId = " + faculty).find(Meeting.class);
+        } catch (Exception e) {
             e.printStackTrace();
             meetings = new ArrayList<>();
         }
@@ -760,13 +839,14 @@ public class ConferenceDbUtils {
 
     /**
      * 根据meetingId来查找某一个会议
+     *
      * @return
      */
     public static Meeting getMeetingByMeetingId(int meetingId) {
         List<Meeting> meetings = null;
         try {
-            meetings = DataSupport.where("meetingid = ?", meetingId + "").find(Meeting.class);
-        }catch (Exception e) {
+            meetings = LitePal.where("meetingid = ?", meetingId + "").find(Meeting.class);
+        } catch (Exception e) {
             e.printStackTrace();
             meetings = new ArrayList<>();
         }
@@ -776,11 +856,12 @@ public class ConferenceDbUtils {
 
     /**
      * 给session添加关注attention
+     *
      * @return 是否修改成功
      */
-    public static boolean addAttentionToSession(int sessionGroupId,int attention) {
+    public static boolean addAttentionToSession(int sessionGroupId, int attention) {
         Session session = getSessionBySessionId(sessionGroupId + "");
-        if(session != null) {
+        if (session != null) {
             session.setAttention(attention);
             return session.save();
         }
@@ -789,11 +870,12 @@ public class ConferenceDbUtils {
 
     /**
      * 给meeting添加关注attention
+     *
      * @return
      */
     public static boolean addAttentionToMeeting(int meetingId, int attention) {
         Meeting meeting = getMeetingByMeetingId(meetingId);
-        if(meeting != null) {
+        if (meeting != null) {
             meeting.setAttention(attention);
             return meeting.save();
         }
@@ -802,37 +884,41 @@ public class ConferenceDbUtils {
 
     /**
      * 添加一个闹铃
+     *
      * @param alert
      * @return
      */
     public static boolean addAlert(Alert alert) {
-        if(alert != null)
+        if (alert != null)
             return alert.save();
         return false;
     }
 
     /**
      * 获取所有的闹铃 alert
+     *
      * @return
      */
     public static List<Alert> getAllAlert() {
         List<Alert> alertList;
         try {
-            alertList = DataSupport.findAll(Alert.class);
-        }catch (Exception e) {
+            alertList = LitePal.findAll(Alert.class);
+        } catch (Exception e) {
             e.printStackTrace();
             alertList = new ArrayList<>();
         }
         return alertList;
     }
+
     /**
      * 删除所有和session有关的meeting的闹铃 alert
+     *
      * @return
      */
     public static void deleteAllMeetAlert(int relativeid) {
-        List<Alert> alerts = DataSupport.where("relativeid = ?", relativeid + "").find(Alert.class);
-        if(alerts!=null){
-            for(Alert alert:alerts){
+        List<Alert> alerts = LitePal.where("relativeid = ?", relativeid + "").find(Alert.class);
+        if (alerts != null) {
+            for (Alert alert : alerts) {
                 alert.delete();
             }
         }
@@ -840,18 +926,19 @@ public class ConferenceDbUtils {
 
     /**
      * 根据sessionId获取闹铃  这里统一定义Alert
+     *
      * @return
      */
     public static Alert getAlertByAlertId(int alertId) {
         List<Alert> alerts = null;
         try {
-            alerts = DataSupport.where("idenId = ?", alertId + "").find(Alert.class);
-        }catch (Exception e) {
+            alerts = LitePal.where("idenId = ?", alertId + "").find(Alert.class);
+        } catch (Exception e) {
             e.printStackTrace();
             alerts = new ArrayList<>();
         }
 
-        if(alerts == null || alerts.size() == 0) {
+        if (alerts == null || alerts.size() == 0) {
             return null;
         }
         return alerts.get(0);
@@ -859,6 +946,7 @@ public class ConferenceDbUtils {
 
     /**
      * 删除某个闹铃
+     *
      * @param alert
      * @return
      */
@@ -868,6 +956,7 @@ public class ConferenceDbUtils {
 
     /**
      * 添加点赞壁报
+     *
      * @param posterId
      */
     public static void addPraisePoster(String posterId) {
@@ -878,19 +967,20 @@ public class ConferenceDbUtils {
 
     /**
      * 查询是否已经点赞壁报
+     *
      * @param posterId
      * @return
      */
     public static boolean isPraisePosterExist(String posterId) {
         List<PosterPraise> posters = null;
         try {
-            posters = DataSupport.where("posterId = ?", posterId).find(PosterPraise.class);
-        }catch (Exception e) {
+            posters = LitePal.where("posterId = ?", posterId).find(PosterPraise.class);
+        } catch (Exception e) {
             e.printStackTrace();
             posters = new ArrayList<>();
         }
 
-        if(posters == null || posters.size() == 0) {
+        if (posters == null || posters.size() == 0) {
             return false;
         }
         return true;
@@ -898,13 +988,14 @@ public class ConferenceDbUtils {
 
     /**
      * 获取所有的笔记
+     *
      * @return
      */
     public static List<Note> getAllNotes() {
         List<Note> notes = null;
         try {
-            notes = DataSupport.order(ConferenceTableField.NOTES_UPDATETIME + " desc").find(Note.class);
-        }catch (Exception e) {
+            notes = LitePal.order(ConferenceTableField.NOTES_UPDATETIME + " desc").find(Note.class);
+        } catch (Exception e) {
             e.printStackTrace();
             notes = new ArrayList<>();
         }
@@ -913,63 +1004,69 @@ public class ConferenceDbUtils {
 
     /**
      * 添加一条笔记
+     *
      * @return
      */
     public static boolean addOneNote(Note note) {
-        if(note == null) {
-            return  false;
+        if (note == null) {
+            return false;
         }
         return note.save();
     }
 
     /**
      * 删除一条笔记
+     *
      * @return
      */
     public static int deleteOneNote(Note note) {
-        if(note == null) {
-            return  -1;
+        if (note == null) {
+            return -1;
         }
         return note.delete();
     }
 
     /**
      * 获取时间表
+     *
      * @return
      */
     public static TimeBean getTime() {
-        TimeBean timeBean = DataSupport.findFirst(TimeBean.class);
+        TimeBean timeBean = LitePal.findFirst(TimeBean.class);
         return timeBean;
     }
 
     /**
      * 更新某一条笔记()
+     *
      * @param note
      * @return
      */
     public static boolean updateOneNote(Note note) {
-        Note searchNote =getNoteBySessionId(note.getSessionid());
+        Note searchNote = getNoteBySessionId(note.getSessionid());
 
-        if(searchNote != null) {
+        if (searchNote != null) {
             searchNote.setUpdatetime(String.valueOf(System.currentTimeMillis()));
             searchNote.setContents(note.getContents());
             return searchNote.save();
         }
 
-        return  false;
+        return false;
     }
 
     /**
      * 根据sessionId查找某一条笔记
+     *
      * @param sessionId
      * @return
      */
     public static Note getNoteBySessionId(String sessionId) {
-        return DataSupport.where("sessionid = " + sessionId).findFirst(Note.class);
+        return LitePal.where("sessionid = " + sessionId).findFirst(Note.class);
     }
 
     /**
      * 根据speaker查找所有的meeting和session
+     *
      * @param speakerId
      * @return
      */
@@ -986,16 +1083,16 @@ public class ConferenceDbUtils {
             String facultyId = tempSession.getFacultyId();
             String roleId = tempSession.getRoleId();
 
-            if(StringUtils.isEmpty(facultyId)) {
+            if (StringUtils.isEmpty(facultyId)) {
                 activity.setType(-1);
-            }else {
+            } else {
                 String[] facultyIds = facultyId.split(",");
                 String[] roleIds = roleId.split(",");
 
                 activity.setType(getType(speakerId + "", facultyIds, roleIds));
             }
 
-            activity.setTime(tempSession.getSessionDay() + " "+ tempSession.getStartTime());
+            activity.setTime(tempSession.getSessionDay() + " " + tempSession.getStartTime());
             activity.setMeetingId(tempSession.getSessionGroupId());
             activity.setStart_time(tempSession.getStartTime());
             activity.setEnd_time(tempSession.getEndTime());
@@ -1014,10 +1111,10 @@ public class ConferenceDbUtils {
 
             int classId = tempSession.getClassesId();
             Class tempClass = findClassByClassId(classId);
-            if(tempClass != null) {
+            if (tempClass != null) {
                 activity.setLocation(tempClass.getClassesCode());
                 activity.setLocationEn(tempClass.getClassCodeEn());
-            }else {
+            } else {
                 activity.setLocation("");
                 activity.setLocationEn("");
             }
@@ -1052,7 +1149,7 @@ public class ConferenceDbUtils {
 
             {
                 //设置身份名称
-                Role tempRole = getRoleById(tempActivity.getType()+"");
+                Role tempRole = getRoleById(tempActivity.getType() + "");
                 if (tempRole != null) {
                     tempActivity.setTypeName(tempRole.getName());
                     tempActivity.setTypeEnName(tempRole.getEnName());
@@ -1083,6 +1180,16 @@ public class ConferenceDbUtils {
         return beans;
     }
 
+    //根据sessionGroupId查找是否有当前预约的直播
+    public static boolean liveIsOrdered(int sessionGroupId) {
+        List<LiveForOrderInfo> list = LitePal.where("sessionGroupId = ?", String.valueOf(sessionGroupId)).find(LiveForOrderInfo.class);
+        if (list != null && list.size() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
     /**
      * 根据facultyId得到相应的数组位置
@@ -1109,7 +1216,6 @@ public class ConferenceDbUtils {
     private static String[] getLocationChinesAndEnglish(String location) {
         return location.split("#@#");
     }
-
 
 
 }

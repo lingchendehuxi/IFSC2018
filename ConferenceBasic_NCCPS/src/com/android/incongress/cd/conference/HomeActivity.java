@@ -1115,7 +1115,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
                             JSONObject obj = new JSONObject(posterJson);
                             String posterId = obj.getString("posterId");
 
-                            CHYHttpClientUsage.getInstanse().doGetPosterByID(Constants.getConId(), posterId, AppApplication.getSystemLanuageCode(), new JsonHttpResponseHandler("gbk") {
+                            CHYHttpClientUsage.getInstanse().doGetPosterByID(posterId, AppApplication.getSystemLanuageCode(), new JsonHttpResponseHandler("gbk") {
                                 @Override
                                 public void onStart() {
                                     super.onStart();
@@ -1142,7 +1142,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
                                     PosterBean posterBean = gson.fromJson(response.toString(), PosterBean.class);
 
                                     if (posterBean.getState() == 1) {
-                                        DZBBBean.ArrayBean dzbb = new DZBBBean.ArrayBean(posterBean.getPosterId(), posterBean.getPosterCode(), posterBean.getAuthor(), Integer.parseInt(posterBean.getConField()), posterBean.getTitle(), posterBean.getAuthor(), posterBean.getPosterPicUrl(), posterBean.getMaxCount() + "", posterBean.getDisCount(), posterBean.getPosterPicUrl(), posterBean.getIsJingxuan());
+                                        DZBBBean.ArrayBean dzbb = new DZBBBean.ArrayBean(posterBean.getPosterId(), posterBean.getPosterCode(), posterBean.getAuthor(), posterBean.getConField(), posterBean.getTitle(), posterBean.getAuthor(), posterBean.getPosterPicUrl(), posterBean.getMaxCount() + "", posterBean.getDisCount(), posterBean.getPosterPicUrl(), posterBean.getIsJingxuan());
                                         Intent intent = new Intent();
                                         intent.setClass(HomeActivity.this, PosterImageFragment.class);
                                         Bundle bundle = new Bundle();
