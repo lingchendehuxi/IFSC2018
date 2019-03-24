@@ -22,10 +22,12 @@ import com.android.incongress.cd.conference.api.CHYHttpClientUsage;
 import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.BaseFragment;
 import com.android.incongress.cd.conference.base.Constants;
+import com.android.incongress.cd.conference.beans.CollegeBookCoveryBean;
 import com.android.incongress.cd.conference.beans.CollegeTitleListBean;
 import com.android.incongress.cd.conference.beans.CollegeVideoBean;
 import com.android.incongress.cd.conference.beans.FastOnLineBean;
 import com.android.incongress.cd.conference.utils.CacheManager;
+import com.android.incongress.cd.conference.utils.JSONCatch;
 import com.android.incongress.cd.conference.utils.NetWorkUtils;
 import com.android.incongress.cd.conference.utils.TimeUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
@@ -66,6 +68,7 @@ public class CollegeVideoListFragment extends BaseFragment implements XRecyclerV
     //缓存
     private CacheManager cacheManager;
     private static final String CACHE_COLLEGE_VIDEO = "college_video_list";
+    private List<CollegeBookCoveryBean> converDataList;
 
 
     public static CollegeVideoListFragment getInstance(String meetingDay,String searchString ) {
@@ -111,6 +114,7 @@ public class CollegeVideoListFragment extends BaseFragment implements XRecyclerV
         xRecyclerView.setLoadingListener(this);
         loadLocalDate();
         initView();
+        getHasOrderInfo();
         return view;
     }
 
@@ -118,7 +122,7 @@ public class CollegeVideoListFragment extends BaseFragment implements XRecyclerV
         ll_book_course.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                action(CollegeListDetailFragment.getInstance("book","",100), R.string.meeting_video_reservation, false, false, false);
+                action(CollegeBookListDetailFragment.getInstance(converDataList), R.string.meeting_college_reservation, false, false, false);
                 StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
             }
         });
@@ -142,7 +146,6 @@ public class CollegeVideoListFragment extends BaseFragment implements XRecyclerV
 
     private void refreshViewState() {
         ll_tips.setVisibility(View.GONE);
-        ll_book_course.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -243,7 +246,6 @@ public class CollegeVideoListFragment extends BaseFragment implements XRecyclerV
                     }
                     xRecyclerView.refreshComplete();
                     xRecyclerView.loadMoreComplete();
-                    ll_book_course.setVisibility(View.GONE);
                     ll_tips.setVisibility(View.VISIBLE);
                     return;
                 }
@@ -252,6 +254,30 @@ public class CollegeVideoListFragment extends BaseFragment implements XRecyclerV
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
+                ToastUtils.showToast("获取信息失败，请联系管理员");
+            }
+        });
+    }
+    //获取是否有预约数据
+    private void getHasOrderInfo() {
+        CHYHttpClientUsage.getInstanse().doHasClassInfo(new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                JSONArray array = JSONCatch.parseJsonarray("dayArray",response);
+                if(array!=null&&array.length()>0){
+                    converDataList = new Gson().fromJson(array.toString(), new TypeToken<List<CollegeBookCoveryBean>>() {
+                    }.getType());
+                    ll_book_course.setVisibility(View.VISIBLE);
+                }else {
+                    ll_book_course.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                xRecyclerView.refreshComplete();
                 ToastUtils.showToast("获取信息失败，请联系管理员");
             }
         });

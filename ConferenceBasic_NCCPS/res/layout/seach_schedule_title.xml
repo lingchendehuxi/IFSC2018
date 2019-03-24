@@ -47,6 +47,6 @@
         android:layout_marginRight="@dimen/margin_20"
         android:textSize="@dimen/text_20"
         android:textColor="@color/unselect_color"
-        android:text="取消" />
+        android:text="@string/search_cancel" />
 
 </LinearLayout>

@@ -20,8 +20,6 @@ import com.android.incongress.cd.conference.model.ConferenceDbUtils;
 import com.android.incongress.cd.conference.utils.PicUtils;
 import com.android.incongress.cd.conference.utils.StringUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
-import com.android.incongress.cd.conference.widget.IncongressTextView;
-import com.android.incongress.cd.conference.widget.StatusBarUtil;
 import com.bumptech.glide.Glide;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
@@ -164,6 +162,25 @@ public class PosterImageFragment extends BaseActivity {
             public void onClick(View v) {
                 finish();
             }
+        });
+        postPostId(String.valueOf(mBean.getPosterId()));
+    }
+    /**
+     * 上传壁报ID
+     */
+    private void postPostId(String posterId) {
+        CHYHttpClientUsage.getInstanse().doPostWallPosterId(posterId,new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                ToastUtils.showToast("获取信息失败，请联系管理员");
+            }
+
         });
     }
 

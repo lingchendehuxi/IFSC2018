@@ -56,7 +56,7 @@ public class SpeakerSearchFragment extends BaseFragment {
     private TextView mTvTips;
     ProgressBar mProgressBar;
     private RelativeLayout mSearchTitle;
-    private LinearLayout mInitialSearch,mStartSearch;
+    private LinearLayout mInitialSearch, mStartSearch;
     private EditText mSearchContent;
     private TextView mCancel;
     private ListView mLvSearchResult;
@@ -72,7 +72,7 @@ public class SpeakerSearchFragment extends BaseFragment {
     private static final String ALL_CHARACTER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ#";
     protected static final String TAG = null;
 
-    private String[] sections = {"","A", "B", "C", "D", "E", "F", "G", "H",
+    private String[] sections = {"", "A", "B", "C", "D", "E", "F", "G", "H",
             "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U",
             "V", "W", "X", "Y", "Z", "#"};
     private int[] counts;
@@ -100,7 +100,7 @@ public class SpeakerSearchFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         MobclickAgent.onPageStart(Constants.FRAGMENT_SPEARK_SEARCH);
-        if(!isBackView){
+        if (!isBackView) {
             StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
         }
     }
@@ -115,14 +115,14 @@ public class SpeakerSearchFragment extends BaseFragment {
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         isBackView = hidden;
-        if(!hidden){
+        if (!hidden) {
             StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
-        StatusBarUtil.setStatusBarDarkTheme(getActivity(),true);
+        StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         View view = inflater.inflate(R.layout.hysqhome_jiangzhe, null);
         mSearchTitle = (RelativeLayout) view.findViewById(R.id.search_title);
@@ -136,9 +136,9 @@ public class SpeakerSearchFragment extends BaseFragment {
         mTvTips = (TextView) view.findViewById(R.id.tv_tips);
         mProgressBar = (ProgressBar) view.findViewById(R.id.progress);
         counts = new int[sections.length];
-        if(mCurrentType == TYPE_FROM_SCENIC_XIU ){
+        if (mCurrentType == TYPE_FROM_SCENIC_XIU) {
             mSearchTitle.setVisibility(View.GONE);
-        }else{
+        } else {
             mSearchTitle.setVisibility(View.VISIBLE);
             mFacultyAdapter = new FacultySearchAdapter();
             mLvSearchResult.setAdapter(mFacultyAdapter);
@@ -170,7 +170,8 @@ public class SpeakerSearchFragment extends BaseFragment {
                 mTvTips.setVisibility(View.GONE);
                 mFacultyAdapter.empty();
                 InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);}
+                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+            }
         });
         mSearchContent.addTextChangedListener(new TextWatcher() {
             @Override
@@ -186,19 +187,19 @@ public class SpeakerSearchFragment extends BaseFragment {
             @Override
             public void afterTextChanged(Editable s) {
                 String searchText = s.toString();
-                if(!searchText.equals("")){
+                if (!searchText.equals("")) {
                     if (!StringUtils.isBlank(searchText)) {
-                        if(ConferenceDbUtils.getSpeakerBySpeakerName(searchText, false).size()>0){
+                        if (ConferenceDbUtils.getSpeakerBySpeakerName(searchText, AppApplication.systemLanguage==1?false:true).size() > 0) {
                             mTvTips.setVisibility(View.GONE);
                             mFacultyAdapter.empty();
                             mFacultyAdapter.search(searchText);
-                        }else{
+                        } else {
                             mTvTips.setVisibility(View.VISIBLE);
                             mFacultyAdapter.empty();
-                            if(AppApplication.systemLanguage == 1){
-                                mTvTips.setText("搜索关键字 “"+searchText+"” 无结果，请重试");
-                            }else{
-                                mTvTips.setText("Sorry,we couldn't find any results matching “"+searchText+"”");
+                            if (AppApplication.systemLanguage == 1) {
+                                mTvTips.setText("搜索关键字 “" + searchText + "” 无结果，请重试");
+                            } else {
+                                mTvTips.setText("Sorry,we couldn't find any results matching “" + searchText + "”");
                             }
                         }
                     }
@@ -217,7 +218,7 @@ public class SpeakerSearchFragment extends BaseFragment {
                     speakerDetailFragment.setArguments(bean.getSpeakerId(), bean.getSpeakerName(), bean.getEnName(), mRoleIds.toString(), bean.getImg(), mAllMeetings, false);
                     action(speakerDetailFragment, R.string.speaker_detial, false, false, false);
                 }
-                ((InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                ((InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
             }
         });
         new SpeakerTask().execute();
@@ -243,11 +244,11 @@ public class SpeakerSearchFragment extends BaseFragment {
         mAllMeetings_sorted.clear();
 
         List<Session> sessions = new ArrayList<>();
-        sessions.addAll(ConferenceDbUtils.getSessionBySpeakerId(speakerId+""));
+        sessions.addAll(ConferenceDbUtils.getSessionBySpeakerId(speakerId + ""));
 
         //获取该speakerId下的所有presentation级别会议
         List<Meeting> meetings = new ArrayList<>();
-        meetings.addAll(ConferenceDbUtils.getMeetingBySpeakerId(speakerId+""));
+        meetings.addAll(ConferenceDbUtils.getMeetingBySpeakerId(speakerId + ""));
 
         //设置每个session下对应的身份类型
         for (int i = 0; i < sessions.size(); i++) {
@@ -273,7 +274,7 @@ public class SpeakerSearchFragment extends BaseFragment {
             MeetingBean_new newBean = new MeetingBean_new(bean.getSessionGroupId(), bean.getSessionName(), bean.getSessionDay(),
                     bean.getStartTime(), bean.getEndTime(), bean.getClassesId(), bean.getSessionGroupId(), bean.getSessionNameEN(),
                     Integer.parseInt(tempRoleId), getRoleNameById(tempRoleId).getName(), getRoleNameById(tempRoleId).getEnName(),
-                    getClassNameByClassId(bean.getClassesId()).getClassesCode(), getClassNameByClassId(bean.getClassesId()).getClassCodeEn(),1);
+                    getClassNameByClassId(bean.getClassesId()).getClassesCode(), getClassNameByClassId(bean.getClassesId()).getClassCodeEn(), 1);
             mAllMeetings.add(newBean);
         }
 
@@ -302,7 +303,7 @@ public class SpeakerSearchFragment extends BaseFragment {
                     bean.getSessionGroupId(), bean.getTopicEn(), Integer.parseInt(tempRoleId),
                     getRoleNameById(tempRoleId).getName(), getRoleNameById(tempRoleId).getEnName(),
                     getClassNameByClassId(bean.getClassesId()).getClassesCode(),
-                    getClassNameByClassId(bean.getClassesId()).getClassCodeEn(),2);
+                    getClassNameByClassId(bean.getClassesId()).getClassCodeEn(), 2);
             mAllMeetings.add(newBean);
         }
 
@@ -341,6 +342,7 @@ public class SpeakerSearchFragment extends BaseFragment {
             }
         });
     }
+
     class SpeakerTask extends AsyncTask {
         @Override
         protected void onPostExecute(Object o) {
@@ -350,11 +352,11 @@ public class SpeakerSearchFragment extends BaseFragment {
             mSpeakerListView.setPinnedHeaderView(LayoutInflater.from(getActivity()).inflate(R.layout.pinned_header_view, mSpeakerListView, false));
 
 
-            if(mSpeakers.size() == 0) {
+            if (mSpeakers.size() == 0) {
                 mTvTips.setVisibility(View.VISIBLE);
                 mSpeakerListView.setVisibility(View.GONE);
                 mBladeView.setVisibility(View.GONE);
-            }else {
+            } else {
                 mTvTips.setVisibility(View.GONE);
                 mBladeView.setOnItemClickListener(new OnItemClickListener() {
                     @Override
@@ -394,7 +396,7 @@ public class SpeakerSearchFragment extends BaseFragment {
         @Override
         protected Object doInBackground(Object[] params) {
             mSpeakers = ConferenceDbUtils.getAllSpeakerWithOrder();
-            Map<String, Integer> map = new HashMap<String, Integer>();
+            Map<String, Integer> map = new HashMap<>();
 
             for (int i = 0; i < sections.length; i++) {
                 map.put(sections[i], 0);

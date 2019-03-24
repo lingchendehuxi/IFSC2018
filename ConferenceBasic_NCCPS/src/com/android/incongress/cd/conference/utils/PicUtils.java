@@ -9,7 +9,9 @@ import android.os.Environment;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
+import com.android.incongress.cd.conference.adapters.NewHotListAdapter;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -83,6 +85,20 @@ public class PicUtils {
         }
         return sdDir.toString();
     }
+    //获取图片的比列
+    public static void getViewWidth(ImageView imageView,int proportion){
+
+        int w = View.MeasureSpec.makeMeasureSpec(0,
+                View.MeasureSpec.UNSPECIFIED);
+        int h = View.MeasureSpec.makeMeasureSpec(0,
+                View.MeasureSpec.UNSPECIFIED);
+        imageView.measure(w, h);
+        LinearLayout.LayoutParams linearParams =(LinearLayout.LayoutParams) imageView.getLayoutParams(); //取控件textView当前的布局参数 linearParams.height = 20;// 控件的高强制设成20
+
+        linearParams.height = imageView.getMeasuredWidth()/proportion;
+
+        imageView.setLayoutParams(linearParams); //使设置好的布局参数应用到控件
+    }
     //drawable 着色
     public static void setImageViewColor(ImageView view, int colorResId) {
         //mutate()
@@ -94,16 +110,32 @@ public class PicUtils {
     }
     //使用glide简单加载url图片
     public static void loadImageUrl(Context context, String url, ImageView view){
-        Glide.with(context).load(url).error(R.drawable.img_error).placeholder(R.drawable.default_load_bg).into(view);
+        Glide.with(context).load(url).error(R.drawable.img_error).placeholder(R.drawable.default_loading).into(view);
     }
     //使用glide简单加载file图片
     public static void loadImageFile(Context context, File file, ImageView view){
-        Glide.with(context).load(file).error(R.drawable.img_error).placeholder(R.drawable.default_load_bg).into(view);
+        Glide.with(context).load(file).error(R.drawable.img_error).placeholder(R.drawable.default_loading).into(view);
+    }
+    //使用glide简单加载file图片首页加载
+    public static void loadHomeImageFile(Context context, File file, ImageView view){
+        Glide.with(context).load(file).error(R.drawable.img_error).into(view);
     }
     public static void loadCircleImage(Context context,String url,final ImageView view){
         Glide.with(context).load(url)
                 .placeholder(R.drawable.professor_default)
                 .error(R.drawable.professor_default)
+                .into(new SimpleTarget<GlideDrawable>() {
+                    @Override
+                    public void onResourceReady(GlideDrawable resource,
+                                                GlideAnimation<? super GlideDrawable> glideAnimation) {
+                        view.setImageDrawable(resource);
+                    }
+                });
+    }
+    public static void loadLogoCircleImage(Context context,String url,final ImageView view){
+        Glide.with(context).load(url)
+                .placeholder(R.drawable.ic_launcher)
+                .error(R.drawable.ic_launcher)
                 .into(new SimpleTarget<GlideDrawable>() {
                     @Override
                     public void onResourceReady(GlideDrawable resource,

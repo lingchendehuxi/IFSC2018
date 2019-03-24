@@ -10,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.model.Class;
 import com.android.incongress.cd.conference.model.Meeting;
 import com.android.incongress.cd.conference.model.Session;
@@ -26,7 +27,7 @@ import java.util.Map;
  * Created by Jacky on 2016/12/14.
  */
 
-public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener{
+public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
     private List<Session> mAllSessions;
     private String[] mRoleWithName;
     private Map<Integer, List<Meeting>> mMeetingBySession;
@@ -40,7 +41,7 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> im
         this.mOnItemClickListener = listener;
     }
 
-    public NowAdapter(List<Session> sessions, String[] roleWithName, List<Class> classes, Map<Integer, List<Meeting>> meetingBySession, String currentDay, int[] currentHourAndMinute ,Context context) {
+    public NowAdapter(List<Session> sessions, String[] roleWithName, List<Class> classes, Map<Integer, List<Meeting>> meetingBySession, String currentDay, int[] currentHourAndMinute, Context context) {
         this.mAllSessions = sessions;
         this.mRoleWithName = roleWithName;
         this.mAllClasses = classes;
@@ -52,17 +53,17 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> im
 
     private Class getClassById(int classId) {
 
-        if(mAllClasses == null || mAllClasses.size() == 0)
+        if (mAllClasses == null || mAllClasses.size() == 0)
             return null;
 
         Class returnClass = null;
         for (int i = 0; i < mAllClasses.size(); i++) {
-            if(mAllClasses.get(i).getClassesId() == classId){
+            if (mAllClasses.get(i).getClassesId() == classId) {
                 returnClass = mAllClasses.get(i);
                 break;
             }
         }
-        return  returnClass;
+        return returnClass;
     }
 
     @Override
@@ -76,24 +77,29 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> im
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Session session = mAllSessions.get(position);
-        ((SessionViewHolder)holder).tvSessionName.setText(session.getSessionName());
-        ((SessionViewHolder)holder).tvSessionTime.setText(session.getStartTime() +" - " + session.getEndTime());
-        ((SessionViewHolder)holder).tvSessionLocation.setText(getClassById(session.getClassesId()).getClassesCode());
+        ((SessionViewHolder) holder).tvSessionTime.setText(session.getStartTime() + " - " + session.getEndTime());
+        if (AppApplication.systemLanguage == 1) {
+            ((SessionViewHolder) holder).tvSessionName.setText(session.getSessionName());
+            ((SessionViewHolder) holder).tvSessionLocation.setText(getClassById(session.getClassesId()).getClassesCode());
+        } else {
+            ((SessionViewHolder) holder).tvSessionName.setText(session.getSessionNameEN());
+            ((SessionViewHolder) holder).tvSessionLocation.setText(getClassById(session.getClassesId()).getClassCodeEn());
+        }
 
         holder.itemView.setTag(session);
 
         List<Meeting> meetings = mMeetingBySession.get(position);
         MeetingAdapter meetingAdapter = new MeetingAdapter(meetings);
-        ((SessionViewHolder)holder).llfMeetings.setAdapter(meetingAdapter);
+        ((SessionViewHolder) holder).llfMeetings.setAdapter(meetingAdapter);
 
         String[] speakerWithRole = mRoleWithName[position].split("#@#");
         SpeakerWithRoleAdapter speakerWithRoleAdapter = new SpeakerWithRoleAdapter(speakerWithRole);
-        ((SessionViewHolder)holder).llfSpeakers.setAdapter(speakerWithRoleAdapter);
+        ((SessionViewHolder) holder).llfSpeakers.setAdapter(speakerWithRoleAdapter);
     }
 
     @Override
     public int getItemCount() {
-        if(mAllSessions!= null && mAllSessions.size()>0) {
+        if (mAllSessions != null && mAllSessions.size() > 0) {
             return mAllSessions.size();
         }
         return 0;
@@ -101,7 +107,7 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> im
 
     @Override
     public void onClick(View v) {
-        if(mOnItemClickListener != null) {
+        if (mOnItemClickListener != null) {
             mOnItemClickListener.onItemClick(v, (Session) v.getTag());
         }
     }
@@ -119,7 +125,7 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> im
 
         @Override
         public int getCount() {
-            if(meetings!= null && meetings.size()>0)
+            if (meetings != null && meetings.size() > 0)
                 return meetings.size();
             return 0;
         }
@@ -137,15 +143,20 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> im
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             ViewHolder holder;
-            if(convertView ==null) {
-                convertView = LayoutInflater.from(mContext).inflate(R.layout.item_meeting_in_session,parent,false);
+            if (convertView == null) {
+                convertView = LayoutInflater.from(mContext).inflate(R.layout.item_meeting_in_session, parent, false);
                 holder = new ViewHolder(convertView);
                 convertView.setTag(holder);
-            }else {
+            } else {
                 holder = (ViewHolder) convertView.getTag();
             }
             Meeting meeting = meetings.get(position);
-            String info = meeting.getStartTime() +" " + meeting.getTopic();
+            String info;
+            if (AppApplication.systemLanguage == 1) {
+                info = meeting.getStartTime() + " " + meeting.getTopic();
+            } else {
+                info = meeting.getStartTime() + " " + meeting.getTopicEn();
+            }
             holder.meetingInfo.setText(info);
 
             String startTime = meeting.getStartTime();
@@ -154,10 +165,10 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> im
             int[] startTimes = getHourAndTime(startTime);
             int[] endTimes = getHourAndTime(endTime);
 
-            if(isInTime(mCurrentHourAndMinute, startTimes, endTimes)) {
+            if (isInTime(mCurrentHourAndMinute, startTimes, endTimes)) {
                 holder.ivNowTag.setVisibility(View.VISIBLE);
                 holder.meetingInfo.setTextColor(mContext.getResources().getColor(R.color.theme_color));
-            }else {
+            } else {
                 holder.ivNowTag.setVisibility(View.GONE);
                 holder.meetingInfo.setTextColor(mContext.getResources().getColor(R.color.gray));
             }
@@ -185,7 +196,7 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> im
 
         @Override
         public int getCount() {
-            if(speakerWithRole!= null && speakerWithRole.length>0)
+            if (speakerWithRole != null && speakerWithRole.length > 0)
                 return speakerWithRole.length;
             return 0;
         }
@@ -203,11 +214,11 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> im
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             ViewHolder holder;
-            if(convertView ==null) {
-                convertView = LayoutInflater.from(mContext).inflate(R.layout.item_meeting_roles,parent,false);
+            if (convertView == null) {
+                convertView = LayoutInflater.from(mContext).inflate(R.layout.item_meeting_roles, parent, false);
                 holder = new ViewHolder(convertView);
                 convertView.setTag(holder);
-            }else {
+            } else {
                 holder = (ViewHolder) convertView.getTag();
             }
 
@@ -236,39 +247,40 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> im
         public SessionViewHolder(View itemView) {
             super(itemView);
 
-            tvSessionName = (TextView) itemView.findViewById(R.id.tv_session_name);
-            tvSessionLocation = (TextView) itemView.findViewById(R.id.tv_session_location);
-            tvSessionTime = (TextView) itemView.findViewById(R.id.tv_session_time);
-            llfMeetings = (LinearLayoutForListView) itemView.findViewById(R.id.llfl_meeting_names);
-            llfSpeakers = (LinearLayoutForListView) itemView.findViewById(R.id.llfl_speakers);
+            tvSessionName = itemView.findViewById(R.id.tv_session_name);
+            tvSessionLocation = itemView.findViewById(R.id.tv_session_location);
+            tvSessionTime = itemView.findViewById(R.id.tv_session_time);
+            llfMeetings = itemView.findViewById(R.id.llfl_meeting_names);
+            llfSpeakers = itemView.findViewById(R.id.llfl_speakers);
         }
     }
 
     /**
      * 获取当前时间，并存入int数组中
+     *
      * @param time
      * @return
      */
     private int[] getHourAndTime(String time) {
-        int[] tempHourAndMinute = {0,0};
-        if(TextUtils.isEmpty(time))
+        int[] tempHourAndMinute = {0, 0};
+        if (TextUtils.isEmpty(time))
             return tempHourAndMinute;
         try {
-            String hour = time.substring(0,2);
-            if(!TextUtils.isEmpty(hour)) {
+            String hour = time.substring(0, 2);
+            if (!TextUtils.isEmpty(hour)) {
                 int tempHour = Integer.parseInt(hour);
                 tempHourAndMinute[0] = tempHour;
-            }else {
+            } else {
                 tempHourAndMinute[0] = 0;
             }
-            String minute = time.substring(3,5);
-            if(!TextUtils.isEmpty(minute)) {
+            String minute = time.substring(3, 5);
+            if (!TextUtils.isEmpty(minute)) {
                 int tempMinute = Integer.parseInt(minute);
                 tempHourAndMinute[1] = tempMinute;
-            }else {
+            } else {
                 tempHourAndMinute[1] = 0;
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             LogUtils.println("time parse error:" + e.getMessage());
         }
 
@@ -277,17 +289,18 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> im
 
     /**
      * 判断是否在指定时间范围内
+     *
      * @param currentHourAndMinute
      * @param startHourAndMinute
      * @param endHourAndMinute
      * @return
      */
-    private boolean isInTime(int[] currentHourAndMinute , int[] startHourAndMinute, int[] endHourAndMinute) {
-        Date currentData = DateUtil.getDate(mCurrentDay +" " + currentHourAndMinute[0] +":" + currentHourAndMinute[1], DateUtil.DEFAULT_MINUTE);
-        Date startData = DateUtil.getDate(mCurrentDay +" " + startHourAndMinute[0] +":" + startHourAndMinute[1], DateUtil.DEFAULT_MINUTE);
-        Date endData = DateUtil.getDate(mCurrentDay +" " + endHourAndMinute[0] +":" + endHourAndMinute[1], DateUtil.DEFAULT_MINUTE);
+    private boolean isInTime(int[] currentHourAndMinute, int[] startHourAndMinute, int[] endHourAndMinute) {
+        Date currentData = DateUtil.getDate(mCurrentDay + " " + currentHourAndMinute[0] + ":" + currentHourAndMinute[1], DateUtil.DEFAULT_MINUTE);
+        Date startData = DateUtil.getDate(mCurrentDay + " " + startHourAndMinute[0] + ":" + startHourAndMinute[1], DateUtil.DEFAULT_MINUTE);
+        Date endData = DateUtil.getDate(mCurrentDay + " " + endHourAndMinute[0] + ":" + endHourAndMinute[1], DateUtil.DEFAULT_MINUTE);
 
-        if(currentData.getTime() >= startData.getTime() && currentData.getTime() <= endData.getTime())
+        if (currentData.getTime() >= startData.getTime() && currentData.getTime() <= endData.getTime())
             return true;
         return false;
     }

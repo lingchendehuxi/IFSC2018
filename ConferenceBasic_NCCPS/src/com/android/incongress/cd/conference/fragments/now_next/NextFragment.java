@@ -77,18 +77,16 @@ public class NextFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         StatusBarUtil.setStatusBarDarkTheme(getActivity(),true);
         View view = inflater.inflate(R.layout.fragment_next, container, false);
-        mLlTimeRoom = (RelativeLayout) view.findViewById(R.id.ll_time_room);
-        mTvTime = (TextView) view.findViewById(R.id.tv_time);
-        mTvRoom = (TextView) view.findViewById(R.id.tv_room);
+        mLlTimeRoom =  view.findViewById(R.id.ll_time_room);
+        mTvTime =  view.findViewById(R.id.tv_time);
+        mTvRoom =  view.findViewById(R.id.tv_room);
 
-        mRvNowSession = (SuperRecyclerView) view.findViewById(R.id.srv_session);
+        mRvNowSession =  view.findViewById(R.id.srv_session);
         mChooseClasses = new ArrayList<>();
 
         mTvRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                open = SharePreferenceUtils.getAppBoolean("popup",true);
-                if(open){
                     if(mRoomPopupWindow == null) {
                         SharePreferenceUtils.saveAppBoolean("popup",false);
                         mRoomPopupWindow = new ChooseRomPopupWindow(getActivity());
@@ -106,14 +104,6 @@ public class NextFragment extends BaseFragment {
                         SharePreferenceUtils.saveAppBoolean("popup",false);
                     }
                     mRoomPopupWindow.showPopupWindowBelowView(mLlTimeRoom);
-                }else{
-                    if(mRoomPopupWindow.getCurrentClass().size()==0){
-                        ToastUtils.showToast("请选择至少一个会议室");
-                    }else{
-                        SharePreferenceUtils.saveAppBoolean("popup",true);
-                        mRoomPopupWindow.dismiss();
-                    }
-                }
             }
         });
 
@@ -122,12 +112,10 @@ public class NextFragment extends BaseFragment {
     }
     private boolean look = true;
 
-    private boolean open = true;
     @Override
     public void onStop() {
         super.onStop();
         look = false;
-        SharePreferenceUtils.saveAppBoolean("popup",true);
         if(mRoomPopupWindow != null){
             mRoomPopupWindow.dismiss();
         }
@@ -189,7 +177,11 @@ public class NextFragment extends BaseFragment {
                     mCurrentRoom = getString(R.string.all_room);
                 } else {
                     for (int i = 0; i < mChooseClasses.size(); i++) {
-                        mCurrentRoom = mCurrentRoom + "，" + mChooseClasses.get(i).getClassesCode();
+                        if(AppApplication.systemLanguage == 1){
+                            mCurrentRoom = mCurrentRoom + "，" + mChooseClasses.get(i).getClassesCode();
+                        }else {
+                            mCurrentRoom = mCurrentRoom + "，" + mChooseClasses.get(i).getClassCodeEn();
+                        }
                     }
                     mCurrentRoom = mCurrentRoom.substring(1);
                 }
@@ -270,7 +262,12 @@ public class NextFragment extends BaseFragment {
                                 Role role = ConferenceDbUtils.getRoleById(roleId);
                                 if(role == null)
                                     continue;
-                                String roleWithName = role.getName() + ":";
+                                String roleWithName;
+                                if(AppApplication.systemLanguage == 1||TextUtils.isEmpty(role.getEnName())){
+                                    roleWithName = role.getName() + ":";
+                                }else {
+                                    roleWithName = role.getEnName() + ":";
+                                }
                                 for (int z = 0; z < speakers.size(); z++) {
                                     Speaker speaker = speakers.get(z);
                                     if (roleId.equals(speaker.getType() + "")) {

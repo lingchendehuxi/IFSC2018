@@ -15,6 +15,7 @@ import com.android.incongress.cd.conference.api.CHYHttpClientUsage;
 import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.BaseFragment;
 import com.android.incongress.cd.conference.base.Constants;
+import com.android.incongress.cd.conference.utils.JSONCatch;
 import com.android.incongress.cd.conference.utils.MyLogger;
 import com.android.incongress.cd.conference.utils.StringUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
@@ -90,9 +91,9 @@ public class MakeQuestionFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_make_question, null);
 
-        mEtQuestion = (EditText) view.findViewById(R.id.et_question);
-        mTvMeetingName = (TextView) view.findViewById(R.id.tv_topic);
-        mEtEmail = (EditText) view.findViewById(R.id.et_email);
+        mEtQuestion = view.findViewById(R.id.et_question);
+        mTvMeetingName = view.findViewById(R.id.tv_topic);
+        mEtEmail = view.findViewById(R.id.et_email);
 
         if (mCurrentQuestionType == QUESTION_MEETING) {
             mTvMeetingName.setText("#" + mMeetingName + "#");
@@ -126,7 +127,7 @@ public class MakeQuestionFragment extends BaseFragment {
 
     private void askMeeting() {
         String content = mEtQuestion.getText().toString();
-        String meetingName = "";
+        String meetingName;
 
         try {
             content = URLEncoder.encode(content, Constants.ENCODING_UTF8);
@@ -156,10 +157,8 @@ public class MakeQuestionFragment extends BaseFragment {
                             @Override
                             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                                 super.onSuccess(statusCode, headers, response);
-                                MyLogger.jLog().i(response.toString());
                                 try {
-                                    int state = response.getInt("state");
-                                    if (state == 1) {
+                                    if (JSONCatch.parseInt("state", response) == 1) {
                                         ToastUtils.showToast("提问成功");
                                         InputMethodManager imm = (InputMethodManager)
                                                 getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);

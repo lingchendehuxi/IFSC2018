@@ -67,15 +67,6 @@ public class AskQuestionAdapter extends BaseAdapter {
         return convertView;
     }
 
-    /**
-     * 清空所有选中状态
-     */
-    public void clearCheck() {
-        for (AskPupBean askPupBean : mList) {
-            askPupBean.setSelected(false);
-        }
-    }
-
 }
 
 

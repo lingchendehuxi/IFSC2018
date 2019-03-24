@@ -68,9 +68,9 @@ public class AlarmUtils {
                     isStartOrBack = 2;
                 }
                 intent.putExtra("time", "30分钟");
-                PendingIntent pi30 = PendingIntent.getActivity(context, bean.getBusInfoId() + 30 + isStartOrBack, intent, 0);
+                PendingIntent pi30 = PendingIntent.getActivity(context, bean.getBusInfoId() + 30 + isStartOrBack, intent, PendingIntent.FLAG_CANCEL_CURRENT);
                 intent.putExtra("time", "15分钟");
-                PendingIntent pi15 = PendingIntent.getActivity(context, bean.getBusInfoId() + 15 + isStartOrBack, intent, 0);
+                PendingIntent pi15 = PendingIntent.getActivity(context, bean.getBusInfoId() + 15 + isStartOrBack, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                     alarmManager.setExact(AlarmManager.RTC_WAKEUP, date.getTime() - time30, pi30);
@@ -180,7 +180,7 @@ public class AlarmUtils {
         intent.putExtra("from", bean.getBusFrom());
         intent.putExtra("to", bean.getBusTo());
 
-        PendingIntent pi = PendingIntent.getActivity(context, bean.getBusInfoId(), intent, 0);
+        PendingIntent pi = PendingIntent.getActivity(context, bean.getBusInfoId(), intent, PendingIntent.FLAG_CANCEL_CURRENT);
         alarmManager.cancel(pi);
 
         deleteBusResmindByBusInfoIdAndTime(bean.getBusInfoId(),bean.getIsStartOrBack());

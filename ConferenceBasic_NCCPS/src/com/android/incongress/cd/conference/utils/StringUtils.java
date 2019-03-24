@@ -377,6 +377,8 @@ public class StringUtils {
             }else {
                 if(texts.length>1){
                     textView.setText(texts[1]);
+                }else {
+                    textView.setText(texts[0]);
                 }
             }
         }

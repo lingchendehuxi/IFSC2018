@@ -8,6 +8,7 @@ import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -224,6 +225,7 @@ public class LiveFragment extends BaseFragment implements LiveAdapter.itemOnclic
                 }.getType());
                 if (isFresh) {
                     allBeans.clear();
+                    mAdapter.notifyDataSetChanged();
                 }
                 if (bean.getSessionArray().size() > 0) {
                     allBeans.addAll(bean.getSessionArray());
@@ -272,7 +274,7 @@ public class LiveFragment extends BaseFragment implements LiveAdapter.itemOnclic
                 newClassList.clear();
                 LiveClassBean.ClassArrayBean firstBean = new LiveClassBean.ClassArrayBean();
                 firstBean.setClassId(-1);
-                firstBean.setClassName("所有会议室#@#all");
+                firstBean.setClassName("所有会议室#@#All");
                 newClassList.add(firstBean);
                 LiveClassBean bean = new Gson().fromJson(response.toString(), new TypeToken<LiveClassBean>() {
                 }.getType());
@@ -342,7 +344,7 @@ public class LiveFragment extends BaseFragment implements LiveAdapter.itemOnclic
         tv_black_bg.setVisibility(View.VISIBLE);
         lightOff(tv_black_bg);
         //popupWindow.showAsDropDown(view);
-        popupWindow.showAsDropDown(mLl_sort, -(int) (DensityUtil.getScreenSize(getActivity())[0] * 0.12), DensityUtil.dip2px(getActivity(), 1f));
+        popupWindow.showAsDropDown(mLl_sort, (int)(DensityUtil.getScreenSize(getActivity())[0] * 0.12), 1,Gravity.CENTER);
     }
 
     class ListAdapter extends BaseAdapter {
@@ -406,7 +408,7 @@ public class LiveFragment extends BaseFragment implements LiveAdapter.itemOnclic
         if(DateUtil.isStart(allBeans.get(position).getStartTime())){
             //getActivity().startActivity(new Intent(getActivity(), CitLiveFragment.class));
             //CitLiveActivity.getInstance(getActivity(),allBeans.get(position).getLiveUrl());
-            CollegeActivity.startCitCollegeActivity(getActivity(), getString(R.string.live), allBeans.get(position).getLiveUrl());
+            CollegeActivity.startCitCollegeActivity(getActivity(), getString(R.string.live), allBeans.get(position).getLiveUrl(),1);
         }else {
             action(LiveListInfoFragment.getInstance(allBeans.get(position).getClassId()), R.string.live, false, false, false);
         }

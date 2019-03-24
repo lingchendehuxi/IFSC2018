@@ -191,7 +191,7 @@
         android:layout_marginTop="@dimen/layout_margin"
         android:orientation="horizontal">
 
-        <com.android.incongress.cd.conference.widget.ListViewForScrollView
+        <com.android.incongress.cd.conference.widget.ListViewForFix
             android:id="@+id/lv_commets"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

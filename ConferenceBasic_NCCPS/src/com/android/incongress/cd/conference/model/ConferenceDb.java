@@ -292,10 +292,10 @@ public class ConferenceDb {
                             } else {
                                 speaker.setEnName(speaker.getEnName());
                             }
-                            String speakernamepingyin = PinyinConverter.getPinyin(speaker.getSpeakerName().trim().replace("\n", ""));
+                            /*String speakernamepingyin = PinyinConverter.getPinyin(speaker.getSpeakerName().trim().replace("\n", ""));
                             speaker.setSpeakerNamePingyin(speakernamepingyin);
                             String s = speakernamepingyin.charAt(0) + "";
-                            speaker.setFirstLetter(speakernamepingyin.charAt(0) + "");
+                            speaker.setFirstLetter(speakernamepingyin.charAt(0) + "");*/
                             speaker.save();
                         }
 //              file.delete();
@@ -473,7 +473,6 @@ public class ConferenceDb {
         }
     }
 
-
     public static void createDB(String path, boolean isUpdate) {
         if (isUpdate) {
             //删除数据库
@@ -632,10 +631,6 @@ public class ConferenceDb {
                     } else {
                         speaker.setEnName(speaker.getEnName());
                     }
-
-                    String speakernamepingyin = PinyinConverter.getPinyin(speaker.getSpeakerName().trim().replace("\n", ""));
-                    speaker.setSpeakerNamePingyin(speakernamepingyin);
-                    speaker.setFirstLetter(speakernamepingyin.charAt(0) + "");
                     speaker.save();
                 }
 //              file.delete();

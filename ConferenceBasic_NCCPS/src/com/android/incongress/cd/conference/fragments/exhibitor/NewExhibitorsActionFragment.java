@@ -16,6 +16,7 @@ import com.android.incongress.cd.conference.base.BaseFragment;
 import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.beans.ExhibitorTitleBean;
 import com.android.incongress.cd.conference.utils.JSONCatch;
+import com.android.incongress.cd.conference.utils.StringUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
 import com.android.incongress.cd.conference.widget.MyViewPager;
 import com.android.incongress.cd.conference.widget.StatusBarUtil;
@@ -119,7 +120,7 @@ public class NewExhibitorsActionFragment extends BaseFragment {
                     ExhibitorTitleBean bean = new Gson().fromJson(response.toString(), new TypeToken<ExhibitorTitleBean>() {
                     }.getType());
                     for(int i = 0;i<bean.getMenu().size();i++){
-                        mTabEntities2.add(new TabEntity(bean.getMenu().get(i).getMenuName(), R.drawable.bottom_home, R.drawable.bottom_home));
+                        mTabEntities2.add(new TabEntity(StringUtils.getNeedString(bean.getMenu().get(i).getMenuName()), R.drawable.bottom_home, R.drawable.bottom_home));
                     }
                     adapter = new NewExhibitorActionAdapter(getChildFragmentManager(), bean.getMenu(), bean.getMenu().size());
                     mViewPager.setScrollble(true);

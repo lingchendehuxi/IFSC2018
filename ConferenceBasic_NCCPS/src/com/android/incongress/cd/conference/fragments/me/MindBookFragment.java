@@ -3,6 +3,7 @@ package com.android.incongress.cd.conference.fragments.me;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.android.incongress.cd.conference.HomeActivity;
 import com.android.incongress.cd.conference.adapters.MessageListAdapter;
 import com.android.incongress.cd.conference.adapters.MindInfoAdapter;
+import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.BaseFragment;
 import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.widget.MyViewPager;
@@ -33,6 +35,7 @@ public class MindBookFragment extends BaseFragment {
     private MyViewPager mViewPager;
     private MindInfoAdapter adapter;
     private String[] titles ;
+    private int dimen;
     private ArrayList<CustomTabEntity> mTabEntities2 = new ArrayList<>();
 
     @Override
@@ -56,6 +59,13 @@ public class MindBookFragment extends BaseFragment {
 
         //tab_layout.setViewPager(mViewPager);
         tab_layout.setTabData(mTabEntities2);
+        if(AppApplication.systemLanguage == 1){
+            tab_layout.setTextsize(17);
+            tab_layout.setTabPadding(23);
+        }else {
+            tab_layout.setTextsize(13);
+            tab_layout.setTabPadding(10);
+        }
         mViewPager.setOffscreenPageLimit(4);
         mViewPager.setCurrentItem(mCurrentPage);
         return view;

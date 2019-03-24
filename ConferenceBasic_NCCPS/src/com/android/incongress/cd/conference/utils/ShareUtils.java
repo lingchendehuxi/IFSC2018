@@ -2,7 +2,6 @@ package com.android.incongress.cd.conference.utils;
 
 import android.app.Activity;
 
-import com.android.incongress.cd.conference.HomeActivity;
 import com.android.incongress.cd.conference.base.Constants;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 import com.umeng.analytics.MobclickAgent;
@@ -31,7 +30,7 @@ public class ShareUtils {
         web.setDescription(content);//描述
 
         new ShareAction(activity).withMedia(web)
-                .setDisplayList(SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.WEIXIN_FAVORITE)
+                .setDisplayList(SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE)
                 .setCallback(listener).open();
         }
 }

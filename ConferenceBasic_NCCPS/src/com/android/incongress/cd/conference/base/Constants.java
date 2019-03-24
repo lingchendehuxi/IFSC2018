@@ -189,7 +189,7 @@ public class Constants {
     /** 检测数据库版本 **/
     public static final String PREFERENCE_DB_VERSION = "db_version";
     public static final String DB_frist = "local2";
-    public static final String DB_CLEAR = "db_clear";
+    public static final String DB_CLEAR = "db_clear_2";
     /** Compas首页版本号 **/
     public static final String COMPASS_VERSION = "compas_version";
 
@@ -345,6 +345,9 @@ public class Constants {
         else
             return "http://app.incongress.cn/";
     }
+    //蒙层
+    //看日程列表
+    public static final String MEETING_SHAPE_GUIDE = "guide_meet_shape";
 
     /*反馈地址*/
     public static final String FEEDBACK_URI = "http://weixin.incongress.cn/xhy/xhyHtml5/html/feedback.html";
@@ -355,7 +358,9 @@ public class Constants {
     //关于扫一扫的第一次开关
     public static final String QRCODE_SCAN_SWITCH = "qr_scan_switch";
     //不是直播时，跳转的链接
-    public static final String NO_LIVE_URL = CHYHttpClient.BASE_URL+CHYHttpClient.BASE_POSTER_LIST+"method=getSMContentById&id=";
+    public static final String NO_LIVE_URL = CHYHttpClient.BASE_URL+CHYHttpClient.BASE_POSTER_LIST+"method=getSMContentById&smId=";
+    //安卓机器定向
+    public static final int MACHINE_TYPE = 3;
     /*所有功能的开关*/
 
     /** 广告广播 **/
@@ -371,8 +376,8 @@ public class Constants {
 
     //初始数据库版本
     public static final int PROJECT_ID = 1;     //这个代表一个项目，如 1代表cit 2代表csccm。。。
-    public static final int DATA_VERSION = 258;
-    public static final int APP_VERSION = 41;
+    public static final int DATA_VERSION = 280;  //280
+    public static final int APP_VERSION = 44;
     /** 参会易下载地址(根据产品不同地址不同) **/
     public static final String APP_DOWNLOAD_SITE = "http://app.incongress.cn/cit";
     /** 下载地址 **/
@@ -389,9 +394,9 @@ public class Constants {
     //日程分享      //默认为true
     public static final boolean SCHEDULE_SHARE = true;
     //课件预约
-    public static final boolean SCHEDULE_BOOK = false;
+    public static final boolean SCHEDULE_BOOK = true;
     //日程提问
-    public static final boolean SCHEDULE_ASK = false;
+    public static final boolean SCHEDULE_ASK = true;
     //讲者信息介绍
     public static final boolean SCHEDULE_SPEAKER_INFO = true;
     //参会指南     分享

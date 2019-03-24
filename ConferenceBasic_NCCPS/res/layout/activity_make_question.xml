@@ -38,13 +38,12 @@
             android:id="@+id/title_question"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="@string/question"
-            android:textColor="@color/white"
-            android:gravity="center"
-            android:textSize="14sp"
             android:layout_alignParentRight="true"
             android:layout_marginRight="12dp"
-            />
+            android:gravity="center"
+            android:text="@string/question"
+            android:textColor="@color/back_color"
+            android:textSize="14sp" />
     </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"

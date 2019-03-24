@@ -67,7 +67,7 @@ public class QuestionsSquarAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 e.printStackTrace();
             }
         }
-        ((QuestionTitleViewHolder) holder).tvTip.setText("来自日程 #" + mAllQuestions.get(position).getMeetingName() + "#");
+        ((QuestionTitleViewHolder) holder).tvTip.setText(mContext.getString(R.string.from_schedule)+" #" + mAllQuestions.get(position).getMeetingName() + "#");
         ((QuestionTitleViewHolder) holder).tv_question_user_name.setText(mAllQuestions.get(position).getAnswerUserName());
         if (holder.getItemViewType() == VIEW_TYPE_TITLE) {
             PicUtils.loadImageUrl(mContext, mAllQuestions.get(position).getAnswerUserImg(), ((QuestionTitleViewHolder) holder).cvHead);

@@ -1,58 +1,33 @@
 package com.android.incongress.cd.conference.fragments.live;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.incongress.cd.conference.adapters.LiveAdapter;
 import com.android.incongress.cd.conference.adapters.LiveDetailListAdapter;
 import com.android.incongress.cd.conference.api.CHYHttpClientUsage;
-import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.BaseFragment;
 import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.beans.AlertBean;
-import com.android.incongress.cd.conference.beans.LiveClassBean;
-import com.android.incongress.cd.conference.beans.LiveInfoBean;
-import com.android.incongress.cd.conference.beans.LiveListInfoBean;
 import com.android.incongress.cd.conference.model.Alert;
 import com.android.incongress.cd.conference.model.ConferenceDbUtils;
 import com.android.incongress.cd.conference.model.LiveForOrderInfo;
 import com.android.incongress.cd.conference.model.LiveForOrderInfoBean;
 import com.android.incongress.cd.conference.utils.AlermClock;
-import com.android.incongress.cd.conference.utils.DensityUtil;
 import com.android.incongress.cd.conference.utils.JSONCatch;
-import com.android.incongress.cd.conference.utils.LogUtils;
-import com.android.incongress.cd.conference.utils.NetWorkUtils;
 import com.android.incongress.cd.conference.utils.StringUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
-import com.android.incongress.cd.conference.utils.WrapContentLinearLayoutManager;
-import com.android.incongress.cd.conference.utils.cache.DiskLruCacheUtil;
 import com.android.incongress.cd.conference.widget.ListViewForFix;
-import com.android.incongress.cd.conference.widget.ListViewForScrollView;
 import com.android.incongress.cd.conference.widget.StatusBarUtil;
-import com.android.incongress.cd.conference.widget.popup.ChooseBBPopupWindow;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import com.jcodecraeer.xrecyclerview.ProgressStyle;
-import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 import com.umeng.analytics.MobclickAgent;
@@ -166,10 +141,6 @@ public class LiveListInfoFragment extends BaseFragment {
                     String jsonString = gson.toJson(list1);
                     tv_holder.setText(StringUtils.getNewString(jsonString));
                     for (int i = 1; i < list.size(); i++) {
-                        lastBeans.add(list.get(i));
-                        lastBeans.add(list.get(i));
-                        lastBeans.add(list.get(i));
-                        lastBeans.add(list.get(i));
                         lastBeans.add(list.get(i));
                     }
                     if (lastBeans.size() > 0) {

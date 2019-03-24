@@ -26,23 +26,23 @@
             <TextView
                 android:id="@+id/tv_session_time"
                 android:layout_width="0dp"
-                android:layout_weight="1"
-                android:textColor="@color/theme_color"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:singleLine="true"
                 android:text="08:30AM-10:15AM"
+                android:textColor="@color/theme_color"
                 android:textSize="@dimen/text_size_media" />
 
             <TextView
                 android:id="@+id/tv_session_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:singleLine="true"
                 android:layout_marginLeft="12dp"
+                android:drawableLeft="@drawable/czs_icon_stand"
                 android:drawablePadding="4dp"
                 android:ellipsize="end"
-                android:drawableLeft="@drawable/czs_icon_stand"
                 android:gravity="right"
+                android:singleLine="true"
                 android:text="一层多功能A厅"
                 android:textSize="@dimen/text_size_media" />
         </LinearLayout>
@@ -59,22 +59,23 @@
             <TextView
                 android:id="@+id/tv_session_name"
                 android:layout_width="wrap_content"
-                android:text="示教演示"
                 android:layout_height="wrap_content"
+                android:text="示教演示"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text_size_media"
-                />
+                android:textSize="@dimen/text_size_media" />
 
 
             <com.android.incongress.cd.conference.widget.LinearLayoutForListView
                 android:id="@+id/llfl_speakers"
-                android:orientation="vertical"
-
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
         </LinearLayout>
 
-        <View style="@style/h_line" android:background="#dcdcdc"/>
+        <View
+            style="@style/h_line"
+            android:background="#dcdcdc" />
 
         <com.android.incongress.cd.conference.widget.LinearLayoutForListView
             android:id="@+id/llfl_meeting_names"
@@ -83,7 +84,7 @@
             android:background="#F8F7F7"
             android:gravity="center_vertical"
             android:orientation="vertical"
-            android:padding="6dp"/>
+            android:padding="6dp" />
     </LinearLayout>
 
 

@@ -27,7 +27,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:text="测试"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -38,7 +37,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="10dp"
-            android:text="标题"
             android:textColor="@color/black_login_text"
             android:textSize="@dimen/text_15" />
 
@@ -48,7 +46,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="10dp"
-            android:text="时间"
             android:textColor="@color/unselect_color"
             android:textSize="@dimen/text_15" />
 
@@ -58,7 +55,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="10dp"
-            android:text="主持人"
             android:textColor="@color/unselect_color"
             android:textSize="@dimen/text_15" />
 

@@ -163,7 +163,7 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <com.android.incongress.cd.conference.widget.ListViewForScrollView
+            <com.android.incongress.cd.conference.widget.ListViewForFix
                 android:id="@+id/lv_meetings"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

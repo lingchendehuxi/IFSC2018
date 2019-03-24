@@ -1,16 +1,14 @@
 package com.android.incongress.cd.conference.fragments.meeting_schedule;
 
+import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -18,21 +16,20 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.android.incongress.cd.conference.HomeActivity;
 import com.android.incongress.cd.conference.adapters.MeetingScheduleListFragmentAdapter;
+import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.BaseFragment;
 import com.android.incongress.cd.conference.base.Constants;
-import com.android.incongress.cd.conference.fragments.search_schedule.NewSearchScheduleActionFragment;
 import com.android.incongress.cd.conference.fragments.search_schedule.SegmentScheduleActionFragment;
 import com.android.incongress.cd.conference.model.ConferenceDbUtils;
 import com.android.incongress.cd.conference.model.Session;
-import com.android.incongress.cd.conference.utils.CommonUtils;
+import com.android.incongress.cd.conference.save.SharePreferenceUtils;
+import com.android.incongress.cd.conference.utils.DateUtil;
 import com.android.incongress.cd.conference.utils.DensityUtil;
 import com.android.incongress.cd.conference.utils.TimeUtils;
-import com.android.incongress.cd.conference.widget.ListViewForScrollView;
 import com.android.incongress.cd.conference.widget.MyViewPager;
 import com.android.incongress.cd.conference.widget.StatusBarUtil;
 import com.android.incongress.cd.conference.widget.popup.ChooseTimePopupWindow;
@@ -41,6 +38,7 @@ import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.Inflater;
 
 /**
  * Created by Jacky on 2016/1/31.
@@ -50,10 +48,10 @@ public class MeetingScheduleListActionFragment extends BaseFragment {
     private MeetingScheduleListFragmentAdapter mPageAdapter;
     private ArrayList<String> mSessionDaysList = new ArrayList<>();
     private ArrayList<String> newSessionDaysList = new ArrayList<>();
-    private TextView mTvTips,mSelectTime;
-    private LinearLayout linearLayout,ll_title;
+    private TextView mTvTips, mSelectTime;
+    private LinearLayout linearLayout, ll_title;
     private RelativeLayout rl_select_time;
-    private ImageView title_back,iv_search;
+    private ImageView title_back, iv_search;
     private int mCurrentPage = 0;
     private ListAdapter listAdapter;
     private ChooseTimePopupWindow popupWindow;
@@ -62,6 +60,7 @@ public class MeetingScheduleListActionFragment extends BaseFragment {
     private float fixHeight;
     //参数为了在切换到activity返回后，fragment重新设置导航栏字体颜色
     private boolean isBackView = true;
+    private View guide_view;
 
     @Override
     public void onAttach(Context context) {
@@ -71,7 +70,7 @@ public class MeetingScheduleListActionFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        StatusBarUtil.setStatusBarDarkTheme(getActivity(),true);
+        StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
         View view = inflater.inflate(R.layout.fragment_meeting_schedule_list, null, false);
         rl_select_time = view.findViewById(R.id.rl_select_time);
         mViewPager = view.findViewById(R.id.viewpager);
@@ -90,7 +89,7 @@ public class MeetingScheduleListActionFragment extends BaseFragment {
         title_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((HomeActivity)getActivity()).performBackClick();
+                ((HomeActivity) getActivity()).performBackClick();
             }
         });
         iv_search.setOnClickListener(new View.OnClickListener() {
@@ -102,22 +101,33 @@ public class MeetingScheduleListActionFragment extends BaseFragment {
 
         getSessionDays();
         newSessionDaysList = getStringList();
-        if(mSessionDaysList.size()!=0){
+        if (mSessionDaysList.size() != 0) {
             mSelectTime.setText(newSessionDaysList.get(0));
         }
         mPageAdapter = new MeetingScheduleListFragmentAdapter(getChildFragmentManager(), mSessionDaysList);
         mViewPager.setScrollble(false);
         mViewPager.setAdapter(mPageAdapter);
         mViewPager.setOffscreenPageLimit(3);
-        for(int i = 0;i<mSessionDaysList.size();i++){
-            if(TimeUtils.getCurrentTimeMD().equals(mSessionDaysList.get(i))){
+        for (int i = 0; i < mSessionDaysList.size(); i++) {
+            if (TimeUtils.getCurrentTimeMD().equals(mSessionDaysList.get(i))) {
                 mCurrentPage = i;
                 mSelectTime.setText(newSessionDaysList.get(mCurrentPage));
             }
         }
-        mViewPager.setCurrentItem(mCurrentPage,false);
+        mViewPager.setCurrentItem(mCurrentPage, false);
+        if (AppApplication.systemLanguage == 1) {
+            iv_search.setImageResource(R.drawable.guide_search_ch);
+        } else {
+            iv_search.setImageResource(R.drawable.guide_search_en);
+        }
+        if(!SharePreferenceUtils.getAppBoolean(Constants.MEETING_SHAPE_GUIDE,false)){
+            addGuideView();
+            SharePreferenceUtils.saveAppBoolean(Constants.MEETING_SHAPE_GUIDE,true);
+        }
         return view;
     }
+
+
 
     private void getSessionDays() {
         mSessionDaysList.clear();
@@ -138,12 +148,15 @@ public class MeetingScheduleListActionFragment extends BaseFragment {
 //            mTvTips.setVisibility(View.GONE);
 //        }
     }
-    private ArrayList<String> getStringList(){
+
+    private ArrayList<String> getStringList() {
         ArrayList<String> list = new ArrayList<>();
-        for(int i = 0;i<mSessionDaysList.size();i++){
-            String[] strings = mSessionDaysList.get(i).split("-");
-            String string = Integer.parseInt(strings[1])+"月"+Integer.parseInt(strings[2])+"日";
-            list.add(string);
+        for (int i = 0; i < mSessionDaysList.size(); i++) {
+            if(AppApplication.systemLanguage == 1){
+                list.add(DateUtil.getFormatMonthAndDayChinese(mSessionDaysList.get(i)));
+            }else {
+                list.add(DateUtil.getFormatMonthAndDayEnglish(mSessionDaysList.get(i)));
+            }
         }
         return list;
     }
@@ -181,7 +194,7 @@ public class MeetingScheduleListActionFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        if(!isBackView){
+        if (!isBackView) {
             StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
         }
         getActivity().findViewById(R.id.title_back_panel).setVisibility(View.VISIBLE);
@@ -192,7 +205,7 @@ public class MeetingScheduleListActionFragment extends BaseFragment {
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         isBackView = hidden;
-        if(!hidden){
+        if (!hidden) {
             StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
         }
     }
@@ -203,11 +216,12 @@ public class MeetingScheduleListActionFragment extends BaseFragment {
         getActivity().findViewById(R.id.title_back_panel).setVisibility(View.VISIBLE);
         MobclickAgent.onPageEnd(Constants.FRAGMENT_MEETINGSCHEDULELIST);
     }
+
     //创建popupwindow
-    private void initPopupWindow(View view){
+    private void initPopupWindow(View view) {
         popupWindow = new ChooseTimePopupWindow(getActivity());
         ListView listView = popupWindow.getmListView();
-        listAdapter = new ListAdapter(getActivity(),newSessionDaysList);
+        listAdapter = new ListAdapter(getActivity(), newSessionDaysList);
         listAdapter.setCurrentItem(mCurrentPage);
         listView.setAdapter(listAdapter);
         int totalHeight = 0;
@@ -216,9 +230,9 @@ public class MeetingScheduleListActionFragment extends BaseFragment {
             listItem.measure(0, 0); //计算子项View 的宽高 //统计所有子项的总高度
             totalHeight += listItem.getMeasuredHeight() + listView.getDividerHeight();
         }
-        if(DensityUtil.getScreenSize(getActivity())[1]<=1920){
+        if (DensityUtil.getScreenSize(getActivity())[1] <= 1920) {
             fixHeight = DensityUtil.getScreenSize(getActivity())[1] * ScreenHeightLPercent;
-        }else {
+        } else {
             fixHeight = DensityUtil.getScreenSize(getActivity())[1] * ScreenHeightHPercent;
         }
         if (totalHeight > fixHeight) {
@@ -240,15 +254,16 @@ public class MeetingScheduleListActionFragment extends BaseFragment {
                 listAdapter.setCurrentItem(mCurrentPage);
                 listAdapter.notifyDataSetChanged();
                 mSelectTime.setText(newSessionDaysList.get(mCurrentPage));
-                mViewPager.setCurrentItem(mCurrentPage,false);
+                mViewPager.setCurrentItem(mCurrentPage, false);
                 popupWindow.dismiss();
             }
         });
         lightOff(linearLayout);
-        int offsetX = Math.abs((int)(view.getWidth()*0.3)-DensityUtil.dip2px(getActivity(),1.5f));
+        int offsetX = Math.abs((int) (view.getWidth() * 0.3) - DensityUtil.dip2px(getActivity(), 1.5f));
         //popupWindow.showAsDropDown(view);
-        popupWindow.showAsDropDown(view,offsetX,1,Gravity.CENTER);
+        popupWindow.showAsDropDown(view, offsetX, 1, Gravity.CENTER);
     }
+
     /**
      * 查日程
      */
@@ -256,21 +271,25 @@ public class MeetingScheduleListActionFragment extends BaseFragment {
         SegmentScheduleActionFragment fragment = new SegmentScheduleActionFragment();
         action(fragment, null);
     }
+
     class ListAdapter extends BaseAdapter {
         ArrayList<String> listBeans;
         public Context context;
         public LayoutInflater layoutInflater;
-        public ListAdapter (Context context,ArrayList<String> listBeans){
+
+        public ListAdapter(Context context, ArrayList<String> listBeans) {
             this.context = context;
             this.listBeans = listBeans;
             layoutInflater = LayoutInflater.from(context);
         }
+
         //当前Item被点击的位置
         private int currentItem;
 
         public void setCurrentItem(int currentItem) {
             this.currentItem = currentItem;
         }
+
         @Override
         public int getCount() {
             return listBeans.size();
@@ -289,25 +308,67 @@ public class MeetingScheduleListActionFragment extends BaseFragment {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             MyTimeHold myHold;
-            if(convertView == null){
-                convertView = layoutInflater.inflate(R.layout.my_centertextview,null);
+            if (convertView == null) {
+                convertView = layoutInflater.inflate(R.layout.my_centertextview, null);
                 myHold = new MyTimeHold();
                 myHold.tv_time = convertView.findViewById(R.id.tv_time);
                 convertView.setTag(myHold);
-            }else {
+            } else {
                 myHold = (MyTimeHold) convertView.getTag();
             }
-            if(currentItem == position){
+            if (currentItem == position) {
                 myHold.tv_time.setSelected(true);
-            }else {
+            } else {
                 myHold.tv_time.setSelected(false);
             }
             myHold.tv_time.setText(listBeans.get(position));
             return convertView;
         }
+
         class MyTimeHold {
             TextView tv_time;
         }
     }
+    //添加蒙层
+    private void addGuideView() {
+        ImageView iv_guide_search, iv_guide_show;
+        guide_view = LayoutInflater.from(getActivity()).inflate(R.layout.activity_guide_view, null);
+        iv_guide_search = guide_view.findViewById(R.id.iv_guide_search);
+        iv_guide_show = guide_view.findViewById(R.id.iv_guide_show);
+        if (AppApplication.systemLanguage == 1) {
+            iv_guide_search.setImageResource(R.drawable.guide_search_shape_ch);
+            iv_guide_show.setImageResource(R.drawable.guide_search_show_ch);
+        } else {
+            iv_guide_search.setImageResource(R.drawable.guide_search_shape_en);
+            iv_guide_show.setImageResource(R.drawable.guide_search_show_en);
+        }
+        guide_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.setVisibility(View.GONE);
+            }
+        });
+        addLayer(getActivity(), guide_view);
+    }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(guide_view!=null){
+            guide_view.setVisibility(View.GONE);
+            guide_view = null;
+        }
+    }
+
+    /**
+     * 为rootView添加蒙层
+     *
+     * @return
+     */
+    public static void addLayer(Activity mContext, View layerView) {
+        if (mContext == null || layerView == null)
+            return;
+        ViewGroup contentView = (ViewGroup) mContext.getWindow().findViewById(Window.ID_ANDROID_CONTENT);
+        contentView.addView(layerView);
+    }
 }

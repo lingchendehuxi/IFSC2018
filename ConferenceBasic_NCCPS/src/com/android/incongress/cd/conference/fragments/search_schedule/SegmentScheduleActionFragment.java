@@ -161,7 +161,7 @@ public class SegmentScheduleActionFragment extends BaseFragment implements View.
         List<String> dataT = new ArrayList<>();
         List<String> secondsF = new ArrayList<>();
         List<String> secondsT = new ArrayList<>();
-        for (int i = 8; i < 21; i++) {
+        for (int i = 7; i < 23; i++) {
             if(i<10){
                 dataF.add("0" + i);
                 dataT.add("0" + i);
@@ -329,7 +329,7 @@ public class SegmentScheduleActionFragment extends BaseFragment implements View.
             case R.id.ll_am:
                 initButtonState();
                 ll_am.setBackground(getResources().getDrawable(R.drawable.bg_segment_selected));
-                mCurrentSearchStartTime = "08:00";
+                mCurrentSearchStartTime = "07:00";
                 mCurrentSearchEndTime = "12:00";
                 isCustomTime = false;
                 break;
@@ -344,7 +344,7 @@ public class SegmentScheduleActionFragment extends BaseFragment implements View.
                 initButtonState();
                 ll_ev.setBackground(getResources().getDrawable(R.drawable.bg_segment_selected));
                 mCurrentSearchStartTime = "18:00";
-                mCurrentSearchEndTime = "20:00";
+                mCurrentSearchEndTime = "22:00";
                 isCustomTime = false;
                 break;
             case R.id.tv_cancel:
@@ -358,7 +358,7 @@ public class SegmentScheduleActionFragment extends BaseFragment implements View.
                 //重置搜索条件
                 mCurrentSearchDay = mSessionDaysList.get(mCurrentTimePosition);
                 mCurrentSearchRoom = "";
-                mCurrentSearchStartTime = "08:00";
+                mCurrentSearchStartTime = "07:00";
                 mCurrentSearchEndTime = "12:00";
                 break;
             //跳转下个内容
@@ -390,10 +390,10 @@ public class SegmentScheduleActionFragment extends BaseFragment implements View.
                         if (Integer.parseInt(s_second_to) > Integer.parseInt(s_second_from)) {
                             doSearchQuery(mCurrentSearchDay, mCurrentSearchRoom, mCurrentSearchRoomName, mCurrentSearchStartTime, mCurrentSearchEndTime);
                         } else {
-                            ToastUtils.showToast(R.string.search_time);
+                            ToastUtils.showToast(getString(R.string.search_time));
                         }
                     } else {
-                        ToastUtils.showToast(R.string.search_time);
+                        ToastUtils.showToast(getString(R.string.search_time));
                     }
                 } else {
                     doSearchQuery(mCurrentSearchDay, mCurrentSearchRoom, mCurrentSearchRoomName, mCurrentSearchStartTime, mCurrentSearchEndTime);

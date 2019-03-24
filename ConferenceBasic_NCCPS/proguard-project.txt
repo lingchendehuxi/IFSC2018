@@ -275,3 +275,6 @@
 -keep class com.alipay.sdk.app.AuthTask{ public *;}
 -keep class com.alipay.mobilesecuritysdk.*
 -keep class com.ut.*
+# 今日头条适配
+ -keep class me.jessyan.autosize.** { *; }
+ -keep interface me.jessyan.autosize.** { *; }

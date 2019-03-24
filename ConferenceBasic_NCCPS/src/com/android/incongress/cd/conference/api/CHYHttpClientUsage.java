@@ -1,5 +1,6 @@
 package com.android.incongress.cd.conference.api;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Message;
 import android.text.TextUtils;
@@ -68,7 +69,7 @@ public class CHYHttpClientUsage {
         params.put("method", "getSceneShowTop");
         params.put("conferencesId", conferencesId);
 
-        CHYHttpClient.post("getSceneShowTop", params, responseHandler);
+        CHYHttpClient.post(params, responseHandler);
     }
 
     /**
@@ -229,13 +230,13 @@ public class CHYHttpClientUsage {
      */
     public void doGetUserMessage(String userId, String userType, JsonHttpResponseHandler responseHandler) {
         RequestParams params = new RequestParams();
-
+        params.put("method","getUserMessageReminderByUserIdAndUserType");
         params.put("userId", userId);
         params.put("userType", userType);
         params.put("conferencesId", Constants.getConId());
 
 
-        CHYHttpClient.post("getUserMessageReminderByUserIdAndUserType", params, responseHandler);
+        CHYHttpClient.post(params, responseHandler);
     }
 
     /**
@@ -482,7 +483,7 @@ public class CHYHttpClientUsage {
     public void doCreateSceneShowQuestionNew(String content, String speakerId, int meetingId, String meetingName, JsonHttpResponseHandler responseHandler) {
         RequestParams params = new RequestParams();
         params.put("method", "createSceneShowQuestionV1");
-        params.put("conId", 367);
+        params.put("conId", Constants.getConId());
         params.put("userId", AppApplication.userId);
         params.put("userType", AppApplication.userType);
         params.put("content", content);
@@ -739,6 +740,16 @@ public class CHYHttpClientUsage {
         CHYHttpClient.post(params, responseHandler);
     }
 
+    /**
+     * 上传壁报ID
+     */
+    public void doPostWallPosterId(String posterId,JsonHttpResponseHandler responseHandler) {
+        RequestParams params = new RequestParams();
+        params.put("method", "posterRead");
+        params.put("posterId", posterId);
+        params.put("clientType", Constants.MACHINE_TYPE);
+        CHYHttpClient.postNew(params, responseHandler);
+    }
     /**
      * 获取电子壁报的数据类型
      */
@@ -1151,9 +1162,9 @@ public class CHYHttpClientUsage {
      */
     public void doGetBusInfo(int conId, JsonHttpResponseHandler responseHandler) {
         RequestParams params = new RequestParams();
+        params.put("method", "getBusInfo");
         params.put("conId", conId + "");
-
-        CHYHttpClient.post("getBusInfo", params, responseHandler);
+        CHYHttpClient.post(params, responseHandler);
     }
 
     /**
@@ -1166,18 +1177,23 @@ public class CHYHttpClientUsage {
         params.put("userId", AppApplication.userId);
         params.put("userType", AppApplication.userType);
         params.put("lan", AppApplication.getSystemLanuageCode());
-
         CHYHttpClient.post(params, responseHandler);
     }
 
     public void doGetQuestionsByMySession(JsonHttpResponseHandler responseHandler) {
         RequestParams params = new RequestParams();
-        params.put("method", "getMySceneShowByIdAndUserType");
+        params.put("method", "getQuestionsBySessionV2");
+        params.put("conId", Constants.getConId());
+        params.put("userId", AppApplication.userId);
+        params.put("userType", AppApplication.userType);
+        params.put("lan", AppApplication.getSystemLanuageCode());
+        CHYHttpClient.post(params, responseHandler);
+        /*params.put("method", "getMySceneShowByIdAndUserType");
         params.put("conId", 367);
         params.put("userId", AppApplication.userId);
         params.put("facultyId", AppApplication.facultyId);
         params.put("userType", AppApplication.userType);
-        params.put("lan", AppApplication.getSystemLanuageCode());
+        params.put("lan", AppApplication.getSystemLanuageCode());*/
 
         CHYHttpClient.postMyQuestion(params, responseHandler);
     }
@@ -1295,6 +1311,15 @@ public class CHYHttpClientUsage {
         params.put("searchString", searchString);
         CHYHttpClient.postFastOnLine(params, responseHandler);
     }
+    /**
+     * 是否有预约课件
+     */
+    public void doHasClassInfo(JsonHttpResponseHandler responseHandler) {
+        RequestParams params = new RequestParams();
+        params.put("method", "getKejianYuyueList1");
+        params.put("conId", Constants.getConId());
+        CHYHttpClient.postNew(params, responseHandler);
+    }
 
     /**
      * 通过modelId获取当年课件天数
@@ -1357,7 +1382,7 @@ public class CHYHttpClientUsage {
     public void doGetOrderCourse(String conId, String topic, String userId, JsonHttpResponseHandler responseHandler) {
         RequestParams params = new RequestParams();
         params.put("method", "coursewareReservationNew");
-        params.put("conId", conId);
+        params.put("conId", Constants.getConId());
         params.put("topic", StringUtils.utf8Encode(topic));
         params.put("userId", userId);
         CHYHttpClient.post(params, responseHandler);
@@ -1367,7 +1392,7 @@ public class CHYHttpClientUsage {
     public void doGetMYOrderCourse(int conId, String userId, JsonHttpResponseHandler responseHandler) {
         RequestParams params = new RequestParams();
         params.put("method", "getUserReservationMeetingByConIdAndUserId");
-        params.put("conId", conId);
+        params.put("conId", Constants.getConId());
         params.put("userId", userId);
         CHYHttpClient.post(params, responseHandler);
     }
@@ -1417,7 +1442,7 @@ public class CHYHttpClientUsage {
     public void doUploadQRCodeInfo(String userId, JsonHttpResponseHandler responseHandler){
         RequestParams params = new RequestParams();
         params.put("method", "mealsAndCardsCheck");
-        params.put("conId", "387");
+        params.put("conId", Constants.getConId());
         params.put("firstuserId", "204907");
         params.put("seconduserId", userId);
         CHYHttpClient.postLiveList(params, responseHandler);
@@ -1431,14 +1456,14 @@ public class CHYHttpClientUsage {
     public void doGetClassForMeetLive(JsonHttpResponseHandler responseHandler){
         RequestParams params = new RequestParams();
         params.put("method", "getClasses");
-        params.put("conId", 399);
+        params.put("conId", Constants.getConId());
         CHYHttpClient.postLiveList(params, responseHandler);
     }
     //获取会议室对应直播列表接口
     public void doGetClassForMeetLiveAddress(int classId,JsonHttpResponseHandler responseHandler){
         RequestParams params = new RequestParams();
         params.put("method", "getSessionListByClass");
-        params.put("conId", 399);
+        params.put("conId", Constants.getConId());
         params.put("classId", classId);
         CHYHttpClient.postLiveList(params, responseHandler);
     }
@@ -1446,7 +1471,7 @@ public class CHYHttpClientUsage {
     public void doGetOrderLive(int sessionId,JsonHttpResponseHandler responseHandler){
         RequestParams params = new RequestParams();
         params.put("method", "liveYuyue");
-        params.put("conId", 399);
+        params.put("conId", Constants.getConId());
         params.put("sessionId", sessionId);
         params.put("userId", AppApplication.userId);
         params.put("userType", AppApplication.userType);
@@ -1456,7 +1481,7 @@ public class CHYHttpClientUsage {
     public void doGetRelativeLive(int classId,JsonHttpResponseHandler responseHandler){
         RequestParams params = new RequestParams();
         params.put("method", "getSessionListByClassAll");
-        params.put("conId", 399);
+        params.put("conId", Constants.getConId());
         params.put("classId", classId);
         params.put("lan", AppApplication.getSystemLanuageCode());
         CHYHttpClient.postLiveList(params, responseHandler);

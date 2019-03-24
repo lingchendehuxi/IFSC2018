@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -487,6 +488,20 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
             TextView tv_gv_list = convertView.findViewById(R.id.tv_gv_list);
             TextView remind_red = convertView.findViewById(R.id.remind_red);
             iv_gv_list.setImageDrawable(imgList[position]);
+            if (AppApplication.systemLanguage == 1) {
+                tv_gv_list.setText(strList[position]);
+                int dimen = getResources().getDimensionPixelSize(R.dimen.middle_text);
+                tv_gv_list.setTextSize(TypedValue.COMPLEX_UNIT_PX,dimen);
+            } else {
+                int dimen;
+                if(position == 0){
+                    dimen = getResources().getDimensionPixelSize(R.dimen.small_l_text);
+                }else {
+                    dimen = getResources().getDimensionPixelSize(R.dimen.small_m_text);
+                }
+                tv_gv_list.setText(strList[position]);
+                tv_gv_list.setTextSize(TypedValue.COMPLEX_UNIT_PX,dimen);
+            }
             tv_gv_list.setText(strList[position]);
             if (position == 0) {
                 badges.add(new QBadgeView(context).bindTarget(remind_red).setBadgeGravity(Gravity.TOP | Gravity.END).setBadgeTextSize(9, true).setBadgePadding(-0.00005f,true).stroke(getResources().getColor(R.color.remind_cycle_color),2,true).setBadgeBackgroundColor(getResources().getColor(R.color.remind_cycle_color)));//.setBadgeNumber()

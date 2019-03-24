@@ -2,12 +2,10 @@ package com.android.incongress.cd.conference.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -26,16 +24,14 @@ import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.beans.ScenicXiuBean;
 import com.android.incongress.cd.conference.fragments.scenic_xiu.ScenicXiuFragment;
-import com.android.incongress.cd.conference.utils.PicUtils;
-import com.android.incongress.cd.conference.widget.CircleImageView;
-import com.android.incongress.cd.conference.widget.ListViewForScrollView;
-import com.android.incongress.cd.conference.widget.NoScrollGridView;
 import com.android.incongress.cd.conference.utils.CommentUtils;
 import com.android.incongress.cd.conference.utils.MyLogger;
+import com.android.incongress.cd.conference.utils.PicUtils;
 import com.android.incongress.cd.conference.utils.StringUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
-import com.android.incongress.cd.conference.utils.transformer.CircleTransform;
-import com.bumptech.glide.Glide;
+import com.android.incongress.cd.conference.widget.CircleImageView;
+import com.android.incongress.cd.conference.widget.ListViewForFix;
+import com.android.incongress.cd.conference.widget.NoScrollGridView;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 import com.yqritc.recyclerviewflexibledivider.FlexibleDividerDecoration;
@@ -362,22 +358,22 @@ public class HistoryPostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         LinearLayout llMoreOperationContainer;
         TextView tvComment;
         TextView tvPraise;
-        ListViewForScrollView lvComments;
+        ListViewForFix lvComments;
 
         public ViewHolder4MakePost(View view) {
             super(view);
-            tvPublisherName = (TextView) view.findViewById(R.id.tv_publisher_name);
-            gridViewPics = (NoScrollGridView) view.findViewById(R.id.gv_pics);
+            tvPublisherName = view.findViewById(R.id.tv_publisher_name);
+            gridViewPics = view.findViewById(R.id.gv_pics);
             civPublisherIcon = view.findViewById(R.id.civ_publisher);
-            tvPublishTime = (TextView) view.findViewById(R.id.tv_publish_time);
-            tvContent = (TextView) view.findViewById(R.id.tv_publish_content);
-            tvCommentNum = (TextView) view.findViewById(R.id.tv_comment_num);
-            tvPraiseNum = (TextView) view.findViewById(R.id.tv_praise_num);
-            ivMoreOperationClick = (ImageView) view.findViewById(R.id.iv_operate_more);
-            llMoreOperationContainer = (LinearLayout) view.findViewById(R.id.ll_more_operate_container);
-            lvComments = (ListViewForScrollView) view.findViewById(R.id.lv_commets);
-            tvComment = (TextView) view.findViewById(R.id.tv_comment);
-            tvPraise = (TextView) view.findViewById(R.id.tv_praise);
+            tvPublishTime = view.findViewById(R.id.tv_publish_time);
+            tvContent = view.findViewById(R.id.tv_publish_content);
+            tvCommentNum = view.findViewById(R.id.tv_comment_num);
+            tvPraiseNum = view.findViewById(R.id.tv_praise_num);
+            ivMoreOperationClick = view.findViewById(R.id.iv_operate_more);
+            llMoreOperationContainer = view.findViewById(R.id.ll_more_operate_container);
+            lvComments = view.findViewById(R.id.lv_commets);
+            tvComment = view.findViewById(R.id.tv_comment);
+            tvPraise = view.findViewById(R.id.tv_praise);
         }
     }
 
@@ -393,7 +389,7 @@ public class HistoryPostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         LinearLayout llMoreOperationContainer;
         TextView tvComment;
         TextView tvPraise;
-        ListViewForScrollView lvComments;
+        ListViewForFix lvComments;
 
         public ViewHolder5CompanyActivitys(View view) {
             super(view);
@@ -406,7 +402,7 @@ public class HistoryPostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             tvPraiseNum = (TextView) view.findViewById(R.id.tv_praise_num);
             ivMoreOperationClick = (ImageView) view.findViewById(R.id.iv_operate_more);
             llMoreOperationContainer = (LinearLayout) view.findViewById(R.id.ll_more_operate_container);
-            lvComments = (ListViewForScrollView) view.findViewById(R.id.lv_commets);
+            lvComments = view.findViewById(R.id.lv_commets);
             tvComment = (TextView) view.findViewById(R.id.tv_comment);
             tvPraise = (TextView) view.findViewById(R.id.tv_praise);
         }

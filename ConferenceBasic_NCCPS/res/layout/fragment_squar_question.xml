@@ -4,13 +4,7 @@
     android:layout_height="match_parent"
     android:paddingTop="3dp"
     android:background="@color/white">
-    <TextView
-        android:id="@+id/tv_tips"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="@string/tips_question_meeting"
-        android:visibility="gone" />
+
     <LinearLayout
         android:id="@+id/ll_question"
         android:layout_width="match_parent"
@@ -39,5 +33,12 @@
         android:id="@+id/rv_question"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-
+    <TextView
+        android:id="@+id/tv_tips"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:text="@string/tips_question_meeting"
+        android:visibility="gone" />
 </RelativeLayout>

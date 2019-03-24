@@ -18,6 +18,7 @@ import com.android.incongress.cd.conference.beans.AllRooms;
 import com.android.incongress.cd.conference.model.Class;
 import com.android.incongress.cd.conference.model.ConferenceDbUtils;
 import com.android.incongress.cd.conference.save.SharePreferenceUtils;
+import com.android.incongress.cd.conference.utils.PicUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 
@@ -113,9 +114,8 @@ public class ChooseRomPopupWindow extends BasePopupWindow {
                 @Override
                 public void onClick(View v) {
                    if(getCurrentClass().size()==0){
-                       ToastUtils.showToast("请选择至少一个会议室");
+                       ToastUtils.showToast(mContext.getString(R.string.chose_meet_pop_tip));
                    }else{
-                       SharePreferenceUtils.saveAppBoolean("popup",true);
                        dismiss();
                    }
                 }
@@ -146,6 +146,7 @@ public class ChooseRomPopupWindow extends BasePopupWindow {
         }
         if(selection){
             mSelectionSelect.setImageResource(R.drawable.room_selected);
+            PicUtils.setImageViewColor(mSelectionSelect,R.color.theme_color);
             mSelectionText.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.bg_room_tag_selected));
             mSelectionText.setTextColor(mContext.getResources().getColor(R.color.alpha_theme_color));
         }else{

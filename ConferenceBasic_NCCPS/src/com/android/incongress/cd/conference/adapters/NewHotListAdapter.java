@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.incongress.cd.conference.HomeActivity;
@@ -67,6 +68,9 @@ public class NewHotListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         HotListBean.ResultBean bean = mBeans.get(position);
         if(holder.getItemViewType() == 0){
             StringUtils.setTextShow(((ViewHolder) holder).tv_title,bean.getTitle());
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
+            layoutParams.height = (DensityUtil.getScreenSize((HomeActivity)mContext)[0]-DensityUtil.dip2px(mContext,34))/3;
+            ((ViewHolder) holder).iv_img.setLayoutParams(layoutParams);
             PicUtils.loadImageUrl(mContext, bean.getImg(), ((ViewHolder) holder).iv_img);
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -91,7 +95,7 @@ public class NewHotListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 ((ViewHolderSatel) holder).iv_img.setVisibility(View.VISIBLE);
                 ((ViewHolderSatel) holder).view_top.setVisibility(View.VISIBLE);
                 FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
-                layoutParams.height = DensityUtil.getScreenSize((HomeActivity)mContext)[0]/2;
+                layoutParams.height = (DensityUtil.getScreenSize((HomeActivity)mContext)[0]-DensityUtil.dip2px(mContext,34))/2;
                 ((ViewHolderSatel) holder).iv_img.setLayoutParams(layoutParams);
                 PicUtils.loadImageUrl(mContext, bean.getImg(), ((ViewHolderSatel) holder).iv_img);
             }

@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -26,31 +25,25 @@ import com.android.incongress.cd.conference.api.CHYHttpClientUsage;
 import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.BaseActivity;
 import com.android.incongress.cd.conference.base.Constants;
-import com.android.incongress.cd.conference.beans.UserInfoEnBean;
 import com.android.incongress.cd.conference.save.ParseUser;
 import com.android.incongress.cd.conference.save.SharePreferenceUtils;
-import com.android.incongress.cd.conference.services.AdService;
 import com.android.incongress.cd.conference.utils.ActivityUtils;
 import com.android.incongress.cd.conference.utils.JSONCatch;
+import com.android.incongress.cd.conference.utils.LanguageUtil;
 import com.android.incongress.cd.conference.utils.MyLogger;
 import com.android.incongress.cd.conference.utils.StringUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
 import com.android.incongress.cd.conference.widget.phonecode.CountDownButton;
 import com.android.incongress.cd.conference.widget.phonecode.FocusPhoneCode;
-import com.google.gson.Gson;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
-import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
-import com.tencent.mm.sdk.modelmsg.SendAuth;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
-import com.umeng.socialize.UMShareConfig;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.URLEncoder;
 import java.util.Map;
 
 import cz.msebera.android.httpclient.Header;
@@ -60,9 +53,9 @@ import cz.msebera.android.httpclient.Header;
  * 登录页面
  */
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
-    private EditText mEtMobile, mEtRegistCode, mEtFamilyName, mEtGivenName, mEtName,mEtConfirmCode;
+    private EditText mEtMobile, mEtPswCode, mEtFamilyName, mEtGivenName;
     private Button mBtLogin, mBtCode;
-    private TextView tv_title, tv_number_code,mTvGoRegister;
+    private TextView tv_title, tv_number_code, mTvGoRegister;
     //private CheckBox mCbRegist;
     private ImageView backimg, we_login;
     private String mUserSMS, mUserMobile, mFamilyName, mGivenName;
@@ -121,9 +114,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if(AppApplication.systemLanguage == 1){
+        if (AppApplication.systemLanguage == 1) {
             initChinese();
-        }else {
+        } else {
             initEnglish();
         }
     }
@@ -256,14 +249,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         });
 
     }
+
     private void initEnglish() {
-        mEtMobile = (EditText) findViewById(R.id.et_mobile);
-        mEtConfirmCode = (EditText) findViewById(R.id.et_confirm);
-        mEtRegistCode = (EditText) findViewById(R.id.et_regist_code);
-        mBtLogin = (Button) findViewById(R.id.bt_login);
-        mTvGoRegister = (TextView) findViewById(R.id.tv_go_regist);
-        backimg = (ImageView) findViewById(R.id.iv_back);
-        mCountryCode = "86";
+        mEtMobile = findViewById(R.id.et_mobile);
+        mEtPswCode = findViewById(R.id.et_psw);
+        mBtLogin = findViewById(R.id.bt_login);
+        tv_title = findViewById(R.id.tv_title);
+        mTvGoRegister = findViewById(R.id.tv_go_regist);
+        backimg = findViewById(R.id.iv_back);
+        backimg.setOnClickListener(this);
+        tv_title.setText(getString(R.string.login));
 
         backimg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -283,35 +278,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             }
         });
 
-        mEtConfirmCode.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    mEtConfirmCode.setHintTextColor(getResources().getColor(R.color.gray));
-                } else {
-                    mEtConfirmCode.setHintTextColor(getResources().getColor(R.color.white));
-                }
-            }
-        });
-
-
-        mEtRegistCode.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    mEtRegistCode.setHintTextColor(getResources().getColor(R.color.gray));
-                } else {
-                    mEtRegistCode.setHintTextColor(getResources().getColor(R.color.white));
-                }
-            }
-        });
-
-        //以下代码不用验证了，有些会议可能单独需要
-        if (mCurrentType == TYPE_SECRETARY) {
-            //mCbRegist.setVisibility(View.GONE);
-            mTvGoRegister.setVisibility(View.GONE);
-        }
-
         mTvGoRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -323,55 +289,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             @Override
             public void onClick(View v) {
                 String mobile = mEtMobile.getText().toString();
-                String confirmCode = mEtConfirmCode.getText().toString();
-                String registCode = mEtRegistCode.getText().toString();
+                String pswCode = mEtPswCode.getText().toString();
 
-                    String familyName = mEtFamilyName.getText().toString();
-                    String givenName = mEtGivenName.getText().toString();
-                    if (!StringUtils.isAllNotEmpty( mobile, confirmCode)) {
-                        ToastUtils.showToast(getString(R.string.login_info_empty));
-                    } else {
-//                      doLogin(givenName, mobile, confirmCode, Constants.LanguageEnglish);
-                        doLoginbyEmail(mobile, confirmCode, AppApplication.getSystemLanuageCode());
-                    }
-                }
-        });
-        mEtFamilyName = (EditText) findViewById(R.id.et_family_name);
-        mEtGivenName = (EditText) findViewById(R.id.et_given_name);
-        //mTvCountryCode = (TextView) findViewById(R.id.tv_country_code);
-
-        mEtGivenName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    mEtGivenName.setHintTextColor(getResources().getColor(R.color.gray));
+                if (TextUtils.isEmpty(mobile)) {
+                    ToastUtils.showToast(getString(R.string.phone_can_not_empty));
+                } else if (TextUtils.isEmpty(pswCode)) {
+                    ToastUtils.showToast(getString(R.string.psw_can_not_empty));
                 } else {
-                    mEtGivenName.setHintTextColor(getResources().getColor(R.color.white));
+                    doLoginbyEmail(mobile, pswCode, AppApplication.getSystemLanuageCode());
                 }
             }
         });
 
-        mEtGivenName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    mEtGivenName.setHintTextColor(getResources().getColor(R.color.gray));
-                } else {
-                    mEtGivenName.setHintTextColor(getResources().getColor(R.color.white));
-                }
-            }
-        });
 
-        if (!StringUtils.isEmpty(mFamilyName)) {
-            mEtFamilyName.setText(mFamilyName);
-        }
-
-        if (!StringUtils.isEmpty(mGivenName)) {
-            mEtGivenName.setText(mGivenName);
-        }
-        if (!StringUtils.isEmpty(mUserMobile)) {
-            mEtMobile.setText(mUserMobile);
-        }
     }
 
     //登录成功标识符
@@ -571,14 +501,18 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
                 break;
             case R.id.iv_back:
-                if (ll_getcode.getVisibility() == View.VISIBLE) {
-                    finish();
+                if (AppApplication.systemLanguage == 1) {
+                    if (ll_getcode.getVisibility() == View.VISIBLE) {
+                        finish();
+                    } else {
+                        ll_getcode.setVisibility(View.VISIBLE);
+                        ll_bottom_wx.setVisibility(View.VISIBLE);
+                        we_login.setVisibility(View.VISIBLE);
+                        ll_login.setVisibility(View.GONE);
+                        mFpc.clearData();
+                    }
                 } else {
-                    ll_getcode.setVisibility(View.VISIBLE);
-                    ll_bottom_wx.setVisibility(View.VISIBLE);
-                    we_login.setVisibility(View.VISIBLE);
-                    ll_login.setVisibility(View.GONE);
-                    mFpc.clearData();
+                    finish();
                 }
 
                 break;
@@ -685,8 +619,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     }
 
     //对英文进行处理
-    private void doLoginbyEmail(final String email, final String psw, String lan){
-        CHYHttpClientUsage.getInstanse().doEmailLoginV1(email,psw,lan,new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
+    private void doLoginbyEmail(final String email, final String psw, String lan) {
+        CHYHttpClientUsage.getInstanse().doEmailLoginV1(email, psw, lan, new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
             public void onStart() {
                 super.onStart();
                 mProgressDialog = ProgressDialog.show(LoginActivity.this, null, "loading...");
@@ -706,41 +640,35 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
+                if (JSONCatch.parseInt("state", response) == 1) {
+                    ParseUser.saveUserInfo(response.toString());
+                    updateUserInfo();
+                    SharePreferenceUtils.saveUserBoolean(Constants.USER_IS_LOGIN, true);
 
-                MyLogger.jLog().i(response.toString());
-                try {
-                    int state = response.getInt("state");
-                    if (state == 1) {
-                        ParseUser.saveUserInfo(response.toString());
-                        SharePreferenceUtils.saveUserBoolean(Constants.USER_IS_LOGIN, true);
-                        /*UserInfoEnBean user = gson.fromJson(response.toString(), UserInfoEnBean.class);
+                    //发送广播
+                    Intent loginIntent = new Intent();
+                    loginIntent.setAction(LOGIN_ACTION);
+                    sendBroadcast(loginIntent);
+                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                    startActivity(intent);
+                } else {
+                    ToastUtils.showToast(JSONCatch.parseString("msg", response));
+                }
 
-                        AppApplication.setSPBooleanValue(Constants.USER_IS_LOGIN, true);
-                        AppApplication.setSPStringValue(Constants.USER_NAME, user.getName());
-                        AppApplication.setSPStringValue(Constants.USER_IMG, user.getImg());
-                        AppApplication.setSPStringValue(Constants.USER_MOBILE, user.getEmail());
-                        AppApplication.setSPIntegerValue(Constants.USER_ID, user.getUserId());
-                        AppApplication.setSPIntegerValue(Constants.USER_TYPE, user.getUserType());
+            }
+        });
+    }
 
-                        AppApplication.setSPBooleanValue(Constants.USER_IS_LOGIN, true);
-                        AppApplication.userId = user.getUserId();
-                        AppApplication.username = user.getName();
-                        AppApplication.userType = user.getUserType();*/
-
-                        //发送广播
-                        Intent loginIntent = new Intent();
-                        loginIntent.setAction(LOGIN_ACTION);
-                        sendBroadcast(loginIntent);
-                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                        startActivity(intent);
-                        finish();
-
-                    } else {
-                        ToastUtils.showToast(response.getString("msg"));
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
+    private void updateUserInfo() {
+        CHYHttpClientUsage.getInstanse().doGetMobileUserInfoByMobile(LanguageUtil.getCurrentLan(LoginActivity.this), Constants.getConId() + "", Constants.getFromWhere(), new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                if (JSONCatch.parseInt("state", response) == 1) {
+                    ParseUser.saveUserInfo(response.toString());
+                    finish();
+                } else {
+                    ToastUtils.showToast(JSONCatch.parseString("msg", response));
                 }
             }
         });

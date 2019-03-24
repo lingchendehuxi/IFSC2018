@@ -3,14 +3,12 @@ package com.android.incongress.cd.conference.adapters;
 import android.content.Context;
 import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.incongress.cd.conference.ChooseIdentityActivity;
 import com.android.incongress.cd.conference.LoginActivity;
 import com.android.incongress.cd.conference.WebViewContainerActivity;
 import com.android.incongress.cd.conference.base.AppApplication;
@@ -123,7 +121,7 @@ public class HdSessionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                         int userId =AppApplication.userId;
                         int conId =Constants.getConId();
 
-                        if (userType < 2) {
+                        if (!AppApplication.isUserLogIn()) {
 //                            if(AppApplication.userType == Constants.TYPE_USER_VISITOR) {
 //                                LoginActivity.startLoginActivity(mContext, LoginActivity.TYPE_PROFESSOR, "", "", "", "");
 //                            }
@@ -151,7 +149,7 @@ public class HdSessionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                         int userId =AppApplication.userId;
                         int conId =Constants.getConId();
 
-                        if (userType < 2) {
+                        if (!AppApplication.isUserLogIn()) {
                             LoginActivity.startLoginActivity(mContext,LoginActivity.TYPE_NORMAL,"","","","");
                             return;
                         }

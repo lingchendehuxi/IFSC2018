@@ -11,14 +11,14 @@
         android:orientation="horizontal"
        >
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="match_parent"
             android:id="@+id/tv_time"
             android:gravity="center_vertical"
             android:layout_marginLeft="12dp"
             android:singleLine="true"
             android:ellipsize="end"
-            android:text="所有会议室"
+            android:text="@string/search_all_class"
             android:layout_centerVertical="true"
             android:textColor="@color/normal_gray"
             android:textSize="15dp" />
@@ -36,7 +36,7 @@
             android:padding="5dp"
             android:background="@drawable/now_next_alldoom"
             android:textColor="@color/white"
-            android:text="选择会议室"
+            android:text="@string/chose_meet"
             android:textSize="@dimen/text_size_media"
             android:id="@+id/tv_room" />
     </RelativeLayout>

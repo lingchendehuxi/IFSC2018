@@ -15,12 +15,10 @@ import com.android.incongress.cd.conference.adapters.NewSatelliteListAdapter;
 import com.android.incongress.cd.conference.api.CHYHttpClientUsage;
 import com.android.incongress.cd.conference.base.BaseFragment;
 import com.android.incongress.cd.conference.base.Constants;
-import com.android.incongress.cd.conference.beans.ActivityBean;
 import com.android.incongress.cd.conference.beans.ExhibitorListInfoBean;
 import com.android.incongress.cd.conference.beans.HotListBean;
 import com.android.incongress.cd.conference.beans.SatelliteInfoListBean;
 import com.android.incongress.cd.conference.utils.DensityUtil;
-import com.android.incongress.cd.conference.utils.JSONCatch;
 import com.android.incongress.cd.conference.utils.StringUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
 import com.android.incongress.cd.conference.utils.cache.DiskLruCacheUtil;
@@ -194,6 +192,8 @@ public class NewExhibitorListFragment extends BaseFragment implements XRecyclerV
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
+                mRecyclerView.refreshComplete();
+                mRecyclerView.loadMoreComplete();
                 ToastUtils.showToast("获取信息失败，请联系管理员");
             }
         });
@@ -236,6 +236,8 @@ public class NewExhibitorListFragment extends BaseFragment implements XRecyclerV
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
+                mRecyclerView.refreshComplete();
+                mRecyclerView.loadMoreComplete();
                 ToastUtils.showToast("获取信息失败，请联系管理员");
             }
         });
@@ -290,6 +292,8 @@ public class NewExhibitorListFragment extends BaseFragment implements XRecyclerV
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
+                mRecyclerView.refreshComplete();
+                mRecyclerView.loadMoreComplete();
                 ToastUtils.showToast("获取信息失败，请联系管理员");
             }
         });
@@ -318,6 +322,8 @@ public class NewExhibitorListFragment extends BaseFragment implements XRecyclerV
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
+                mRecyclerView.refreshComplete();
+                mRecyclerView.loadMoreComplete();
                 ToastUtils.showToast("获取信息失败，请联系管理员");
             }
         });
@@ -326,27 +332,27 @@ public class NewExhibitorListFragment extends BaseFragment implements XRecyclerV
     @Override
     public void onItemClick(int position) {
         if (type == 3) {
-            action(NewExhibitorDetailActionFragment.getInstanceFragment(mExhibitorBeans.get(position).getId()), mExhibitorBeans.get(position).getTitle(), false, false, false);
+            action(NewExhibitorDetailActionFragment.getInstanceFragment(mExhibitorBeans.get(position)), getString(R.string.exhibitor_detail_title), false, false, false);
         }else if(type == 1){
             HotListBean.ResultBean resultBean = mHotBeans.get(position);
             if(resultBean.getType() == 2){
-                CollegeActivity.startCitCollegeActivity(getActivity(), StringUtils.getNeedString(resultBean.getTitle()), resultBean.getUrl());
+                CollegeActivity.startCitCollegeActivity(getActivity(), StringUtils.getNeedString(resultBean.getTitle()), resultBean.getUrl(),1);
             }else {
                 if(resultBean.getIslive() == 1){
-                    CollegeActivity.startCitCollegeActivity(getActivity(), StringUtils.getNeedString(resultBean.getTitle()), resultBean.getLiveUrl());
+                    CollegeActivity.startCitCollegeActivity(getActivity(), StringUtils.getNeedString(resultBean.getTitle()), resultBean.getLiveUrl(),1);
                 }else {
-                    CollegeActivity.startCitCollegeActivity(getActivity(), StringUtils.getNeedString(resultBean.getTitle()), Constants.NO_LIVE_URL+resultBean.getId());
+                    CollegeActivity.startCitCollegeActivity(getActivity(), StringUtils.getNeedString(resultBean.getTitle()), Constants.NO_LIVE_URL+resultBean.getId(),1);
                 }
             }
         }else if(type == 2){
             HotListBean.ResultBean resultBean = mHotBeans.get(position);
-            CollegeActivity.startCitCollegeActivity(getActivity(), StringUtils.getNeedString(resultBean.getTitle()), resultBean.getUrl());
+            CollegeActivity.startCitCollegeActivity(getActivity(), StringUtils.getNeedString(resultBean.getTitle()), resultBean.getUrl(),1);
         }else if(type == 4){
             SatelliteInfoListBean.ResultBean resultBean = mSatelliteBeans.get(position);
             if(resultBean.getIslive() == 1){
-                CollegeActivity.startCitCollegeActivity(getActivity(), StringUtils.getNeedString(resultBean.getTitle()), resultBean.getLiveUrl());
+                CollegeActivity.startCitCollegeActivity(getActivity(), StringUtils.getNeedString(resultBean.getTitle()), resultBean.getLiveUrl(),1);
             }else {
-                CollegeActivity.startCitCollegeActivity(getActivity(), StringUtils.getNeedString(resultBean.getTitle()), Constants.NO_LIVE_URL+resultBean.getId());
+                CollegeActivity.startCitCollegeActivity(getActivity(), StringUtils.getNeedString(resultBean.getTitle()), Constants.NO_LIVE_URL+resultBean.getId(),1);
             }
         }
     }

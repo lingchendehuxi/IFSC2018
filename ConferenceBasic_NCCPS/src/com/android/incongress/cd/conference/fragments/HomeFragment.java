@@ -256,7 +256,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
             WebViewContainerActivity.startWebViewContainerActivity(getActivity(),
                     getString(R.string.secretary_trip, AppApplication.getSystemLanuageCode()), getString(R.string.home_icon_professor_trip));
         } else {
-            ToastUtils.showToast(R.string.only_professor_can_use);
+            ToastUtils.showToast(getString(R.string.only_professor_can_use));
         }
     }
 

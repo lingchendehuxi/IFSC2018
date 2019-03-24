@@ -41,7 +41,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="29dp"
                 android:gravity="center"
-                android:text="全部"
+                android:text="@string/hysq_home_huiyimingcheng_all"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_15"
                 android:textStyle="bold" />
@@ -115,9 +115,10 @@
             android:src="@drawable/no_data_icon" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_20"
+            android:gravity="center"
             android:text="@string/no_data_tips"
             android:textColor="@color/gray" />
         </LinearLayout>

@@ -1,5 +1,6 @@
 package com.android.incongress.cd.conference;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -42,6 +43,7 @@ public class VideoPlayDetailActivity extends AppCompatActivity implements OnVide
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
         //设置状态栏透明
         StatusBarUtil.setTranslucentStatus(this);
         StatusBarUtil.setStatusBarDarkTheme(this, false);
@@ -83,8 +85,8 @@ public class VideoPlayDetailActivity extends AppCompatActivity implements OnVide
                     mController.setTitle(title.substring(0,splitLength));
                 } else {
                     if(splitLength != 0){
-                        content.setText(title.substring(splitLength-1,title.length()));
-                        mController.setTitle(title.substring(splitLength-1,title.length()));
+                        content.setText(title.substring(splitLength+1,title.length()));
+                        mController.setTitle(title.substring(splitLength+1,title.length()));
                     }else {
                         content.setText("");
                         mController.setTitle("");
@@ -115,8 +117,8 @@ public class VideoPlayDetailActivity extends AppCompatActivity implements OnVide
                     mController.setTitle(title.substring(0,splitLength));
                 } else {
                     if(splitLength != 0){
-                        content.setText(title.substring(splitLength-1,title.length()));
-                        mController.setTitle(title.substring(splitLength-1,title.length()));
+                        content.setText(title.substring(splitLength+1,title.length()));
+                        mController.setTitle(title.substring(splitLength+1,title.length()));
                     }else {
                         content.setText("");
                         mController.setTitle("");

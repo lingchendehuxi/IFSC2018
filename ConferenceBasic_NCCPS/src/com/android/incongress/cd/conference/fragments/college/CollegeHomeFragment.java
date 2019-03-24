@@ -40,6 +40,7 @@ import com.android.incongress.cd.conference.beans.MessageBean;
 import com.android.incongress.cd.conference.utils.CacheManager;
 import com.android.incongress.cd.conference.utils.DensityUtil;
 import com.android.incongress.cd.conference.utils.NetWorkUtils;
+import com.android.incongress.cd.conference.utils.StringUtils;
 import com.android.incongress.cd.conference.utils.TimeUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
 import com.android.incongress.cd.conference.widget.MyViewPager;
@@ -349,7 +350,7 @@ public class CollegeHomeFragment extends BaseFragment implements XRecyclerView.L
                 if ("1".equals(bean.getState())) {
                     cacheManager.saveString(CACHE_COLLEGE_TITLE, response.toString());
                     for (int i = 0; i < bean.getItemArray().size(); i++) {
-                        mSessionDaysList.add(bean.getItemArray().get(i).getItemName());
+                        mSessionDaysList.add(StringUtils.getNeedString(bean.getItemArray().get(i).getItemName()));
                         mSessionIDsList.add(bean.getItemArray().get(i).getItemId());
                     }
                 } else {

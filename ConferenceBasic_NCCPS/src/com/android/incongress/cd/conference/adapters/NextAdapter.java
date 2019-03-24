@@ -10,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.model.Class;
 import com.android.incongress.cd.conference.model.Meeting;
 import com.android.incongress.cd.conference.model.Session;
@@ -78,9 +79,15 @@ public class NextAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Session session = mAllSessions.get(position);
-        ((SessionViewHolder)holder).tvSessionName.setText(session.getSessionName());
+
         ((SessionViewHolder)holder).tvSessionTime.setText(session.getStartTime() +" - " + session.getEndTime());
-        ((SessionViewHolder)holder).tvSessionLocation.setText(getClassById(session.getClassesId()).getClassesCode());
+        if(AppApplication.systemLanguage == 1){
+            ((SessionViewHolder)holder).tvSessionName.setText(session.getSessionName());
+            ((SessionViewHolder)holder).tvSessionLocation.setText(getClassById(session.getClassesId()).getClassesCode());
+        }else {
+            ((SessionViewHolder)holder).tvSessionName.setText(session.getSessionNameEN());
+            ((SessionViewHolder)holder).tvSessionLocation.setText(getClassById(session.getClassesId()).getClassCodeEn());
+        }
 
         holder.itemView.setTag(session);
 
@@ -149,7 +156,12 @@ public class NextAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
                 holder = (ViewHolder) convertView.getTag();
             }
             Meeting meeting = meetings.get(position);
-            String info = meeting.getStartTime() +" " + meeting.getTopic();
+            String info;
+            if(AppApplication.systemLanguage == 1){
+                info = meeting.getStartTime() +" " + meeting.getTopic();
+            }else {
+                info = meeting.getStartTime() +" " + meeting.getTopicEn();
+            }
             holder.meetingInfo.setText(info);
 
             holder.ivNowTag.setVisibility(View.GONE);

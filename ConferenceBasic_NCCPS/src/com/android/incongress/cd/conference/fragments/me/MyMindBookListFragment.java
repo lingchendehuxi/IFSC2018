@@ -10,13 +10,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.incongress.cd.conference.HomeActivity;
+import com.android.incongress.cd.conference.adapters.MeetingBusRemindMyAdapater;
 import com.android.incongress.cd.conference.adapters.MindBookListAdapter;
 import com.android.incongress.cd.conference.api.CHYHttpClientUsage;
 import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.BaseFragment;
 import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.beans.AlertBean;
-import com.android.incongress.cd.conference.beans.LiveInfoBean;
+import com.android.incongress.cd.conference.beans.BusRemindBean;
 import com.android.incongress.cd.conference.beans.MyOrderCourse;
 import com.android.incongress.cd.conference.model.Alert;
 import com.android.incongress.cd.conference.model.ConferenceDbUtils;
@@ -48,12 +49,14 @@ import cz.msebera.android.httpclient.Header;
 public class MyMindBookListFragment extends BaseFragment implements MindBookFragment.ManagerNewLister, XRecyclerView.LoadingListener, MindBookListAdapter.DeleteItemOnClick {
     private List<MyOrderCourse.ArrayBean> mOrderBeans;
     private MindBookListAdapter mAdapter;
+    private MeetingBusRemindMyAdapater mBusAdapter;
 
     protected XRecyclerView mRecyclerView;
     private LinearLayout ll_tips;
     private static final String BUNDLE_TIME = "order_title";
     private List<Meeting> mMeetingBeans = new ArrayList<>();
     private List<LiveForOrderInfo> mLiveBeans = new ArrayList<>();
+    private List<BusRemindBean> mBusArrayList = new ArrayList<>();
     private TextView tv_tips;
     private String mTitle;
 
@@ -95,8 +98,13 @@ public class MyMindBookListFragment extends BaseFragment implements MindBookFrag
 
         ((HomeActivity) getActivity()).setMyBookClick(this);
         mOrderBeans = new ArrayList<>();
-        mAdapter = new MindBookListAdapter(this, getActivity(), mOrderBeans);
-        mRecyclerView.setAdapter(mAdapter);
+        if(!mTitle.equals(getString(R.string.bus))){
+            mAdapter = new MindBookListAdapter(this, getActivity(), mOrderBeans);
+            mRecyclerView.setAdapter(mAdapter);
+        }else {
+            mBusAdapter = new MeetingBusRemindMyAdapater(getActivity(), mBusArrayList);
+            mRecyclerView.setAdapter(mBusAdapter);
+        }
         mRecyclerView.setLoadingListener(this);
         mRecyclerView.setLoadingMoreEnabled(false);
         mRecyclerView.setRefreshing(true);
@@ -122,9 +130,10 @@ public class MyMindBookListFragment extends BaseFragment implements MindBookFrag
             getMyDaySchedule();
         } else if(mTitle.equals(getString(R.string.live))){
             getMyLive();
-        }else {
-            ll_tips.setVisibility(View.VISIBLE);
-            mRecyclerView.refreshComplete();
+        }else if(mTitle.equals(getString(R.string.bus))){
+            getMyBus();
+            /*ll_tips.setVisibility(View.VISIBLE);
+            mRecyclerView.refreshComplete();*/
         }
     }
     //获取我的直播
@@ -292,6 +301,19 @@ public class MyMindBookListFragment extends BaseFragment implements MindBookFrag
             }
         });
     }
+    //获取我的班车
+    private void getMyBus() {
+        mBusArrayList.clear();
+        List<BusRemindBean> tempList = ConferenceDbUtils.getBusByOrder();
+        mBusArrayList.addAll(tempList);
+        if (mBusArrayList.size() == 0) {
+            ll_tips.setVisibility(View.VISIBLE);
+        } else {
+            ll_tips.setVisibility(View.GONE);
+            mBusAdapter.notifyDataSetChanged();
+        }
+        mRecyclerView.refreshComplete();
+    }
 
     @Override
     public void deleteItem(int position) {
@@ -318,10 +340,12 @@ public class MyMindBookListFragment extends BaseFragment implements MindBookFrag
 
     @Override
     public void managerClick() {
-        for (int i = 0; i < mOrderBeans.size(); i++) {
-            mOrderBeans.get(i).setShow(!mOrderBeans.get(i).isShow());
+        if(!mTitle.equals(getString(R.string.bus))){
+            for (int i = 0; i < mOrderBeans.size(); i++) {
+                mOrderBeans.get(i).setShow(!mOrderBeans.get(i).isShow());
+            }
+            mAdapter.notifyDataSetChanged();
         }
-        mAdapter.notifyDataSetChanged();
     }
 
     @Override

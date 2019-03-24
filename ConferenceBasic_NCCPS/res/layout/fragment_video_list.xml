@@ -15,8 +15,8 @@
 
     <LinearLayout
         android:id="@+id/ll_book_course"
-        android:layout_width="46dp"
-        android:layout_height="46dp"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         android:layout_gravity="bottom|right"
         android:layout_marginRight="18dp"
         android:layout_marginBottom="22dp"
@@ -25,11 +25,12 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/tv_book"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/icon_study_small"
             android:drawableTint="@color/white"
-            android:text="@string/meeting_video_reservation"
+            android:text="@string/meeting_college_reservation"
             android:textColor="@color/white"
             android:textSize="9sp" />
     </LinearLayout>
@@ -50,8 +51,9 @@
 
         <TextView
             android:id="@+id/tv_tips"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:layout_marginTop="@dimen/margin_20"
             android:text="@string/no_data_tips"
             android:textColor="@color/gray" />

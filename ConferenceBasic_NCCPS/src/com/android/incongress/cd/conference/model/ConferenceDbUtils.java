@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.android.incongress.cd.conference.beans.ActivityBean;
 import com.android.incongress.cd.conference.beans.AlertBean;
+import com.android.incongress.cd.conference.beans.BusRemindBean;
 import com.android.incongress.cd.conference.beans.EsmosBean;
 import com.android.incongress.cd.conference.beans.LiveInfoBean;
 import com.android.incongress.cd.conference.beans.MyFieldBean;
@@ -403,7 +404,7 @@ public class ConferenceDbUtils {
     }
 
     public static List<Session> getSessionByTimeAndRoom(String searchDay, String searchRoom, String searchStartTime, String searchEndTime) {
-        List<Session> sessions = null;
+        List<Session> sessions;
         String sql = "1=1";
 
         if (!StringUtils.isEmpty(searchDay)) {
@@ -414,10 +415,12 @@ public class ConferenceDbUtils {
         }
         if (!StringUtils.isEmpty(searchStartTime)) {
             sql = sql + " and " + ConferenceTableField.SESSION_STARTTIME + " >= '" + searchStartTime + "'";
+            sql = sql + " and " + ConferenceTableField.SESSION_STARTTIME + " <= '" + searchEndTime + "'";
         }
-        if (!StringUtils.isEmpty(searchEndTime)) {
+        //去除结束时间段的限制
+        /*if (!StringUtils.isEmpty(searchEndTime)) {
             sql = sql + " and " + ConferenceTableField.SESSION_ENDTIME + " <= '" + searchEndTime + "'";
-        }
+        }*/
 
         try {
             sessions = LitePal.where(sql).find(Session.class);
@@ -694,7 +697,7 @@ public class ConferenceDbUtils {
     public static List<Speaker> getAllSpeakerWithOrder() {
         List<Speaker> speakers = null;
         try {
-            speakers = LitePal.order("speakernamepingyin asc").find(Speaker.class);
+            speakers = LitePal.order("firstLetter asc").find(Speaker.class);
         } catch (Exception e) {
             e.printStackTrace();
             speakers = new ArrayList<>();
@@ -751,6 +754,42 @@ public class ConferenceDbUtils {
 
         return meetings;
     }
+    /**
+     * 根据MeetingId获取对应的Meeting
+     *
+     * @return
+     */
+    public static Meeting getMeetingsByMeetingId(int meetingId) {
+        List<Meeting> meetingList = null;
+        try {
+            meetingList = LitePal.where(" meetingId = ?", String.valueOf(meetingId)).find(Meeting.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if(meetingList!=null&&meetingList.size()>0){
+            return meetingList.get(0);
+        }else {
+            return null;
+        }
+    }
+    /**
+     * 根据session名称和时间查询Session是否已经预约
+     *
+     * @return
+     */
+    public static boolean getSessionStateByNameAndTime(String sessionName ,String sessionTime) {
+        List<Alert> alertList = null;
+        try {
+            alertList = LitePal.where(" title = ?and date = ?", sessionName,sessionTime).find(Alert.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if(alertList!=null&&alertList.size()>0){
+            return true;
+        }else {
+            return false;
+        }
+    }
 
     /**
      * 获取所有预约的直播
@@ -767,6 +806,22 @@ public class ConferenceDbUtils {
         }
 
         return lives;
+    }
+    /**
+     * 获取所有预约的班车
+     *
+     * @return
+     */
+    public static List<BusRemindBean> getBusByOrder() {
+        List<BusRemindBean> busList;
+        try {
+            busList = LitePal.findAll(BusRemindBean.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+            busList = new ArrayList<>();
+        }
+
+        return busList;
     }
 
     /**
@@ -1098,7 +1153,7 @@ public class ConferenceDbUtils {
             activity.setEnd_time(tempSession.getEndTime());
             activity.setDate(tempSession.getSessionDay());
             activity.setActivityNameEN(tempSession.getSessionNameEN());
-            activity.setIsSessionOrMeeting(tempSession.getSessionGroupId());
+            activity.setIsSessionOrMeeting(0); //0代表session
 
             {
                 //设置身份名称
@@ -1145,7 +1200,7 @@ public class ConferenceDbUtils {
             tempActivity.setStart_time(tempMeeting.getStartTime());
             tempActivity.setEnd_time(tempMeeting.getEndTime());
             tempActivity.setDate(tempMeeting.getMeetingDay());
-            tempActivity.setIsSessionOrMeeting(tempMeeting.getMeetingId());
+            tempActivity.setIsSessionOrMeeting(1); // 1代表meeting
 
             {
                 //设置身份名称

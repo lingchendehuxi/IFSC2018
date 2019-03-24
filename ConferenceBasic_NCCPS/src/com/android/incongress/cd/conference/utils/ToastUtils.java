@@ -45,10 +45,6 @@ public class ToastUtils {
         oneTime=twoTime;
     }
 
-    public static void showToast(int msg) {
-        Toast.makeText(AppApplication.getInstance().getContext(), msg, Toast.LENGTH_SHORT).show();
-    }
-
     //通知框中间
     public static void showRoundRectToast(Context context, int layout) {
         if (layout == 0) {

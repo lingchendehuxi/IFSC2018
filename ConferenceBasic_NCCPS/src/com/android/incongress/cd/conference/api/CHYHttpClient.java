@@ -1,6 +1,5 @@
 package com.android.incongress.cd.conference.api;
 
-import com.android.incongress.cd.conference.base.Constants;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.MySSLSocketFactory;
@@ -12,12 +11,12 @@ import com.loopj.android.http.RequestParams;
 public class CHYHttpClient {
     //----------------------  接口地址1  测试-------------------------
     //测试服务器
-    public static final String BASE_URL = "http://incongress.cn:8090"; //新接口地址都在这里面，因为Https的关系 测试服
+//    public static final String BASE_URL = "http://incongress.cn:8090"; //新接口地址都在这里面，因为Https的关系 测试服
     //新添加本地服务器
     private static final String BASE_LOCAL= "http://192.168.0.153/chyNewApi.do?";//"http://incongress.cn:8090/chyNewApi.do?"
     //----------------------  接口地址2   正式-------------------------
     //正式服务器
-//    public static final String BASE_URL = "http://app.incongress.cn";
+    public static final String BASE_URL = "http://app.incongress.cn";
 
     /**
      * 接口集合
@@ -91,7 +90,7 @@ public class CHYHttpClient {
     }
 
     private static String getAbsoluteUrl(String methodName) {
-        return BASE_URL + "?method=" + methodName;
+        return BASE_URL+BASE_COMMON_URL + "method=" + methodName;
     }
     //邮箱 登陆等
     public static void post2(RequestParams params, JsonHttpResponseHandler responseHandler) {

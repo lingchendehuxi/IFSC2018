@@ -16,6 +16,7 @@ import com.android.incongress.cd.conference.base.BaseActivity;
 import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.beans.ActivityBean;
 import com.android.incongress.cd.conference.beans.SceneShowArrayBean;
+import com.android.incongress.cd.conference.widget.StatusBarUtil;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 import com.umeng.analytics.MobclickAgent;
 
@@ -57,6 +58,7 @@ public class SecretaryActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarUtil.setStatusBarDarkTheme(this, false);
         try {
             mTaskNum = getIntent().getIntExtra(TASK_NUM, 0);
             mQuestionNum = getIntent().getIntExtra(QUESTION_NUM, 0);

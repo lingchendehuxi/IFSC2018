@@ -14,11 +14,12 @@
 
     <!-- 透明的主题色 -->
     <string name="meeting_video_reservation">课件预约</string>
+    <!--学院里面的预约-->
+    <string name="meeting_college_reservation">课件预约</string>
     <string name="meeting_video_play">课件播放</string>
     <string name="current_time">当前时间：%1$s</string>
     <string name="all_room">所有会议室</string>
-    <string name="now_no_sessions">当前没有正在进行的会议</string>
-    <string name="next_no_sessions">没有即将进行的会议</string>
+    <string name="next_no_sessions">当前时段该会议室没有会议</string>
 
     <string name="new_apk_find_tips">新版正在后台下载，您可继续使用应用，稍后将自动安装...</string>
     <string name="first_start_tips">第一次启动，正在加载数据，请稍等</string>
@@ -58,7 +59,7 @@
     <string name="home_scene_xiu">现场秀</string>
     <string name="home_cit_college">CIT学院</string>
     <string name="home_me">我</string>
-    <string name="home_cit_live">IFSC直播</string>
+    <string name="home_cit_live">CIT直播</string>
     <string name="home_interactive">现场互动</string>
     <string name="home_icon_bl">病例</string>
     <string name="home_hands_on">实习中心</string>
@@ -91,6 +92,7 @@
     <string name="my_schedule_edit">编辑</string>
     <string name="my_schedule_tips">您还未对日程和发言进行提醒设置</string>
     <string name="no_data_tips">暂无数据</string>
+
 
     <!-- 电子壁报 -->
     <string name="cit_net_error">您的网络不给力哦，请稍后再试</string>
@@ -136,6 +138,7 @@
     <string name="shut_down_my_meeting_alarm">关闭我的会议秘书提醒功能</string>
     <string name="secretay_role">任务：</string>
     <string name="secretay_reminding">已加提醒</string>
+    <string name="secretay_remind">提醒</string>
     <string name="logout">退出</string>
     <string name="success_open_alarm">您已启动所有会议提醒\n小秘书将在会议开始前%d分钟提醒您！</string>
     <string name="success_close_alarm">您已关闭所有会议提醒</string>
@@ -213,6 +216,8 @@
     <string name="hysq_home_comment_send_msg_hint">请输入发表信息!</string>
     <string name="hysq_home_comment_send_msg_success_hint">发表信息成功!</string>
     <string name="hysq_home_comment_send_msg_error_hint">发表信息失败!</string>
+    <string name="chose_meet">选择会议室</string>
+    <string name="chose_meet_pop_tip">请选择至少一个会议室</string>
 
     <!-- 参展商 -->
     <string name="exhibitor_list_item_guanzhuchengong">您将关注此展商!</string>
@@ -226,6 +231,7 @@
     <string name="exhibitor_detail_title">参展商详情</string>
     <string name="exhibitor_detail_zanwei">展位:%s</string>
     <string name="exhibitor_list_no_data">暂无参展商信息，敬请期待！</string>
+    <string name="exhibitor_Location">"展位： "</string>
 
     <!-- 讲者 -->
     <string name="speaker_speaker">讲者</string>
@@ -260,6 +266,7 @@
     <!-- 设置 -->
     <string name="settings_database">数据版本更新</string>
     <string name="clear_cache">清除缓存</string>
+    <string name="clear_success">清除成功</string>
     <string name="settings_version">版本更新</string>
     <string name="settings_about">关于参会易</string>
     <string name="settings_contact">联系我们</string>
@@ -289,7 +296,7 @@
 \n
 \n主要功能
 \n-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;会议日程：除可在手机上直接浏览详尽的会议日程外，参会者可按日期、时间、领域、分会(session)名称、演讲名称、讲者名任意定向查询日程。与其它会议App截然不同的是，安装App后，上述资讯即可离线使用，并可随时自动更新。在会场无需任何网络即可使用。
-\n-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;会议社区：加入IFSC会议社区，针对学术话题进行讨论，还可以@你崇拜的专家噢。
+\n-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;会议社区：加入CIT会议社区，针对学术话题进行讨论，还可以@你崇拜的专家噢。
 \n-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;新闻中心：查看最新的会议资讯。
 \n-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;参会指南：查看会议信息和场馆图。
 \n-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;我的大会：关注的会议与发言、展商活动；发表的帖子、记录的笔记，一切和您参会切身相关的内容。
@@ -302,7 +309,7 @@
     <string name="settings_contact_text_wx">微信公众平台服务号：incongress</string>
     <string name="settings_share_sms">短信推荐</string>
     <string name="settings_share_mail">邮件推荐</string>
-    <string name="settings_share_content">我正在使用“参会易”,完全不同的参会体验。建议你下载试试！http://app.incongress.cn/ifsc2018/app</string>
+    <string name="settings_share_content">我正在使用“参会易”,完全不同的参会体验。建议你下载试试！http://app.incongress.cn/cit2019/app</string>
     <string name="settings_share_wxtitle">我正在使用“参会易”,完全不同的参会体验。建议你下载试试！</string>
     <string name="settings_share_hint">推荐使用参会易</string>
     <string name="settings_help_way1">方式1：</string>
@@ -354,6 +361,7 @@
     <string name="custom_text_hint">用户自定义打开的Activity</string>
     <string name="login">登  录</string>
     <string name="login_forget_conform">确定</string>
+    <string name="chose_all">全选</string>
     <string name="login_forget_hint">请输入邮箱地址</string>
     <string name="login_forget_success">我们已发送邮件至您的注册邮箱,请及时修改密码。</string>
     <string name="login_forget_success_title">找回密码</string>
@@ -456,9 +464,12 @@
     <string name="add_description">添加文字描述</string>
     <string name="post_prompt">请输入内容...</string>
     <string name="scenic_content">发布内容不能为空</string>
-
+    <!--提问-->
     <string name="question">提问</string>
     <string name="make_question">发起提问</string>
+    <string name="go_question_tip">请先选择提问模块</string>
+    <string name="go_schedule_question_tip">对大会日程进行提问，即将前往日程模块</string>
+    <string name="go_poster_question_tip">对壁报内容进行提问，即将前往壁报模块</string>
 
     <string-array name="jazzy_effects">
         <item>Standard</item>
@@ -508,7 +519,7 @@
     <string name="server_error">服务器开小差了，请稍后重试</string>
     <string name="register_success">注册成功</string>
     <string name="first_author">作者: </string>
-    <string name="rating">均分: </string>
+    <string name="rating">平均分: </string>
     <string name="point">分</string>
     <string name="views">浏览: </string>
     <string name="send">发送</string>
@@ -519,12 +530,13 @@
     <string name="verify_attendance">核实参会代表身份</string>
     <string name="sign_up">没有账号，去注册></string>
     <string name="phone_can_not_empty">手机号码不能为空</string>
+    <string name="psw_can_not_empty">密码不能为空</string>
     <string name="login_info_empty">手机号不能为空</string>
     <string name="register_next">下一步</string>
     <string name="country_code">国家</string>
     <string name="success_send_regist_code">验证码已发送成功，注意查收</string>
     <string name="dialog_tips">提示信息</string>
-    <string name="meeting_share_info">我使用“参会易”关注了“%1$s”,http://app.incongress.cn/ifsc2018/app</string>
+    <string name="meeting_share_info">我使用“参会易”关注了“%1$s”,http://app.incongress.cn/cit2019/app</string>
     <string name="my_task">我的学术任务(%1$s)</string>
     <string name="my_question">我收到的提问(%1$s)</string>
     <string name="no_more_date">没有更多数据了</string>
@@ -658,6 +670,12 @@
 
     <string name="only_professor_can_use">该功能只有专家才能使用</string>
     <string name="tips_question_meeting">暂无提问</string>
+    <string name="schedule_ask">日程提问</string>
+    <string name="poster_ask">壁报提问</string>
+    <string name="from_schedule">来自日程</string>
+    <string name="from_poster">来自壁报</string>
+    <string name="accept_ask">收到了提问</string>
+    <string name="question_answer">回答了问题</string>
 
     <string name="guide_in">进入</string>
 
@@ -700,7 +718,7 @@
     <string name="get_again">重新获取</string>
     <string name="other_type_login">第三方账号登录</string>
     <!--个人中心界面-->
-    <string name="me_remind">预约提醒</string>
+    <string name="me_remind">预约</string>
     <string name="head_img">头像</string>
     <string name="me_quiz">问答</string>
     <string name="me_post">帖子</string>
@@ -727,7 +745,7 @@
     <string name="search">查找</string>
     <!--极光推送修改-->
     <!--包名修改的部分-->
-    <string name="share_info">IFSC基本信息</string>
+    <string name="share_info">CIT基本信息</string>
     <string name="party_guide">参会指南</string>
     <!--首页-->
     <string name="system_notify">系统通知</string>

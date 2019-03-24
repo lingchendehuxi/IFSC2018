@@ -18,6 +18,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,7 +47,6 @@ import com.android.incongress.cd.conference.beans.SceneShowArrayBean;
 import com.android.incongress.cd.conference.fragments.bus_reminder.MeetingBusRemindAllFragment;
 import com.android.incongress.cd.conference.fragments.cit_live.CitLiveFragment;
 import com.android.incongress.cd.conference.fragments.college.CollegeHomeFragment;
-import com.android.incongress.cd.conference.fragments.exhibitor.ExhibitorsActionFragment;
 import com.android.incongress.cd.conference.fragments.exhibitor.NewExhibitorsActionFragment;
 import com.android.incongress.cd.conference.fragments.interactive.HdSessionActionFragment;
 import com.android.incongress.cd.conference.fragments.live.LiveFragment;
@@ -60,7 +60,6 @@ import com.android.incongress.cd.conference.fragments.now_next.NextFragment;
 import com.android.incongress.cd.conference.fragments.now_next.NowFragment;
 import com.android.incongress.cd.conference.fragments.photo_album.PhotoAlbumFragment;
 import com.android.incongress.cd.conference.fragments.professor_secretary.SecretaryActivity;
-import com.android.incongress.cd.conference.fragments.question.MeetingQuestionFragment;
 import com.android.incongress.cd.conference.fragments.question.QuestionSquarFragment;
 import com.android.incongress.cd.conference.fragments.scenic_xiu.ScenicXiuFragment;
 import com.android.incongress.cd.conference.fragments.search_schedule.NewSearchScheduleActionFragment;
@@ -79,7 +78,6 @@ import com.android.incongress.cd.conference.utils.JSONCatch;
 import com.android.incongress.cd.conference.utils.MyLogger;
 import com.android.incongress.cd.conference.utils.PicUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
-import com.android.incongress.cd.conference.utils.cache.CacheClearUtils;
 import com.android.incongress.cd.conference.widget.StatusBarUtil;
 import com.android.incongress.cd.conference.widget.zxing.activity.CaptureActivity;
 import com.android.incongress.cd.conference.widget.zxing.activity.QRCodeCaptureActivity;
@@ -331,7 +329,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
     private void setAdImageView(String filepath, ImageView imageview) {
         File file = new File(filepath);
         if (file != null) {
-            PicUtils.loadImageFile(getActivity(), file, imageview);
+            PicUtils.loadHomeImageFile(getActivity(), file, imageview);
             int width = getActivity().getWindowManager().getDefaultDisplay().getWidth();
             ViewGroup.LayoutParams lp = imageview.getLayoutParams();
             lp.height = (int) (width * 0.17);
@@ -412,19 +410,16 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
                         innerLinearLayout.addView(addTextAndImage(rowBean, Float.parseFloat(rowBean.getWidth().replace("%", "")), innerLinearLayout));
                         innerLinearLayout.setTag(rowBean);
                         innerLinearLayout.setOnClickListener(this);
-                        Log.d("sgqTest", "inner: " + ActivityUtils.getViewHeight(innerLinearLayout));
                         linearLayout.addView(innerLinearLayout);
                     }
                     if (i == 1 || i == 2) {
                         fixedSize = fixedSize + ActivityUtils.getViewHeight(linearLayout) + 43;
                     }
 
-                    Log.d("sgqTest", "fixedSize: " + ActivityUtils.getViewHeight(linearLayout));
                     mLlConstainer.addView(linearLayout);
                 }
             }
             priSize = ActivityUtils.getViewHeight(mLlConstainer);
-            Log.d("sgqTest", "priSize: " + priSize);
             setHeightAnimator(priSize);
             mHandler.sendEmptyMessageDelayed(1, 2000);
         } catch (Exception e) {
@@ -518,12 +513,15 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
         }
         lp.weight = weight;
         int spMarginBottom = DensityUtil.dip2px(getActivity(), 3.5f);
+        int spMargin2Bottom = DensityUtil.dip2px(getActivity(), 7f);
         if (index == 0) {
             lp.setMargins(0, 0, spMarginBottom, 0);
         } else if (index == 1) {
             lp.setMargins(spMarginBottom, 0, spMarginBottom, 0);
         } else if (index == 2) {
             lp.setMargins(spMarginBottom, 0, 0, 0);
+        }else if(index == 3){
+            lp.setMargins(spMargin2Bottom, 0, 0, 0);
         }
         linearLayout.setLayoutParams(lp);
         linearLayout.setOrientation(LinearLayout.HORIZONTAL);
@@ -569,16 +567,20 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
                 //横向布局
                 View view = LayoutInflater.from(getActivity()).inflate(R.layout.merge_horizontal_text_image, parentView, false);
                 view.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-                TextView tvName = (TextView) view.findViewById(R.id.tv_name);
-                ImageView ivLogo = (ImageView) view.findViewById(R.id.iv_logo);
-                TextView tvMsgNum = (TextView) view.findViewById(R.id.tv_msg_nums);
-                ImageView ivInteractive = (ImageView) view.findViewById(R.id.iv_hd_session_on);
+                TextView tvName =  view.findViewById(R.id.tv_name);
+                ImageView ivLogo =  view.findViewById(R.id.iv_logo);
+                TextView tvMsgNum =  view.findViewById(R.id.tv_msg_nums);
+                ImageView ivInteractive =  view.findViewById(R.id.iv_hd_session_on);
                 view.setBackgroundColor(Color.parseColor(bean.getIconColor()));
                 //AppApplication.applyFont(getActivity(), view, "fonts/cg.TTF");
                 if (AppApplication.systemLanguage == 1) {
                     tvName.setText(bean.getIconName());
+                    int dimen = getResources().getDimensionPixelSize(R.dimen.large_home_text);
+                    tvName.setTextSize(TypedValue.COMPLEX_UNIT_PX,dimen);
                 } else {
                     tvName.setText(bean.getIconEnName());
+                    int dimen = getResources().getDimensionPixelSize(R.dimen.shifting_label);
+                    tvName.setTextSize(TypedValue.COMPLEX_UNIT_PX,dimen);
                 }
                 tvName.setTextColor(Color.parseColor(bean.getIconFontColor()));
                 if (TextUtils.isEmpty(bean.getIconUrl())) {
@@ -599,8 +601,12 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
                 //AppApplication.applyFont(getActivity(), view, "fonts/cg.TTF");
                 if (AppApplication.systemLanguage == 1) {
                     tvName.setText(bean.getIconName());
+                    int dimen = getResources().getDimensionPixelSize(R.dimen.large_home_text);
+                    tvName.setTextSize(TypedValue.COMPLEX_UNIT_PX,dimen);
                 } else {
                     tvName.setText(bean.getIconEnName());
+                    int dimen = getResources().getDimensionPixelSize(R.dimen.shifting_label);
+                    tvName.setTextSize(TypedValue.COMPLEX_UNIT_PX,dimen);
                 }
                 tvName.setTextColor(Color.parseColor(bean.getIconFontColor()));
 
@@ -692,12 +698,11 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
                         /*Intent intent = new Intent(getActivity(),MainMyActivity.class);
                         startActivity(intent);*/
                         //看日程
-                        /*if (AppApplication.systemLanguage == 1) {
+                        if (AppApplication.systemLanguage == 1) {
                             goLookSchedule(rowBean.getIconName());
                         } else {
                             goLookSchedule(rowBean.getIconEnName());
-                        }*/
-                        goLive();
+                        }
                         break;
                     case SEARCH:
                         //差日程
@@ -727,7 +732,11 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
                         break;
                     case LIVE:
                         //直播
-                        goLive();
+                        if (AppApplication.systemLanguage == 1) {
+                            goLive(rowBean.getIconName());
+                        } else {
+                            goLive(rowBean.getIconEnName());
+                        }
                         break;
                     case MESSAGE:
                         //消息站
@@ -890,7 +899,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
     /**
      * 看日程
      */
-    private void goLookSchedule(String title) {
+    public void goLookSchedule(String title) {
         MeetingScheduleListActionFragment listFragment = new MeetingScheduleListActionFragment();
         ImageView view = (ImageView) CommonUtils.initView(getActivity(), R.layout.title_right_image);
         if (AppApplication.systemLanguage == 1) {
@@ -954,8 +963,8 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
     /**
      * 新直播
      */
-    private void goLive() {
-        action(new LiveFragment(), R.string.live, false, false, false);
+    public void goLive(String titleName) {
+        action(new LiveFragment(), titleName, false, false, false);
     }
 
     /**
@@ -1069,7 +1078,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
     /**
      * 提问模块
      */
-    private void goQuestions(String title) {
+    public void goQuestions(String title) {
         if (AppApplication.isUserLogIn()) {
             action(new QuestionSquarFragment(), title, false, false, false);
         } else {
@@ -1107,7 +1116,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
     /**
      * 参展商
      */
-    private void goExhibitor(String title) {
+    public void goExhibitor(String title) {
         //action(new ExhibitorsActionFragment(), title, false, false, false);
         action(new NewExhibitorsActionFragment(), title, false, false, false);
     }
@@ -1122,7 +1131,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
     /**
      * 班车提醒
      */
-    private void goBus(String title) {
+    public void goBus(String title) {
         action(new MeetingBusRemindAllFragment(), title, false, false, false);
     }
 
@@ -1136,7 +1145,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
     /**
      * 学院
      */
-    private void goCollege(String titleName) {
+    public void goCollege(String titleName) {
         /*View titleView = CommonUtils.initView(getActivity(), R.layout.title_segment);
         searchFragment.setCenterView(titleView);*/
         //goQuestions("提问");
@@ -1228,7 +1237,8 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
                 LoginActivity.startLoginActivity(getActivity(), LoginActivity.TYPE_PROFESSOR, "", "", "", "");
                 return;
             } else if (AppApplication.facultyId == -1) {
-                ToastUtils.showToast(R.string.secretary_module_not_available);
+                ToastUtils.showToast(getString(R.string.secretary_module_not_available));
+                StatusBarUtil.setStatusBarDarkTheme(getActivity(), false);
                 return;
             }
 
@@ -1317,6 +1327,5 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
         valueAnimator.setDuration(1500);
         valueAnimator.start();
         currentSize = height;
-        Log.d("sgqTest", "currentSize: " + currentSize);
     }
 }

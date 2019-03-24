@@ -63,7 +63,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <com.android.incongress.cd.conference.widget.ListViewForScrollView
+        <com.android.incongress.cd.conference.widget.ListViewForFix
             android:padding="@dimen/layout_padding"
             android:id="@+id/lv_meetings"
             android:layout_width="match_parent"

@@ -42,10 +42,10 @@
                 android:id="@+id/tv_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="52dp"
+                android:layout_marginTop="30dp"
                 android:ellipsize="end"
                 android:gravity="center"
-                android:singleLine="true"
+                android:maxLines="2"
                 android:text="这是一场盛大的演出"
                 android:textColor="@color/white"
                 android:textSize="21sp" />

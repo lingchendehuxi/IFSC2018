@@ -42,7 +42,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="全选"
+                android:text="@string/chose_all"
                 android:gravity="center"
                 android:background="@drawable/bg_room_tag_normal"
                 android:layout_marginRight="20dp"
@@ -54,7 +54,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:text="确定"
+            android:text="@string/login_forget_conform"
             android:gravity="center"
             android:background="@drawable/now_next_alldoom"
             android:textColor="@color/white"/>

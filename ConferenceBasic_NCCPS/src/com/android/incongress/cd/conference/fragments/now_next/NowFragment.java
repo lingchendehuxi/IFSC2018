@@ -60,7 +60,6 @@ public class NowFragment extends BaseFragment {
     private ChooseRomPopupWindow mRoomPopupWindow;
     private List<Class> mAllClasses;
     private List<Class> mChooseClasses;
-    private boolean open = true;
     /**
      * 正在进行的sssion列表
      **/
@@ -78,18 +77,16 @@ public class NowFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         StatusBarUtil.setStatusBarDarkTheme(getActivity(),true);
         View view = inflater.inflate(R.layout.fragment_now, container, false);
-        mLlTimeRoom = (ImageView) view.findViewById(R.id.fg_img);
-        mTvTime = (TextView) view.findViewById(R.id.tv_time);
-        mTvRoom = (TextView) view.findViewById(R.id.tv_room);
+        mLlTimeRoom =  view.findViewById(R.id.fg_img);
+        mTvTime =  view.findViewById(R.id.tv_time);
+        mTvRoom =  view.findViewById(R.id.tv_room);
 
-        mRvNowSession = (SuperRecyclerView) view.findViewById(R.id.srv_session);
+        mRvNowSession =  view.findViewById(R.id.srv_session);
         mChooseClasses = new ArrayList<>();
 
         mTvRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                open = SharePreferenceUtils.getAppBoolean("popup", true);
-                if (open) {
                     if (mRoomPopupWindow == null) {
                         SharePreferenceUtils.saveAppBoolean("popup", false);
                         mRoomPopupWindow = new ChooseRomPopupWindow(getActivity());
@@ -108,14 +105,6 @@ public class NowFragment extends BaseFragment {
                         SharePreferenceUtils.saveAppBoolean("popup", false);
                     }
                     mRoomPopupWindow.showPopupWindowBelowView(mLlTimeRoom);
-                } else {
-                    if (mRoomPopupWindow.getCurrentClass().size() == 0) {
-                        ToastUtils.showToast("请选择至少一个会议室");
-                    } else {
-                        SharePreferenceUtils.saveAppBoolean("popup", true);
-                        mRoomPopupWindow.dismiss();
-                    }
-                }
 
             }
         });
@@ -180,7 +169,11 @@ public class NowFragment extends BaseFragment {
                     mCurrentRoom = getString(R.string.all_room);
                 } else {
                     for (int i = 0; i < mChooseClasses.size(); i++) {
-                        mCurrentRoom = mCurrentRoom + "，" + mChooseClasses.get(i).getClassesCode();
+                        if(AppApplication.systemLanguage == 1){
+                            mCurrentRoom = mCurrentRoom + "，" + mChooseClasses.get(i).getClassesCode();
+                        }else {
+                            mCurrentRoom = mCurrentRoom + "，" + mChooseClasses.get(i).getClassCodeEn();
+                        }
                     }
                     mCurrentRoom = mCurrentRoom.substring(1);
                 }
@@ -260,7 +253,12 @@ public class NowFragment extends BaseFragment {
                                 Role role = ConferenceDbUtils.getRoleById(roleId);
                                 if (role == null)
                                     continue;
-                                String roleWithName = role.getName() + ":";
+                                String roleWithName;
+                                if(AppApplication.systemLanguage == 1||TextUtils.isEmpty(role.getEnName())){
+                                    roleWithName = role.getName() + ":";
+                                }else {
+                                    roleWithName = role.getEnName() + ":";
+                                }
                                 for (int z = 0; z < speakers.size(); z++) {
                                     Speaker speaker = speakers.get(z);
                                     if (roleId.equals(speaker.getType() + "")) {

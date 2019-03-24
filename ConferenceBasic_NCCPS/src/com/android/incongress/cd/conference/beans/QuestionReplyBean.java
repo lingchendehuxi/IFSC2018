@@ -1,86 +1,128 @@
 package com.android.incongress.cd.conference.beans;
 
-import java.util.List;
-
 public class QuestionReplyBean {
 
     /**
-     * sceneShowArray : [{"sceneShowId":3914,"content":"%E6%B5%8B%E8%AF%95","meetingName":"冠脉分叉病变介入治疗中怎样合理对吻球囊扩张？","speakerName":"李丽","imgUrl":""}]
-     * state : 1
+     * sceneShowId : 4585
+     * type : 6
+     * timeShow : 1小时前
+     * meetingName : 欢迎致辞
+     * content : %E6%84%9F%E8%B0%A2%E6%82%A8%E7%9A%84%E6%BC%94%E8%AE%B2
+     * isShow : 0
+     * laudCount : 0
+     * isLaud : 0
+     * isHuiFu : 0
+     * answerUserName : 高润霖
+     * answerUserImg :
+     * answerContent :
      */
 
-    private String state;
-    private List<SceneShowArrayBean> sceneShowArray;
+    private int sceneShowId;
+    private int type;
+    private String timeShow;
+    private String meetingName;
+    private String content;
+    private int isShow;
+    private int laudCount;
+    private int isLaud;
+    private int isHuiFu;
+    private String answerUserName;
+    private String answerUserImg;
+    private String answerContent;
 
-    public String getState() {
-        return state;
+    public int getSceneShowId() {
+        return sceneShowId;
     }
 
-    public void setState(String state) {
-        this.state = state;
+    public void setSceneShowId(int sceneShowId) {
+        this.sceneShowId = sceneShowId;
     }
 
-    public List<SceneShowArrayBean> getSceneShowArray() {
-        return sceneShowArray;
+    public int getType() {
+        return type;
     }
 
-    public void setSceneShowArray(List<SceneShowArrayBean> sceneShowArray) {
-        this.sceneShowArray = sceneShowArray;
+    public void setType(int type) {
+        this.type = type;
     }
 
-    public static class SceneShowArrayBean {
-        /**
-         * sceneShowId : 3914
-         * content : %E6%B5%8B%E8%AF%95
-         * meetingName : 冠脉分叉病变介入治疗中怎样合理对吻球囊扩张？
-         * speakerName : 李丽
-         * imgUrl :
-         */
+    public String getTimeShow() {
+        return timeShow;
+    }
 
-        private int sceneShowId;
-        private String content;
-        private String meetingName;
-        private String speakerName;
-        private String imgUrl;
+    public void setTimeShow(String timeShow) {
+        this.timeShow = timeShow;
+    }
 
-        public int getSceneShowId() {
-            return sceneShowId;
-        }
+    public String getMeetingName() {
+        return meetingName;
+    }
 
-        public void setSceneShowId(int sceneShowId) {
-            this.sceneShowId = sceneShowId;
-        }
+    public void setMeetingName(String meetingName) {
+        this.meetingName = meetingName;
+    }
 
-        public String getContent() {
-            return content;
-        }
+    public String getContent() {
+        return content;
+    }
 
-        public void setContent(String content) {
-            this.content = content;
-        }
+    public void setContent(String content) {
+        this.content = content;
+    }
 
-        public String getMeetingName() {
-            return meetingName;
-        }
+    public int getIsShow() {
+        return isShow;
+    }
 
-        public void setMeetingName(String meetingName) {
-            this.meetingName = meetingName;
-        }
+    public void setIsShow(int isShow) {
+        this.isShow = isShow;
+    }
 
-        public String getSpeakerName() {
-            return speakerName;
-        }
+    public int getLaudCount() {
+        return laudCount;
+    }
 
-        public void setSpeakerName(String speakerName) {
-            this.speakerName = speakerName;
-        }
+    public void setLaudCount(int laudCount) {
+        this.laudCount = laudCount;
+    }
 
-        public String getImgUrl() {
-            return imgUrl;
-        }
+    public int getIsLaud() {
+        return isLaud;
+    }
 
-        public void setImgUrl(String imgUrl) {
-            this.imgUrl = imgUrl;
-        }
+    public void setIsLaud(int isLaud) {
+        this.isLaud = isLaud;
+    }
+
+    public int getIsHuiFu() {
+        return isHuiFu;
+    }
+
+    public void setIsHuiFu(int isHuiFu) {
+        this.isHuiFu = isHuiFu;
+    }
+
+    public String getAnswerUserName() {
+        return answerUserName;
+    }
+
+    public void setAnswerUserName(String answerUserName) {
+        this.answerUserName = answerUserName;
+    }
+
+    public String getAnswerUserImg() {
+        return answerUserImg;
+    }
+
+    public void setAnswerUserImg(String answerUserImg) {
+        this.answerUserImg = answerUserImg;
+    }
+
+    public String getAnswerContent() {
+        return answerContent;
+    }
+
+    public void setAnswerContent(String answerContent) {
+        this.answerContent = answerContent;
     }
 }

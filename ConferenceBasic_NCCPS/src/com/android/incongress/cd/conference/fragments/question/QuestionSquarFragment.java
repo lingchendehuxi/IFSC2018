@@ -80,6 +80,7 @@ public class QuestionSquarFragment extends BaseFragment implements View.OnClickL
         mRVQuestion = view.findViewById(R.id.rv_question);
         fawen = view.findViewById(R.id.tv_question);
         emptyView = view.findViewById(R.id.tv_tips);
+        emptyView.setVisibility(View.GONE);
         ll_question = view.findViewById(R.id.ll_question);
 
         fawen.setOnClickListener(this);
@@ -123,7 +124,9 @@ public class QuestionSquarFragment extends BaseFragment implements View.OnClickL
                     myList.addAll(mAllQuestions.getSceneShowArray2()) ;
                     mQuestionAdapter.notifyDataSetChanged();
                     if(myList.size()<=0){
-                        mRVQuestion.setEmptyView(emptyView);
+                        emptyView.setVisibility(View.VISIBLE);
+                    }else {
+                        emptyView.setVisibility(View.GONE);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -144,11 +147,11 @@ public class QuestionSquarFragment extends BaseFragment implements View.OnClickL
             case R.id.tv_question:
                 if (listBean.size() == 0) {
                     AskPupBean bean = new AskPupBean();
-                    bean.setFirName("日程提问");
-                    bean.setTopic("对大会日程进行提问，即将前往日程模块");
+                    bean.setFirName(getString(R.string.schedule_ask));
+                    bean.setTopic(getString(R.string.go_schedule_question_tip));
                     AskPupBean bean2 = new AskPupBean();
-                    bean2.setFirName("壁报提问");
-                    bean2.setTopic("对壁报内容进行提问，即将前往日程模块");
+                    bean2.setFirName(getString(R.string.poster_ask));
+                    bean2.setTopic(getString(R.string.go_poster_question_tip));
                     listBean.add(bean);
                     listBean.add(bean2);
                 }
@@ -161,7 +164,7 @@ public class QuestionSquarFragment extends BaseFragment implements View.OnClickL
 
     private void InitQuestionPopupWindow(final List<AskPupBean> list) {
         if (list.size() == 0) {
-            ToastUtils.showToast("暂无数据");
+            ToastUtils.showToast(getString(R.string.tv_tips));
             return;
         }
         mQuestionPopupWindow = new QuestionPopupWindow(getActivity());
@@ -191,9 +194,11 @@ public class QuestionSquarFragment extends BaseFragment implements View.OnClickL
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                RadioButton radioButton = view.findViewById(R.id.question_rb);
-                askQuestionAdapter.clearCheck();
-                radioButton.setChecked(true);
+                for(int i=0;i<list.size();i++){
+                    list.get(i).setSelected(false);
+                }
+                list.get(position).setSelected(true);
+                askQuestionAdapter.notifyDataSetChanged();
                 currentPosition = position+10;
             }
         });
@@ -212,7 +217,7 @@ public class QuestionSquarFragment extends BaseFragment implements View.OnClickL
                     action(post, getString(R.string.home_wallpaper), scane, false, false, false);
                     mQuestionPopupWindow.dismiss();
                 }else{
-                    ToastUtils.showToast("请先选择提问模块");
+                    ToastUtils.showToast(getString(R.string.go_question_tip));
                 }
             }
         });

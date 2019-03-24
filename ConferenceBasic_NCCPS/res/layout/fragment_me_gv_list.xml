@@ -24,6 +24,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="11dp"
+            android:maxLines="2"
+            android:gravity="center"
             android:text="测试"
             android:textColor="@color/unselect_color"
             android:textSize="15sp" />

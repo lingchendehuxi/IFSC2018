@@ -194,9 +194,11 @@ public class MeetingScheduleListAdapter extends BaseAdapter implements StickyLis
         }else {
             holder.tvMeetingName.setText(mSessions.get(position).getSessionNameEN());
         }
-
-        Date date = DateUtil.getDate(mSessions.get(position).getSessionDay(), DateUtil.DEFAULT);
-        holder.tvMeetingTime.setText(DateUtil.getDateShort(date)  + " " + mSessions.get(position).getStartTime() + "-" + mSessions.get(position).getEndTime());
+        if(AppApplication.systemLanguage == 1){
+            holder.tvMeetingTime.setText(DateUtil.getFormatMonthAndDayChinese(mSessions.get(position).getSessionDay())  + " " + mSessions.get(position).getStartTime() + "-" + mSessions.get(position).getEndTime());
+        }else {
+            holder.tvMeetingTime.setText(DateUtil.getFormatMonthAndDayEnglish(mSessions.get(position).getSessionDay())  + " " + mSessions.get(position).getStartTime() + "-" + mSessions.get(position).getEndTime());
+        }
 
         return convertView;
     }

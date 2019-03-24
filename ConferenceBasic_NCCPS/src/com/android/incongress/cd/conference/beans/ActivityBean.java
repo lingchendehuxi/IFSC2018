@@ -20,6 +20,15 @@ public class ActivityBean implements Serializable{
 	private String start_time;
 	private String end_time;
 	private String date;
+	private boolean isRemind;
+
+	public boolean getIsRemind() {
+		return isRemind;
+	}
+
+	public void setIsRemind(boolean isRemind) {
+		this.isRemind = isRemind;
+	}
 
 	private boolean isStartNotify;
 

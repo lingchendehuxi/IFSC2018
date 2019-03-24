@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -34,12 +33,13 @@ import com.android.incongress.cd.conference.base.BaseFragment;
 import com.android.incongress.cd.conference.base.BaseFragment.MainCallBack;
 import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.beans.DZBBBean;
+import com.android.incongress.cd.conference.beans.FastOnLineBean;
+import com.android.incongress.cd.conference.beans.JpushDataBean;
 import com.android.incongress.cd.conference.beans.PosterBean;
 import com.android.incongress.cd.conference.beans.TitleEntry;
 import com.android.incongress.cd.conference.fragments.NewDynamicHomeFragment;
 import com.android.incongress.cd.conference.fragments.me.MindBookFragment;
 import com.android.incongress.cd.conference.fragments.me.PersonCenterFragment;
-import com.android.incongress.cd.conference.fragments.meeting_schedule.SessionDetailViewPageFragment;
 import com.android.incongress.cd.conference.fragments.message_station.MessageStationActionFragment;
 import com.android.incongress.cd.conference.fragments.scenic_xiu.ScenicXiuFragment;
 import com.android.incongress.cd.conference.fragments.wall_poster.PosterImageFragment;
@@ -63,6 +63,7 @@ import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.baidu.mobstat.StatService;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 import com.tencent.mm.sdk.openapi.IWXAPI;
@@ -78,7 +79,6 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -227,21 +227,25 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
             finish();
         }
 
-//        if(Constants.HAS_COMPAS) {
-//            mCurrentFragment = mChooseConferenceFragment;
-//            addFragment(mChooseConferenceFragment, true);
-//            setTitleEntry(false, false, false, null, R.string.app_name, true, true, false, true);
-//        }else {
-//            mCurrentFragment = mDynamicHomeFragment;
-//            addFragment(mDynamicHomeFragment, true);
-//            setTitleEntry(false, false, false, null, R.string.app_name, true, true, false, true);
-//        }
-
         setTitleEntry(true, false, false, null, R.string.app_name, true, true, false, true, null, true);
 
         //判断是否从推送跳入，需要直接打开webview
         try {
             Bundle bundle = getIntent().getExtras();
+            String info = bundle.getString(JPushInterface.EXTRA_EXTRA);
+            if (info.contains("ModelId")) {
+                JpushDataBean bean = new Gson().fromJson(info, new TypeToken<FastOnLineBean>() {
+                }.getType());
+                switch (bean.getModelId()) {
+                    case "1":
+                        if (mDynamicHomeFragment != null) {
+                            mDynamicHomeFragment.goLookSchedule(StringUtils.getNeedString(bean.getModelTitle()));
+                        }
+                        break;
+                }
+                return;
+            }
+
             if (bundle != null) {
                 String url = bundle.getString("url");
                 String title = bundle.getString("title");
@@ -312,7 +316,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
 // 日志输出
         android.util.Log.d("sgqtest", "Test DeviceId : " + testDeviceId);
         //这里对41版本强制删除用户信息，重新登录
-        if (!SharePreferenceUtils.getAppBoolean("force_login", false) && Constants.APP_VERSION == 41) {
+        if (!SharePreferenceUtils.getAppBoolean("force_login", false)) {
             SharePreferenceUtils.saveAppBoolean("force_login", true);
             umengDeleteOauth(this, SHARE_MEDIA.WEIXIN);
             ParseUser.clearUserInfo(this);
@@ -329,19 +333,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
                 super.onSuccess(statusCode, headers, response);
                 if (JSONCatch.parseInt("state", response) == 1) {
                     ParseUser.saveUserInfo(response.toString());
-                                /*Gson gson = new Gson();
-                                UserInfoBean user = gson.fromJson(response.toString(), UserInfoBean.class);
-                                AppApplication.setSPStringValue(Constants.USER_NAME, user.getName());
-                                AppApplication.setSPStringValue(Constants.USER_IMG, user.getImg());
-                                AppApplication.setSPStringValue(Constants.USER_MOBILE, user.getMobilePhone());
-                                AppApplication.setSPIntegerValue(Constants.USER_ID, user.getUserId());
-                                AppApplication.setSPIntegerValue(Constants.USER_TYPE, user.getUserType());
-                                AppApplication.setSPIntegerValue(Constants.USER_FACULTYID, user.getFacultyId());
-                                AppApplication.setSPBooleanValue(Constants.USER_IS_LOGIN, true);
-                                AppApplication.userId = user.getUserId();
-                                AppApplication.username = user.getName();
-                                AppApplication.userType = user.getUserType();
-                                AppApplication.facultyId = user.getFacultyId();*/
                     if (mMeFragment != null) {
                         mMeFragment.refreshInfo();
                     }
@@ -462,9 +453,9 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
                 .setText("  ")
                 .setHideOnSelect(false);
         mNavigationBar
-                .addItem(new BottomNavigationItem(R.drawable.bottom_home, R.string.bottom_home))
+                .addItem(new BottomNavigationItem(R.drawable.bottom_home_ed, R.string.bottom_home).setInactiveIconResource(R.drawable.bottom_home))
                 .addItem(new BottomNavigationItem(R.drawable.bottom_boke_ed, R.string.bottom_broadcast).setInactiveIconResource(R.drawable.bottom_boke))
-                .addItem(new BottomNavigationItem(R.drawable.bottom_message, R.string.bottom_message).setBadgeItem(mBadgeItem))
+                .addItem(new BottomNavigationItem(R.drawable.bottom_message_ed, R.string.bottom_message).setInactiveIconResource(R.drawable.bottom_message).setBadgeItem(mBadgeItem))
                 .addItem(new BottomNavigationItem(R.drawable.bottom_me_ed, R.string.bottom_me).setInactiveIconResource(R.drawable.bottom_me))
                 .initialise();
         mNavigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
@@ -935,26 +926,66 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         setIntent(intent);
-        try {
-            Bundle bundle = intent.getExtras();
-            if (bundle != null) {
-                String url = bundle.getString("H5URL");
-                String title = bundle.getString("H5TITLE");
-                String share = bundle.getString("H5SHARE");
-                long notificationId = bundle.getLong("notificationId");
-                if (!StringUtils.isEmpty(url)) {
-                    int type = 3;
-                    if (share.equals("1")) {
-                        type = 1;
-                    } else {
-                        type = 3;
-                    }
-                    CollegeActivity.startCitCollegeActivity(HomeActivity.this, title, url, type);
+        Bundle bundle = intent.getExtras();
+        if (bundle != null) {
+            String info = bundle.getString(JPushInterface.EXTRA_EXTRA);
+            if (info.contains("ModelId")) {
+                JpushDataBean bean = new Gson().fromJson(info, new TypeToken<JpushDataBean>() {
+                }.getType());
+                switch (bean.getModelId()) {
+                    //看日程
+                    case "1":
+                        if (mDynamicHomeFragment != null) {
+                            mDynamicHomeFragment.goLookSchedule(StringUtils.getNeedString(bean.getModelTitle()));
+                        }
+                        break;
+                    //直播
+                    case "2":
+                        if (mDynamicHomeFragment != null) {
+                            mDynamicHomeFragment.goLive(StringUtils.getNeedString(bean.getModelTitle()));
+                        }
+                        break;
+                    //学院
+                    case "3":
+                        if (mDynamicHomeFragment != null) {
+                            mDynamicHomeFragment.goCollege(StringUtils.getNeedString(bean.getModelTitle()));
+                        }
+                        break;
+                    //参展商
+                    case "4":
+                        if (mDynamicHomeFragment != null) {
+                            mDynamicHomeFragment.goExhibitor(StringUtils.getNeedString(bean.getModelTitle()));
+                        }
+                        break;
+                    //班车提醒
+                    case "5":
+                        if (mDynamicHomeFragment != null) {
+                            mDynamicHomeFragment.goBus(StringUtils.getNeedString(bean.getModelTitle()));
+                        }
+                        break;
+                    //提问
+                    case "6":
+                        if (mDynamicHomeFragment != null) {
+                            mDynamicHomeFragment.goQuestions(StringUtils.getNeedString(bean.getModelTitle()));
+                        }
+                        break;
                 }
-                JPushInterface.removeLocalNotification(HomeActivity.this, notificationId);
+                return;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+            String url = bundle.getString("H5URL");
+            String title = bundle.getString("H5TITLE");
+            String share = bundle.getString("H5SHARE");
+            long notificationId = bundle.getLong("notificationId");
+            if (!StringUtils.isEmpty(url)) {
+                int type = 3;
+                if (share.equals("1")) {
+                    type = 1;
+                } else {
+                    type = 3;
+                }
+                CollegeActivity.startCitCollegeActivity(HomeActivity.this, title, url, type);
+            }
+            JPushInterface.removeLocalNotification(HomeActivity.this, notificationId);
         }
     }
 
@@ -1188,6 +1219,10 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
                 }
             }
         }
+    }
+
+    public static void notifyActivitySkip(Bundle bundle) {
+
     }
 
     private List<MindBookFragment.ManagerNewLister> listLister = new ArrayList<>();

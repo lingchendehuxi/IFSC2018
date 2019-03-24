@@ -17,7 +17,7 @@
             android:layout_marginLeft="11dp"
             android:layout_marginTop="7dp"
             android:layout_marginRight="12dp"
-            android:src="@drawable/professor_default" />
+            android:src="@drawable/ic_launcher" />
 
         <RelativeLayout
             android:layout_width="match_parent"

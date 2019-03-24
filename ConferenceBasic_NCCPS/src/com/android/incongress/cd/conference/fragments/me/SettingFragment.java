@@ -2,8 +2,6 @@ package com.android.incongress.cd.conference.fragments.me;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Application;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -16,12 +14,9 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.android.incongress.cd.conference.LoginActivity;
 import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.BaseFragment;
-import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.save.ParseUser;
-import com.android.incongress.cd.conference.save.SharePreferenceUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
 import com.android.incongress.cd.conference.utils.cache.CacheClearUtils;
 import com.android.incongress.cd.conference.utils.cache.NotificationsUtils;
@@ -107,7 +102,7 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         CacheClearUtils.clearAllCache(getActivity());
-                        ToastUtils.showToast("清除成功");
+                        ToastUtils.showToast(getString(R.string.clear_success));
                         memory_of.setText("");
                     }
                 }).setNegativeButton(R.string.negative_button, new DialogInterface.OnClickListener() {

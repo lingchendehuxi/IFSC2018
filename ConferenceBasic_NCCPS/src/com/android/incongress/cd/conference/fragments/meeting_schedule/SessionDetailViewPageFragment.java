@@ -167,7 +167,7 @@ public class SessionDetailViewPageFragment extends BaseFragment implements View.
     private void InitMeetingPopupWindow() {
         final List<Meeting> meetings = ConferenceDbUtils.getMeetingBySessionGroupId(mSessionBeanList.get(mPosition).getSessionGroupId() + "");
         if (meetings.size() == 0) {
-            ToastUtils.showToast("暂无数据");
+            ToastUtils.showToast(getString(R.string.tv_tips));
             return;
         }
         mMeetingPopupWindow = new QuestionPopupWindow(getActivity());
@@ -264,7 +264,7 @@ public class SessionDetailViewPageFragment extends BaseFragment implements View.
         final List<Meeting> compareList = ConferenceDbUtils.getMeetingBySessionGroupId(mSessionBeanList.get(mPosition).getSessionGroupId() + "");
         mClassBean = ConferenceDbUtils.findClassByClassId(mSessionBeanList.get(mPosition).getClassesId());
         if (meetings.size() == 0 && mClassBean !=null) {
-            ToastUtils.showToast("暂无数据");
+            ToastUtils.showToast(getString(R.string.tv_tips));
             return;
         }
         mAlarmPopupWindow = new QuestionPopupWindow(getActivity());
@@ -393,7 +393,7 @@ public class SessionDetailViewPageFragment extends BaseFragment implements View.
                     bean.setTopic(meetings.get(i).getTopic());
                     bean.setSpearkerId(speaker.getSpeakerId());
                 }else {
-                    bean.setFirName(speaker.getSpeakerNamePingyin());
+                    bean.setFirName(speaker.getEnName());
                     bean.setTopic(meetings.get(i).getTopicEn());
                     bean.setSpearkerId(speaker.getSpeakerId());
                 }
@@ -403,7 +403,7 @@ public class SessionDetailViewPageFragment extends BaseFragment implements View.
             askList.add(bean);
         }
         if (askList.size() == 0) {
-            ToastUtils.showToast("暂无数据");
+            ToastUtils.showToast(getString(R.string.tv_tips));
             return;
         }
         mQuestionPopupWindow = new QuestionPopupWindow(getActivity());
@@ -417,7 +417,7 @@ public class SessionDetailViewPageFragment extends BaseFragment implements View.
         });
         ListView listView = mQuestionPopupWindow.getContentView().findViewById(R.id.list_scroll);
         TextView textView = mQuestionPopupWindow.getContentView().findViewById(R.id.tv_tip);
-        textView.setText(getString(R.string.question));
+        textView.setText(getString(R.string.schedule_ask));
         final AskQuestionAdapter askQuestionAdapter = new AskQuestionAdapter(askList, getActivity());
         listView.setAdapter(askQuestionAdapter);
         int totalHeight = 0;
@@ -440,7 +440,9 @@ public class SessionDetailViewPageFragment extends BaseFragment implements View.
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                askQuestionAdapter.clearCheck();
+                for (int i = 0;i<askList.size();i++){
+                    askList.get(i).setSelected(false);
+                }
                 askList.get(position).setSelected(true);
                 askBean = askList.get(position);
                 askBean.setMeetingId(meetings.get(position).getMeetingId());

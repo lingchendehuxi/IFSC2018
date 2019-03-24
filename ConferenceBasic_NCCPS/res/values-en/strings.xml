@@ -8,6 +8,8 @@
     <string name="update_database">wait for the database update</string>
 
     <string name="system_message">Notifications</string>
+    <string name="login_forget_conform">OK</string>
+    <string name="chose_all">ALL</string>
     <string name="personal_message">My Messages</string>
     <string name="system_nomessage">You have no notifications</string>
     <string name="personal_nomessage">You have no messages</string>
@@ -18,16 +20,21 @@
     <string name="bottom_tab_me">Personal Center</string>
     <string name="tv_tips">No data</string>
     <string name="bus_tips">No data</string>
+    <string name="no_data_tips">No data</string>
     <string name="photo_tips">Please Try Again</string>
-    <string name="question_meeting">Program</string>
-    <string name="live">Live</string>
-    <string name="schedule">Schedule</string>
-    <string name="bus">Bus</string>
+    <string name="question_meeting">Programme</string>
+    <string name="live">Livestream</string>
+    <string name="schedule">On-Demand</string>
+    <string name="bus">Shuttle Bus</string>
     <string name="question_post">Poster</string>
 
     <string name="question_poster_tips">no question here</string>
     <string name="tips_question_meeting">no question here</string>
-    <string name="make_question">make a question</string>
+    <string name="make_question">Ask a Expert now</string>
+    <string name="from_schedule">Posted in final Programme</string>
+    <string name="from_poster">Posted in Poster</string>
+    <string name="accept_ask">Received question</string>
+    <string name="question_answer">Answered question</string>
 
     <string name="home_icon_presidium">Faculty\nExclusive</string>
     <string name="home_newscenter">Media Center</string>
@@ -62,7 +69,9 @@
     <string name="home_commend">Recommendation videos</string>
     <string name="nowifi">The current network is not available.\nPlease check your network settings</string>
     <!-- 会议日程 -->
-    <string name="meeting_video_reservation">Video Reservation</string>
+    <string name="meeting_video_reservation">Video</string>
+    <!--学院里面的预约-->
+    <string name="meeting_college_reservation">Subscription</string>
     <string name="meeting_schedule_share">Share</string>
     <string name="meeting_schedule_note">Note</string>
     <string name="meeting_schedule_txwb">Tencent Weibo</string>
@@ -199,6 +208,10 @@ For any changes of reminder time,please go to "My CIT > My reminder".]]>
     <string name="hysq_home_comment_zan">%d Likes</string>
     <string name="hysq_home_comment_tie">%d Comments</string>
     <string name="hysq_home_comment_post">Send</string>
+    <string name="clear_cache">Clear Cache</string>
+    <string name="clear_success">Successfuly Cleared</string>
+    <string name="clear_cache_tips">After clearing, you need to reconnect to the network to cache the data. Are you sure to clear it?</string>
+    <string name="notify_tip">To open push, please confirm that Android system Settings - notification - notification management -CIT have been opened</string>
     <string name="hysq_home_comment_gen">Add a comment…</string>
     <string name="hysq_jiangliangju_titlebar_send_hint">Send</string>
     <string name="hysq_jiangliangju_zuijin">Recently speaker</string>
@@ -217,6 +230,7 @@ For any changes of reminder time,please go to "My CIT > My reminder".]]>
     <string name="exhibitor_detail_title">Exhibitor</string>
     <string name="exhibitor_detail_zanwei">Booth:%s</string>
     <string name="exhibitor_list_no_data">Exhibitor informations are not available at this moment.Please stay up to date!</string>
+    <string name="exhibitor_Location">"stand: "</string>
 
     <!-- 讲者 -->
     <string name="speaker_speaker">Speakers</string>
@@ -238,6 +252,7 @@ For any changes of reminder time,please go to "My CIT > My reminder".]]>
     <string name="meeting_voice_all_msg">Read All</string>
     <string name="hyzs_list_no_data">Media Center is not available at this moment.Please stay up to date!</string>
     <string name="see_detail">Watch Detail</string>
+    <string name="go_question_tip">Please select the question module first</string>
 
     <!-- 参会指南 -->
     <string name="tips_title_information">General Info</string>
@@ -249,6 +264,7 @@ For any changes of reminder time,please go to "My CIT > My reminder".]]>
 
     <string name="secretay_role">Role:</string>
     <string name="secretay_reminding">Reminding</string>
+    <string name="secretay_remind">Remind</string>
     <string name="retrieval_results">Retrieval results：%d</string>
     <string name="search_time">The end time should not be earlier than the start time. Please select again</string>
     <!-- 设置 -->
@@ -282,7 +298,7 @@ For any changes of reminder time,please go to "My CIT > My reminder".]]>
     <string name="settings_contact_text_wx">WeChat: incongress</string>
     <string name="settings_share_sms">SMS</string>
     <string name="settings_share_mail">Email</string>
-    <string name="settings_share_content">Come and join me with ‘iConference’ APP! Download now at: http://m.incongress.cn/ifsc2018/app</string>
+    <string name="settings_share_content">Come and join me with ‘iConference’ APP! Download now at: http://m.incongress.cn/cit2019/app</string>
     <string name="settings_share_wxtitle">Come and join me with ‘iConference’ APP! Download try !</string>
     <string name="settings_share_hint">Share to</string>
     <string name="settings_help_way1">You can：</string>
@@ -328,6 +344,7 @@ For any changes of reminder time,please go to "My CIT > My reminder".]]>
     <string name="mymeeting_no_tiezhi">You haven\'t posted anything yet. What\'s on your mind ?</string>
     <string name="mymeeting_no_session_metting">Go and add your favorite sessions and presentations !</string>
     <string name="history_post_empty">You haven\'t posted anything yet.What\'s on your mind?</string>
+    <string name="chose_meet_pop_tip">Please select at least one conference room</string>
 
     <string name="login_out_tips">Some service stop once you log out.Are you sure you want to log out?</string>
     <string-array name="repeate_dis">
@@ -438,13 +455,14 @@ Before first use, you’ll need to download the latest conference data. Afterwar
     <string name="verify_attendance">Verify Your Attendance</string>
     <string name="sign_up">Sign Up></string>
     <string name="phone_can_not_empty">Plesase provide correct email</string>
+    <string name="psw_can_not_empty">Plesase provide correct passWord</string>
     <string name="login_info_empty">please complete your login info!</string>
     <string name="register_title">Register</string>
     <string name="register_next">Next</string>
     <string name="country_code">Country</string>
     <string name="success_send_regist_code">success send sms</string>
     <string name="dialog_tips">Tips</string>
-    <string name="meeting_share_info">I follow “%1$s” presentation,http://m.incongress.cn/ifsc2018/app</string>
+    <string name="meeting_share_info">I follow “%1$s” presentation,http://m.incongress.cn/cit2019/app</string>
 
     <!-- 我的笔记 -->
     <string name="metting_node_edit_no_data">No Content.</string>
@@ -529,13 +547,17 @@ Before first use, you’ll need to download the latest conference data. Afterwar
     <string name="secretary_no_task">You do not have any meeting arrangements</string>
     <string name="exhibitor_detail_learning_center">Learning Center Program</string>
     <string name="exhibitor_detail_read_more">Read more</string>
-
+    <string name="schedule_ask">Ask Expert</string>
+    <string name="poster_ask">Ask Poster</string>
+    <!--提问-->
+    <string name="go_schedule_question_tip">To ask questions about the conference schedule, go to the schedule module</string>
+    <string name="go_poster_question_tip">Ask questions about the contents of the wall newspaper</string>
     <string name="dzbb_question">Question</string>
     <string name="dzbb_discuss">Discuss</string>
     <string name="question_list">Question</string>
     <string name="no_bus">No Data \n Recapture Again</string>
     <!--登录界面-->
-    <string name="welcome">Hello, welcome to use the conference easy</string>
+    <string name="welcome">Welcome to attend our conference!</string>
     <string name="mobile_text">mobile phone</string>
     <string name="login_tip">The phone number that the user signs in for the first time will automatically generate an account</string>
     <string name="code_hasgot">The verification code has been sent</string>
@@ -563,11 +585,15 @@ Before first use, you’ll need to download the latest conference data. Afterwar
     <string name="incongress_modify_person_info">Add your Profile Photo and Name</string>
     <!--会议部分-->
     <string name="seach_title_hint">Enter the meeting keyword and start searching quickly！</string>
-    <string name="schedule_mind">schedule reminder</string>
-    <string name="professor_ask">professor ask</string>
+    <string name="schedule_mind">Reminder</string>
+    <string name="professor_ask">Ask Expert</string>
     <string name="classes_map">Location</string>
     <string name="reset">reset</string>
     <string name="search">search</string>
+    <string name="next_no_sessions">The conference room is not available at this moment</string>
+    <string name="all_room">All Room</string>
+    <string name="chose_meet">Select Room</string>
+
     <!--包名修改的部分-->
     <string name="share_info">CIT Information</string>
     <string name="party_guide">Meeting Guide</string>

@@ -26,13 +26,13 @@ import java.util.List;
 
 public class MyQuestionsSquarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context mContext;
-    private List<QuestionReplyBean.SceneShowArrayBean> mAllQuestions;
+    private List<QuestionReplyBean> mAllQuestions;
 
     private static final int VIEW_TYPE_TITLE = 1;
     private static final int VIEW_TYPE_QUESTION = 2;
     private QuestionsAnswerClick answerClick;
 
-    public MyQuestionsSquarAdapter(Context context, List<QuestionReplyBean.SceneShowArrayBean> questions, QuestionsAnswerClick answerClick) {
+    public MyQuestionsSquarAdapter(Context context, List<QuestionReplyBean> questions, QuestionsAnswerClick answerClick) {
         this.mContext = context;
         this.mAllQuestions = questions;
         this.answerClick = answerClick;
@@ -73,9 +73,9 @@ public class MyQuestionsSquarAdapter extends RecyclerView.Adapter<RecyclerView.V
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
-            ((MyQuestionsSquarAdapter.QuestionTitleViewHolder) holder).tvTip.setText("来自日程 #" + mAllQuestions.get(position).getMeetingName() + "#");
-            ((MyQuestionsSquarAdapter.QuestionTitleViewHolder) holder).tv_question_user_name.setText(mAllQuestions.get(position).getSpeakerName());
-            PicUtils.loadImageUrl(mContext, mAllQuestions.get(position).getImgUrl(), ((MyQuestionsSquarAdapter.QuestionTitleViewHolder) holder).cvHead);
+            ((MyQuestionsSquarAdapter.QuestionTitleViewHolder) holder).tvTip.setText(mContext.getString(R.string.from_schedule)+" #" + mAllQuestions.get(position).getMeetingName() + "#");
+            /*((MyQuestionsSquarAdapter.QuestionTitleViewHolder) holder).tv_question_user_name.setText(mAllQuestions.get(position).getSpeakerName());
+            PicUtils.loadImageUrl(mContext, mAllQuestions.get(position).getImgUrl(), ((MyQuestionsSquarAdapter.QuestionTitleViewHolder) holder).cvHead);*/
         }else {
             try {
                 if(!TextUtils.isEmpty(mAllQuestions.get(position).getContent())){
@@ -84,9 +84,9 @@ public class MyQuestionsSquarAdapter extends RecyclerView.Adapter<RecyclerView.V
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-            ((MyQuestionsSquarAdapter.QuestionContextViewHolder) holder).tvTip.setText("来自日程 #" + mAllQuestions.get(position).getMeetingName() + "#");
-            ((MyQuestionsSquarAdapter.QuestionContextViewHolder) holder).tv_question_user_name.setText(mAllQuestions.get(position).getSpeakerName());
-            PicUtils.loadImageUrl(mContext, mAllQuestions.get(position).getImgUrl(), ((MyQuestionsSquarAdapter.QuestionContextViewHolder) holder).cvHead);
+            ((MyQuestionsSquarAdapter.QuestionContextViewHolder) holder).tvTip.setText(mContext.getString(R.string.from_schedule)+" #" + mAllQuestions.get(position).getMeetingName() + "#");
+            ((MyQuestionsSquarAdapter.QuestionContextViewHolder) holder).tv_question_user_name.setText(mAllQuestions.get(position).getAnswerUserName());
+            PicUtils.loadImageUrl(mContext, mAllQuestions.get(position).getAnswerUserImg(), ((MyQuestionsSquarAdapter.QuestionContextViewHolder) holder).cvHead);
             ((QuestionContextViewHolder)holder).tv_answer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

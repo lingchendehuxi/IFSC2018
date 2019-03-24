@@ -7,14 +7,17 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.incongress.cd.conference.HomeActivity;
 import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.beans.CollegeVideoBean;
 import com.android.incongress.cd.conference.beans.FastOnLineBean;
 import com.android.incongress.cd.conference.utils.DateUtil;
+import com.android.incongress.cd.conference.utils.DensityUtil;
 import com.android.incongress.cd.conference.utils.PicUtils;
 import com.android.incongress.cd.conference.utils.StringUtils;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
@@ -53,6 +56,9 @@ public class CollegeViewGridViewAdapter extends RecyclerView.Adapter<RecyclerVie
         StringUtils.setTextShow(((MyViewHolder) holder).video_show_time,bean.getOpenTime());
         StringUtils.setCommaTextShow(((MyViewHolder) holder).video_title,bean.getTitle());
         StringUtils.setTextShow(((MyViewHolder) holder).video_time,bean.getSpeakerName().replaceAll(","," "));
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
+        layoutParams.height = ((DensityUtil.getScreenSize((HomeActivity)mContext)[0]-DensityUtil.dip2px(mContext,46))*2)/8;
+        ((MyViewHolder) holder).iv_background.setLayoutParams(layoutParams);
         PicUtils.loadImageUrl(mContext,bean.getVideoImage(),((MyViewHolder) holder).iv_background);
         ((MyViewHolder) holder).ll_video_item.setOnClickListener(new View.OnClickListener() {
             @Override

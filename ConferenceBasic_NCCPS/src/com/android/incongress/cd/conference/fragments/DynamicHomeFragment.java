@@ -1088,7 +1088,7 @@ public class DynamicHomeFragment extends BaseFragment implements View.OnClickLis
                 LoginActivity.startLoginActivity(getActivity(), LoginActivity.TYPE_PROFESSOR, "", "", "", "");
                 return;
             } else if (AppApplication.facultyId == -1) {
-                ToastUtils.showToast(R.string.secretary_module_not_available);
+                ToastUtils.showToast(getString(R.string.secretary_module_not_available));
                 return;
             }
 

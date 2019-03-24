@@ -122,7 +122,7 @@
                 <com.android.incongress.cd.conference.widget.ListViewForScrollView
                     android:id="@+id/rcv_comments"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="match_parent"
                     android:layout_marginBottom="50dp" />
             </LinearLayout>
         </RelativeLayout>

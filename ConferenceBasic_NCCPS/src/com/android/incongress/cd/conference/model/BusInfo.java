@@ -59,7 +59,7 @@ public class BusInfo extends LitePalSupport {
             this.busArray = busArray;
         }
 
-        public static class BusArrayBean {
+        public static class BusArrayBean extends LitePalSupport{
             /**
              * busInfoId : 3
              * busDate : 2017-05-25

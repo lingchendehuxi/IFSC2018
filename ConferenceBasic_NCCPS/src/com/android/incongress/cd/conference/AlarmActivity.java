@@ -45,12 +45,11 @@ public class AlarmActivity extends BaseActivity {
                                 //停止音乐
                                 //alarmMusic.stop();
                                 vibrator.cancel();
-                                AlarmActivity.this.finish();
-                                dialog.dismiss();
-
                                 Intent intent = new Intent();
                                 intent.setClass(AlarmActivity.this, HomeActivity.class);
                                 startActivity(intent);
+                                dialog.dismiss();
+                                AlarmActivity.this.finish();
                             }
                         }).show();
                 break;

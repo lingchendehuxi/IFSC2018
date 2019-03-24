@@ -43,7 +43,7 @@ import com.android.incongress.cd.conference.utils.DateUtil;
 import com.android.incongress.cd.conference.utils.LogUtils;
 import com.android.incongress.cd.conference.utils.MyLogger;
 import com.android.incongress.cd.conference.utils.ShareUtils;
-import com.android.incongress.cd.conference.widget.ListViewForScrollView;
+import com.android.incongress.cd.conference.widget.ListViewForFix;
 import com.android.incongress.cd.conference.widget.MyButton;
 import com.android.incongress.cd.conference.widget.ScrollControlViewpager;
 import com.android.incongress.cd.conference.widget.StatusBarUtil;
@@ -64,7 +64,7 @@ public class SessionDetailPageFragment extends BaseFragment implements View.OnCl
 
     private TextView mTvScheduleTime, mTvRoom, mTvScheduleName, mTvScheduleDetailTime;
     private LinearLayout mLlSpeakerContainer;
-    private ListViewForScrollView mLvMeetings;
+    private ListViewForFix mLvMeetings;
     private ScrollView mScrollview;
     private MyButton mBtLocation, mBtAlarm;
 
@@ -449,7 +449,7 @@ public class SessionDetailPageFragment extends BaseFragment implements View.OnCl
 
         @Override
         protected Void doInBackground(Void... params) {
-            //mSessionBean = ConferenceDbUtils.getSessionBySessionId(mSessionid + "");
+            mSessionBean = ConferenceDbUtils.getSessionBySessionId(mSessionid + "");
             mClassBean = ConferenceDbUtils.findClassByClassId(mSessionBean.getClassesId());
             mClasses = ConferenceDbUtils.getAllClasses();
             mRoleListAll = ConferenceDbUtils.getAllRoles();

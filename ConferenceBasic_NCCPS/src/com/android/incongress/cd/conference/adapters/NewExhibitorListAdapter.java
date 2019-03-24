@@ -52,19 +52,18 @@ public class NewExhibitorListAdapter extends RecyclerView.Adapter<RecyclerView.V
         ExhibitorListInfoBean.ResultBean bean = mBeans.get(position);
         if (holder.getItemViewType() == 0) {
             ((ViewHolder) holder).tv_conner.setText(bean.getLocation());
-            ((ViewHolder) holder).tv_title.setText(bean.getTitle());
-            ((ViewHolder) holder).tv_context.setText(bean.getContent());
             StringUtils.setTextShow(((ViewHolder) holder).tv_context, bean.getContent());
+            StringUtils.setTextShow(((ViewHolder) holder).tv_title,bean.getTitle());
             if (TextUtils.isEmpty(bean.getLogoImg())) {
                 ((ViewHolder) holder).iv_img.setVisibility(View.GONE);
             } else {
                 PicUtils.loadImageUrl(mContext, bean.getLogoImg(), ((ViewHolder) holder).iv_img);
             }
         } else {
-            if (TextUtils.isEmpty(bean.getLogoImg())) {
+            if (TextUtils.isEmpty(bean.getTopImg())) {
                 ((ViewHolder2) holder).iv_img.setVisibility(View.GONE);
             } else {
-                PicUtils.loadImageUrl(mContext, bean.getLogoImg(), ((ViewHolder2) holder).iv_img);
+                PicUtils.loadImageUrl(mContext, bean.getTopImg(), ((ViewHolder2) holder).iv_img);
             }
         }
         holder.itemView.setOnClickListener(new View.OnClickListener() {

@@ -14,7 +14,7 @@ public class Speaker extends LitePalSupport {
     private String speakerFrom;// 演讲者来至于
     private String speakerName;// 演讲者姓名
     private int type;// 类型 1讲者 2主持 新加入了15种身份
-    private String speakerNamePingyin;// 名字的拼音
+    private String sortNumber; //英语的姓拼音
     private String firstLetter;
     private int attention;// 用于@讲者 最近的讲者
     private String enName;//英文名
@@ -22,6 +22,14 @@ public class Speaker extends LitePalSupport {
     private int entityId ;//未知
     private int userId;// userId;
     private String pykey; //
+
+    public String getSortNumber() {
+        return sortNumber;
+    }
+
+    public void setSortNumber(String sortNumber) {
+        this.sortNumber = sortNumber;
+    }
 
     public int getId() {
         return id;
@@ -77,14 +85,6 @@ public class Speaker extends LitePalSupport {
 
     public void setType(int type) {
         this.type = type;
-    }
-
-    public String getSpeakerNamePingyin() {
-        return speakerNamePingyin;
-    }
-
-    public void setSpeakerNamePingyin(String speakerNamePingyin) {
-        this.speakerNamePingyin = speakerNamePingyin;
     }
 
     public String getFirstLetter() {

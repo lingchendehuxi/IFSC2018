@@ -238,22 +238,8 @@ public class RegisterConfirmActivity extends BaseActivity {
                         showDialog(msg, null);
                     } else {
                         ParseUser.saveUserInfo(response.toString());
-                        /*Gson gson = new Gson();
-                        UserInfoBean user = gson.fromJson(response.toString(), UserInfoBean.class);
 
                         SharePreferenceUtils.saveUserString(Constants.USER_IS_LOGIN, "true");
-                        AppApplication.setSPStringValue(Constants.USER_NAME, user.getName());
-                        AppApplication.setSPStringValue(Constants.USER_FAMILY_NAME, user.getFamilyName());
-                        AppApplication.setSPStringValue(Constants.USER_GIVEN_NAME, user.getGiveName());
-                        AppApplication.setSPStringValue(Constants.USER_IMG, user.getImg());
-                        AppApplication.setSPStringValue(Constants.USER_MOBILE, user.getMobilePhone());
-                        AppApplication.setSPIntegerValue(Constants.USER_ID, user.getUserId());
-                        AppApplication.setSPIntegerValue(Constants.USER_TYPE, user.getUserType());*/
-
-                        SharePreferenceUtils.saveUserString(Constants.USER_IS_LOGIN, "true");
-                        /*AppApplication.userId = user.getUserId();
-                        AppApplication.username = user.getName();
-                        AppApplication.userType = user.getUserType();*/
 
                         Intent intent = new Intent(RegisterConfirmActivity.this, HomeActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

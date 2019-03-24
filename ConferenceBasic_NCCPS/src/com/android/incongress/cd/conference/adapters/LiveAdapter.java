@@ -105,6 +105,12 @@ public class LiveAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 ((MViewHolder) holder).ll_order.setBackground(mContext.getResources().getDrawable(R.drawable.book_course));
                 ((MViewHolder) holder).ll_order.setClickable(true);
             }
+            ((MViewHolder) holder).ll_order.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    itemOnclick.onItemClick(position);
+                }
+            });
         }
         StringUtils.setTextShow(((MViewHolder) holder).tv_address, bean.getLiveClassName());
         StringUtils.setTextShow(((MViewHolder) holder).tv_title, bean.getSessionName());
@@ -133,56 +139,6 @@ public class LiveAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             ll_person = view.findViewById(R.id.ll_person);
             tv_order = view.findViewById(R.id.tv_order);
         }
-    }
-
-    /**
-     * 直播预约
-     */
-    private void orderLive(int sessionId, final LiveInfoBean bean) {
-        CHYHttpClientUsage.getInstanse().doGetOrderLive(sessionId, new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                super.onSuccess(statusCode, headers, response);
-                if (JSONCatch.parseInt("state", response) == 1) {
-                    ToastUtils.showToast("预约成功");
-                } else {
-                    ToastUtils.showToast("预约失败，请联系管理员");
-                    return;
-                }
-                bean.save();
-                //添加闹钟提醒
-                Alert alertbean = new Alert();
-                if (!TextUtils.isEmpty(bean.getStartTime()) && !TextUtils.isEmpty(bean.getEndTime())) {
-                    String[] beginStrings = bean.getStartTime().split(" ");
-                    String[] endStrings = bean.getEndTime().split(" ");
-                    alertbean.setDate(beginStrings[0]);
-                    alertbean.setStart(beginStrings[1]);
-                    alertbean.setEnd(endStrings[1]);
-                } else {
-                    ToastUtils.showToast("直播时间不正确，请联系管理员");
-                    return;
-                }
-                alertbean.setEnable(1);
-                alertbean.setRelativeid(String.valueOf(bean.getSessionId()));
-                alertbean.setRepeatdistance("5");
-                alertbean.setRepeattimes("0");
-                alertbean.setRoom(bean.getLiveClassName());
-                alertbean.setIdenId(bean.getClassId());
-                alertbean.setTitle(bean.getSessionName());
-                alertbean.setLiveUrl(bean.getLiveUrl());
-                alertbean.setType(AlertBean.TYPE_LIVE); //3代表直播
-
-                alertbean.save();
-                AlermClock.addClock(alertbean);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                super.onFailure(statusCode, headers, responseString, throwable);
-                ToastUtils.showToast("获取信息失败，请联系管理员");
-            }
-
-        });
     }
 
     private String longOverString(Long date) {

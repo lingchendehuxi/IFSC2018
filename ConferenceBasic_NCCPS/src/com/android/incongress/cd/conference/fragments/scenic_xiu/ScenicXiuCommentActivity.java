@@ -5,9 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -139,6 +142,7 @@ public class ScenicXiuCommentActivity extends BaseActivity implements View.OnCli
         mRecyclerView.setFocusable(false);
         mCommentAdapter = new CommentAdapter(this, bean.getCommentArray());
         mRecyclerView.setAdapter(mCommentAdapter);
+        setListViewHeightBasedOnChildren(mRecyclerView);
 
         mCommentAdapter.setmOnItemClickListner(new CommentAdapter.OnItemClickListener() {
             @Override
@@ -188,6 +192,7 @@ public class ScenicXiuCommentActivity extends BaseActivity implements View.OnCli
                         if (tempComment != null) {
                             bean.getCommentArray().add(0, tempComment);
                             mCommentAdapter.notifyDataSetChanged();
+                            setListViewHeightBasedOnChildren(mRecyclerView);
                             tvNumber.setText(getString(R.string.xxx_comments1, (bean.getCommentArray().size())+""));
                             Intent intent = new Intent(Constants.ACTION_COMMENT_UPDATE);
                             sendBroadcast(intent);
@@ -264,5 +269,25 @@ public class ScenicXiuCommentActivity extends BaseActivity implements View.OnCli
                 break;
         }
     }
-
+    /**
+     * 动态设置ListView的高度
+     * @param listView
+     */
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
+        if(listView == null) return;
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+            // pre-condition
+            return;
+        }
+        int totalHeight = 0;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View listItem = listAdapter.getView(i, null, listView);
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
+    }
 }

@@ -37,11 +37,11 @@ import com.android.incongress.cd.conference.base.BaseFragment;
 import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.beans.BBFiledTypeBean;
 import com.android.incongress.cd.conference.beans.DZBBBean;
-import com.android.incongress.cd.conference.fragments.NewDynamicHomeFragment;
 import com.android.incongress.cd.conference.save.SharePreferenceUtils;
 import com.android.incongress.cd.conference.utils.DensityUtil;
 import com.android.incongress.cd.conference.utils.LogUtils;
 import com.android.incongress.cd.conference.utils.NetWorkUtils;
+import com.android.incongress.cd.conference.utils.StringUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
 import com.android.incongress.cd.conference.utils.WrapContentLinearLayoutManager;
 import com.android.incongress.cd.conference.widget.StatusBarUtil;
@@ -292,14 +292,6 @@ public class PosterFragment extends BaseFragment {
                 public void onClick(View v) {
                     //获取壁报类型
                     getDZBBType();
-                    /*if (isSortViewOn) {
-                        mRlSort.setVisibility(View.GONE);
-                        isSortViewOn = false;
-                    } else {
-                        mRlSort.setVisibility(View.VISIBLE);
-                        isSortViewOn = true;
-                    }*/
-
                 }
             });
 
@@ -437,11 +429,11 @@ public class PosterFragment extends BaseFragment {
                 newSessionDaysList.clear();
                 BBFiledTypeBean bean = new Gson().fromJson(response.toString(), new TypeToken<BBFiledTypeBean>() {
                 }.getType());
+                BBFiledTypeBean.ClassArrayBean arrayBean = new BBFiledTypeBean.ClassArrayBean();
+                arrayBean.setFieldId(-1);
+                arrayBean.setFieldName("全部#@#All");
+                newSessionDaysList.add(arrayBean);
                 newSessionDaysList.addAll(bean.getClassArray());
-                if (newSessionDaysList.size() == 0) {
-                    ToastUtils.showToast("没有数据");
-                    return;
-                }
                 initPopupWindow();
             }
 
@@ -507,7 +499,7 @@ public class PosterFragment extends BaseFragment {
                 mCurrentFiled = newSessionDaysList.get(i).getFieldId();
                 listAdapter.notifyDataSetChanged();
                 popupWindow.dismiss();
-                tv_type.setText(newSessionDaysList.get(i).getFieldName());
+                tv_type.setText(StringUtils.getNeedString(newSessionDaysList.get(i).getFieldName()));
                 getDZBBList(true);
             }
         });
@@ -554,7 +546,7 @@ public class PosterFragment extends BaseFragment {
             } else {
                 myHold = (PosterFragment.ListAdapter.MyTimeHold) convertView.getTag();
             }
-            myHold.tv_time.setText(listBeans.get(position).getFieldName());
+            myHold.tv_time.setText(StringUtils.getNeedString(listBeans.get(position).getFieldName()));
             return convertView;
         }
 

@@ -131,6 +131,11 @@ public class ScenicXiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     url = url.replaceFirst("s", "");
                 PicUtils.loadImageUrl(mContext, url, ((ViewHolder2Notifacation) holder).ivShow);
             }
+            if(TextUtils.isEmpty(bean.getAuthorImg())){
+                ((ViewHolder2Notifacation) holder).notify_img.setImageResource(R.drawable.ic_launcher);
+            }else {
+                PicUtils.loadLogoCircleImage(mContext,bean.getAuthorImg(),((ViewHolder2Notifacation) holder).notify_img);
+            }
 
             ((ViewHolder2Notifacation) holder).tvContent.setText(bean.getTitle());
             ((ViewHolder2Notifacation) holder).rlNotify.setOnClickListener(new View.OnClickListener() {
@@ -166,9 +171,9 @@ public class ScenicXiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 PicUtils.loadImageUrl(mContext, url, ((ViewHolder2Notifacation) holder).ivShow);
             }
             if(TextUtils.isEmpty(bean.getAuthorImg())){
-                ((ViewHolder2Notifacation) holder).notify_img.setImageResource(R.drawable.professor_default);
+                ((ViewHolder2Notifacation) holder).notify_img.setImageResource(R.drawable.ic_launcher);
             }else {
-                PicUtils.loadCircleImage(mContext,bean.getAuthorImg(),((ViewHolder2Notifacation) holder).notify_img);
+                PicUtils.loadLogoCircleImage(mContext,bean.getAuthorImg(),((ViewHolder2Notifacation) holder).notify_img);
             }
 
             ((ViewHolder2Notifacation) holder).tvContent.setText(bean.getTitle());

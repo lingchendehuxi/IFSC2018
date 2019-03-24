@@ -37,7 +37,7 @@ public class MeetingAndSessionAttentionPopupWindow extends PopupWindow {
     private int mHeight;
     private View mConvertView;
     private TextView mTvSessionName, mTvSessionTime;
-    private ListViewForScrollView mLvMeetings;
+    private ListViewForFix mLvMeetings;
     private AttentionPopupAdapter mAdapter;
     private ImageView mIvSessionAttention;
     private LinearLayout mLlSessionContainer;
@@ -85,7 +85,7 @@ public class MeetingAndSessionAttentionPopupWindow extends PopupWindow {
         mIvSessionAttention = (ImageView) mConvertView.findViewById(R.id.iv_session_attention);
         mTvSessionName = (TextView) mConvertView.findViewById(R.id.tv_session_name);
         mTvSessionTime = (TextView) mConvertView.findViewById(R.id.tv_session_time);
-        mLvMeetings = (ListViewForScrollView) mConvertView.findViewById(R.id.lv_meetings);
+        mLvMeetings =  mConvertView.findViewById(R.id.lv_meetings);
         mAdapter = new AttentionPopupAdapter(mMeetingsList, context);
 
         mTvSessionName.setText(mSessionBean.getSessionName());

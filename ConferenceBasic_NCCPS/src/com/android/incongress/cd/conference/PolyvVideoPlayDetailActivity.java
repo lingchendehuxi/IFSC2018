@@ -1,5 +1,6 @@
 package com.android.incongress.cd.conference;
 
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -64,6 +65,7 @@ public class PolyvVideoPlayDetailActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
         //设置状态栏透明
         //StatusBarUtil.setTranslucentStatus(this);
         LanguageUtil.setLanguage(this, AppApplication.systemLanguage);
@@ -109,8 +111,8 @@ public class PolyvVideoPlayDetailActivity extends AppCompatActivity {
                     polyv_player_media_controller.tv_title.setText(title.substring(0,splitLength));
                 } else {
                     if(splitLength != 0){
-                        content.setText(title.substring(splitLength-1,title.length()));
-                        polyv_player_media_controller.tv_title.setText(title.substring(splitLength-1,title.length()));
+                        content.setText(title.substring(splitLength+1,title.length()));
+                        polyv_player_media_controller.tv_title.setText(title.substring(splitLength+1,title.length()));
                     }else {
                         content.setText("");
                         polyv_player_media_controller.tv_title.setText("");
@@ -139,8 +141,8 @@ public class PolyvVideoPlayDetailActivity extends AppCompatActivity {
                     polyv_player_media_controller.tv_title.setText(title.substring(0,splitLength));
                 } else {
                     if(splitLength != 0){
-                        content.setText(title.substring(splitLength-1,title.length()));
-                        polyv_player_media_controller.tv_title.setText(title.substring(splitLength-1,title.length()));
+                        content.setText(title.substring(splitLength+1,title.length()));
+                        polyv_player_media_controller.tv_title.setText(title.substring(splitLength+1,title.length()));
                     }else {
                         content.setText("");
                         polyv_player_media_controller.tv_title.setText("");

@@ -64,13 +64,13 @@ public class MeetingBusRemindAdapater extends RecyclerView.Adapter<MeetingBusRem
                 holder.ivVip.setVisibility(View.INVISIBLE);
             }
             if(busArrayBean.getBackTime().equals("")){
-                holder.backRemind.setVisibility(View.INVISIBLE);
-                holder.hc.setVisibility(View.INVISIBLE);
+                holder.backRemind.setVisibility(View.GONE);
+                holder.hc.setVisibility(View.GONE);
                 holder.isBus.setImageResource(R.drawable.shuttlebus_circulation);
             }else{
-                holder.backRemind.setVisibility(View.VISIBLE);
+                /*holder.backRemind.setVisibility(View.VISIBLE);
                 holder.hc.setVisibility(View.VISIBLE);
-                holder.isBus.setImageResource(R.drawable.shuttlebus_circulation_loop);
+                holder.isBus.setImageResource(R.drawable.shuttlebus_circulation_loop);*/
             }
             holder.startRemind.setOnClickListener(new View.OnClickListener() {
                 @Override

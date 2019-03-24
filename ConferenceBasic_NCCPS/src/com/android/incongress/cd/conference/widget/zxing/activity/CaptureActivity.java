@@ -7,7 +7,9 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.android.incongress.cd.conference.base.BaseActivity;
 import com.android.incongress.cd.conference.base.Constants;
+import com.android.incongress.cd.conference.widget.StatusBarUtil;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 import com.umeng.analytics.MobclickAgent;
 
@@ -17,15 +19,18 @@ import com.umeng.analytics.MobclickAgent;
  *
  * 默认的二维码扫描Activity
  */
-public class CaptureActivity extends FragmentActivity {
+public class CaptureActivity extends BaseActivity {
 
     private ImageView mIvBack;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.camera);
 
-        mIvBack = (ImageView) findViewById(R.id.iv_back);
+    @Override
+    protected void setContentView() {
+        setContentView(R.layout.camera);
+    }
+
+    @Override
+    protected void initViewsAction() {
+        mIvBack =  findViewById(R.id.iv_back);
         CaptureFragment captureFragment = new CaptureFragment();
         captureFragment.setAnalyzeCallback(analyzeCallback);
         getSupportFragmentManager().beginTransaction().replace(R.id.fl_zxing_container, captureFragment).commit();
@@ -68,6 +73,7 @@ public class CaptureActivity extends FragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        StatusBarUtil.setStatusBarDarkTheme(this, false);
         MobclickAgent.onPageStart(Constants.ACTIVITY_SCANE);
     }
 

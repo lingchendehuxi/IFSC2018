@@ -12,11 +12,11 @@ import com.android.incongress.cd.conference.api.CHYHttpClientUsage;
 import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.BaseActivity;
 import com.android.incongress.cd.conference.base.Constants;
+import com.android.incongress.cd.conference.utils.JSONCatch;
 import com.android.incongress.cd.conference.utils.StringUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
-import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
 
@@ -26,7 +26,7 @@ import java.net.URLEncoder;
 import cz.msebera.android.httpclient.Header;
 
 public class MakeQuestionActivity extends BaseActivity {
-    private TextView mTitle,mQuestion;
+    private TextView mTitle, mQuestion;
     private ImageView ivback;
     private EditText mEtQuestion;
     private EditText mEtEmail;
@@ -35,6 +35,7 @@ public class MakeQuestionActivity extends BaseActivity {
     private String mPosterTitle;
     private int mPosterId;
     private String mAuthorName;
+
     @Override
     protected void setContentView() {
         setContentView(R.layout.activity_make_question);
@@ -42,15 +43,15 @@ public class MakeQuestionActivity extends BaseActivity {
 
     @Override
     protected void initViewsAction() {
-        mPosterTitle=getIntent().getStringExtra("title");
-        mPosterId=getIntent().getIntExtra("id",0);
-        mAuthorName=getIntent().getStringExtra("name");
-        mEtQuestion = (EditText)findViewById(R.id.et_question);
-        mTvMeetingName = (TextView)findViewById(R.id.tv_topic);
-        mTitle = (TextView)findViewById(R.id.title_text);
-        mQuestion = (TextView)findViewById(R.id.title_question);
-        mEtEmail = (EditText)findViewById(R.id.et_email);
-        ivback = (ImageView) findViewById(R.id.title_back);
+        mPosterTitle = getIntent().getStringExtra("title");
+        mPosterId = getIntent().getIntExtra("id", 0);
+        mAuthorName = getIntent().getStringExtra("name");
+        mEtQuestion = findViewById(R.id.et_question);
+        mTvMeetingName = findViewById(R.id.tv_topic);
+        mTitle = findViewById(R.id.title_text);
+        mQuestion = findViewById(R.id.title_question);
+        mEtEmail = findViewById(R.id.et_email);
+        ivback = findViewById(R.id.title_back);
 
         mTitle.setText(getString(R.string.ask_sb, mAuthorName));
         mTvMeetingName.setText("#" + mPosterTitle + "#");
@@ -66,15 +67,16 @@ public class MakeQuestionActivity extends BaseActivity {
         mQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    askPoster();
+                askPoster();
             }
         });
     }
+
     private void askPoster() {
         String content = mEtQuestion.getText().toString().trim();
-        String posterTitle = "";
+        String posterTitle;
         String email = mEtEmail.getText().toString().trim();
-        String authorName = "";
+        String authorName;
 
         try {
             content = URLEncoder.encode(content, Constants.ENCODING_UTF8);
@@ -83,15 +85,15 @@ public class MakeQuestionActivity extends BaseActivity {
 
             if (!StringUtils.isEmpty(content)) {
 
-                if(StringUtils.isEmpty(email)) {
-                    if(AppApplication.getSystemLanuageCode()=="cn"){
+                if (StringUtils.isEmpty(email)) {
+                    if (AppApplication.systemLanguage == 1) {
                         ToastUtils.showToast("请输入您的email地址");
-                    }else{
+                    } else {
                         ToastUtils.showToast("Please enter your email");
                     }
-                }else{
+                } else {
                     CHYHttpClientUsage.getInstanse().doCreatePosterQuestion(Constants.getConId(), AppApplication.userId, AppApplication.userType, posterTitle, content,
-                            mPosterId, authorName, email, new JsonHttpResponseHandler("gbk") {
+                            mPosterId, authorName, email, new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
                                 @Override
                                 public void onStart() {
                                     super.onStart();
@@ -114,18 +116,17 @@ public class MakeQuestionActivity extends BaseActivity {
                                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                                     super.onSuccess(statusCode, headers, response);
                                     try {
-                                        int state = response.getInt("state");
-                                        if (state == 1) {
-                                            if(AppApplication.getSystemLanuageCode()=="cn"){
+                                        if (JSONCatch.parseInt("state", response) == 1) {
+                                            if (AppApplication.systemLanguage == 1) {
                                                 ToastUtils.showToast("提问成功");
-                                            }else{
+                                            } else {
                                                 ToastUtils.showToast("Question success");
                                             }
-                                            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                                            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                                             imm.hideSoftInputFromWindow(mEtQuestion.getWindowToken(), 0);
                                             finish();
                                         } else {
-                                            ToastUtils.showToast("提问失败，请稍后重试\n"+response.getString("msg"));
+                                            ToastUtils.showToast("提问失败，请稍后重试\n" + response.getString("msg"));
                                         }
                                     } catch (Exception e) {
                                         e.printStackTrace();
@@ -134,9 +135,9 @@ public class MakeQuestionActivity extends BaseActivity {
                             });
                 }
             } else {
-                if(AppApplication.getSystemLanuageCode()=="cn"){
+                if (AppApplication.systemLanguage == 1) {
                     ToastUtils.showToast("提问不许为空");
-                }else{
+                } else {
                     ToastUtils.showToast("Question are not empty");
                 }
             }

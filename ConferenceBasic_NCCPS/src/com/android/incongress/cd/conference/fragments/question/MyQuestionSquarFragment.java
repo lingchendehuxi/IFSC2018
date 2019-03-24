@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.android.incongress.cd.conference.adapters.AskQuestionAdapter;
 import com.android.incongress.cd.conference.adapters.MyQuestionsSquarAdapter;
+import com.android.incongress.cd.conference.adapters.MyTempQuestionsSquarAdapter;
 import com.android.incongress.cd.conference.adapters.QuestionsSquarAdapter;
 import com.android.incongress.cd.conference.api.CHYHttpClientUsage;
 import com.android.incongress.cd.conference.base.BaseFragment;
@@ -25,6 +26,7 @@ import com.android.incongress.cd.conference.beans.MyMeetingQuestion;
 import com.android.incongress.cd.conference.beans.QuestionReplyBean;
 import com.android.incongress.cd.conference.utils.CommonUtils;
 import com.android.incongress.cd.conference.utils.DensityUtil;
+import com.android.incongress.cd.conference.utils.JSONCatch;
 import com.android.incongress.cd.conference.utils.ToastUtils;
 import com.android.incongress.cd.conference.widget.StatusBarUtil;
 import com.android.incongress.cd.conference.widget.popup.QuestionPopupWindow;
@@ -35,6 +37,7 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -49,16 +52,16 @@ import cz.msebera.android.httpclient.Header;
 public class MyQuestionSquarFragment extends BaseFragment implements MyQuestionsSquarAdapter.QuestionsAnswerClick{
     private XRecyclerView mRVQuestion;
     private View emptyView;
-    private QuestionReplyBean mQuestionReply;
-    private MyQuestionsSquarAdapter mQuestionAdapter;
+    private MyTempQuestionsSquarAdapter mQuestionAdapter;
     private LinearLayout ll_question;
-    private List<QuestionReplyBean.SceneShowArrayBean> myList = new ArrayList<>();
+    private List<QuestionReplyBean> myList = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_squar_question, container,false);
         mRVQuestion =  view.findViewById(R.id.rv_question);
         emptyView = view.findViewById(R.id.tv_tips);
+        emptyView.setVisibility(View.GONE);
         ll_question = view.findViewById(R.id.ll_question);
         ll_question.setVisibility(View.GONE);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -68,7 +71,7 @@ public class MyQuestionSquarFragment extends BaseFragment implements MyQuestions
         mRVQuestion.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
         mRVQuestion.setLoadingMoreProgressStyle(ProgressStyle.BallRotate);
         mRVQuestion.setArrowImageView(R.drawable.iconfont_downgrey);
-        mQuestionAdapter = new MyQuestionsSquarAdapter(getActivity(), myList,this);
+        mQuestionAdapter = new MyTempQuestionsSquarAdapter(getActivity(), myList);
         mRVQuestion.setAdapter(mQuestionAdapter);
         mRVQuestion.setLoadingMoreEnabled(false);
 
@@ -95,36 +98,43 @@ public class MyQuestionSquarFragment extends BaseFragment implements MyQuestions
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-                try {
-                    myList.clear();
-                    mQuestionReply = new Gson().fromJson(response.toString(), new TypeToken<QuestionReplyBean>() {
-                    }.getType());
-                    myList.addAll(mQuestionReply.getSceneShowArray()) ;
-                    mQuestionAdapter.notifyDataSetChanged();
-                    if(myList.size()<=0){
-                        mRVQuestion.setEmptyView(emptyView);
+                JSONArray jsonArray = JSONCatch.parseJsonarray("sceneShowArray1",response);
+                if(jsonArray!=null&&jsonArray.length()>0){
+                    try {
+                        myList.clear();
+                        List<QuestionReplyBean> tempList = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<QuestionReplyBean>>() {
+                        }.getType());
+                        myList.addAll(tempList);
+                        mQuestionAdapter.notifyDataSetChanged();
+                        if(myList.size()<=0){
+                            emptyView.setVisibility(View.VISIBLE);
+                        }else {
+                            emptyView.setVisibility(View.GONE);
+                        }
+                    }catch (Exception e) {
+                        e.printStackTrace();
                     }
-                }catch (Exception e) {
-                    e.printStackTrace();
+                }else {
+                    emptyView.setVisibility(View.VISIBLE);
                 }
+                mRVQuestion.refreshComplete();
             }
 
             @Override
             public void onFinish() {
                 super.onFinish();
-                mRVQuestion.refreshComplete();
             }
         });
     }
 
     @Override
     public void qustionAnswer(int position) {
-        View question = CommonUtils.initView(getActivity(), R.layout.title_right_textview);
+        /*View question = CommonUtils.initView(getActivity(), R.layout.title_right_textview);
         MyQuestionAnswerFragment instance = new MyQuestionAnswerFragment();
         QuestionReplyBean.SceneShowArrayBean bean  = mQuestionReply.getSceneShowArray().get(position);
         instance.setMeetingQuestionInfo(bean.getSpeakerName(), 123, 123, bean.getMeetingName());
         instance.setRightListener(question);
-        action(instance, getString(R.string.ask_sb, bean.getSpeakerName()), question, false, false, false);
+        action(instance, getString(R.string.ask_sb, bean.getSpeakerName()), question, false, false, false);*/
     }
 
     @Override
