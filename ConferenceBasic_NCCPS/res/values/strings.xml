@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--基本属性 -->
-    <string name="app_name">CIT</string>
     <string name="update_database">更新本地数据库，请稍等</string>
     <string name="bottom_tab_home">首页</string>
     <string name="bottom_tab_broadcast">播客</string>
     <string name="bottom_tab_me">我</string>
+    <string name="easy_permissions">该APP需要您允许打开电话，拍摄照片和访问设备上的文件的权限</string>
 
     <!-- 专家行程 地址 -->
     <string name="secretary_trip">http://app.incongress.cn/webapp/discussion/cit/zjxc/index.html?lan=%1$s</string>
@@ -57,9 +56,7 @@
     <string name="home_live_and_q">Live Q&#038;A</string>
 
     <string name="home_scene_xiu">现场秀</string>
-    <string name="home_cit_college">CIT学院</string>
     <string name="home_me">我</string>
-    <string name="home_cit_live">CIT直播</string>
     <string name="home_interactive">现场互动</string>
     <string name="home_icon_bl">病例</string>
     <string name="home_hands_on">实习中心</string>
@@ -68,6 +65,23 @@
     <string name="home_icon_reg_online">在线注册</string>
     <string name="home_icon_professor_trip">专家行程</string>
     <string name="home_commend">精彩课件</string>
+    <string name="hot_schedule">热门课件</string>
+    <string name="read_count">阅读 %d</string>
+    <!--新首页-->
+    <string name="home_hot_meets">热门会议</string>
+    <string name="home_show_all">查看全部</string>
+    <string name="fast_channel">快速通道</string>
+    <string name="attend_register">参会注册</string>
+    <string name="paper_contribute">论文投稿</string>
+    <string name="hotel_reservation">酒店预订</string>
+    <string name="read_all_meet">查看所有上线会议</string>
+    <string name="meet_courseware">会议课件</string>
+    <string name="meet_show_all">全部会议</string>
+    <!--会议注册-->
+    <string name="meet_register_chose_tip">选择您想参加的会议</string>
+    <string name="meet_register_tip">暂无会议提供会议注册功能\n敬请期待！</string>
+    <string name="meet_contribute_tip">暂无会议提供论文投稿功能\n敬请期待！</string>
+    <string name="meet_hotel_tip">暂无会议提供酒店预订功能\n敬请期待！</string>
 
     <!-- 会议日程 -->
     <string name="meeting_schedule_share">分享</string>
@@ -152,6 +166,7 @@
     <string name="secretary_loading">小秘书正在加载…</string>
     <string name="secretary_type_role">任务:</string>
     <string name="secretary_info">查看专家简介</string>
+    <string name="secretary_fragment_title">个人秘书</string>
     <string name="secretary_info_url">http://app.incongress.cn/Conferences/jsp/html5/expertRemark.jsp?conferencesId=%1$s&amp;entityId=%2$s&amp;lan=%3$s</string>
 
     <!-- Splash界面 -->
@@ -262,6 +277,19 @@
     <!-- 用户注册 -->
     <string name="register_title_msg">用户注册</string>
     <string name="register_title">注册</string>
+    <!--资源-->
+    <string name="attach_open_tips">由于您的系统版本过低于5.0，文献打开失败，建议安装福昕pdf软件，然后重试</string>
+    <string name="search_keyword">关键字</string>
+    <string name="search_title">课件搜索</string>
+    <string name="search_author">指南搜索</string>
+    <string name="search_expert">专家搜索</string>
+    <string name="search_title_keyword">搜索课件关键字</string>
+    <string name="search_author_keyword">搜索指南关键字</string>
+    <string name="search_expert_keyword">搜索专家关键字</string>
+    <string name="search_search">搜&#160;&#160;索</string>
+    <!--动态-->
+    <string name="bottom_cscovoice">动态</string>
+    <string name="bottom_resource">资源</string>
 
     <!-- 设置 -->
     <string name="settings_database">数据版本更新</string>
@@ -296,7 +324,7 @@
 \n
 \n主要功能
 \n-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;会议日程：除可在手机上直接浏览详尽的会议日程外，参会者可按日期、时间、领域、分会(session)名称、演讲名称、讲者名任意定向查询日程。与其它会议App截然不同的是，安装App后，上述资讯即可离线使用，并可随时自动更新。在会场无需任何网络即可使用。
-\n-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;会议社区：加入CIT会议社区，针对学术话题进行讨论，还可以@你崇拜的专家噢。
+\n-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;会议社区：加入CSD会议社区，针对学术话题进行讨论，还可以@你崇拜的专家噢。
 \n-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;新闻中心：查看最新的会议资讯。
 \n-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;参会指南：查看会议信息和场馆图。
 \n-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;我的大会：关注的会议与发言、展商活动；发表的帖子、记录的笔记，一切和您参会切身相关的内容。
@@ -309,7 +337,6 @@
     <string name="settings_contact_text_wx">微信公众平台服务号：incongress</string>
     <string name="settings_share_sms">短信推荐</string>
     <string name="settings_share_mail">邮件推荐</string>
-    <string name="settings_share_content">我正在使用“参会易”,完全不同的参会体验。建议你下载试试！http://app.incongress.cn/cit2019/app</string>
     <string name="settings_share_wxtitle">我正在使用“参会易”,完全不同的参会体验。建议你下载试试！</string>
     <string name="settings_share_hint">推荐使用参会易</string>
     <string name="settings_help_way1">方式1：</string>
@@ -536,7 +563,6 @@
     <string name="country_code">国家</string>
     <string name="success_send_regist_code">验证码已发送成功，注意查收</string>
     <string name="dialog_tips">提示信息</string>
-    <string name="meeting_share_info">我使用“参会易”关注了“%1$s”,http://app.incongress.cn/cit2019/app</string>
     <string name="my_task">我的学术任务(%1$s)</string>
     <string name="my_question">我收到的提问(%1$s)</string>
     <string name="no_more_date">没有更多数据了</string>
@@ -544,6 +570,7 @@
     <string name="push_tips">推送信息</string>
     <string name="no_more_data">没有更多数据了哦</string>
     <string name="login_success">登陆成功</string>
+    <string name="qrcode_permission">此功能仅对企业代表及工作人员开放，如有需求请联系会务组：\n徐先生 18621772867</string>
 
     <string name="my_time">时间</string>
     <string name="my_role">角色</string>
@@ -571,7 +598,7 @@
     <string name="nowifi">当前网络不可用,请检查你的网络设置</string>
     <!-- 所有的地址 -->
     <!-- Cit Live 地址 -->
-    <string name="cit_live_url_test">http://incongress.cn/webapp/discussion/CIT2016H5/liveList.html?conId=%1$s&amp;lan=%2$s&amp;userId=%3$s&amp;userType=%4$s&amp;</string>
+    <string name="cit_live_url_test">http://incongress.cn/webapp/discussion/CSD2019H5/liveList.html?conId=%1$s&amp;lan=%2$s&amp;userId=%3$s&amp;userType=%4$s&amp;</string>
     <string name="cit_live_url_official">http://app.incongress.cn/webapp/discussion/CIT2016H5/liveList.html?conId=%1$s&amp;lan=%2$s&amp;userId=%3$s&amp;userType=%4$s&amp;</string>
 
     <!-- 现场互动中提问 -->
@@ -634,6 +661,31 @@
     <string name="exhibitor_info">展商信息</string>
     <string name="exhibitor_introduce">展商介绍</string>
     <!--注册以及登录中新加入的 end-->
+    <!--photo-->
+    <string name="gallery">Gallery</string>
+    <string name="all_photo">All Photo</string>
+    <string name="selected">selected(%1$d/%2$d)</string>
+    <string name="folder_photo_size">%1$d Piece</string>
+    <string name="photo_edit">Photo Edit</string>
+    <string name="photo_crop">Photo Crop</string>
+    <string name="crop_suc">Photo crop success</string>
+    <string name="crop_fail">Photo crop failure</string>
+    <string name="no_photo">Photo empty</string>
+    <string name="waiting">Please wait…</string>
+    <string name="select_max_tips">Has reached the maximum number selection!</string>
+    <string name="empty_sdcard">No SD card</string>
+    <string name="open_gallery_fail">Gallery init failure!</string>
+    <string name="take_photo_fail">Take photo failure</string>
+    <string name="saving">Saving picture…</string>
+    <string name="please_reopen_gf">Please reopen Gallery</string>
+    <string name="edit_letoff_photo_format">The image format does not support this operation!</string>
+    <string name="photo_list_empty">Failed to get the picture!</string>
+    <string name="preview">Preview</string>
+    <string name="permissions_tips_gallery">This app requesting access to your Gallery</string>
+    <string name="permissions_denied_tips">Unable to get pictures</string>
+    <string name="maxsize_zero_tip">Maxsize should be greater than zero</string>
+    <!--表情符号-->
+    <string name="username_rule">用户名不能包含表情符号或特殊字符！</string>
 
     <string name="social_title">我的参会圈</string>
     <string name="social_message_title">消息</string>
@@ -675,7 +727,7 @@
     <string name="from_schedule">来自日程</string>
     <string name="from_poster">来自壁报</string>
     <string name="accept_ask">收到了提问</string>
-    <string name="question_answer">回答了问题</string>
+    <string name="question_answer">回答了提问</string>
 
     <string name="guide_in">进入</string>
 
@@ -736,7 +788,6 @@
     <string name="system_setting">系统设置</string>
     <string name="privacy_policy">隐私协议</string>
     <string name="my_info">我的资料</string>
-    <string name="notify_tip">打开推送需确认 Android 系统设置 -通知 -通知管理 -CIT已打开</string>
     <!--会议部分-->
     <string name="seach_title_hint">输入日程关键字</string>
     <string name="schedule_mind">日程提醒</string>
@@ -745,9 +796,17 @@
     <string name="search">查找</string>
     <!--极光推送修改-->
     <!--包名修改的部分-->
-    <string name="share_info">CIT基本信息</string>
     <string name="party_guide">参会指南</string>
     <!--首页-->
     <string name="system_notify">系统通知</string>
     <string name="person_notify">个人通知</string>
+    <!--修改部分-->
+    <!--基本属性 -->
+    <string name="app_name">CSCCM</string>
+    <string name="home_cit_college">CSCCM学院</string>
+    <string name="share_info">CSCCM基本信息</string>
+    <string name="notify_tip">打开推送需确认 Android 系统设置 -通知 -通知管理 -CSCCM已打开</string>
+    <string name="meeting_share_info">我使用“参会易”关注了“%1$s”,http://app.incongress.cn/csccm2019/app</string>
+    <string name="settings_share_content">我正在使用“参会易”,完全不同的参会体验。建议你下载试试！http://app.incongress.cn/csccm2019/app</string>
+    <string name="home_cit_live">CSCCM直播</string>
 </resources>

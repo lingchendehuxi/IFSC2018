@@ -39,7 +39,6 @@ import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
-import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -112,6 +111,7 @@ public class CollegeVideoListFragment extends BaseFragment implements XRecyclerV
         mVideoAdapter = new CollegeViewGridViewAdapter(videoList, getActivity(),this);
         xRecyclerView.setAdapter(mVideoAdapter);
         xRecyclerView.setLoadingListener(this);
+        xRecyclerView.setLoadingMoreEnabled(false);
         loadLocalDate();
         initView();
         getHasOrderInfo();
@@ -167,13 +167,13 @@ public class CollegeVideoListFragment extends BaseFragment implements XRecyclerV
                         cacheManager.saveString(CACHE_COLLEGE_VIDEO,response.toString());
                         videoList.clear();
                         xRecyclerView.refreshComplete();
-                        xRecyclerView.setLoadingMoreEnabled(true);
+                        //xRecyclerView.setLoadingMoreEnabled(true);
                         //加载更多进来
                     } else {
                         xRecyclerView.loadMoreComplete();
                         if ("0".equals(mIsMore)) {
                             ToastUtils.showToast(getString(R.string.incongress_send_no_more_data));
-                            xRecyclerView.setLoadingMoreEnabled(false);
+                            //xRecyclerView.setLoadingMoreEnabled(false);
                             return;
                         }
                     }
@@ -187,7 +187,7 @@ public class CollegeVideoListFragment extends BaseFragment implements XRecyclerV
                         xRecyclerView.loadMoreComplete();
                         xRecyclerView.refreshComplete();
                         ToastUtils.showToast(getString(R.string.incongress_send_no_more_data));
-                        xRecyclerView.setLoadingMoreEnabled(false);
+                        //xRecyclerView.setLoadingMoreEnabled(false);
                         return;
                     }
                     ll_book_course.setVisibility(View.GONE);
@@ -222,13 +222,13 @@ public class CollegeVideoListFragment extends BaseFragment implements XRecyclerV
                     if ("-1".equals(lastId)) {
                         videoList.clear();
                         xRecyclerView.refreshComplete();
-                        xRecyclerView.setLoadingMoreEnabled(true);
+                        //xRecyclerView.setLoadingMoreEnabled(true);
                         //加载更多进来
                     } else {
                         xRecyclerView.loadMoreComplete();
                         if ("0".equals(mIsMore)) {
                             ToastUtils.showToast(getString(R.string.incongress_send_no_more_data));
-                            xRecyclerView.setLoadingMoreEnabled(false);
+                            //xRecyclerView.setLoadingMoreEnabled(false);
                             return;
                         }
                     }
@@ -241,7 +241,7 @@ public class CollegeVideoListFragment extends BaseFragment implements XRecyclerV
                     if ("0".equals(bean.getIsNextPage())&&videoList.size()!=0) {
                         xRecyclerView.loadMoreComplete();
                         ToastUtils.showToast(getString(R.string.incongress_send_no_more_data));
-                        xRecyclerView.setLoadingMoreEnabled(false);
+                        //xRecyclerView.setLoadingMoreEnabled(false);
                         return;
                     }
                     xRecyclerView.refreshComplete();
@@ -313,6 +313,7 @@ public class CollegeVideoListFragment extends BaseFragment implements XRecyclerV
 
     @Override
     public void itemClick(int position) {
+
         if(videoList.get(position).getVideoType()== 3){
             String[] string = videoList.get(position).getTitle().split(",");
             if(AppApplication.systemLanguage == 1){

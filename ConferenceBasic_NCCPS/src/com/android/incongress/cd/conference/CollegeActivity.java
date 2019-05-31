@@ -114,6 +114,15 @@ public class CollegeActivity extends BaseActivity {
         context.startActivity(intent);
     }
 
+    //参会注册专用
+    public static void startCitCollegeActivity(Context context, String title, String url, boolean isRegister) {
+        Intent intent = new Intent();
+        intent.setClass(context, CollegeActivity.class);
+        intent.putExtra(EXTRA_URL, url);
+        intent.putExtra(EXTRA_TITLE, title);
+        context.startActivity(intent);
+    }
+
     @Override
     protected void setContentView() {
         setContentView(R.layout.webview_video_cit);
@@ -160,7 +169,7 @@ public class CollegeActivity extends BaseActivity {
                     webView.destroy();
                     finish();
                 }
-				/*try {
+                /*try {
 					if(webView != null) {
 						webView.loadUrl("javascript:clearCachc(2)");//区分精彩回顾 电子病历 cit
 						webView.loadUrl("");
@@ -204,7 +213,7 @@ public class CollegeActivity extends BaseActivity {
             @Override
             public void onReceivedTitle(WebView view, String title) {
                 super.onReceivedTitle(view, title);
-                if (title.contains("app.incongress.cn/webapp/discussion/") || title.contains("https://")) {
+                if (title.contains("app.incongress.cn/webapp/discussion/") || title.contains("https://") || title.contains("xhy.incongress.cn")) {
                     shareTitle = mTitle;
                     mIvTitle.setText(mTitle);
                 } else if (!title.contains("letv")) {

@@ -10,8 +10,9 @@ import java.util.Map;
 import java.util.Set;
 
 public class SharePreferenceUtils {
-	public static String user_msg = "user_msg";
-	public static String base_app = "base_app";
+	public static final String user_msg = "user_msg";
+	public static final String base_app = "base_app";
+	public static final String base_data = "base_data";
 
 	/** 保存appConfig配置 */
 	public static void saveApp(Map<String, String> map) {
@@ -106,12 +107,32 @@ public class SharePreferenceUtils {
 	public static String getUser(String key) {
 		SharedPreferences share = AppApplication.getContext().getSharedPreferences(user_msg, Context.MODE_PRIVATE);
 		return share.getString(key, "");
-
 	}
 
 	public static void cleanUser() {
 		SharedPreferences share = AppApplication.getContext().getSharedPreferences(user_msg, Context.MODE_PRIVATE);
 		Editor editor = share.edit();
 		editor.clear().commit();
+	}
+	//存储数据包状态
+	public static void saveDataBoolean(String key, boolean value) {
+		SharedPreferences share = AppApplication.getContext().getSharedPreferences(base_data, Context.MODE_PRIVATE);
+		Editor editor = share.edit();
+		editor.putBoolean(key, value);
+		editor.commit();
+	}
+	public static boolean getDataBoolean(String key, boolean value) {
+		SharedPreferences share = AppApplication.getContext().getSharedPreferences(base_data, Context.MODE_PRIVATE);
+		return share.getBoolean(key,value);
+	}
+	public static void saveDataInt(String key, int value) {
+		SharedPreferences share = AppApplication.getContext().getSharedPreferences(base_data, Context.MODE_PRIVATE);
+		Editor editor = share.edit();
+		editor.putInt(key, value);
+		editor.commit();
+	}
+	public static int getDataInt(String key, int value) {
+		SharedPreferences share = AppApplication.getContext().getSharedPreferences(base_data, Context.MODE_PRIVATE);
+		return share.getInt(key,value);
 	}
 }

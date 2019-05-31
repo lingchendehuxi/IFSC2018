@@ -244,7 +244,6 @@ public class FocusPhoneCode extends RelativeLayout{
             et_code6.setFocusableInTouchMode(true);
             et_code6.requestFocus();
             et_code6.setSelection(et_code6.getText().length());
-            showSoftInput(et_code6);
         }
     }
     /**

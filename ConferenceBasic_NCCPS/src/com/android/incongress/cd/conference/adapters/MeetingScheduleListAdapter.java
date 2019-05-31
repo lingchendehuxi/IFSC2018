@@ -140,7 +140,6 @@ public class MeetingScheduleListAdapter extends BaseAdapter implements StickyLis
         }else {
             holder.view_begin.setVisibility(View.VISIBLE);
         }
-        Log.d("sgqTest", "getHeaderView: "+position);
         for(int i=0; i<mClassBean.size(); i++) {
             if(mClassBean.get(i).getClassesId() == mSessions.get(position).getClassesId()) {
                 if(AppApplication.systemLanguage == 1) {

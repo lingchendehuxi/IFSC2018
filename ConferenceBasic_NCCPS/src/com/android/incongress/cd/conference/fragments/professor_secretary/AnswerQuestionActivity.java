@@ -34,26 +34,20 @@ import cz.msebera.android.httpclient.Header;
  * 回答问题列表
  */
 public class AnswerQuestionActivity extends BaseActivity {
-    private static final String INTENT_QUESTION = "question";
     private TextView mTvQuestionName, mTvQuestionTime, mTvContent, mTvTitleText;
     private EditText mEtAnswer;
     private LinearLayout mLlRightView;
     private ImageView mIvBack;
     private SceneShowArrayBean mQuestion;
-
-    public static final void startAnswerQuestionActivity(Context ctx, SceneShowArrayBean question) {
-        Intent intent = new Intent();
-        intent.setClass(ctx, AnswerQuestionActivity.class);
-        intent.putExtra(INTENT_QUESTION, question);
-        ctx.startActivity(intent);
-    }
+    private int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         try {
-            mQuestion = (SceneShowArrayBean) getIntent().getSerializableExtra(INTENT_QUESTION);
+            mQuestion = (SceneShowArrayBean) getIntent().getSerializableExtra(ReceiveProfessorQuestionActionFragment.INTENT_QUESTION);
+            position = getIntent().getIntExtra(ReceiveProfessorQuestionActionFragment.QUESTION_POSITION,0);
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -116,6 +110,7 @@ public class AnswerQuestionActivity extends BaseActivity {
                              int state = response.getInt("state");
                              if(state == 1) {
                                  ToastUtils.showToast(getString(R.string.succcess_reply));
+                                 setResult(RESULT_OK);
                                  AnswerQuestionActivity.this.finish();
                              }else {
                                  ToastUtils.showToast(getString(R.string.fail_reply));

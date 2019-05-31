@@ -3,6 +3,8 @@ package com.android.incongress.cd.conference.base;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
@@ -14,14 +16,24 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.android.incongress.cd.conference.HomeActivity;
-import com.android.incongress.cd.conference.LoginActivity;
+import com.android.incongress.cd.conference.ui.login.view.LoginActivity;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
+
+import butterknife.ButterKnife;
 
 public class BaseFragment extends Fragment {
 
     public MainCallBack mCallBack;
 
     protected ProgressDialog mProgressDialog;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if(getActivity()!=null){
+            ButterKnife.bind(getActivity());
+        }
+    }
 
     protected void showProgressBar(String msg) {
         if (getActivity() != null)

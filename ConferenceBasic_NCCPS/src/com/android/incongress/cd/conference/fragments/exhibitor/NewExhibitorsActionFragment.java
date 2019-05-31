@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.android.incongress.cd.conference.adapters.NewExhibitorActionAdapter;
 import com.android.incongress.cd.conference.api.CHYHttpClientUsage;
+import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.BaseFragment;
 import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.beans.ExhibitorTitleBean;
@@ -54,6 +55,11 @@ public class NewExhibitorsActionFragment extends BaseFragment {
         initView();
         tab_layout.setIndicatorWidth(24);
         getTopTitle();
+        if(AppApplication.systemLanguage == 1){
+            tab_layout.setTextsize(17);
+        }else {
+            tab_layout.setTextsize(12);
+        }
 
         return view;
     }

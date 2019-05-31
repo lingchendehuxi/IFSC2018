@@ -3,6 +3,7 @@ package com.android.incongress.cd.conference.fragments.me;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -10,6 +11,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
+import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -19,26 +23,25 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.incongress.cd.conference.CollegeActivity;
 import com.android.incongress.cd.conference.HomeActivity;
-import com.android.incongress.cd.conference.LoginActivity;
 import com.android.incongress.cd.conference.LoginForUpdateInfoActivity;
-import com.android.incongress.cd.conference.adapters.MyQuestionsSquarAdapter;
 import com.android.incongress.cd.conference.api.CHYHttpClientUsage;
 import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.BaseFragment;
 import com.android.incongress.cd.conference.base.Constants;
+import com.android.incongress.cd.conference.fragments.message_station.MessageStationActionFragment;
+import com.android.incongress.cd.conference.fragments.professor_secretary.ReceiveProfessorQuestionActionFragment;
 import com.android.incongress.cd.conference.fragments.question.MyQuestionSquarFragment;
 import com.android.incongress.cd.conference.model.ConferenceDbUtils;
 import com.android.incongress.cd.conference.model.Note;
-import com.android.incongress.cd.conference.save.ParseUser;
 import com.android.incongress.cd.conference.save.SharePreferenceUtils;
-import com.android.incongress.cd.conference.utils.CacheUtils;
+import com.android.incongress.cd.conference.ui.login.view.LoginActivity;
+import com.android.incongress.cd.conference.utils.JSONCatch;
 import com.android.incongress.cd.conference.utils.MyLogger;
 import com.android.incongress.cd.conference.utils.PicUtils;
 import com.android.incongress.cd.conference.utils.ShareUtils;
@@ -50,12 +53,16 @@ import com.android.incongress.cd.conference.widget.CircleImageView;
 import com.android.incongress.cd.conference.widget.IconChoosePopupWindow;
 import com.android.incongress.cd.conference.widget.NoScrollGridView;
 import com.android.incongress.cd.conference.widget.StatusBarUtil;
+import com.android.incongress.cd.conference.widget.zxing.activity.QRCodeCaptureActivity;
 import com.bumptech.glide.Glide;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 import com.pedaily.yc.ycdialoglib.selectDialog.CustomSelectDialog;
 import com.umeng.analytics.MobclickAgent;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -65,9 +72,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.finalteam.galleryfinal.FunctionConfig;
-import cn.finalteam.galleryfinal.GalleryFinal;
-import cn.finalteam.galleryfinal.model.PhotoInfo;
+import cz.msebera.android.httpclient.Header;
 import q.rorbin.badgeview.Badge;
 import q.rorbin.badgeview.QBadgeView;
 
@@ -76,21 +81,22 @@ import q.rorbin.badgeview.QBadgeView;
  * 模块：我
  * Jacky Chen
  */
-public class PersonCenterFragment extends BaseFragment implements View.OnClickListener, GalleryFinal.OnHanlderResultCallback {
+public class PersonCenterFragment extends BaseFragment implements View.OnClickListener {
 
     public static final int REQUEST_LOGIN = 0x0001;
-    private RelativeLayout mMeetingAlertPanel, mContackPanel, mSharePanel, mHelpPanel, mRlMyField, mRlMyKeshi, mRlSettingsCache,mSettingsMark,mSettings;
-    private TextView tv_modify_info;
+    private RelativeLayout mMeetingAlertPanel, mContackPanel, mSharePanel, mHelpPanel, mRlMyField, mRlMyKeshi, mRlSettingsCache, mSettingsMark, mSettings, mSettingMessage;
+    private TextView tv_modify_info, tv_message;
     private TextView username, welcomeInfo;
+    private ImageView iv_scan;
     private int mNoteCount, mTieZiCount;
     private CircleImageView mCivHeadIcon;
     private NoScrollGridView mGridView;
-    private boolean currentState = false;
+    private GridListAdapter gridListAdapter;
     //中间图片和文字
     private Drawable[] imgList;
     private String[] strList;
     //拖动气泡
-    private List<Badge> badges;
+    private Badge messageBadge;
 
     private static final int HANDLE_TIEZI_COUNT = 0x0001;
     private static final int HANDLE_NOTE_COUNT = 0x0002;
@@ -101,6 +107,7 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
      * 页面是否处于打开状态
      **/
     private boolean mIsOpen = true;
+    private int messageNumber, questionNumber;
 
     private final int REQUEST_CODE_CAMERA = 1000;
     private final int REQUEST_CODE_GALLERY = 1001;
@@ -145,7 +152,7 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
             }
             return false;
         }
-    }) ;
+    });
 
     @Override
     public void onClick(View v) {
@@ -177,8 +184,15 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
                 action(help, R.string.settings_help_title, view, false, false, false);*/
                 CollegeActivity.startCitCollegeActivity(getContext(), getActivity().getResources().getString(R.string.settings_help_title), Constants.FEEDBACK_URI);
                 break;
+            case R.id.settings_message:
+                action(new MessageStationActionFragment(), R.string.home_messagestation, false, false, false);
+                postUNReadQuestionNumber(false, 6);
+                if(messageBadge!=null){
+                    messageBadge.hide(false);
+                }
+                break;
             case R.id.tv_modify_info:
-                CollegeActivity.startCitCollegeActivity(getContext(), getActivity().getResources().getString(R.string.settings_modify_info_title), Constants.MODEFIY_INFO_URI+"typeApp=4");
+                CollegeActivity.startCitCollegeActivity(getContext(), getActivity().getResources().getString(R.string.settings_modify_info_title), Constants.MODEFIY_INFO_URI+SharePreferenceUtils.getUser(Constants.USER_IC_ID));
                 /*ModifyInfoFragment fragment = new ModifyInfoFragment();
                 action(fragment, R.string.my_info, false, false, false);*/
                 break;
@@ -191,20 +205,34 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
                 break;*/
             case R.id.civ_me:
             case R.id.tv_name:
-                if (AppApplication.isUserLogIn()) {
+                if (SharePreferenceUtils.getUserBoolean(Constants.USER_IS_LOGIN, false)) {
                     /*initPopupWindow();
                     mIconChoosePopupWindow.showAtLocation(mCivHeadIcon, Gravity.BOTTOM, 0, 0);
                     lightOff();*/
-                    Intent intent = new Intent(getActivity(),LoginForUpdateInfoActivity.class);
+                    Intent intent = new Intent(getActivity(), LoginForUpdateInfoActivity.class);
+                    intent.putExtra("update", true);
                     getActivity().startActivity(intent);
                 } else {
                     LoginActivity.startLoginActivity(getActivity(), LoginActivity.TYPE_NORMAL, "", "", "", "");
 //                    ChooseIdentityActivity.startChooseIdentityActivity(getActivity());
                 }
                 break;
-            /*case R.id.iv_scane:
-                getActivity().startActivityForResult(new Intent(getActivity(), CaptureActivity.class), HomeActivity.REQUEST_SCANE);
-                break;*/
+            case R.id.iv_scan:
+                if (AppApplication.isUserLogIn()) {
+                    if (SharePreferenceUtils.getUser(Constants.USER_MOBILE).startsWith("18000000") || SharePreferenceUtils.getUser(Constants.USER_MOBILE).startsWith("18100000")) {
+                        getActivity().startActivity(new Intent(getActivity(), QRCodeCaptureActivity.class));
+                    } else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setTitle(R.string.dialog_tips).setMessage(R.string.qrcode_permission).setPositiveButton(R.string.positive_button, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        }).setCancelable(true).show();
+                    }
+                } else {
+                    LoginActivity.startLoginActivity(getActivity(), LoginActivity.TYPE_NORMAL, "", "", "", "");
+                }
+                break;
             /*case R.id.rl_my_field:
                 Intent fieldIntent = new Intent(getActivity(), ChooseFieldActivity.class);
                 fieldIntent.putExtra(EXTRA_FROM_ME, true);
@@ -230,6 +258,8 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
         mSettings.setOnClickListener(this);
         tv_modify_info.setOnClickListener(this);
         username.setOnClickListener(this);
+        mSettingMessage.setOnClickListener(this);
+        iv_scan.setOnClickListener(this);
         getNoteCount();
     }
 
@@ -260,40 +290,54 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
         username = view.findViewById(R.id.tv_name);
         welcomeInfo = view.findViewById(R.id.tv_welcome);
         mGridView = view.findViewById(R.id.gv_list);
+        mSettingMessage = view.findViewById(R.id.settings_message);
         tv_modify_info = view.findViewById(R.id.tv_modify_info);
-        imgList = new Drawable[]{getResources().getDrawable(R.drawable.remind), getResources().getDrawable(R.drawable.quiz), getResources().getDrawable(R.drawable.post), getResources().getDrawable(R.drawable.note)};
-        strList = new String[]{getString(R.string.me_remind), getString(R.string.me_quiz), getString(R.string.me_post), getString(R.string.me_note)};
-        mGridView.setAdapter(new GridListAdapter(getActivity()));
+        tv_message = view.findViewById(R.id.tv_message_number);
+        iv_scan = view.findViewById(R.id.iv_scan);
+        imgList = new Drawable[]{getResources().getDrawable(R.drawable.remind), getResources().getDrawable(R.drawable.quiz), getResources().getDrawable(R.drawable.note)};
+        strList = new String[]{getString(R.string.me_remind), getString(R.string.me_quiz), getString(R.string.me_note)};
+        gridListAdapter = new GridListAdapter(getActivity());
+        mGridView.setAdapter(gridListAdapter);
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 switch (i) {
                     case 0:
                         MindBookFragment fragment = new MindBookFragment();
-                        action(fragment,null);
+                        action(fragment, null);
                         break;
                     case 1:
-                        MyQuestionSquarFragment squarFragment = new MyQuestionSquarFragment();
-                        action(squarFragment, R.string.me_quiz, false, false, false);
-                        break;
-                    case 2:
-                        if (AppApplication.isUserLogIn()) {
+                        if (AppApplication.facultyId != -1) {
+                            action(ReceiveProfessorQuestionActionFragment.getInstance(), R.string.me_quiz, false, false, false);
+                        } else {
+                            MyQuestionSquarFragment squarFragment = new MyQuestionSquarFragment();
+                            action(squarFragment, R.string.me_quiz, false, false, false);
+                        }
+                        postUNReadQuestionNumber(false, 18);
+                        /*if (SharePreferenceUtils.getUserBoolean(Constants.USER_IS_LOGIN,false)) {
                             action(HistoryPostActionFragment.getInstance(), R.string.mymeeting_tiezi, false, false, false);
                         } else {
                             LoginActivity.startLoginActivity(getActivity(), LoginActivity.TYPE_NORMAL, "", "", "", "");
 //                    ChooseIdentityActivity.startChooseIdentityActivity(getActivity());
-                        }
+                        }*/
                         break;
-                    case 3:
+                    case 2:
                         NoteManageActionFragment noteManager = new NoteManageActionFragment();
                         action(noteManager, R.string.mymeeting_note, false, false, false);
                         break;
                 }
             }
         });
-
+        if (SharePreferenceUtils.getUser(Constants.USER_MOBILE).startsWith("18000000") || SharePreferenceUtils.getUser(Constants.USER_MOBILE).startsWith("18100000")) {
+            iv_scan.setVisibility(View.VISIBLE);
+        }
+        if(!EventBus.getDefault().isRegistered(this)){
+            EventBus.getDefault().register(this);
+        }
         initEvents();
         refreshInfo();
+        getUNReadMessageNumber();
+        getUNReadQuestionNumber();
         return view;
     }
 
@@ -315,116 +359,72 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
         getNoteCount();
     }
 
-
-    private void initPopupWindow() {
-        mIconChoosePopupWindow = new IconChoosePopupWindow(getActivity());
-        mIconChoosePopupWindow.setAnimationStyle(R.style.icon_popup_window);
-        mIconChoosePopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+    /**
+     * 获取未读消息数
+     */
+    private void getUNReadMessageNumber() {
+        CHYHttpClientUsage.getInstanse().doGetUNReadMessage(new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
             @Override
-            public void onDismiss() {
-                lightOn();
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                messageNumber = JSONCatch.parseInt("tokenMessageCount", response);
+                messageBadge = new QBadgeView(getActivity()).bindTarget(tv_message).setBadgeNumber(messageNumber).setBadgeGravity(Gravity.TOP | Gravity.END).setBadgeTextSize(9, true).setBadgePadding(-0.00005f, true).stroke(getResources().getColor(R.color.remind_cycle_color), 2, true).setBadgeBackgroundColor(getResources().getColor(R.color.remind_cycle_color));//.setBadgeNumber()
             }
-        });
 
-        mIconChoosePopupWindow.getContentView().findViewById(R.id.tv_album).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                FunctionConfig config = new FunctionConfig.Builder().setMutiSelectMaxSize(1).build();
-                GalleryFinal.openGalleryMuti(REQUEST_CODE_GALLERY, config, PersonCenterFragment.this);
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                ToastUtils.showToast("获取信息失败，请联系管理员");
             }
-        });
 
-        mIconChoosePopupWindow.getContentView().findViewById(R.id.tv_take_photo).setOnClickListener(new View.OnClickListener() {
+        });
+    }
+
+    /**
+     * 获取未读问答数
+     * 返回结果：photoWallCount、coursewareCount、questionCount
+     */
+    private void getUNReadQuestionNumber() {
+        CHYHttpClientUsage.getInstanse().doGetUNReadQuestion(new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
             @Override
-            public void onClick(View v) {
-                GalleryFinal.openCamera(REQUEST_CODE_CAMERA, PersonCenterFragment.this);
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                questionNumber = JSONCatch.parseInt("questionCount", response);
+                gridListAdapter.notifyDataSetChanged();
             }
-        });
 
-        mIconChoosePopupWindow.getContentView().findViewById(R.id.tv_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                mIconChoosePopupWindow.dismiss();
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                ToastUtils.showToast("获取信息失败，请联系管理员");
+            }
+
+        });
+    }
+
+    /**
+     * 上传红点点击记录
+     * 返回结果：photoWallCount、coursewareCount、questionCount
+     */
+    private void postUNReadQuestionNumber(boolean isCompass, int moduleNo) {
+        CHYHttpClientUsage.getInstanse().doPostUNReadQuestion(isCompass, moduleNo, new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
             }
         });
     }
 
-
-    private ProgressDialog mProgressDialog;
-
-
-    private void doUploadFile(String userId, String userType, File uploadFile) {
-
-        try {
-            CHYHttpClientUsage.getInstanse().doCreateUserImg(userId, userType, uploadFile, new JsonHttpResponseHandler() {
-                @Override
-                public void onStart() {
-                    super.onStart();
-                    mProgressDialog = ProgressDialog.show(getActivity(), null, "loading...");
-                }
-
-                @Override
-                public void onFinish() {
-                    super.onFinish();
-                    mProgressDialog.dismiss();
-                }
-
-                @Override
-                public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
-                    super.onSuccess(statusCode, headers, response);
-
-                    MyLogger.jLog().i("onSuccess" + response.toString());
-                    try {
-                        int state = response.getInt("state");
-                        if (state == 1) {
-                            mUploadFilePath = response.getString("imgUrl");
-                            mHandler.sendEmptyMessage(UPLOAD_IMGURL_SUCCESS);
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    @Override
-    public void onHanlderSuccess(int reqeustCode, List<PhotoInfo> resultList) {
-        if (mIconChoosePopupWindow != null && mIconChoosePopupWindow.isShowing())
-            mIconChoosePopupWindow.dismiss();
-
-        String photoPath = "";
-        if (reqeustCode == REQUEST_CODE_GALLERY) {
-            photoPath = resultList.get(0).getPhotoPath();
-        } else if (reqeustCode == REQUEST_CODE_CAMERA) {
-            photoPath = resultList.get(0).getPhotoPath();
-        }
-
-        //图片进行压缩
-        try {
-            mUploadFilePath = PicUtils.saveFile(PicUtils.getSmallBitmap(photoPath));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        //上传
-        doUploadFile(AppApplication.userId + "", AppApplication.userType + "", new File(mUploadFilePath));
-    }
-
-    @Override
-    public void onHanlderFailure(int requestCode, String errorMsg) {
-        ToastUtils.showToast(getString(R.string.choose_photo_fail));
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         mIsOpen = true;
         queryCount();
-        if(!isBackView){
+        if (!isBackView) {
             StatusBarUtil.setStatusBarDarkTheme(getActivity(), false);
         }
         MobclickAgent.onPageStart(Constants.FRAGMENT_PERSONCENTER);
@@ -440,10 +440,10 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
 
     //刷新用户信息
     public void refreshInfo() {
-        if (SharePreferenceUtils.getUserBoolean(Constants.USER_IS_LOGIN, false)&&username!=null&&welcomeInfo!=null&&mCivHeadIcon!=null) {
+        if (SharePreferenceUtils.getUserBoolean(Constants.USER_IS_LOGIN, false) && username != null && welcomeInfo != null && mCivHeadIcon != null) {
             username.setText(SharePreferenceUtils.getUser(Constants.USER_NAME));
             welcomeInfo.setText(getString(R.string.mymeeting_welcome_sb, SharePreferenceUtils.getUser(Constants.USER_NAME)));
-            PicUtils.loadCircleImage(getActivity(),SharePreferenceUtils.getUser(Constants.USER_IMG),mCivHeadIcon);
+            PicUtils.loadCircleImage(getActivity(), SharePreferenceUtils.getUser(Constants.USER_IMG), mCivHeadIcon);
         }
     }
 
@@ -463,7 +463,6 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
         public GridListAdapter(Context context) {
             this.context = context;
             layoutInflater = LayoutInflater.from(context);
-            badges = new ArrayList<>();
         }
 
         @Override
@@ -491,35 +490,23 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
             if (AppApplication.systemLanguage == 1) {
                 tv_gv_list.setText(strList[position]);
                 int dimen = getResources().getDimensionPixelSize(R.dimen.middle_text);
-                tv_gv_list.setTextSize(TypedValue.COMPLEX_UNIT_PX,dimen);
+                tv_gv_list.setTextSize(TypedValue.COMPLEX_UNIT_PX, dimen);
             } else {
                 int dimen;
-                if(position == 0){
+                if (position == 0) {
                     dimen = getResources().getDimensionPixelSize(R.dimen.small_l_text);
-                }else {
+                } else {
                     dimen = getResources().getDimensionPixelSize(R.dimen.small_m_text);
                 }
                 tv_gv_list.setText(strList[position]);
-                tv_gv_list.setTextSize(TypedValue.COMPLEX_UNIT_PX,dimen);
+                tv_gv_list.setTextSize(TypedValue.COMPLEX_UNIT_PX, dimen);
             }
             tv_gv_list.setText(strList[position]);
-            if (position == 0) {
-                badges.add(new QBadgeView(context).bindTarget(remind_red).setBadgeGravity(Gravity.TOP | Gravity.END).setBadgeTextSize(9, true).setBadgePadding(-0.00005f,true).stroke(getResources().getColor(R.color.remind_cycle_color),2,true).setBadgeBackgroundColor(getResources().getColor(R.color.remind_cycle_color)));//.setBadgeNumber()
-            }
-            for (Badge badge : badges) {
-                badge.setOnDragStateChangedListener(new Badge.OnDragStateChangedListener() {
-                    @Override
-                    public void onDragStateChanged(int dragState, Badge badge, View targetView) {
-                        if(dragState == STATE_SUCCEED){
-                            ToastUtils.showToast("消除成功");
-                        }
-                    }
-                });
-            }
             return convertView;
         }
     }
     //对app进行评分
+
     /**
      * 跳转应用市场
      */
@@ -533,7 +520,7 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
                 Log.e("应用市场++++", filterInstallMarkets.get(a));
                 String pkg = filterInstallMarkets.get(a);
                 //if (installAppMarkets.contains(pkg)&&!"com.tencent.android.qqdownloader".equals(pkg)) {
-                    markets.add(pkg);
+                markets.add(pkg);
                 //}
             }
             List<String> names = new ArrayList<>();
@@ -556,4 +543,21 @@ public class PersonCenterFragment extends BaseFragment implements View.OnClickLi
         }
     }
 
+    /**
+     * 收到更新通知
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onUpdateConferenceEvent(HomeActivity.UpdateConferenceEvent event) {
+        if(AppApplication.isUserLogIn()){
+            refreshInfo();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(EventBus.getDefault().isRegistered(this)){
+            EventBus.getDefault().unregister(this);
+        }
+    }
 }

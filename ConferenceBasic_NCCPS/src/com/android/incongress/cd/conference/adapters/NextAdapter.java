@@ -94,10 +94,11 @@ public class NextAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
         List<Meeting> meetings = mMeetingBySession.get(position);
         MeetingAdapter meetingAdapter = new MeetingAdapter(meetings);
         ((SessionViewHolder)holder).llfMeetings.setAdapter(meetingAdapter);
-
-        String[] speakerWithRole = mRoleWithName[position].split("#@#");
-        SpeakerWithRoleAdapter speakerWithRoleAdapter = new SpeakerWithRoleAdapter(speakerWithRole);
-        ((SessionViewHolder)holder).llfSpeakers.setAdapter(speakerWithRoleAdapter);
+        if(mRoleWithName[position]!=null){
+            String[] speakerWithRole = mRoleWithName[position].split("#@#");
+            SpeakerWithRoleAdapter speakerWithRoleAdapter = new SpeakerWithRoleAdapter(speakerWithRole);
+            ((SessionViewHolder)holder).llfSpeakers.setAdapter(speakerWithRoleAdapter);
+        }
     }
 
     @Override

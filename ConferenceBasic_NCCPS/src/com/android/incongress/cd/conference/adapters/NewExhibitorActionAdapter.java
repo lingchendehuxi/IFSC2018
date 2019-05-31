@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.android.incongress.cd.conference.beans.ExhibitorTitleBean;
+import com.android.incongress.cd.conference.fragments.exhibitor.InvitationFragment;
 import com.android.incongress.cd.conference.fragments.exhibitor.NewExhibitorListFragment;
 import com.android.incongress.cd.conference.fragments.me.MyMindBookListFragment;
 import com.android.incongress.cd.conference.model.Exhibitor;
@@ -26,6 +27,9 @@ public class NewExhibitorActionAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+        if(list.get(position).getIndex() == 5){
+            return InvitationFragment.getInstance(list.get(position).getMenuName(),list.get(position).getIndex());
+        }
         return NewExhibitorListFragment.getInstance(list.get(position).getMenuName(),list.get(position).getIndex());
     }
 

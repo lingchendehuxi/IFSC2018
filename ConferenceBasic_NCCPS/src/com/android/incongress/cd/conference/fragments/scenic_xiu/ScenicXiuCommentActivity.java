@@ -15,7 +15,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.incongress.cd.conference.LoginActivity;
 import com.android.incongress.cd.conference.ScenicXiuPicsViewpagerActivity;
 import com.android.incongress.cd.conference.adapters.CommentAdapter;
 import com.android.incongress.cd.conference.adapters.ScenicXiuGridAdapter;
@@ -26,6 +25,7 @@ import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.beans.CommentArrayBean;
 import com.android.incongress.cd.conference.beans.ScenicXiuBean;
 import com.android.incongress.cd.conference.save.SharePreferenceUtils;
+import com.android.incongress.cd.conference.ui.login.view.LoginActivity;
 import com.android.incongress.cd.conference.utils.PicUtils;
 import com.android.incongress.cd.conference.utils.StringUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;

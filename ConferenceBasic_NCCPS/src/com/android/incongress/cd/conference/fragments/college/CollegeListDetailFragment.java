@@ -2,6 +2,7 @@ package com.android.incongress.cd.conference.fragments.college;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -59,6 +60,7 @@ public class CollegeListDetailFragment extends BaseFragment {
     private static final String CACHE_COLLEGE_BOOK_TITLE = "college_book_title_list";
     private DiskLruCacheUtil mDiskLruCacheUtil;
     private ArrayList<TextView> listText;
+    private FragmentManager fragmentManager;
 
     public static CollegeListDetailFragment getInstance(String stringYear, String stringModelId,int cacheId) {
         CollegeListDetailFragment fragment = new CollegeListDetailFragment();
@@ -79,18 +81,14 @@ public class CollegeListDetailFragment extends BaseFragment {
         stringYear = getArguments().getString(BUNDLE_COLLEGE_YEAR);
         stringModelId = getArguments().getString(BUNDLE_COLLEGE_MODEL_ID);
         cacheId = getArguments().getInt(BUNDLE_CACHE_ID);
+        fragmentManager = getChildFragmentManager();
         if ("book".equals(stringYear)) {
             cacheManager2 = CacheManager.getInstance().open(CACHE_COLLEGE_BOOK_TITLE+cacheId, 1);
         } else {
             mDiskLruCacheUtil = new DiskLruCacheUtil(getActivity(), CACHE_COLLEGE_DATA_TITLE+cacheId);
         }
-        return view;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
         loadLocalDate();
+        return view;
     }
 
     //无网络的时候加载本地数据
@@ -117,9 +115,9 @@ public class CollegeListDetailFragment extends BaseFragment {
                 }
                 if (mSessionDaysList.size() > 0) {
                     if ("book".equals(stringYear)) {
-                        mPageAdapter = new CollegeListItemFragmentAdapter(getChildFragmentManager(), mSessionDaysDetailList, 100, stringModelId);
+                        mPageAdapter = new CollegeListItemFragmentAdapter(fragmentManager, mSessionDaysDetailList, 100, stringModelId);
                     } else {
-                        mPageAdapter = new CollegeListItemFragmentAdapter(getChildFragmentManager(), mSessionDaysDetailList, 101, stringModelId);
+                        mPageAdapter = new CollegeListItemFragmentAdapter(fragmentManager, mSessionDaysDetailList, 101, stringModelId);
                     }
                     mViewPager.setScrollble(false);
                     mViewPager.setAdapter(mPageAdapter);
@@ -203,7 +201,7 @@ public class CollegeListDetailFragment extends BaseFragment {
                         mSessionDaysDetailList.add(bean.getDateArray().get(i).getTimeStart());
                     }
                     if (mSessionDaysDetailList.size() > 0) {
-                        mPageAdapter = new CollegeListItemFragmentAdapter(getChildFragmentManager(), mSessionDaysDetailList, 101, stringModelId);
+                        mPageAdapter = new CollegeListItemFragmentAdapter(fragmentManager, mSessionDaysDetailList, 101, stringModelId);
                         mViewPager.setScrollble(false);
                         mViewPager.setAdapter(mPageAdapter);
                         mViewPager.setCurrentItem(0);
@@ -244,7 +242,7 @@ public class CollegeListDetailFragment extends BaseFragment {
                         mSessionDaysDetailList.add(bean.getDateArray().get(i).getTimeStart());
                     }
                     if (mSessionDaysList.size() > 0) {
-                        mPageAdapter = new CollegeListItemFragmentAdapter(getChildFragmentManager(), mSessionDaysDetailList, 100, stringModelId);
+                        mPageAdapter = new CollegeListItemFragmentAdapter(fragmentManager, mSessionDaysDetailList, 100, stringModelId);
                         mViewPager.setScrollble(false);
                         mViewPager.setAdapter(mPageAdapter);
                         mViewPager.setCurrentItem(0);

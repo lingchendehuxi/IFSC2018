@@ -15,6 +15,7 @@ import com.android.incongress.cd.conference.base.BaseActivity;
 import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.model.Ad;
 import com.android.incongress.cd.conference.model.ConferenceDbUtils;
+import com.android.incongress.cd.conference.ui.login.view.LoginActivity;
 import com.android.incongress.cd.conference.utils.PicUtils;
 import com.android.incongress.cd.conference.widget.CountDownButtonHelper;
 import com.android.incongress.cd.conference.widget.Rotatable;
@@ -77,7 +78,7 @@ public class AdvertisesActivity extends BaseActivity {
     }
 
     private void goHomeActivity() {
-        if(true) {
+        if(AppApplication.isUserLogIn()) {
             Intent intent = new Intent();
             intent.setClass(AdvertisesActivity.this, HomeActivity.class);
             startActivity(intent);
@@ -86,9 +87,8 @@ public class AdvertisesActivity extends BaseActivity {
             intent.setClass(AdvertisesActivity.this, LoginActivity.class);
             startActivity(intent);
         }
-
-        finish();
         mIsFinish = true;
+        finish();
     }
 
     @OnClick(R.id.imageView_front)

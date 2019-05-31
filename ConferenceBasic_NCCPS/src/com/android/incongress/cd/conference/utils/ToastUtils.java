@@ -3,14 +3,11 @@ package com.android.incongress.cd.conference.utils;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.LayoutRes;
-import android.support.v7.widget.CardView;
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.os.Build;
 
 import com.android.incongress.cd.conference.base.AppApplication;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
@@ -19,38 +16,39 @@ import com.mobile.incongress.cd.conference.basic.csccm.R;
  * Created by Jacky on 2016/1/15.
  */
 public class ToastUtils {
-    private static Toast toast;
+    private static Toast toastString;
+    private static Toast toastView;
     /** Data */
     private static String oldMsg;
     private static long oneTime = 0;
     private static long twoTime = 0;
     /*********************************/
     public static void showToast( String s){
-        if(toast==null){
-            toast =Toast.makeText(AppApplication.getInstance().getContext(), s, Toast.LENGTH_SHORT);
-            toast.show();
+        if(toastString==null){
+            toastString =Toast.makeText(AppApplication.getInstance(), s, Toast.LENGTH_SHORT);
+            toastString.show();
             oneTime=System.currentTimeMillis();
         }else{
             twoTime=System.currentTimeMillis();
             if(s.equals(oldMsg)){
                 if(twoTime-oneTime>Toast.LENGTH_SHORT){
-                    toast.show();
+                    toastString.show();
                 }
             }else{
                 oldMsg = s;
-                toast.setText(s);
-                toast.show();
+                toastString.setText(s);
+                toastString.show();
             }
         }
         oneTime=twoTime;
     }
 
     //通知框中间
-    public static void showRoundRectToast(Context context, int layout) {
+    public static void showRoundRectToast(Context context,String mindText, int layout) {
         if (layout == 0) {
             return;
         }
-        new Builder(context)
+        new Builder(context,mindText)
                 .setDuration(Toast.LENGTH_SHORT)
                 .setFill(false)
                 .setGravity(Gravity.CENTER)
@@ -74,10 +72,12 @@ public class ToastUtils {
         private float radius;
         private int elevation;
         private int layout;
+        private String mindText;
 
 
-        public Builder(Context context) {
+        public Builder(Context context,String mindText) {
             this.context = context;
+            this.mindText = mindText;
         }
 
         public Builder setTitle(CharSequence title) {
@@ -136,19 +136,21 @@ public class ToastUtils {
         }
 
         public Toast build() {
-            if (toast == null) {
-                toast = new Toast(context);
+            if (toastView == null) {
+                toastView = new Toast(context);
             }
             if (isFill) {
-                toast.setGravity(gravity | Gravity.FILL_HORIZONTAL, 0, yOffset);
+                toastView.setGravity(gravity | Gravity.FILL_HORIZONTAL, 0, yOffset);
             } else {
-                toast.setGravity(gravity, 0, yOffset);
+                toastView.setGravity(gravity, 0, yOffset);
             }
-            toast.setDuration(duration);
-            toast.setMargin(0, 0);
+            toastView.setDuration(duration);
+            toastView.setMargin(0, 0);
             View view = LayoutInflater.from(context).inflate(layout, null);
-            toast.setView(view);
-            return toast;
+            TextView tv_mind = view.findViewById(R.id.tv_mind);
+            tv_mind.setText(mindText);
+            toastView.setView(view);
+            return toastView;
         }
     }
 }

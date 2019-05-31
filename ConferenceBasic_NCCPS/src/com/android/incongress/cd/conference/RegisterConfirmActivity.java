@@ -20,6 +20,7 @@ import com.android.incongress.cd.conference.beans.UserInfoEnBean;
 import com.android.incongress.cd.conference.fragments.me.PersonCenterFragment;
 import com.android.incongress.cd.conference.save.ParseUser;
 import com.android.incongress.cd.conference.save.SharePreferenceUtils;
+import com.android.incongress.cd.conference.ui.login.view.LoginActivity;
 import com.android.incongress.cd.conference.widget.ClearEditText;
 import com.android.incongress.cd.conference.utils.ActivityUtils;
 import com.android.incongress.cd.conference.utils.MyLogger;
@@ -239,7 +240,7 @@ public class RegisterConfirmActivity extends BaseActivity {
                     } else {
                         ParseUser.saveUserInfo(response.toString());
 
-                        SharePreferenceUtils.saveUserString(Constants.USER_IS_LOGIN, "true");
+                        SharePreferenceUtils.saveUserBoolean(Constants.USER_IS_LOGIN, true);
 
                         Intent intent = new Intent(RegisterConfirmActivity.this, HomeActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

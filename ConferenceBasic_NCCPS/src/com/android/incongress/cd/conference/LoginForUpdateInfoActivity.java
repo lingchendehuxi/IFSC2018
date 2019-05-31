@@ -16,21 +16,29 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.android.incongress.cd.conference.api.CHYHttpClientUsage;
+import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.BaseActivity;
 import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.save.ParseUser;
 import com.android.incongress.cd.conference.save.SharePreferenceUtils;
+import com.android.incongress.cd.conference.ui.login.view.LoginActivity;
 import com.android.incongress.cd.conference.utils.JSONCatch;
+import com.android.incongress.cd.conference.utils.LanguageUtil;
 import com.android.incongress.cd.conference.utils.MyLogger;
 import com.android.incongress.cd.conference.utils.PicUtils;
+import com.android.incongress.cd.conference.utils.StringUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
 import com.android.incongress.cd.conference.widget.CircleImageView;
 import com.android.incongress.cd.conference.widget.ClearEditText;
 import com.android.incongress.cd.conference.widget.IconChoosePopupWindow;
+import com.android.incongress.cd.conference.widget.photo.galleryfinal.FunctionConfig;
+import com.android.incongress.cd.conference.widget.photo.galleryfinal.GalleryFinal;
+import com.android.incongress.cd.conference.widget.photo.galleryfinal.model.PhotoInfo;
 import com.android.incongress.cd.conference.widget.popup.InputMethodUtils;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -39,9 +47,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
-import cn.finalteam.galleryfinal.FunctionConfig;
-import cn.finalteam.galleryfinal.GalleryFinal;
-import cn.finalteam.galleryfinal.model.PhotoInfo;
 import cz.msebera.android.httpclient.Header;
 
 /**
@@ -56,6 +61,7 @@ public class LoginForUpdateInfoActivity extends BaseActivity implements GalleryF
     private String mobile, sms, nickName;
     private Button bt_save;
     private ImageView iv_back;
+    private boolean isUpdate = false;
     /**
      * 页面是否处于打开状态
      **/
@@ -70,7 +76,7 @@ public class LoginForUpdateInfoActivity extends BaseActivity implements GalleryF
     /**
      * 头像上传后的地址
      **/
-    private String mUploadFilePath = "", userId, userType;
+    private String mUploadFilePath = "", userIcId, userType, userId;
     private IconChoosePopupWindow mIconChoosePopupWindow;
     private CircleImageView iv_head;
 
@@ -89,10 +95,12 @@ public class LoginForUpdateInfoActivity extends BaseActivity implements GalleryF
     @Override
     protected void initViewsAction() {
         mobile = getIntent().getStringExtra(Constants.USER_MOBILE);
-        userId = getIntent().getStringExtra(Constants.USER_ID);
+        userIcId = getIntent().getStringExtra(Constants.USER_IC_ID);
         userType = getIntent().getStringExtra(Constants.USER_TYPE);
+        isUpdate = getIntent().getBooleanExtra("update", false);
         mUploadFilePath = SharePreferenceUtils.getUser(Constants.USER_IMG);
-        if (TextUtils.isEmpty(userId)) {
+        userId = SharePreferenceUtils.getUser(Constants.USER_ID);
+        if (isUpdate) {
             tv_title.setText(R.string.incongress_modify_person_info);
             title_tip.setVisibility(View.INVISIBLE);
         } else {
@@ -115,11 +123,8 @@ public class LoginForUpdateInfoActivity extends BaseActivity implements GalleryF
             @Override
             public void onClick(View view) {
                 InputMethodUtils.hideSoftInput(LoginForUpdateInfoActivity.this, et_userName);
-                if (TextUtils.isEmpty(userId)) {
-                    doModifyPersonInfo();
-                } else {
-                    doUpdateInfo();
-                }
+                doModifyPersonInfo();
+                hideShurufa();
             }
         });
         et_userName.addTextChangedListener(new TextWatcher() {
@@ -168,8 +173,14 @@ public class LoginForUpdateInfoActivity extends BaseActivity implements GalleryF
         if (TextUtils.isEmpty(nickName)) {
             ToastUtils.showToast("请输入用户名");
             return;
+        } else if (StringUtils.stringIsLegal(nickName)) {
+            ToastUtils.showRoundRectToast(this, getString(R.string.username_rule), R.layout.view_toast_custom);
+            return;
         }
-        CHYHttpClientUsage.getInstanse().doModifyUserInfo(nickName, mUploadFilePath, new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
+        if (TextUtils.isEmpty(userIcId)) {
+            userIcId = SharePreferenceUtils.getUser(Constants.USER_IC_ID);
+        }
+        CHYHttpClientUsage.getInstanse().doModifyUserInfo(userIcId, nickName, mUploadFilePath, new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
             public void onStart() {
                 super.onStart();
                 mProgressDialog = ProgressDialog.show(LoginForUpdateInfoActivity.this, null, "loading...");
@@ -194,71 +205,14 @@ public class LoginForUpdateInfoActivity extends BaseActivity implements GalleryF
                 } else {
                     ParseUser.saveUserInfo(response.toString());
                     SharePreferenceUtils.saveUserBoolean(Constants.USER_IS_LOGIN, true);
-                        /*AppApplication.userId = user.getUserId();
-                        AppApplication.username = user.getName();
-                        AppApplication.userType = user.getUserType();*/
-
-//                        setResult(RESULT_OK);
-                    //发送广播
-                    Intent loginIntent = new Intent();
-                    loginIntent.setAction(LoginActivity.LOGIN_ACTION);
-                    sendBroadcast(loginIntent);
-                    finish();
-                }
-
-            }
-        });
-    }
-
-    private void doUpdateInfo() {
-        if (TextUtils.isEmpty(mUploadFilePath)) {
-            ToastUtils.showToast("请先上传头像");
-            return;
-        }
-        nickName = et_userName.getText().toString().trim();
-        if (TextUtils.isEmpty(nickName)) {
-            ToastUtils.showToast("请输入用户名");
-            return;
-        }
-        nickName = et_userName.getText().toString().trim();
-        CHYHttpClientUsage.getInstanse().doUpdateUserInfo(mobile, sms, "", nickName, mUploadFilePath, "", new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
-            public void onStart() {
-                super.onStart();
-                mProgressDialog = ProgressDialog.show(LoginForUpdateInfoActivity.this, null, "loading...");
-            }
-
-            @Override
-            public void onFinish() {
-                super.onFinish();
-                mProgressDialog.dismiss();
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                ToastUtils.showToast("服务器开小差了，请稍后重试");
-            }
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                super.onSuccess(statusCode, headers, response);
-                if (JSONCatch.parseInt("state", response) == 0) {
-                    ToastUtils.showToast(JSONCatch.parseString("msg", response));
-                } else {
-                    ParseUser.saveUserInfo(response.toString());
-                    SharePreferenceUtils.saveUserBoolean(Constants.USER_IS_LOGIN, true);
-                        /*AppApplication.userId = user.getUserId();
-                        AppApplication.username = user.getName();
-                        AppApplication.userType = user.getUserType();*/
-
-//                        setResult(RESULT_OK);
-                    //发送广播
                     Intent loginIntent = new Intent();
                     loginIntent.setAction(LoginActivity.LOGIN_ACTION);
                     sendBroadcast(loginIntent);
                     setResult(RESULT_OK);
+                    startActivity(new Intent(LoginForUpdateInfoActivity.this, HomeActivity.class));
+                    EventBus.getDefault().post(new HomeActivity.UpdateConferenceEvent(true));
                     finish();
                 }
-
             }
         });
     }
@@ -316,10 +270,10 @@ public class LoginForUpdateInfoActivity extends BaseActivity implements GalleryF
         }
 
         //上传
-        if (TextUtils.isEmpty(userId)) {
-            doUploadFile(SharePreferenceUtils.getUser(Constants.USER_ID) + "", SharePreferenceUtils.getUser(Constants.USER_TYPE) + "", new File(mUploadFilePath));
+        if (!TextUtils.isEmpty(userId)) {
+            doUploadFile(SharePreferenceUtils.getUser(Constants.USER_IC_ID) + "", new File(mUploadFilePath));
         } else {
-            doUploadFile(userId + "", userType + "", new File(mUploadFilePath));
+            doUploadFile(userIcId + "", new File(mUploadFilePath));
         }
     }
 
@@ -328,10 +282,10 @@ public class LoginForUpdateInfoActivity extends BaseActivity implements GalleryF
         ToastUtils.showToast(getString(R.string.choose_photo_fail));
     }
 
-    private void doUploadFile(String userId, String userType, File uploadFile) {
+    private void doUploadFile(String userId, File uploadFile) {
 
         try {
-            CHYHttpClientUsage.getInstanse().doCreateUserImg(userId, userType, uploadFile, new JsonHttpResponseHandler() {
+            CHYHttpClientUsage.getInstanse().doCreateUserImg(userId, uploadFile, new JsonHttpResponseHandler() {
                 @Override
                 public void onStart() {
                     super.onStart();
@@ -347,18 +301,16 @@ public class LoginForUpdateInfoActivity extends BaseActivity implements GalleryF
                 @Override
                 public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
                     super.onSuccess(statusCode, headers, response);
-
-                    MyLogger.jLog().i("onSuccess" + response.toString());
-                    try {
-                        int state = response.getInt("state");
-                        if (state == 1) {
-                            mUploadFilePath = response.getString("imgUrl");
-                            mHandler.sendEmptyMessage(UPLOAD_IMGURL_SUCCESS);
-                        } else {
-                            mUploadFilePath = "";
+                    if (JSONCatch.parseInt("state", response) == 1) {
+                        mUploadFilePath = JSONCatch.parseString("imgUrl",response);
+                        mHandler.sendEmptyMessage(UPLOAD_IMGURL_SUCCESS);
+                        if(AppApplication.isUserLogIn()){
+                            Intent loginIntent = new Intent();
+                            loginIntent.setAction(LoginActivity.LOGIN_ACTION);
+                            sendBroadcast(loginIntent);
                         }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                    } else {
+                        mUploadFilePath = "";
                     }
                 }
             });

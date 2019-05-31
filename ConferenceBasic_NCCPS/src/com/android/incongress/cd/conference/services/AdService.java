@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.util.Log;
 
 import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.Constants;
@@ -119,6 +120,7 @@ public class AdService extends Service {
 
     private void setAdList() {
         adList = ConferenceDbUtils.getAllAds();
+        Log.d("sgqtest", "setAdList: "+adList.size());
     }
 
 }

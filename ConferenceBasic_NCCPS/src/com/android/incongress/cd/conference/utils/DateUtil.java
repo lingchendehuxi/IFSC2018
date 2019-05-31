@@ -1,9 +1,12 @@
 package com.android.incongress.cd.conference.utils;
 
+import android.text.TextUtils;
+
 import com.android.incongress.cd.conference.base.AppApplication;
 
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -312,6 +315,20 @@ public final class DateUtil {
     public static String getHourAndMinute(String string){
         int position = string.lastIndexOf(":");
         return string.substring(0,position);
+    }
+    public static Date stringToDate(String dateString) {
+        ParsePosition position = new ParsePosition(0);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date dateValue = simpleDateFormat.parse(dateString, position);
+        return dateValue;
+    }
+    //返回月
+    public static int getCurrentMonth(String time){
+        if(!TextUtils.isEmpty(time)){
+            String[] strings = time.split("-");
+          return Integer.valueOf(strings[1]);
+        }
+        return 0;
     }
 
 }

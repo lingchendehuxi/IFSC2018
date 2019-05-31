@@ -24,7 +24,6 @@ import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.android.incongress.cd.conference.LoginActivity;
 import com.android.incongress.cd.conference.adapters.AskQuestionAdapter;
 import com.android.incongress.cd.conference.adapters.OrderMeetingAdapter;
 import com.android.incongress.cd.conference.adapters.SessionDetailViewPagerAdapter;
@@ -43,6 +42,7 @@ import com.android.incongress.cd.conference.model.Meeting;
 import com.android.incongress.cd.conference.model.Note;
 import com.android.incongress.cd.conference.model.Session;
 import com.android.incongress.cd.conference.model.Speaker;
+import com.android.incongress.cd.conference.ui.login.view.LoginActivity;
 import com.android.incongress.cd.conference.utils.AlermClock;
 import com.android.incongress.cd.conference.utils.CommonUtils;
 import com.android.incongress.cd.conference.utils.DensityUtil;
@@ -111,11 +111,11 @@ public class SessionDetailViewPageFragment extends BaseFragment implements View.
         mll_bottom_session = view.findViewById(R.id.ll_bottom_session);
         ll_study = view.findViewById(R.id.ll_study);
         ll_study.setOnClickListener(this);
-        ll_study.setVisibility(Constants.SCHEDULE_BOOK?View.VISIBLE:View.GONE);
+        ll_study.setVisibility(Constants.SCHEDULE_BOOK ? View.VISIBLE : View.GONE);
         ll_date = view.findViewById(R.id.ll_date);
         ll_date.setOnClickListener(this);
-        ll_question = findClickView(view,R.id.ll_question);
-        ll_question.setVisibility(Constants.SCHEDULE_ASK?View.VISIBLE:View.GONE);
+        ll_question = findClickView(view, R.id.ll_question);
+        ll_question.setVisibility(Constants.SCHEDULE_ASK ? View.VISIBLE : View.GONE);
         ll_location = view.findViewById(R.id.ll_location);
         ll_location.setOnClickListener(this);
         ll_note = view.findViewById(R.id.ll_note);
@@ -135,31 +135,32 @@ public class SessionDetailViewPageFragment extends BaseFragment implements View.
         }
         sPool = new SoundPool(10, AudioManager.STREAM_SYSTEM, 5);//第一个参数为同时播放数据流的最大个数，第二数据流类型，第三为声音质量
         final int music = sPool.load(getActivity(), R.raw.fy, 1);
-        mAdapter = new SessionDetailViewPagerAdapter(getChildFragmentManager(), mSessionDetailFragments);
-        mViewPager.setAdapter(mAdapter);
-        mViewPager.setCurrentItem(mPosition);
-        mViewPager.setOffscreenPageLimit(1);
-        MyHandler.sendEmptyMessageDelayed(SHOWWHAT, 1000);
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        if (isAdded()) {
+            mAdapter = new SessionDetailViewPagerAdapter(getChildFragmentManager(), mSessionDetailFragments);
+            mViewPager.setAdapter(mAdapter);
+            mViewPager.setCurrentItem(mPosition);
+            mViewPager.setOffscreenPageLimit(1);
+            MyHandler.sendEmptyMessageDelayed(SHOWWHAT, 1000);
+            mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-            }
+                }
 
-            @Override
-            public void onPageSelected(int position) {
-                mll_bottom_session.setVisibility(View.INVISIBLE);
-                MyHandler.removeMessages(SHOWWHAT);
-                MyHandler.sendEmptyMessageDelayed(SHOWWHAT, 1000);
-                mPosition = position;
-                sPool.play(music, 1, 1, 0, 0, 1);
-            }
+                @Override
+                public void onPageSelected(int position) {
+                    mll_bottom_session.setVisibility(View.INVISIBLE);
+                    MyHandler.removeMessages(SHOWWHAT);
+                    MyHandler.sendEmptyMessageDelayed(SHOWWHAT, 1000);
+                    mPosition = position;
+                    sPool.play(music, 1, 1, 0, 0, 1);
+                }
 
-            @Override
-            public void onPageScrollStateChanged(int state) {
-            }
-        });
-
+                @Override
+                public void onPageScrollStateChanged(int state) {
+                }
+            });
+        }
         return view;
     }
 
@@ -182,7 +183,7 @@ public class SessionDetailViewPageFragment extends BaseFragment implements View.
         ListView listView = mMeetingPopupWindow.getContentView().findViewById(R.id.list_scroll);
         TextView textView = mMeetingPopupWindow.getContentView().findViewById(R.id.tv_tip);
         textView.setText(getString(R.string.meeting_video_reservation));
-        final OrderMeetingAdapter orderMeetingAdapter = new OrderMeetingAdapter(meetings, getActivity(),"order");
+        final OrderMeetingAdapter orderMeetingAdapter = new OrderMeetingAdapter(meetings, getActivity(), "order");
         listView.setAdapter(orderMeetingAdapter);
         int totalHeight = 0;
         for (int i = 0; i < orderMeetingAdapter.getCount(); i++) {
@@ -190,9 +191,9 @@ public class SessionDetailViewPageFragment extends BaseFragment implements View.
             listItem.measure(0, 0); //计算子项View 的宽高 //统计所有子项的总高度
             totalHeight += listItem.getMeasuredHeight() + listView.getDividerHeight();
         }
-        if(DensityUtil.getScreenSize(getActivity())[1]<=1920){
+        if (DensityUtil.getScreenSize(getActivity())[1] <= 1920) {
             fixHeight = DensityUtil.getScreenSize(getActivity())[1] * ScreenHeightLPercent;
-        }else {
+        } else {
             fixHeight = DensityUtil.getScreenSize(getActivity())[1] * ScreenHeightHPercent;
         }
         if (totalHeight > fixHeight) {
@@ -227,7 +228,7 @@ public class SessionDetailViewPageFragment extends BaseFragment implements View.
                                 @Override
                                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                                     super.onSuccess(statusCode, headers, response);
-                                    ToastUtils.showRoundRectToast(getActivity(), R.layout.view_toast_custom);
+                                    ToastUtils.showRoundRectToast(getActivity(), getString(R.string.book_success), R.layout.view_toast_custom);
                                 }
 
                                 @Override
@@ -240,7 +241,7 @@ public class SessionDetailViewPageFragment extends BaseFragment implements View.
                         }
                     }
                 }
-                for(Meeting meeting : meetings){
+                for (Meeting meeting : meetings) {
                     meeting.save();
                 }
                 Intent intent = new Intent(Constants.ACTION_UPDATE_MEET);
@@ -258,12 +259,13 @@ public class SessionDetailViewPageFragment extends BaseFragment implements View.
         mMeetingPopupWindow.showAtLocation(mll_bottom_session, Gravity.TOP, 0, (int) (DensityUtil.getScreenSize(getActivity())[1] * 0.4));
         lightOff();
     }
+
     //课件提醒
     private void InitAlarmPopupWindow() {
         final List<Meeting> meetings = ConferenceDbUtils.getMeetingBySessionGroupId(mSessionBeanList.get(mPosition).getSessionGroupId() + "");
         final List<Meeting> compareList = ConferenceDbUtils.getMeetingBySessionGroupId(mSessionBeanList.get(mPosition).getSessionGroupId() + "");
         mClassBean = ConferenceDbUtils.findClassByClassId(mSessionBeanList.get(mPosition).getClassesId());
-        if (meetings.size() == 0 && mClassBean !=null) {
+        if (meetings.size() == 0 && mClassBean != null) {
             ToastUtils.showToast(getString(R.string.tv_tips));
             return;
         }
@@ -279,7 +281,7 @@ public class SessionDetailViewPageFragment extends BaseFragment implements View.
         ListView listView = mAlarmPopupWindow.getContentView().findViewById(R.id.list_scroll);
         TextView textView = mAlarmPopupWindow.getContentView().findViewById(R.id.tv_tip);
         textView.setText(getString(R.string.schedule_mind));
-        final OrderMeetingAdapter orderMeetingAdapter = new OrderMeetingAdapter(meetings, getActivity(),"alarm");
+        final OrderMeetingAdapter orderMeetingAdapter = new OrderMeetingAdapter(meetings, getActivity(), "alarm");
         listView.setAdapter(orderMeetingAdapter);
         int totalHeight = 0;
         for (int i = 0; i < orderMeetingAdapter.getCount(); i++) {
@@ -287,9 +289,9 @@ public class SessionDetailViewPageFragment extends BaseFragment implements View.
             listItem.measure(0, 0); //计算子项View 的宽高 //统计所有子项的总高度
             totalHeight += listItem.getMeasuredHeight() + listView.getDividerHeight();
         }
-        if(DensityUtil.getScreenSize(getActivity())[1]<=1920){
+        if (DensityUtil.getScreenSize(getActivity())[1] <= 1920) {
             fixHeight = DensityUtil.getScreenSize(getActivity())[1] * ScreenHeightLPercent;
-        }else {
+        } else {
             fixHeight = DensityUtil.getScreenSize(getActivity())[1] * ScreenHeightHPercent;
         }
         if (totalHeight > fixHeight) {
@@ -305,19 +307,19 @@ public class SessionDetailViewPageFragment extends BaseFragment implements View.
                 CheckBox checkBox = view.findViewById(R.id.question_cb);
                 if (checkBox.isChecked()) {
                     meetings.get(position).setAttention(0);
-                    if(compareList.get(position).getAttention() == 1){
+                    if (compareList.get(position).getAttention() == 1) {
                         alarmList.add(meetings.get(position));
-                    }else {
-                        if(alarmList.contains(meetings.get(position))){
+                    } else {
+                        if (alarmList.contains(meetings.get(position))) {
                             alarmList.remove(meetings.get(position));
                         }
                     }
                 } else {
                     meetings.get(position).setAttention(1);
-                    if(compareList.get(position).getAttention() == 0){
+                    if (compareList.get(position).getAttention() == 0) {
                         alarmList.add(meetings.get(position));
-                    }else {
-                        if(alarmList.contains(meetings.get(position))){
+                    } else {
+                        if (alarmList.contains(meetings.get(position))) {
                             alarmList.remove(meetings.get(position));
                         }
                     }
@@ -332,7 +334,7 @@ public class SessionDetailViewPageFragment extends BaseFragment implements View.
                     for (int position = 0; position < alarmList.size(); position++) {
                         //添加闹钟
                         Meeting meeting = alarmList.get(position);
-                        if(meeting.getAttention() == 1){
+                        if (meeting.getAttention() == 1) {
                             Alert alertbean = new Alert();
                             alertbean.setDate(meeting.getMeetingDay());
                             alertbean.setEnable(1);
@@ -347,15 +349,15 @@ public class SessionDetailViewPageFragment extends BaseFragment implements View.
                             alertbean.setType(AlertBean.TYPE_MEETING);
                             alertbean.save();
                             AlermClock.addClock(alertbean);
-                        }else {
+                        } else {
                             Alert alert = ConferenceDbUtils.getAlertByAlertId(meeting.getMeetingId());
-                            if(alert!=null){
+                            if (alert != null) {
                                 AlermClock.disableClock(alert);
                             }
                         }
                     }
                 }
-                for(Meeting meeting : meetings){
+                for (Meeting meeting : meetings) {
                     meeting.save();
                 }
                 Intent intent = new Intent(Constants.ACTION_UPDATE_MEET);
@@ -383,21 +385,21 @@ public class SessionDetailViewPageFragment extends BaseFragment implements View.
             String sps = meetings.get(i).getFacultyId();
             String[] speaker_ = sps.split(",");
 
-            if(speaker_[0] !=null&&!TextUtils.isEmpty(speaker_[0])){
+            if (speaker_[0] != null && !TextUtils.isEmpty(speaker_[0])) {
                 Speaker speaker = SessionDetailPageFragment.getSpeakerById(speaker_[0]);
-                if(speaker == null){
+                if (speaker == null) {
                     continue;
                 }
-                if(AppApplication.systemLanguage == 1){
+                if (AppApplication.systemLanguage == 1) {
                     bean.setFirName(speaker.getSpeakerName());
                     bean.setTopic(meetings.get(i).getTopic());
                     bean.setSpearkerId(speaker.getSpeakerId());
-                }else {
+                } else {
                     bean.setFirName(speaker.getEnName());
                     bean.setTopic(meetings.get(i).getTopicEn());
                     bean.setSpearkerId(speaker.getSpeakerId());
                 }
-            }else {
+            } else {
                 continue;
             }
             askList.add(bean);
@@ -426,9 +428,9 @@ public class SessionDetailViewPageFragment extends BaseFragment implements View.
             listItem.measure(0, 0); //计算子项View 的宽高 //统计所有子项的总高度
             totalHeight += listItem.getMeasuredHeight() + listView.getDividerHeight();
         }
-        if(DensityUtil.getScreenSize(getActivity())[1]<=1920){
+        if (DensityUtil.getScreenSize(getActivity())[1] <= 1920) {
             fixHeight = DensityUtil.getScreenSize(getActivity())[1] * ScreenHeightLPercent;
-        }else {
+        } else {
             fixHeight = DensityUtil.getScreenSize(getActivity())[1] * ScreenHeightHPercent;
         }
         if (totalHeight > fixHeight) {
@@ -440,7 +442,7 @@ public class SessionDetailViewPageFragment extends BaseFragment implements View.
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                for (int i = 0;i<askList.size();i++){
+                for (int i = 0; i < askList.size(); i++) {
                     askList.get(i).setSelected(false);
                 }
                 askList.get(position).setSelected(true);
@@ -483,7 +485,7 @@ public class SessionDetailViewPageFragment extends BaseFragment implements View.
             }
             return false;
         }
-    }) ;
+    });
 
     @Override
     public void onClick(View view) {
@@ -522,7 +524,7 @@ public class SessionDetailViewPageFragment extends BaseFragment implements View.
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if(!hidden){
+        if (!hidden) {
             StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
         }
     }
@@ -530,7 +532,7 @@ public class SessionDetailViewPageFragment extends BaseFragment implements View.
     /**
      * Find出来的View，自带防抖功能
      */
-    public <T extends View> T findClickView(View parentView,int id) {
+    public <T extends View> T findClickView(View parentView, int id) {
 
         T view = (T) parentView.findViewById(id);
         view.setOnClickListener(new EventListener(this));

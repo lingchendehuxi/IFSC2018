@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.android.incongress.cd.conference.LoginActivity;
 import com.android.incongress.cd.conference.WebViewContainerActivity;
 import com.android.incongress.cd.conference.adapters.MessageStationAdapter;
 import com.android.incongress.cd.conference.api.CHYHttpClientUsage;
@@ -22,6 +21,7 @@ import com.android.incongress.cd.conference.base.BaseFragment;
 import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.beans.MessageBean;
 import com.android.incongress.cd.conference.fragments.DynamicHomeFragment;
+import com.android.incongress.cd.conference.ui.login.view.LoginActivity;
 import com.android.incongress.cd.conference.utils.LogUtils;
 import com.android.incongress.cd.conference.utils.NetWorkUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
@@ -313,6 +313,5 @@ public class MyMessageListFragment extends BaseFragment implements XRecyclerView
                 mRecyclerView.setRefreshing(true);
             }
         }
-
     }
 }

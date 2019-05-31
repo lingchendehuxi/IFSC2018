@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/content_resource_list"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EBEBEB"
+    >
+    <LinearLayout
+    android:id="@+id/include_title"
+    android:layout_width="match_parent"
+        android:orientation="horizontal"
+    android:background="@color/action_bar_bg"
+    android:layout_height="50dp">
+    <ImageView
+        android:id="@+id/title_back"
+        android:layout_width="55dp"
+        android:layout_height="match_parent"
+        android:clickable="false"
+        android:focusable="false"
+        android:scaleType="center"
+        android:src="@drawable/nav_btn_back" />
+    <com.android.incongress.cd.conference.widget.IncongressTextView
+        android:id="@+id/title_text"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/title_back"
+        android:ellipsize="middle"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textColor="#FFF"
+        android:textSize="20sp" />
+        <ImageView
+            android:id="@+id/title_isShare"
+            android:layout_width="55dp"
+            android:layout_height="match_parent"
+            android:clickable="false"
+            android:layout_alignParentRight="true"
+            android:focusable="false"
+            android:scaleType="center"
+            android:src="@drawable/icon_share" />
+</LinearLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/resource_swiperefresh_list"
+        android:layout_below="@id/include_title"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="wrap_content">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/resource_guide"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </android.support.v7.widget.RecyclerView>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/resource_recycle_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </android.support.v7.widget.RecyclerView>
+        </LinearLayout>
+        </ScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+        <TextView
+            android:id="@+id/guide_msg"
+            android:padding="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_below="@id/include_title"
+            android:gravity="center_vertical"
+            android:background="#ff00"
+            android:textColor="@color/white"
+            android:textSize="13dp"/>
+
+    <LinearLayout
+        android:id="@+id/resource_cs"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_below="@id/include_title"
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/resource_empty"/>
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:textSize="16dp"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:text="没有获取到内容"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:textSize="16dp"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:text="点击屏幕重试"/>
+    </LinearLayout>
+</RelativeLayout>

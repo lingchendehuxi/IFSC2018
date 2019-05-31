@@ -1,30 +1,16 @@
 package com.android.incongress.cd.conference.api;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.os.Message;
 import android.text.TextUtils;
-import android.widget.TextView;
 
 import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.Constants;
-import com.android.incongress.cd.conference.model.ConferenceDb;
 import com.android.incongress.cd.conference.save.SharePreferenceUtils;
-import com.android.incongress.cd.conference.utils.FileUtils;
 import com.android.incongress.cd.conference.utils.StringUtils;
-import com.google.gson.stream.JsonToken;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.FileAsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-
-import cz.msebera.android.httpclient.Header;
 
 /**
  * Created by Jacky on 2015/12/19.
@@ -44,6 +30,204 @@ public class CHYHttpClientUsage {
             }
         }
         return mInstance;
+    }
+
+    /**
+     * \
+     * <p>
+     * 获取底部button
+     */
+    public void doGetTitleButton(JsonHttpResponseHandler responseHandler) {
+        RequestParams params = new RequestParams();
+        params.put("method", "getTabbarMenu");
+        params.put("groupID", Constants.COMPASS_ID);
+        CHYHttpClient.postNew(params, responseHandler);
+    }
+
+    /**
+     * \
+     * <p>
+     * 获取首页信息
+     */
+    public void doGetHomeResource(JsonHttpResponseHandler responseHandler) {
+        RequestParams params = new RequestParams();
+        params.put("method", "init");
+        params.put("compassId", Constants.COMPASS_ID);
+        CHYHttpClient.postCompass(params, responseHandler);
+    }
+
+    /**
+     * \
+     * <p>
+     * 获取参会注册会议列表
+     */
+    public void doGetRegisterMeetList(JsonHttpResponseHandler responseHandler) {
+        RequestParams params = new RequestParams();
+        params.put("method", "getChzcCons");
+        params.put("compassId", Constants.COMPASS_ID);
+        CHYHttpClient.postCompass(params, responseHandler);
+    }
+    /**
+     * \
+     * <p>
+     * 获取论文投稿会议列表
+     */
+    public void doGetContributeMeetList(JsonHttpResponseHandler responseHandler) {
+        RequestParams params = new RequestParams();
+        params.put("method", "getTgCons");
+        params.put("compassId", Constants.COMPASS_ID);
+        CHYHttpClient.postCompass(params, responseHandler);
+    }
+    /**
+     * \
+     * <p>
+     * 获取酒店预订会议列表
+     */
+    public void doGetHotelMeetList(JsonHttpResponseHandler responseHandler) {
+        RequestParams params = new RequestParams();
+        params.put("method", "getJdCons");
+        params.put("compassId", Constants.COMPASS_ID);
+        CHYHttpClient.postCompass(params, responseHandler);
+    }
+
+    /**
+     * \
+     * http://app.incongress.cn/compassApiV2.do?method=&conId=&userToken=
+     * 获取未读消息数
+     */
+    public void doGetUNReadMessage(JsonHttpResponseHandler responseHandler) {
+        RequestParams params = new RequestParams();
+        params.put("method", "getLookCountByTokenMessage");
+        params.put("conId", Constants.getConId());
+        params.put("userToken", AppApplication.TOKEN_IMEI);
+        CHYHttpClient.postCompass(params, responseHandler);
+    }
+
+    /**
+     * \
+     * http://app.incongress.cn/compassApiV2.do?method=&conId=&userToken=
+     * 获取未读问答数
+     */
+    public void doGetUNReadQuestion(JsonHttpResponseHandler responseHandler) {
+        RequestParams params = new RequestParams();
+        params.put("method", "getLookCountByChy");
+        params.put("conId", Constants.getConId());
+        params.put("userToken", AppApplication.TOKEN_IMEI);
+        CHYHttpClient.postCompass(params, responseHandler);
+    }
+
+    /**
+     * \
+     * http://app.incongress.cn/compassApiV2.do?method=&userToken=&moduleNo=&conId=&compassId=
+     * <p>
+     * 是参会易数据时compassId传-1；是compass数据时conId传-1
+     * 上传红点点击记录
+     */
+    public void doPostUNReadQuestion(boolean isCompass,int moduleNo, JsonHttpResponseHandler responseHandler) {
+        RequestParams params = new RequestParams();
+        params.put("method", "createUserLooked");
+        if(isCompass){
+            params.put("conId", "-1");
+            params.put("compassId", Constants.COMPASS_ID);
+        }else {
+            params.put("conId", Constants.getConId());
+            params.put("compassId", "-1");
+        }
+        params.put("userToken", AppApplication.TOKEN_IMEI);
+        params.put("moduleNo", moduleNo);
+        CHYHttpClient.postCompass(params, responseHandler);
+    }
+    /**
+     * \
+     * 头像飘起来
+     */
+    public void doPostNameAnddPHeadFloat(JsonHttpResponseHandler responseHandler) {
+        RequestParams params = new RequestParams();
+        params.put("getLocationUser", "");
+        params.put("conId", Constants.getConId());
+        CHYHttpClient.postNew(params, responseHandler);
+    }
+
+    /**
+     * 资源
+     * http://app.incongress.cn/compassApiV2.do?method=resourceList&compassId=
+     */
+    public void doGetResourceListNew(JsonHttpResponseHandler responseHandler) {
+        RequestParams params = new RequestParams();
+        params.put("method", "resourceList");
+        params.put("compassId", Constants.COMPASS_ID);
+        CHYHttpClient.postCompass(params, responseHandler);
+    }
+
+    /**
+     * 换一批
+     * http://app.incongress.cn/compassApiV2.do?method=refreshData&compassId=&dataIds=
+     */
+    public void doGetRefreshData(String dataIds, JsonHttpResponseHandler responseHandler) {
+        RequestParams params = new RequestParams();
+        params.put("method", "refreshData");
+        params.put("compassId", Constants.COMPASS_ID);
+        params.put("dataIds", dataIds);
+        CHYHttpClient.postCompass(params, responseHandler);
+    }
+
+    /**
+     * 资源更新
+     */
+    public void doGetCheckUpdateData(JsonHttpResponseHandler responseHandler) {
+        RequestParams params = new RequestParams();
+        params.put("method", "checkUpdateData");
+        params.put("userId", AppApplication.userId);
+        params.put("userType", AppApplication.userType);
+        CHYHttpClient.postCompass(params, responseHandler);
+    }
+
+    /**
+     * 获取课件列表
+     */
+    public void doGetDataByConId(String conferencesId, JsonHttpResponseHandler responseHandler) {
+        RequestParams params = new RequestParams();
+        params.put("method", "getDataByConId");
+        params.put("conferencesId", conferencesId);
+        CHYHttpClient.postResource(params, responseHandler);
+    }
+
+    /**
+     * 获取指南列表
+     */
+    public void doGetZhiNanList(String conferencesId, int isVip, JsonHttpResponseHandler responseHandler) {
+        RequestParams params = new RequestParams();
+        params.put("method", "getZhiNanList");
+        params.put("isVip", isVip);
+        params.put("conferencesId", conferencesId);
+        CHYHttpClient.postResource(params, responseHandler);
+    }
+
+    /**
+     * 资源搜索
+     */
+    public void getSearchData(String searchString, int type, int isVip, JsonHttpResponseHandler responseHandler) {
+        RequestParams params = new RequestParams();
+        params.put("method", "searchData");
+        params.put("isVip", isVip);
+        params.put("type", type);
+        params.put("searchString", searchString);
+        CHYHttpClient.postResource(params, responseHandler);
+    }
+
+    /**
+     * CSCO之声接口 下方列表数据
+     * http://app.incongress.cn/compassApiV2.do?method=&compassId=&lastSceneShowId=&userId=&userType=&lan=
+     */
+    public void doGetSceneShowZs(String lastSceneShowId, JsonHttpResponseHandler responseHandler) {
+        RequestParams params = new RequestParams();
+        params.put("method", "getSceneShowList");
+        params.put("compassId", Constants.COMPASS_ID);
+        params.put("lastSceneShowId", lastSceneShowId);
+        params.put("userId", AppApplication.userId);
+        params.put("userType", AppApplication.userType);
+
+        CHYHttpClient.postCompass(params, responseHandler);
     }
 
     /**
@@ -151,6 +335,30 @@ public class CHYHttpClientUsage {
         CHYHttpClient.post(params, responseHandler);
     }
 
+    /**
+     * 获取秘书信息
+     * http://app.incongress.cn/chyNewApi.do?method=&conId=&fromWhere=&userId=&userType=&facultyId=
+     */
+    public void doGetScretaryList(JsonHttpResponseHandler responseHandler) {
+        RequestParams params = new RequestParams();
+        params.put("method", "getXiaoMiShu");
+        params.put("conId", Constants.getConId());
+        params.put("fromWhere", Constants.getFromWhere());
+        params.put("userId", AppApplication.userId);
+        params.put("userType", AppApplication.userType);
+        params.put("facultyId", AppApplication.facultyId);
+        CHYHttpClient.postNew(params, responseHandler);
+    }
+    /**
+     * 对课件检查用户权限
+     *
+     */
+    public void doGetCheckUserInfo( JsonHttpResponseHandler responseHandler) {
+        RequestParams params = new RequestParams();
+        params.put("checkUserInfoState", "");
+        params.put("userId", AppApplication.userId);
+        CHYHttpClient.postNew(params, responseHandler);
+    }
 
     /**
      * 现场动态接口 下方列表数据
@@ -177,7 +385,7 @@ public class CHYHttpClientUsage {
         RequestParams params = new RequestParams();
 
         params.put("method", "chyModuleTongji");
-        params.put("moduleName", moduleName);
+        params.put("moduleName", StringUtils.utf8Encode(moduleName));
         params.put("conId", Constants.getConId());
         params.put("fromWhere", Constants.getFromWhere());
         params.put("type", 1);
@@ -230,7 +438,7 @@ public class CHYHttpClientUsage {
      */
     public void doGetUserMessage(String userId, String userType, JsonHttpResponseHandler responseHandler) {
         RequestParams params = new RequestParams();
-        params.put("method","getUserMessageReminderByUserIdAndUserType");
+        params.put("method", "getUserMessageReminderByUserIdAndUserType");
         params.put("userId", userId);
         params.put("userType", userType);
         params.put("conferencesId", Constants.getConId());
@@ -338,28 +546,35 @@ public class CHYHttpClientUsage {
 
     public void doLoginWX(String openId, JsonHttpResponseHandler responseHandler) {
         RequestParams params = new RequestParams();
-        params.put("loginV6", "");
-        params.put("mobile", "");
+        params.put("method", "login");
+        params.put("mobile", SharePreferenceUtils.getUser(Constants.USER_MOBILE));
         params.put("lan", AppApplication.getSystemLanuageCode());
         params.put("sms", "");
+        params.put("compassId", Constants.COMPASS_ID);
         params.put("openId", openId);
         params.put("fromWhere", Constants.getFromWhere());
         params.put("conId", Constants.getConId());
 
-        CHYHttpClient.post2(params, responseHandler);
+        CHYHttpClient.postCompass(params, responseHandler);
     }
 
+    /**
+     * 英文登陆http://app.incongress.cn/compassApiV2.do?method=loginByEmail&email=&password=&lan=
+     *
+     * @param email
+     * @param password
+     * @param lan
+     * @param responseHandler
+     */
     public void doEmailLoginV1(String email, String password, String lan, JsonHttpResponseHandler responseHandler) {
         RequestParams params = new RequestParams();
-        params.put("loginByEmailV1", "");
+        params.put("method", "loginByEmail");
         params.put("email", email);
         params.put("password", password);
         params.put("lan", lan);
         params.put("fromWhere", Constants.getFromWhere());
         params.put("conId", Constants.getConId());
-
-
-        CHYHttpClient.post2(params, responseHandler);
+        CHYHttpClient.postCompass(params, responseHandler);
     }
 
     /**
@@ -374,7 +589,7 @@ public class CHYHttpClientUsage {
      */
     public void doLoginByCode(String mobile, String sms, String lan, String fromWhere, JsonHttpResponseHandler responseHandler) {
         RequestParams params = new RequestParams();
-        params.put("loginV6", "");
+        params.put("method", "login");
         params.put("mobile", mobile);
         params.put("lan", lan);
         params.put("fromWhere", fromWhere);
@@ -394,37 +609,36 @@ public class CHYHttpClientUsage {
         params.put("code", ccode);
         params.put("type",type+"");*/
 
-        CHYHttpClient.post2(params, responseHandler);
+        CHYHttpClient.postCompass(params, responseHandler);
     }
-    //第一次登录后，设置用户名和头像
+
+    //微信绑定手机
+    //http://app.incongress.cn/compassApiV2.do?method=wxBindPhone&mobile=&sms=&lan=&compassId=&openId=
     public void doUpdateUserInfo(String mobile, String sms, String openId, String nickName, String imgUrl, String sex, JsonHttpResponseHandler responseHandler) {
         RequestParams params = new RequestParams();
-        params.put("mobilePhone", mobile);
+        params.put("method", "wxBindPhone");
+        params.put("mobile", mobile);
         params.put("lan", AppApplication.getSystemLanuageCode());
         params.put("fromWhere", Constants.getFromWhere());
         params.put("sms", sms);
         params.put("conId", Constants.getConId());
+        params.put("compassId", Constants.COMPASS_ID);
         params.put("openId", openId);
-        params.put("imgUrl", imgUrl);
-        if (!TextUtils.isEmpty(nickName)) {
-            params.put("nickName", StringUtils.utf8Encode(nickName));
-        }
-        if (!TextUtils.isEmpty(sex)) {
-            params.put("sex", StringUtils.utf8Encode(sex));
-        }
-        CHYHttpClient.postOther(params, "updateUserInfoWx", responseHandler);
+        CHYHttpClient.postCompass(params, responseHandler);
     }
-    //更改用户名和头像
-    public void doModifyUserInfo(String nickName, String imgUrl, JsonHttpResponseHandler responseHandler) {
+
+    //更改用户名和头像  http://app.incongress.cn/compassApiV2.do?method=updateIcUserWx&icUserId=&nickName=&imgUrl=
+    public void doModifyUserInfo(String icUserId, String nickName, String imgUrl, JsonHttpResponseHandler responseHandler) {
         RequestParams params = new RequestParams();
+        params.put("method", "updateIcUserWx");
         params.put("fromWhere", Constants.getFromWhere());
         params.put("conId", Constants.getConId());
         params.put("imgUrl", imgUrl);
-        params.put("userId", SharePreferenceUtils.getUser(Constants.USER_ID));
+        params.put("icUserId", icUserId);
         if (!TextUtils.isEmpty(nickName)) {
             params.put("nickName", StringUtils.utf8Encode(nickName));
         }
-        CHYHttpClient.postOther(params, "updateUserInfoWxV2", responseHandler);
+        CHYHttpClient.postCompass(params, responseHandler);
     }
 
     /**
@@ -577,6 +791,22 @@ public class CHYHttpClientUsage {
     }
 
     /**
+     * 获取动态的数量
+     * http://app.incongress.cn/compassApiV2.do?method=&compassId=&userToken=
+     *
+     * @param responseHandler
+     */
+    public void doGetLookBoKeCount(JsonHttpResponseHandler responseHandler) {
+        RequestParams params = new RequestParams();
+
+        params.put("method", "getLookCountBySceneShow");
+        params.put("compassId", Constants.COMPASS_ID);
+        params.put("userToken", AppApplication.TOKEN_IMEI);
+
+        CHYHttpClient.postCompass(params, responseHandler);
+    }
+
+    /**
      * 接口sceneShowAnswer讲者回复提问
      *
      * @param sceneShowId
@@ -648,21 +878,20 @@ public class CHYHttpClientUsage {
 
     /**
      * 上传用户头像
+     * http://app.incongress.cn/compassApiV2.do?method=createUserImg&icUserId=&userImg=
      *
      * @param userId
-     * @param userType
      * @param userImg
      * @param responseHandler
      * @throws FileNotFoundException
      */
-    public void doCreateUserImg(String userId, String userType, File userImg, JsonHttpResponseHandler responseHandler) throws FileNotFoundException {
+    public void doCreateUserImg(String userId, File userImg, JsonHttpResponseHandler responseHandler) throws FileNotFoundException {
         RequestParams params = new RequestParams();
         params.put("method", "createUserImg");
         params.put("userImg", userImg);
-        params.put("userId", userId);
-        params.put("userType", userType);
+        params.put("icUserId", userId);
 
-        CHYHttpClient.post(params, responseHandler);
+        CHYHttpClient.postCompass(params, responseHandler);
     }
 
     /**
@@ -705,16 +934,15 @@ public class CHYHttpClientUsage {
     /**
      * 程序初始化调用的接口
      */
-    public void doGetInitData(int cId, int dataVersion, int clientType, String appVersion, String token,int totalConId, JsonHttpResponseHandler responseHandler) {
+    public void doGetInitData(int cId, int dataVersion, String appVersion, int totalConId, JsonHttpResponseHandler responseHandler) {
         RequestParams params = new RequestParams();
 
         params.put("method", "getInitData");
         params.put("cId", cId + "");
         params.put("dataVersion", dataVersion + "");
-        params.put("clientType", clientType + "");
+        params.put("clientType", AppApplication.conType);
         params.put("appVersion", appVersion + "");
-        params.put("token", token);
-        params.put("totalConId", 1);
+        params.put("totalConId", totalConId);
 
         CHYHttpClient.post(params, responseHandler);
 
@@ -743,13 +971,14 @@ public class CHYHttpClientUsage {
     /**
      * 上传壁报ID
      */
-    public void doPostWallPosterId(String posterId,JsonHttpResponseHandler responseHandler) {
+    public void doPostWallPosterId(String posterId, JsonHttpResponseHandler responseHandler) {
         RequestParams params = new RequestParams();
         params.put("method", "posterRead");
         params.put("posterId", posterId);
         params.put("clientType", Constants.MACHINE_TYPE);
         CHYHttpClient.postNew(params, responseHandler);
     }
+
     /**
      * 获取电子壁报的数据类型
      */
@@ -771,7 +1000,7 @@ public class CHYHttpClientUsage {
         params.put("page", pageIndex);
         params.put("search", StringUtils.utf8Encode(searchString));
         params.put("count", Constants.PAGE_SIZE);
-        if(!TextUtils.isEmpty(searchString)){
+        if (!TextUtils.isEmpty(searchString)) {
             orderBy = -1;
         }
         params.put("fieldId", orderBy + "");
@@ -849,11 +1078,12 @@ public class CHYHttpClientUsage {
         RequestParams params = new RequestParams();
         params.put("method", "getTokenByUserId");
         params.put("userId", userId + "");
+        params.put("userType", SharePreferenceUtils.getUser(Constants.USER_TYPE));
         params.put("conId", Constants.getConId() + "");
         params.put("fromWhere", Constants.getFromWhere());
 
-//        CHYHttpClient.post(params, responseHandler);
-//        CHYHttpClient.postLocal(params, responseHandler);
+        CHYHttpClient.post(params, responseHandler);
+       // CHYHttpClient.postCompass(params, responseHandler);
     }
 
     /**
@@ -872,7 +1102,7 @@ public class CHYHttpClientUsage {
 
 //        CHYHttpClient.post(params, responseHandler);
 
-//        CHYHttpClient.postLocal(params, responseHandler);
+//        CHYHttpClient.postCompass(params, responseHandler);
     }
 
 
@@ -890,7 +1120,7 @@ public class CHYHttpClientUsage {
         params.put("fromWhere", Constants.getFromWhere());
 //        CHYHttpClient.post(params, responseHandler);
 
-//        CHYHttpClient.postLocal(params, responseHandler);
+//        CHYHttpClient.postCompass(params, responseHandler);
     }
 
     /**
@@ -914,7 +1144,7 @@ public class CHYHttpClientUsage {
 
 //        CHYHttpClient.post(params, responseHandler);
 
-//        CHYHttpClient.postLocal(params, responseHandler);
+//        CHYHttpClient.postCompass(params, responseHandler);
     }
 
     /**
@@ -934,7 +1164,7 @@ public class CHYHttpClientUsage {
 
 //        CHYHttpClient.post(params, responseHandler);
 
-//        CHYHttpClient.postLocal(params, responseHandler);
+//        CHYHttpClient.postCompass(params, responseHandler);
     }
 
     /**
@@ -954,7 +1184,7 @@ public class CHYHttpClientUsage {
 
 //        CHYHttpClient.post(params, responseHandler);
 
-//        CHYHttpClient.postLocal(params, responseHandler);
+//        CHYHttpClient.postCompass(params, responseHandler);
     }
 
     /**
@@ -974,7 +1204,7 @@ public class CHYHttpClientUsage {
 
 //        CHYHttpClient.post(params, responseHandler);
 
-//        CHYHttpClient.postLocal(params, responseHandler);
+//        CHYHttpClient.postCompass(params, responseHandler);
     }
 
 
@@ -995,19 +1225,40 @@ public class CHYHttpClientUsage {
         CHYHttpClient.post(params, responseHandler);
     }
 
-    public void doGetMobileUserInfoByMobile(String lan, String conId, String fromWhere, JsonHttpResponseHandler responseHandler) {
+    //根据icUserId 获取头像和昵称
+    public void doGetMobileUserInfoByMobile(String icUserId, JsonHttpResponseHandler responseHandler) {
         RequestParams params = new RequestParams();
-        params.put("getUserInfoByIdV2", "");
-        params.put("userId", SharePreferenceUtils.getUser(Constants.USER_ID));
-        //params.put("mobile", mobile);
-        //params.put("trueName", trueName);
-        params.put("lan", lan);
-        params.put("conId", conId);
-        params.put("fromWhere", fromWhere);
+        params.put("method", "getIcUserById");
+        params.put("icUserId", icUserId);
+        params.put("lan", AppApplication.getSystemLanuageCode());
 
-        CHYHttpClient.post2(params, responseHandler);
+        CHYHttpClient.postCompass(params, responseHandler);
     }
 
+    //根据icUserId获取个人信息 16、根据icUserId、conId获取参会易的userId、facultyId、userType
+    public void doGetMobileUserInfoByIcUserId(String icUserId, String lan, JsonHttpResponseHandler responseHandler) {
+        RequestParams params = new RequestParams();
+        params.put("method", "getUserInfoByIcUserId");
+        params.put("icUserId", icUserId);
+        params.put("lan", lan);
+        params.put("conId", Constants.getConId());
+        params.put("fromWhere", Constants.getFromWhere());
+        CHYHttpClient.postCompass(params, responseHandler);
+    }
+    //上传用户地理位置
+    public void doGetUploadUserLocation(double longitude,double latitude,String provinceName,String cityName,String address, JsonHttpResponseHandler responseHandler) {
+        RequestParams params = new RequestParams();
+        params.put("sendUserLocation", "");
+        params.put("userId", SharePreferenceUtils.getUser(Constants.USER_ID));
+        params.put("longitude", longitude);
+        params.put("latitude", latitude);
+        params.put("conId", Constants.getConId());
+        params.put("provinceName", StringUtils.newUtf8Encode(provinceName));
+        params.put("cityName", StringUtils.newUtf8Encode(cityName));
+        params.put("address", StringUtils.newUtf8Encode(address));
+
+        CHYHttpClient.postNew(params, responseHandler);
+    }
     /**
      * 检查数据包接口
      *
@@ -1285,11 +1536,12 @@ public class CHYHttpClientUsage {
 
     public void doGetSearchCollegeTitle(String searchString, String lastId, JsonHttpResponseHandler responseHandler) {
         RequestParams params = new RequestParams();
-        params.put("method", "getDataListByConIdAndSearchString");
+        params.put("method", "getDataListByConIdAndSearchStringV1");
         params.put("totalConId", Constants.PROJECT_ID);
         params.put("searchString", StringUtils.utf8Encode(searchString));
         params.put("lastId", lastId);
         params.put("row", 10);
+        params.put("userId", AppApplication.userId);
         params.put("lan", AppApplication.getSystemLanuageCode());
         CHYHttpClient.postExamTable(params, responseHandler);
     }
@@ -1307,10 +1559,11 @@ public class CHYHttpClientUsage {
         params.put("method", "getZuiXinOrTopData");
         params.put("modelId", modelId);
         params.put("lastId", lastId);
-        params.put("row", Constants.MAXDATA);
+        params.put("row", 50);
         params.put("searchString", searchString);
         CHYHttpClient.postFastOnLine(params, responseHandler);
     }
+
     /**
      * 是否有预约课件
      */
@@ -1322,7 +1575,19 @@ public class CHYHttpClientUsage {
     }
 
     /**
+     * 上传播放课件的人数
+     */
+    public void uploadVideoPlayNumber(int dataId, JsonHttpResponseHandler responseHandler) {
+        RequestParams params = new RequestParams();
+        params.put("method", "dataRead");
+        params.put("dataId", dataId);
+        params.put("readWhere", "android");
+        CHYHttpClient.postExamTable(params, responseHandler);
+    }
+
+    /**
      * 通过modelId获取当年课件天数
+     *
      * @param modelId
      * @param responseHandler
      */
@@ -1337,9 +1602,10 @@ public class CHYHttpClientUsage {
     //获取某一年的课件信息
     public void doGetCollegeListDetail(String day, String modelId, JsonHttpResponseHandler responseHandler) {
         RequestParams params = new RequestParams();
-        params.put("method", "getClassArryAndSessionArray");
+        params.put("method", "getClassArryAndSessionArrayV1");
         params.put("modelId", modelId);
         params.put("timeStart", day);
+        params.put("userId", AppApplication.userId);
         CHYHttpClient.postExamTable(params, responseHandler);
     }
 
@@ -1396,6 +1662,7 @@ public class CHYHttpClientUsage {
         params.put("userId", userId);
         CHYHttpClient.post(params, responseHandler);
     }
+
     //删除我的预约课件
     public void doDeleteMYOrderCourse(String topic, JsonHttpResponseHandler responseHandler) {
         RequestParams params = new RequestParams();
@@ -1405,15 +1672,17 @@ public class CHYHttpClientUsage {
         params.put("topic", StringUtils.utf8Encode(topic));
         CHYHttpClient.post(params, responseHandler);
     }
+
     //获取展商头部信息
-    public void doGetExhibitorTopInfo(JsonHttpResponseHandler responseHandler){
+    public void doGetExhibitorTopInfo(JsonHttpResponseHandler responseHandler) {
         RequestParams params = new RequestParams();
-        params.put("method", "getExhibitorMenu");
+        params.put("method", "getExhibitorMenuV2");
         params.put("conId", Constants.getConId());
         CHYHttpClient.postNew(params, responseHandler);
     }
+
     //获取展商列表信息
-    public void doGetExhibitorListInfo(String lastId, JsonHttpResponseHandler responseHandler){
+    public void doGetExhibitorListInfo(String lastId, JsonHttpResponseHandler responseHandler) {
         RequestParams params = new RequestParams();
         params.put("method", "getExhibitorsV2ListByConIdV1");
         params.put("conId", Constants.getConId());
@@ -1421,8 +1690,9 @@ public class CHYHttpClientUsage {
         params.put("lastId", lastId);
         CHYHttpClient.postNew(params, responseHandler);
     }
+
     //获取展商子信息
-    public void doGetExhibitorByListInfo(String row,int menuIndex,String lastIndex, JsonHttpResponseHandler responseHandler){
+    public void doGetExhibitorByListInfo(String row, int menuIndex, String lastIndex, JsonHttpResponseHandler responseHandler) {
         RequestParams params = new RequestParams();
         params.put("method", "getExhibitorByMenu");
         params.put("conId", Constants.getConId());
@@ -1431,44 +1701,49 @@ public class CHYHttpClientUsage {
         params.put("lastIndex", lastIndex);
         CHYHttpClient.postNew(params, responseHandler);
     }
+
     //获取展商详细信息
-    public void doGetExhibitorDetailInfo(int exhibitorsId, JsonHttpResponseHandler responseHandler){
+    public void doGetExhibitorDetailInfo(int exhibitorsId, JsonHttpResponseHandler responseHandler) {
         RequestParams params = new RequestParams();
         params.put("method", "getExhibitorsV2ById");
         params.put("exhibitorsId", exhibitorsId);
         CHYHttpClient.postNew(params, responseHandler);
     }
+
     //上传二维码信息
     public void doUploadQRCodeInfo(String userId, JsonHttpResponseHandler responseHandler){
         RequestParams params = new RequestParams();
         params.put("method", "mealsAndCardsCheck");
         params.put("conId", Constants.getConId());
-        params.put("firstuserId", "204907");
+        params.put("firstuserId", AppApplication.userId);
         params.put("seconduserId", userId);
         CHYHttpClient.postLiveList(params, responseHandler);
     }
 
     /**
      * 直播
+     *
      * @param responseHandler
      */
     //获取会议室列表接口
-    public void doGetClassForMeetLive(JsonHttpResponseHandler responseHandler){
+    public void doGetClassForMeetLive(JsonHttpResponseHandler responseHandler) {
         RequestParams params = new RequestParams();
         params.put("method", "getClasses");
         params.put("conId", Constants.getConId());
         CHYHttpClient.postLiveList(params, responseHandler);
     }
+
     //获取会议室对应直播列表接口
-    public void doGetClassForMeetLiveAddress(int classId,JsonHttpResponseHandler responseHandler){
+    public void doGetClassForMeetLiveAddress(int classId, JsonHttpResponseHandler responseHandler) {
         RequestParams params = new RequestParams();
         params.put("method", "getSessionListByClass");
         params.put("conId", Constants.getConId());
         params.put("classId", classId);
         CHYHttpClient.postLiveList(params, responseHandler);
     }
+
     //直播预约
-    public void doGetOrderLive(int sessionId,JsonHttpResponseHandler responseHandler){
+    public void doGetOrderLive(int sessionId, JsonHttpResponseHandler responseHandler) {
         RequestParams params = new RequestParams();
         params.put("method", "liveYuyue");
         params.put("conId", Constants.getConId());
@@ -1477,8 +1752,9 @@ public class CHYHttpClientUsage {
         params.put("userType", AppApplication.userType);
         CHYHttpClient.postLiveList(params, responseHandler);
     }
+
     //获取相关直播列表
-    public void doGetRelativeLive(int classId,JsonHttpResponseHandler responseHandler){
+    public void doGetRelativeLive(int classId, JsonHttpResponseHandler responseHandler) {
         RequestParams params = new RequestParams();
         params.put("method", "getSessionListByClassAll");
         params.put("conId", Constants.getConId());

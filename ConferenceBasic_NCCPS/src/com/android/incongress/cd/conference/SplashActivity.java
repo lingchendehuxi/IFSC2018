@@ -1,11 +1,18 @@
 package com.android.incongress.cd.conference;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -20,8 +27,10 @@ import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.beans.VersionBean;
 import com.android.incongress.cd.conference.data.JsonParser;
 import com.android.incongress.cd.conference.model.ConferenceDb;
+import com.android.incongress.cd.conference.model.ConferenceDbUtils;
 import com.android.incongress.cd.conference.save.SharePreferenceUtils;
 import com.android.incongress.cd.conference.services.DownloadService;
+import com.android.incongress.cd.conference.ui.login.view.LoginActivity;
 import com.android.incongress.cd.conference.utils.BaseAsyncTask;
 import com.android.incongress.cd.conference.utils.FileUtils;
 import com.android.incongress.cd.conference.utils.JSONCatch;
@@ -45,13 +54,16 @@ import java.util.List;
 import butterknife.BindView;
 import cn.jpush.android.api.JPushInterface;
 import cz.msebera.android.httpclient.Header;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.AppSettingsDialog;
+import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * 启动屏，进行数据更新和数据库建立
  * <p>
  * 开机首页，主要功能，第一次会解压一个文件，
  */
-public class SplashActivity extends BaseActivity {
+public class SplashActivity extends BaseActivity implements EasyPermissions.PermissionCallbacks {
     private static final int MSG_CHECK = 0x0001;
     private static final int MSG_DOWNLOADING = 0x0002;
     private static final int MSG_FINISH = 0x0003;
@@ -62,6 +74,7 @@ public class SplashActivity extends BaseActivity {
     private static final int MSG_UPDATE_FOUND = 0x0008;
     private static final int MSG_DOWNLOADING_ZIP = 0x0009;
     protected static final int MSG_ERROR = 0x1002;
+    protected static final int INSTALL_PERMISS_CODE = 1008;
 
 
     private static final int CREATEDB_TRUE = 0;
@@ -191,7 +204,6 @@ public class SplashActivity extends BaseActivity {
                             Intent intent = new Intent(SplashActivity.this, DownloadService.class);
                             intent.putExtra("url", strUrl);
                             startService(intent);
-
                             finishsplash();
                         }
                     }, new DialogInterface.OnClickListener() {
@@ -209,19 +221,8 @@ public class SplashActivity extends BaseActivity {
                 break;
                 case MSG_UPDATE_FOUND: {
                     if (!updateing) {
-                        showDialog(R.string.incongress_data_update, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                UpdateZip(0);
-                                updateing = true;
-                            }
-                        }, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                handler.sendEmptyMessage(MSG_FINISH);
-                            }
-                        }, false);
+                        UpdateZip(0);
+                        updateing = true;
                         mPbh.setProgress(0);
                     }
                 }
@@ -240,6 +241,10 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initPermissions();
+    }
+
+    private void initNeedData() {
         path = AppApplication.instance().getSDPath() + Constants.DOWNLOADDIR;
         filespath = AppApplication.instance().getSDPath() + Constants.FILESDIR;
         mJumpBeans = JumpingBeans.with(mTvDots).appendJumpingDots().build();
@@ -294,9 +299,15 @@ public class SplashActivity extends BaseActivity {
             });
         } else {
             Toast.makeText(SplashActivity.this, R.string.nowifi, Toast.LENGTH_LONG).show();
-            Intent intent = new Intent();
-            intent.setClass(SplashActivity.this, HomeActivity.class);
-            startActivity(intent);
+            if (AppApplication.isUserLogIn()) {
+                Intent intent = new Intent();
+                intent.setClass(SplashActivity.this, HomeActivity.class);
+                startActivity(intent);
+            } else {
+                Intent intent = new Intent();
+                intent.setClass(SplashActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
             finish();
         }
     }
@@ -312,6 +323,136 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     protected void initViewsAction() {
+    }
+
+    //申请权限
+    private static final int RC_LOCATION_CONTACTS_PERM = 124;
+    private static final String[] LOCATION_AND_CONTACTS = {
+            Manifest.permission.CALL_PHONE,
+            Manifest.permission.CAMERA,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_PHONE_STATE,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+    };
+
+    @AfterPermissionGranted(RC_LOCATION_CONTACTS_PERM)
+    private void startPermissionsTask() {
+        if (hasPermissions()) {
+            //具备权限 直接进行操作
+            //如果是O版本检查安装apk权限
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                boolean haveInstallPermission = getPackageManager().canRequestPackageInstalls();
+                if (!haveInstallPermission) {
+                    toInstallPermissionSettingIntent();
+                } else {
+                    initNeedData();
+                }
+            }else {
+                initNeedData();
+            }
+        } else {
+            //权限拒绝 申请权限
+            //第二个参数是被拒绝后再次申请该权限的解释
+            //第三个参数是请求码
+            //第四个参数是要申请的权限
+
+            EasyPermissions.requestPermissions(this,
+                    this.getResources().getString(R.string.easy_permissions),
+                    RC_LOCATION_CONTACTS_PERM, LOCATION_AND_CONTACTS);
+        }
+    }
+
+    /**
+     * 开启安装未知来源权限
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void toInstallPermissionSettingIntent() {
+        Uri packageURI = Uri.parse("package:" + getPackageName());
+        Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, packageURI);
+        startActivityForResult(intent, INSTALL_PERMISS_CODE);
+    }
+
+
+    /**
+     * 判断是否添加了权限
+     *
+     * @return true
+     */
+    private boolean hasPermissions() {
+        return EasyPermissions.hasPermissions(this, LOCATION_AND_CONTACTS);
+    }
+
+
+    /**
+     * 初始化权限
+     */
+    private void initPermissions() {
+        startPermissionsTask();
+    }
+
+
+    /**
+     * 将结果转发到EasyPermissions
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        // 将结果转发到EasyPermissions
+        EasyPermissions.onRequestPermissionsResult(requestCode,
+                permissions, grantResults, SplashActivity.this);
+    }
+
+    /**
+     * 某些权限已被授予
+     */
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+        //某些权限已被授予
+        Log.d("权限", "onPermissionsGranted:" + requestCode + ":" + perms.size());
+    }
+
+    /**
+     * 某些权限已被拒绝
+     */
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+        //某些权限已被拒绝
+        Log.d("权限", "onPermissionsDenied:" + requestCode + ":" + perms.size());
+        // (Optional) Check whether the user denied any permissions and checked "NEVER ASK AGAIN."
+        // This will display a dialog directing them to enable the permission in app settings.
+        if (EasyPermissions.somePermissionPermanentlyDenied(SplashActivity.this, perms)) {
+            AppSettingsDialog.Builder builder = new AppSettingsDialog.Builder(SplashActivity.this);
+            builder.setTitle("允许权限")
+                    .setRationale("没有该权限，此应用程序部分功能可能无法正常工作。打开应用设置界面以修改应用权限")
+                    .setPositiveButton("去设置")
+                    .setNegativeButton("取消")
+                    .setRequestCode(124)
+                    .build()
+                    .show();
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE) {
+            // Do something after user returned from app settings screen, like showing a Toast.
+            // 当用户从应用设置界面返回的时候，可以做一些事情，比如弹出一个土司。
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                boolean haveInstallPermission = getPackageManager().canRequestPackageInstalls();
+                if (!haveInstallPermission) {
+                    toInstallPermissionSettingIntent();
+                } else {
+                    initNeedData();
+                }
+            }
+            initNeedData();
+        } else if (resultCode == RESULT_OK && requestCode == INSTALL_PERMISS_CODE) {
+            initNeedData();
+        }
     }
 
     /**
@@ -462,10 +603,10 @@ public class SplashActivity extends BaseActivity {
                     ConferenceDb.createDB(filespath, 0, mUpdateListener);
                     SharePreferenceUtils.saveAppInt(Constants.PREFERENCE_DB_VERSION, Constants.DATA_VERSION);
                     mDbVersion = Constants.DATA_VERSION;
-                    SharePreferenceUtils.saveAppBoolean(Constants.DB_CLEAR,true);
-                }else {
+                    SharePreferenceUtils.saveAppBoolean(Constants.DB_CLEAR, true);
+                } else {
                     //这里是对当前版本进行一次数据库的转移，重新创建一个
-                    if(!SharePreferenceUtils.getAppBoolean(Constants.DB_CLEAR,false)){
+                    if (!SharePreferenceUtils.getAppBoolean(Constants.DB_CLEAR, false)) {
                         ConferenceDb.deleteAllClass();
                         //第一次进行数据加载
                         InputStream zipIn = getResources().openRawResource(R.raw.data1);
@@ -473,7 +614,7 @@ public class SplashActivity extends BaseActivity {
                         ConferenceDb.createDB(filespath, 0, mUpdateListener);
                         SharePreferenceUtils.saveAppInt(Constants.PREFERENCE_DB_VERSION, Constants.DATA_VERSION);
                         mDbVersion = Constants.DATA_VERSION;
-                        SharePreferenceUtils.saveAppBoolean(Constants.DB_CLEAR,true);
+                        SharePreferenceUtils.saveAppBoolean(Constants.DB_CLEAR, true);
                     }
                 }
             }
@@ -486,11 +627,8 @@ public class SplashActivity extends BaseActivity {
             @Override
             protected void postWork() {
                 int conId = Constants.getConId();
-                int type = AppApplication.conType;
-                String token = SharePreferenceUtils.getAppString("incongress_token");
-
                 //检查更新数据
-                CHYHttpClientUsage.getInstanse().doGetInitData(conId, mDbVersion, type, appversion, token, Constants.PROJECT_ID, new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
+                CHYHttpClientUsage.getInstanse().doGetInitData(conId, mDbVersion, appversion, Constants.PROJECT_ID, new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                         super.onSuccess(statusCode, headers, response);

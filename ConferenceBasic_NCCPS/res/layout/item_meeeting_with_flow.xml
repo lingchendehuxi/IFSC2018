@@ -52,13 +52,15 @@
                         android:layout_width="12dp"
                         android:layout_height="12dp"
                         android:layout_marginRight="9dp"
-                        android:src="@drawable/icon_date_small" />
+                        android:src="@drawable/icon_date_small"
+                        android:tint="@color/theme_color"/>
 
                     <ImageView
                         android:id="@+id/meet_order"
                         android:layout_width="12dp"
                         android:layout_height="12dp"
-                        android:src="@drawable/icon_study_small" />
+                        android:src="@drawable/icon_study_small"
+                        android:tint="@color/theme_color"/>
                 </LinearLayout>
             </LinearLayout>
 

@@ -1,58 +1,56 @@
-package com.android.incongress.cd.conference;
+package com.android.incongress.cd.conference.ui.login.view;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.android.incongress.cd.conference.api.CHYHttpClientUsage;
+import com.android.incongress.cd.conference.HomeActivity;
+import com.android.incongress.cd.conference.LoginForUpdateInfoActivity;
+import com.android.incongress.cd.conference.RegisterActivity;
+import com.android.incongress.cd.conference.WxForLoginActivity;
 import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.BaseActivity;
 import com.android.incongress.cd.conference.base.Constants;
+import com.android.incongress.cd.conference.mvp.BaseMVPActivity;
 import com.android.incongress.cd.conference.save.ParseUser;
 import com.android.incongress.cd.conference.save.SharePreferenceUtils;
+import com.android.incongress.cd.conference.ui.login.contract.LoginContract;
+import com.android.incongress.cd.conference.ui.login.presenter.LoginActivityPresenter;
 import com.android.incongress.cd.conference.utils.ActivityUtils;
 import com.android.incongress.cd.conference.utils.JSONCatch;
-import com.android.incongress.cd.conference.utils.LanguageUtil;
-import com.android.incongress.cd.conference.utils.MyLogger;
 import com.android.incongress.cd.conference.utils.StringUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
 import com.android.incongress.cd.conference.widget.phonecode.CountDownButton;
 import com.android.incongress.cd.conference.widget.phonecode.FocusPhoneCode;
-import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Map;
-
-import cz.msebera.android.httpclient.Header;
 
 /**
  * Created by Jacky on 2016/1/29.
  * 登录页面
  */
-public class LoginActivity extends BaseActivity implements View.OnClickListener {
+public class LoginActivity extends BaseActivity implements View.OnClickListener ,LoginContract.View{
     private EditText mEtMobile, mEtPswCode, mEtFamilyName, mEtGivenName;
     private Button mBtLogin, mBtCode;
     private TextView tv_title, tv_number_code, mTvGoRegister;
@@ -106,6 +104,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     @Override
     protected void initViewsAction() {
+        //不可以再强制退出
+        SharePreferenceUtils.saveAppBoolean(Constants.FORCE_LOGOUT,true);
         try {
             mCurrentType = getIntent().getIntExtra(LOGIN_TYPE, TYPE_NORMAL);
             mUserMobile = getIntent().getStringExtra(LOGIN_USERMOBILE);
@@ -212,19 +212,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             }
         });
 
-
-
-        /*mEtRegistCode.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    mEtRegistCode.setHintTextColor(getResources().getColor(R.color.gray));
-                } else {
-                    mEtRegistCode.setHintTextColor(getResources().getColor(R.color.white));
-                }
-            }
-        });*/
-
         //以下代码不用验证了，有些会议可能单独需要
         if (mCurrentType == TYPE_SECRETARY) {
             //mCbRegist.setVisibility(View.GONE);
@@ -247,7 +234,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 }
             }
         });
-
     }
 
     private void initEnglish() {
@@ -296,159 +282,40 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 } else if (TextUtils.isEmpty(pswCode)) {
                     ToastUtils.showToast(getString(R.string.psw_can_not_empty));
                 } else {
-                    doLoginbyEmail(mobile, pswCode, AppApplication.getSystemLanuageCode());
+                    ProgressDialog pd = new ProgressDialog(LoginActivity.this);
+                    pd.setCanceledOnTouchOutside(false);
+                    presenter.doLoginbyEmail(mobile, pswCode, pd);
                 }
             }
         });
-
-
     }
-
     //登录成功标识符
     public static final String LOGIN_ACTION = "login";
     //退出登录标识符
     public static final String LOGOUT_ACTION = "logout";
-
-    private void doLogin___(final String mobile, final String sms, String lan) {
-        CHYHttpClientUsage.getInstanse().doLoginByCode(mobile.replaceAll(" ", ""), sms, lan, Constants.getFromWhere(), new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
-            public void onStart() {
-                super.onStart();
-                mProgressDialog = ProgressDialog.show(LoginActivity.this, null, "loading...");
-            }
-
-            @Override
-            public void onFinish() {
-                super.onFinish();
-                mProgressDialog.dismiss();
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                ToastUtils.showToast("服务器开小差了，请稍后重试");
-            }
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                super.onSuccess(statusCode, headers, response);
-                try {
-                    if (JSONCatch.parseInt("state", response) == 1) {
-                        if (TextUtils.isEmpty(JSONCatch.parseString("name", response)) && TextUtils.isEmpty(JSONCatch.parseString("img", response))) {
-                            Intent intent = new Intent(LoginActivity.this, LoginForUpdateInfoActivity.class);
-                            Bundle bundle = new Bundle();
-                            bundle.putString(Constants.USER_MOBILE, mobile.replaceAll(" ", ""));
-                            bundle.putString("sms", sms);
-                            bundle.putString(Constants.USER_ID, JSONCatch.parseString(Constants.USER_ID, response));
-                            bundle.putString(Constants.USER_TYPE, JSONCatch.parseString(Constants.USER_TYPE, response));
-                            intent.putExtras(bundle);
-                            mFpc.clearData();
-                            startActivityForResult(intent, LOGIN_UPDATA_CODE_RESULT);
-                            return;
-                        }
-                        ParseUser.saveUserInfo(response.toString());
-                        SharePreferenceUtils.saveUserBoolean(Constants.USER_IS_LOGIN, true);
-
-//                        setResult(RESULT_OK);
-                        //发送广播
-                        Intent loginIntent = new Intent();
-                        loginIntent.setAction(LOGIN_ACTION);
-                        sendBroadcast(loginIntent);
-                        finish();
-                    } else {
-                        ToastUtils.showToast(response.getString("msg"));
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+    //去获取验证码
+    private void toPutSms(){
+        mUserMobile = mEtMobile.getText().toString().trim();
+        if (TextUtils.isEmpty(mUserMobile)) {
+            ToastUtils.showToast("请先输入手机号");
+            return;
+        }
+        ll_getcode.setVisibility(View.GONE);
+        ll_login.setVisibility(View.VISIBLE);
+        ll_bottom_wx.setVisibility(View.GONE);
+        we_login.setVisibility(View.GONE);
+        countDownTextView.setCountDownMillis(60000);
+        countDownTextView.start();
+        tv_number_code.setText("验证码已发送   " + mUserMobile);
+        ProgressDialog pd = new ProgressDialog(this);
+        pd.setCanceledOnTouchOutside(false);
+        presenter.doGetSms(mUserMobile.replaceAll(" ",""),pd);
     }
 
-    private void doGetSms(String mobile, String lan) {
-        CHYHttpClientUsage.getInstanse().doGetSmsMobile(Constants.getConId(), mobile.replaceAll(" ", ""), Constants.ConfirmTypeLogin, lan, new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
-            @Override
-            public void onStart() {
-                super.onStart();
-                mProgressDialog = ProgressDialog.show(LoginActivity.this, null, "loading...");
-            }
-
-            /*
-             返回内容{"state":1,"code":"156114","msg":""}
-             */
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                super.onSuccess(statusCode, headers, response);
-
-                MyLogger.jLog().i(response.toString());
-                String msg = JSONCatch.parseString("msg", response);
-                if (JSONCatch.parseInt("state", response) == 0) {
-                    showDialog(msg, null);
-                } else {
-                    ToastUtils.showToast(getString(R.string.success_send_regist_code));
-                }
-            }
-
-            @Override
-            public void onFinish() {
-                super.onFinish();
-                mProgressDialog.dismiss();
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                super.onFailure(statusCode, headers, throwable, errorResponse);
-                ToastUtils.showToast(getString(R.string.server_error));
-            }
-        });
-    }
-
-    private void showDialog(String msg, DialogInterface.OnClickListener okListener) {
+    @Override
+    public void showDialog(String msg, DialogInterface.OnClickListener okListener) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getString(R.string.dialog_tips)).setMessage(msg).setPositiveButton(R.string.positive_button, okListener).setCancelable(false).show();
-    }
-
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
-            View v = getCurrentFocus();
-            if (isShouldHideInput(v, ev)) {
-
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                if (imm != null) {
-                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                }
-            }
-            return super.dispatchTouchEvent(ev);
-        }
-        // 必不可少，否则所有的组件都不会有TouchEvent了
-        if (getWindow().superDispatchTouchEvent(ev)) {
-            return true;
-        }
-        return onTouchEvent(ev);
-    }
-
-    public boolean isShouldHideInput(View v, MotionEvent event) {
-        if (v != null && (v instanceof EditText)) {
-            int[] leftTop = {0, 0};
-            //获取输入框当前的location位置
-            v.getLocationInWindow(leftTop);
-            int left = leftTop[0];
-            int top = leftTop[1];
-            int bottom = top + v.getHeight();
-            int right = left + v.getWidth();
-            if (event.getX() > left && event.getX() < right
-                    && event.getY() > top && event.getY() < bottom) {
-                return false;
-            } else {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
     }
 
     @Override
@@ -471,10 +338,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         switch (v.getId()) {
             case R.id.bt_login:
                 if (!TextUtils.isEmpty(mUserMobile) && !TextUtils.isEmpty(mUserSMS)) {
-                    doLogin___(mUserMobile, mUserSMS, AppApplication.getSystemLanuageCode());
+                    ProgressDialog pd = new ProgressDialog(this);
+                    pd.setCanceledOnTouchOutside(false);
+                    presenter.doLogin___(mUserMobile.replaceAll(" ",""),mUserSMS,pd);
+                    hideShurufa();
                 }
-                break;
-            case R.id.countDownTextView:
                 break;
             case R.id.we_login:
                 if (ActivityUtils.isWxInstall(getApplicationContext())) {
@@ -496,7 +364,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     break;
                     //直接跳转
                     //ToastUtils.showToast("检测到您手机没有安装微信，请安装后使用该功能");
-
                 }
 
                 break;
@@ -517,19 +384,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
                 break;
             case R.id.bt_getcode:
-                mUserMobile = mEtMobile.getText().toString().trim();
-                if (TextUtils.isEmpty(mUserMobile)) {
-                    ToastUtils.showToast("请先输入手机号");
-                    return;
-                }
-                ll_getcode.setVisibility(View.GONE);
-                ll_login.setVisibility(View.VISIBLE);
-                ll_bottom_wx.setVisibility(View.GONE);
-                we_login.setVisibility(View.GONE);
-                countDownTextView.setCountDownMillis(60000);
-                countDownTextView.start();
-                tv_number_code.setText("验证码已发送   " + mUserMobile);
-                doGetSms(mUserMobile, Constants.LanguageChinese);
+            case R.id.countDownTextView:
+                toPutSms();
+                hideShurufa();
                 break;
 
         }
@@ -557,7 +414,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 nickName = map.get("name");
                 sex = map.get("gender");
                 imgUrl = map.get("iconurl");
-                loginWX(openid);
+                ProgressDialog pd = new ProgressDialog(LoginActivity.this);
+                pd.setCanceledOnTouchOutside(false);
+                presenter.loginWX(openid,pd);
             }
 
             @Override
@@ -571,107 +430,97 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             }
         });
     }
-
-    private void loginWX(String openId) {
-        CHYHttpClientUsage.getInstanse().doLoginWX(openId, new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
-            @Override
-            public void onStart() {
-                super.onStart();
-                mProgressDialog = ProgressDialog.show(LoginActivity.this, null, "loading...");
+    //处理微信登陆
+    @Override
+    public void handleWXLogin(JSONObject response){
+        if (JSONCatch.parseInt("state", response)==1) {
+            if (TextUtils.isEmpty(JSONCatch.parseString("name", response)) || TextUtils.isEmpty(JSONCatch.parseString("img", response))) {
+                presenter.doModifyPersonInfo(String.valueOf(JSONCatch.parseInt(Constants.USER_IC_ID,response)),imgUrl,nickName);
             }
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                super.onSuccess(statusCode, headers, response);
-                if ("1".equals(JSONCatch.parseString("state", response))) {
-                    if (TextUtils.isEmpty(JSONCatch.parseString("mobilePhone", response)) && !TextUtils.isEmpty(JSONCatch.parseString("openId", response))) {
-                        Intent intent = new Intent(LoginActivity.this, WxForLoginActivity.class);
-                        intent.putExtra(Constants.USER_OPENID, JSONCatch.parseString(Constants.USER_OPENID, response));
-                        intent.putExtra(Constants.USER_NICK_NAME, nickName);
-                        intent.putExtra(Constants.USER_IMG, imgUrl);
-                        intent.putExtra(Constants.USER_SEX, sex);
-                        startActivityForResult(intent, LOGIN_CODE_RESULT);
-                    } else {
-                        ParseUser.saveUserInfo(response.toString());
-                        SharePreferenceUtils.saveUserBoolean(Constants.USER_IS_LOGIN, true);
-
-                        //发送广播
-                        Intent loginIntent = new Intent();
-                        loginIntent.setAction(LOGIN_ACTION);
-                        sendBroadcast(loginIntent);
-                        finish();
-                    }
-                }
+            if (TextUtils.isEmpty(JSONCatch.parseString("mobilePhone", response)) && !TextUtils.isEmpty(JSONCatch.parseString("openId", response))) {
+                Intent intent = new Intent(LoginActivity.this, WxForLoginActivity.class);
+                intent.putExtra(Constants.USER_OPENID, JSONCatch.parseString(Constants.USER_OPENID, response));
+                intent.putExtra(Constants.USER_NICK_NAME, nickName);
+                intent.putExtra(Constants.USER_IMG, imgUrl);
+                intent.putExtra(Constants.USER_SEX, sex);
+                startActivityForResult(intent, LOGIN_CODE_RESULT);
+            } else {
+                ParseUser.saveUserInfo(response.toString());
+                SharePreferenceUtils.saveUserBoolean(Constants.USER_IS_LOGIN, true);
+                startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+                finish();
             }
-
-            @Override
-            public void onFinish() {
-                super.onFinish();
-                mProgressDialog.dismiss();
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                super.onFailure(statusCode, headers, throwable, errorResponse);
-                ToastUtils.showToast(getString(R.string.server_error));
-            }
-        });
+        }
     }
 
-    //对英文进行处理
-    private void doLoginbyEmail(final String email, final String psw, String lan) {
-        CHYHttpClientUsage.getInstanse().doEmailLoginV1(email, psw, lan, new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
-            public void onStart() {
-                super.onStart();
-                mProgressDialog = ProgressDialog.show(LoginActivity.this, null, "loading...");
+    //对邮箱登陆处理
+    @Override
+    public void handleEmailLogin(JSONObject response){
+        if (JSONCatch.parseInt("state", response) == 1) {
+            if (TextUtils.isEmpty(JSONCatch.parseString("name", response)) || TextUtils.isEmpty(JSONCatch.parseString("img", response))) {
+                Intent intent = new Intent(LoginActivity.this, LoginForUpdateInfoActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString(Constants.USER_MOBILE, mUserMobile.replaceAll(" ", ""));
+                bundle.putString("sms", mUserSMS);
+                bundle.putString(Constants.USER_IC_ID, String.valueOf(JSONCatch.parseInt(Constants.USER_IC_ID, response)));
+                bundle.putString(Constants.USER_TYPE, JSONCatch.parseString(Constants.USER_TYPE, response));
+                intent.putExtras(bundle);
+                mFpc.clearData();
+                startActivityForResult(intent, LOGIN_UPDATA_CODE_RESULT);
+                return;
             }
-
-            @Override
-            public void onFinish() {
-                super.onFinish();
-                mProgressDialog.dismiss();
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                ToastUtils.showToast("服务器开小差了，请稍后重试");
-            }
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                super.onSuccess(statusCode, headers, response);
-                if (JSONCatch.parseInt("state", response) == 1) {
-                    ParseUser.saveUserInfo(response.toString());
-                    updateUserInfo();
-                    SharePreferenceUtils.saveUserBoolean(Constants.USER_IS_LOGIN, true);
-
-                    //发送广播
-                    Intent loginIntent = new Intent();
+            ParseUser.saveUserInfo(response.toString());
+            SharePreferenceUtils.saveUserBoolean(Constants.USER_IS_LOGIN, true);
+                    /*Intent loginIntent = new Intent();
                     loginIntent.setAction(LOGIN_ACTION);
-                    sendBroadcast(loginIntent);
-                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                    startActivity(intent);
-                } else {
-                    ToastUtils.showToast(JSONCatch.parseString("msg", response));
-                }
+                    sendBroadcast(loginIntent);*/
+            startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+            finish();
+        } else {
+            ToastUtils.showToast(JSONCatch.parseString("msg", response));
+        }
 
-            }
-        });
     }
 
-    private void updateUserInfo() {
-        CHYHttpClientUsage.getInstanse().doGetMobileUserInfoByMobile(LanguageUtil.getCurrentLan(LoginActivity.this), Constants.getConId() + "", Constants.getFromWhere(), new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                super.onSuccess(statusCode, headers, response);
-                if (JSONCatch.parseInt("state", response) == 1) {
-                    ParseUser.saveUserInfo(response.toString());
-                    finish();
-                } else {
-                    ToastUtils.showToast(JSONCatch.parseString("msg", response));
-                }
+    //对获取到是否有用户名和头像处理
+    @Override
+    public void handleUserNameAndImg(JSONObject response){
+        if (JSONCatch.parseInt("state", response) == 1) {
+            if (TextUtils.isEmpty(JSONCatch.parseString("name", response)) || TextUtils.isEmpty(JSONCatch.parseString("img", response))) {
+                Intent intent = new Intent(LoginActivity.this, LoginForUpdateInfoActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString(Constants.USER_MOBILE, mUserMobile.replaceAll(" ", ""));
+                bundle.putString("sms", mUserSMS);
+                bundle.putString(Constants.USER_IC_ID, String.valueOf(JSONCatch.parseInt(Constants.USER_IC_ID, response)));
+                bundle.putString(Constants.USER_TYPE, JSONCatch.parseString(Constants.USER_TYPE, response));
+                intent.putExtras(bundle);
+                mFpc.clearData();
+                startActivityForResult(intent, LOGIN_UPDATA_CODE_RESULT);
+                return;
             }
-        });
+            ParseUser.saveUserInfo(response.toString());
+            SharePreferenceUtils.saveUserBoolean(Constants.USER_IS_LOGIN, true);
+                    /*Intent loginIntent = new Intent();
+                    loginIntent.setAction(LOGIN_ACTION);
+                    sendBroadcast(loginIntent);*/
+            startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+            finish();
+
+        } else {
+            ToastUtils.showToast(JSONCatch.parseString("msg", response));
+        }
     }
 
+    private LoginContract.Presenter presenter = new LoginActivityPresenter(this);
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        presenter.subscribe();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.unSubscribe();
+    }
 }

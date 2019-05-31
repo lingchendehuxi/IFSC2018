@@ -82,7 +82,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableTint="@color/theme_color"
-                android:text="@string/professor_ask"
+                android:text="@string/schedule_ask"
                 android:textColor="@color/unselect_color"
                 android:textSize="11sp" />
         </LinearLayout>

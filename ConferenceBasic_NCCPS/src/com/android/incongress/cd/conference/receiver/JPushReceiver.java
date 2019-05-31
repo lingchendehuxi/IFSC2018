@@ -106,7 +106,7 @@ public class JPushReceiver extends BroadcastReceiver {
             Log.d(TAG, "[MyReceiver] 用户点击打开了通知");
             //打开自定义的Activity
             //这里可以根据具体的消息打开需要的Activity
-            String info = bundle.getString(JPushInterface.EXTRA_EXTRA).replace("\\", "");
+            String info = bundle.getString(JPushInterface.EXTRA_EXTRA);
             Log.d(TAG, "info = " + info);
             if(info.contains("ModelId")){
                 Intent i = new Intent(context, HomeActivity.class);
@@ -118,18 +118,21 @@ public class JPushReceiver extends BroadcastReceiver {
             String url = "";
             String title = "";
             String share = "";
-            long notificationId;
             try {
                 JSONObject obj = new JSONObject(info);
-                url = obj.getString("H5URL");
-                title = obj.getString("H5TITLE");
-                share = obj.getString("H5SHARE");
+                url = JSONCatch.parseString("H5URL",obj);
+                title = JSONCatch.parseString("H5TITLE",obj);
+                share = JSONCatch.parseString("H5SHARE",obj);
                 //notificationId = obj.getLong("notificationId");
+                if(url.contains("http%")){
+                    url = StringUtils.utf8Decode(url);
+                    Log.d(TAG, "url: "+url);
+                }
+                Log.d(TAG, "onReceive: "+url);
 
                 bundle.putString("H5URL", url);
                 bundle.putString("H5TITLE", title);
                 bundle.putString("H5SHARE", share);
-                bundle.putLong("notificationId", 10086);
                 Intent i = new Intent(context, HomeActivity.class);
                 i.putExtras(bundle);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);

@@ -13,7 +13,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
 import android.support.multidex.MultiDex;
-import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +26,10 @@ import com.android.incongress.cd.conference.services.AdService;
 import com.android.incongress.cd.conference.utils.CrashHandler;
 import com.android.incongress.cd.conference.utils.GlideImageLoader;
 import com.android.incongress.cd.conference.utils.LogUtils;
+import com.android.incongress.cd.conference.widget.photo.galleryfinal.CoreConfig;
+import com.android.incongress.cd.conference.widget.photo.galleryfinal.FunctionConfig;
+import com.android.incongress.cd.conference.widget.photo.galleryfinal.GalleryFinal;
+import com.android.incongress.cd.conference.widget.photo.galleryfinal.ThemeConfig;
 import com.android.incongress.cd.conference.widget.zxing.activity.ZXingLibrary;
 import com.easefun.polyvsdk.PolyvSDKClient;
 import com.loopj.android.http.AsyncHttpClient;
@@ -43,13 +46,11 @@ import org.litepal.LitePal;
 import org.litepal.LitePalApplication;
 
 import java.io.File;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.List;
-import java.util.Locale;
 
-import cn.finalteam.galleryfinal.CoreConfig;
-import cn.finalteam.galleryfinal.FunctionConfig;
-import cn.finalteam.galleryfinal.GalleryFinal;
-import cn.finalteam.galleryfinal.ThemeConfig;
 import cn.jpush.android.api.CustomPushNotificationBuilder;
 import cn.jpush.android.api.JPushInterface;
 
@@ -61,7 +62,7 @@ public class AppApplication extends LitePalApplication {
     //EsmoId
     public static String COMPAS_ID = "1";
 
-    //表明类型 在初始化数据时会用
+    //表明类型 在初始化数据时会用  固定的，应该是android的意思
     public static int conType = 2;
 
     //0表明是游客  1表明是用户，2绑定注册码的用户，, 3是专家
@@ -79,7 +80,7 @@ public class AppApplication extends LitePalApplication {
     public static IncongressBean conBean = new IncongressBean();
 
     //1代表 中文  2代表英文 其他值  代表随系统变化
-    public static int systemLanguage = 3;
+    public static int systemLanguage = 1;
 
     public static Typeface mTypeface = null;
 
@@ -126,7 +127,7 @@ public class AppApplication extends LitePalApplication {
 //        OkHttpFinal.getInstance().init(okhttpBuilder.build());
 
        /* * 微信分享初始化 **/
-        PlatformConfig.setWeixin("wxd40d6655d0199e18", "37325ffce412660d98a02fdd3e7a2617");
+        PlatformConfig.setWeixin(Constants.WX_APPID, Constants.APP_SECRET);
 
         /**新浪分享初始化**/
         PlatformConfig.setSinaWeibo("4015025148", "458be4e8e2dbce03700b155aef9c8123","https://api.weibo.com/oauth2/default.html");
@@ -174,7 +175,7 @@ public class AppApplication extends LitePalApplication {
         //设置主题
         //ThemeConfig.CYAN
         ThemeConfig theme = new ThemeConfig.Builder()
-                .setTitleBarBgColor(Color.rgb(21,41,58))
+                .setTitleBarBgColor(Color.BLACK)
                 .setTitleBarTextColor(Color.WHITE)
                 .build();
         //配置功能
@@ -197,6 +198,7 @@ public class AppApplication extends LitePalApplication {
 
         //初始化用户数据
         ParseUser.initUserInfo();
+        closeAndroidPDialog();
         /*if (StringUtils.isAllNotEmpty(SharePreferenceUtils.getUser(Constants.USER_NAME),
             SharePreferenceUtils.getUser(Constants.USER_ID) , SharePreferenceUtils.getUser(Constants.USER_TYPE))) {
             AppApplication.userId = AppApplication.getSPIntegerValue(Constants.USER_ID);
@@ -242,11 +244,6 @@ public class AppApplication extends LitePalApplication {
 //        mPoolExecutor.execute(runnable);
 //    }
 
-    public String getImei() {
-        TelephonyManager manager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
-        return manager.getDeviceId();
-    }
-
     public static AsyncHttpClient getHttpClient() {
         return mHttpClient;
     }
@@ -272,7 +269,7 @@ public class AppApplication extends LitePalApplication {
      * @return
      */
     public static boolean isUserLogIn() {
-        return SharePreferenceUtils.getUserBoolean(Constants.USER_IS_LOGIN,false) == true;
+        return SharePreferenceUtils.getUserBoolean(Constants.USER_IS_LOGIN,false);
     }
 
     public void setDisPlayMetrics(DisplayMetrics mDisplayMetrics) {
@@ -402,6 +399,27 @@ public class AppApplication extends LitePalApplication {
         client.initCrashReport(getApplicationContext());
         //启动Bugly后，在学员登录时设置学员id
 //		client.crashReportSetUserId(userId);
+    }
+    //关闭去掉在Android P上的提醒弹窗 （Detected problems with API compatibility(visit g.co/dev/appcompat for more info)
+    private void closeAndroidPDialog(){
+        try {
+            Class aClass = Class.forName("android.content.pm.PackageParser$Package");
+            Constructor declaredConstructor = aClass.getDeclaredConstructor(String.class);
+            declaredConstructor.setAccessible(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            Class cls = Class.forName("android.app.ActivityThread");
+            Method declaredMethod = cls.getDeclaredMethod("currentActivityThread");
+            declaredMethod.setAccessible(true);
+            Object activityThread = declaredMethod.invoke(null);
+            Field mHiddenApiWarningShown = cls.getDeclaredField("mHiddenApiWarningShown");
+            mHiddenApiWarningShown.setAccessible(true);
+            mHiddenApiWarningShown.setBoolean(activityThread, true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 

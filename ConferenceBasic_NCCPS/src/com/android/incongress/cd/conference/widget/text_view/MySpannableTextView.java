@@ -4,7 +4,6 @@ package com.android.incongress.cd.conference.widget.text_view;
 import android.content.Context;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.AppCompatTextView;
 import android.text.Html;
 import android.text.Layout;
 import android.text.SpannableString;

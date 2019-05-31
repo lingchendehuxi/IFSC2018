@@ -374,17 +374,22 @@ public class SessionDetailPageFragment extends BaseFragment implements View.OnCl
 
             if (AppApplication.systemLanguage == 1) {
                 mTvScheduleTime.setText(DateUtil.getDateWithWeek(DateUtil.getDate(mSessionBean.getSessionDay(), DateUtil.DEFAULT)));
-                mTvRoom.setText(mClassBean.getClassesCode());
+                if(mClassBean!=null){
+                    mTvRoom.setText(mClassBean.getClassesCode());
+                }
                 mTvScheduleName.setText(mSessionBean.getSessionName());
             } else {
                 mTvScheduleTime.setText(DateUtil.getDateWithWeekInEnglish(DateUtil.getDate(mSessionBean.getSessionDay(), DateUtil.DEFAULT)));
-                mTvRoom.setText(mClassBean.getClassCodeEn());
+                if(mClassBean!=null){
+                    mTvRoom.setText(mClassBean.getClassCodeEn());
+                }
                 mTvScheduleName.setText(mSessionBean.getSessionNameEN());
             }
 
             mTvScheduleDetailTime.setText(mSessionBean.getStartTime() + "-" + mSessionBean.getEndTime());
-
-
+            if(mClassBean == null){
+                return;
+            }
             mMeetingWithSpeakerAdapter = new MeetingWithSpeakerAdapter(getActivity(), mClassBean.getClassesCode(), mMeetingBeanList, mAllSpeakers, new MeetingWithSpeakerAdapter.OnTagListener() {
                 @Override
                 public void tagListener(Speaker bean) {
@@ -475,7 +480,9 @@ public class SessionDetailPageFragment extends BaseFragment implements View.OnCl
 
             for (int i = 0; i < mFacultyBeanList.size(); i++) {
                 FacultyBean bean = mFacultyBeanList.get(i);
-
+                if(bean==null){
+                    continue;
+                }
                 if ("".equals(bean.getFacultyId()))
                     continue;
 

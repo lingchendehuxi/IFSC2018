@@ -6,6 +6,7 @@
     <string name="home_my_schedule">My Agenda</string>
     <string name="search_faculty_hint">Please enter faculty name</string>
     <string name="update_database">wait for the database update</string>
+    <string name="easy_permissions">The APP requires that you have permission to open the phone, take photos, and access files on the device</string>
 
     <string name="system_message">Notifications</string>
     <string name="login_forget_conform">OK</string>
@@ -25,6 +26,7 @@
     <string name="question_meeting">Programme</string>
     <string name="live">Livestream</string>
     <string name="schedule">On-Demand</string>
+    <string name="read_count">read %d</string>
     <string name="bus">Shuttle Bus</string>
     <string name="question_post">Poster</string>
 
@@ -50,14 +52,11 @@
     <string name="home_search">Search</string>
     <string name="home_scane">Scan Me</string>
     <string name="home_setting">Settings</string>
-    <string name="home_review">CIT On-Demand</string>
     <string name="home_electroniccase">e-Case</string>
     <string name="home_secretary">Faculty\nExclusive</string>
     <string name="home_messagestation">Message Center</string>
     <string name="home_scene_xiu">Info\nRelease</string>
-    <string name="home_cit_live">CIT Live</string>
     <string name="home_hands_on">Learning\nCenter</string>
-    <string name="home_cit_college">CIT On-Demand</string>
     <string name="home_me">User Center</string>
     <string name="home_interactive">Interactive\nDiscussion</string>
     <string name="my_task">My Task(%1$s)</string>
@@ -88,6 +87,19 @@
     <string name="orderRelativeLiveHint">Upcoming</string>
 
     <!-- 我的笔记 -->
+    <!--新首页-->
+    <string name="home_hot_meets">HOT MEET</string>
+    <string name="home_show_all">SHOW ALL</string>
+    <string name="fast_channel">FAST CHANNEL</string>
+    <string name="attend_register">ATTEND REGISTER</string>
+    <string name="paper_contribute">PAPER CONTRIBUTE</string>
+    <string name="hotel_reservation">HOTEL RESERVATION</string>
+    <string name="read_all_meet">READ ALL ONLINE MEETS</string>
+    <string name="meet_courseware">MEET COURSEWARE</string>
+    <string name="meet_show_all">ALL MEETS</string>
+    <string name="hot_schedule">HOT SCHEDULE</string>
+    <!--会议注册-->
+    <string name="meet_register_chose_tip">Choose the meeting you want to attend</string>
 
     <!-- 我的日程 -->
     <string name="my_schedule_tips">Go to "Detailed Programme" to set up your own meeting schedule alarm</string>
@@ -126,7 +138,6 @@
     <!-- other -->
     <string name="alert_start">%1$s will start in %2$s in %3$s</string>
     <string name="alert_pending">Later</string>
-    <string name="app_name">CIT</string>
     <string name="conference_exit_app">Are you sure to exit app?</string>
     <string name="action_settings">Settings</string>
     <string name="test">Test</string>
@@ -141,7 +152,7 @@
     <string name="no_such_secretary_name">No result or incorrect spelling on the name of faculty.\nTry with the different one.</string>
     <string name="yes_such_secretary_name"><Data>
 <![CDATA[ <h3>Congratulations, your meeting reminder is set!</h3> You will receive notification 5 minutes before the start of the sessions or presentations, please stay up to date!
-For any changes of reminder time,please go to "My CIT > My reminder".]]>
+For any changes of reminder time,please go to "My CSD > My reminder".]]>
 </Data></string>
     <string name="part_in_activitys">I Will participate the following secretary_no_infory alert function</string>
     <string name="success_open_alarm">Meeting reminder is set. You will\nreceive notification %d minutes before\nthe start of the sessions or presentations!</string>
@@ -155,7 +166,6 @@ For any changes of reminder time,please go to "My CIT > My reminder".]]>
     <string name="secretary_speaker">Presentation:</string>
     <string name="logout_secretary">This will stop meeting reminder.Are you\nsure you want to log out of the function?</string>
     <string name="secretary_login">Set meeting reminder</string>
-    <string name="secretary_no_info">All the presentations you participated are over now.\nSee you next CIT conference!</string>
     <string name="secretary_loading">Secretary is loading…</string>
     <string name="secretary_type_role">Role:</string>
 
@@ -175,7 +185,8 @@ For any changes of reminder time,please go to "My CIT > My reminder".]]>
     <string name="splash_onference">Save conference info ,wait moment...</string>
     <string name="splash_speaker">Save speaker info, wait moment...</string>
     <string name="splash_exhibitor">Save exhibitor info ,wait moment...</string>
-
+    <!--秘书-->
+    <string name="secretary_fragment_title">PERSION SCRETARY</string>
 
     <!-- 登录 -->
     <string name="login">Login</string>
@@ -211,7 +222,6 @@ For any changes of reminder time,please go to "My CIT > My reminder".]]>
     <string name="clear_cache">Clear Cache</string>
     <string name="clear_success">Successfuly Cleared</string>
     <string name="clear_cache_tips">After clearing, you need to reconnect to the network to cache the data. Are you sure to clear it?</string>
-    <string name="notify_tip">To open push, please confirm that Android system Settings - notification - notification management -CIT have been opened</string>
     <string name="hysq_home_comment_gen">Add a comment…</string>
     <string name="hysq_jiangliangju_titlebar_send_hint">Send</string>
     <string name="hysq_jiangliangju_zuijin">Recently speaker</string>
@@ -298,7 +308,6 @@ For any changes of reminder time,please go to "My CIT > My reminder".]]>
     <string name="settings_contact_text_wx">WeChat: incongress</string>
     <string name="settings_share_sms">SMS</string>
     <string name="settings_share_mail">Email</string>
-    <string name="settings_share_content">Come and join me with ‘iConference’ APP! Download now at: http://m.incongress.cn/cit2019/app</string>
     <string name="settings_share_wxtitle">Come and join me with ‘iConference’ APP! Download try !</string>
     <string name="settings_share_hint">Share to</string>
     <string name="settings_help_way1">You can：</string>
@@ -330,7 +339,6 @@ For any changes of reminder time,please go to "My CIT > My reminder".]]>
     <string name="mymeeting_warning">My Reminder</string>
     <string name="mymeeting_wellcome">Welcome</string>
     <string name="mymeeting_wellcome1">Welcome,</string>
-    <string name="mymeeting_wellcome2">,to CIT!</string>
     <string name="mymeeting_finish">Done</string>
     <string name="mymeeting_manage">Edit</string>
     <string name="mymeeting_w_timemanage">Reminder Timing Set</string>
@@ -462,7 +470,6 @@ Before first use, you’ll need to download the latest conference data. Afterwar
     <string name="country_code">Country</string>
     <string name="success_send_regist_code">success send sms</string>
     <string name="dialog_tips">Tips</string>
-    <string name="meeting_share_info">I follow “%1$s” presentation,http://m.incongress.cn/cit2019/app</string>
 
     <!-- 我的笔记 -->
     <string name="metting_node_edit_no_data">No Content.</string>
@@ -595,9 +602,19 @@ Before first use, you’ll need to download the latest conference data. Afterwar
     <string name="chose_meet">Select Room</string>
 
     <!--包名修改的部分-->
-    <string name="share_info">CIT Information</string>
     <string name="party_guide">Meeting Guide</string>
     <!--首页-->
     <string name="system_notify">SYSTEM NOTIFY</string>
     <string name="person_notify">PERSON NOTIFY</string>
+    <!--需要修改的部分-->
+    <string name="share_info">CSCCM Information</string>
+    <string name="meeting_share_info">I follow “%1$s” presentation,http://m.incongress.cn/csccm2019/app</string>
+    <string name="mymeeting_wellcome2">,to CSCCM!</string>
+    <string name="settings_share_content">Come and join me with ‘iConference’ APP! Download now at: http://m.incongress.cn/csccm2019/app</string>
+    <string name="notify_tip">To open push, please confirm that Android system Settings - notification - notification management -CSCCM have been opened</string>
+    <string name="secretary_no_info">All the presentations you participated are over now.\nSee you next CSCCM conference!</string>
+    <string name="home_cit_college">CSCCM On-Demand</string>
+    <string name="home_cit_live">CSCCM Live</string>
+    <string name="home_review">CSCCM On-Demand</string>
+    <string name="app_name">CSCCM</string>
 </resources>

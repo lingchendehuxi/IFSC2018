@@ -31,6 +31,7 @@ import com.android.incongress.cd.conference.model.TimeBean;
 import com.android.incongress.cd.conference.utils.CommonUtils;
 import com.android.incongress.cd.conference.utils.DensityUtil;
 import com.android.incongress.cd.conference.utils.StringUtils;
+import com.android.incongress.cd.conference.utils.ToastUtils;
 import com.android.incongress.cd.conference.widget.HScroll;
 import com.android.incongress.cd.conference.widget.HVScrollView;
 import com.android.incongress.cd.conference.widget.VScroll;
@@ -396,15 +397,20 @@ public class MeetingScheduleDetailActionFragment extends BaseFragment {
         @Override
         protected Void doInBackground(Void... params) {
             mTimeBean = ConferenceDbUtils.getTime();
+            if(mTimeBean == null){
+                ToastUtils.showToast("数据为空");
+                performback();
+            }else {
+                for(int i=mTimeBean.getStartTime(); i<= mTimeBean.getEndTime(); i++) {
+                    setTimeList(i);
+                }
 
-            for(int i=mTimeBean.getStartTime(); i<= mTimeBean.getEndTime(); i++) {
-                setTimeList(i);
+                setTimeLayout();
+                setRoomsLayout();
+                setTablesLayout();
+                setSessionLayout();
             }
 
-            setTimeLayout();
-            setRoomsLayout();
-            setTablesLayout();
-            setSessionLayout();
 
             return null;
         }

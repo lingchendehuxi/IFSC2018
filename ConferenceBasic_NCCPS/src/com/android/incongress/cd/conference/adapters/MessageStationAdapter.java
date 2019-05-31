@@ -59,7 +59,7 @@ public class MessageStationAdapter extends RecyclerView.Adapter<MessageStationAd
         boolean isShow = content.startsWith("【");
         if(isShow){
             String string1 = content.substring(1,finalPosition);
-            String string2 = content.substring(finalPosition+1,content.length()-1);
+            String string2 = content.substring(finalPosition+1,content.length());
             holder.tv_title.setText(string1);
             holder.tvMessage.setText(string2);
         }else {
@@ -68,7 +68,6 @@ public class MessageStationAdapter extends RecyclerView.Adapter<MessageStationAd
         }
         holder.tvTime.setText(bean.getCreateTime());
         if(TextUtils.isEmpty(bean.getUrl())){
-            holder.iv_left.setImageResource(R.drawable.professor_default);
         }else {
             PicUtils.loadCircleImage(mContext,bean.getUrl(),holder.iv_left);
         }

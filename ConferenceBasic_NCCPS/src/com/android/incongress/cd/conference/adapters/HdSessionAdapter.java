@@ -9,11 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.incongress.cd.conference.LoginActivity;
 import com.android.incongress.cd.conference.WebViewContainerActivity;
 import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.beans.HdSessionBean;
+import com.android.incongress.cd.conference.ui.login.view.LoginActivity;
 import com.android.incongress.cd.conference.utils.MyLogger;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 import com.yqritc.recyclerviewflexibledivider.FlexibleDividerDecoration;
@@ -131,7 +131,7 @@ public class HdSessionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 //                                        AppApplication.getSPStringValue(Constants.USER_MOBILE),"","");
 //                            }
 
-                            LoginActivity.startLoginActivity(mContext,LoginActivity.TYPE_NORMAL,"","","","");
+                            LoginActivity.startLoginActivity(mContext, LoginActivity.TYPE_NORMAL,"","","","");
                             return;
                         }
                         WebViewContainerActivity.startWebViewContainerActivity(mContext, mContext.getString(Constants.get_HD_SSSION_SERVER(),

@@ -272,6 +272,7 @@ public class WxForLoginActivity extends BaseActivity implements View.OnClickList
                     loginIntent.setAction(LOGIN_ACTION);
                     sendBroadcast(loginIntent);
                     setResult(RESULT_OK);
+                    startActivity(new Intent(WxForLoginActivity.this,HomeActivity.class));
                     finish();
                 }
 
@@ -379,6 +380,7 @@ public class WxForLoginActivity extends BaseActivity implements View.OnClickList
                 if (!TextUtils.isEmpty(mUserMobile) && !TextUtils.isEmpty(mUserSMS)) {
                     doLoginForWx(mUserMobile, mUserSMS);
                 }
+                hideShurufa();
                 break;
             case R.id.countDownTextView:
                 break;

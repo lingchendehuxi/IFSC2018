@@ -55,7 +55,9 @@ public class CollegeViewGridViewAdapter extends RecyclerView.Adapter<RecyclerVie
         FastOnLineBean.VideoArrayBean bean = mVideoList.get(position);
         StringUtils.setTextShow(((MyViewHolder) holder).video_show_time,bean.getOpenTime());
         StringUtils.setCommaTextShow(((MyViewHolder) holder).video_title,bean.getTitle());
-        StringUtils.setTextShow(((MyViewHolder) holder).video_time,bean.getSpeakerName().replaceAll(","," "));
+        if(bean.getSpeakerName()!=null){
+            StringUtils.setTextShow(((MyViewHolder) holder).video_time,bean.getSpeakerName().replaceAll(","," "));
+        }
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
         layoutParams.height = ((DensityUtil.getScreenSize((HomeActivity)mContext)[0]-DensityUtil.dip2px(mContext,46))*2)/8;
         ((MyViewHolder) holder).iv_background.setLayoutParams(layoutParams);

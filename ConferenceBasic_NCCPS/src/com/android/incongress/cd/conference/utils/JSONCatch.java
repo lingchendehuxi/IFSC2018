@@ -1,5 +1,7 @@
 package com.android.incongress.cd.conference.utils;
 
+import android.text.TextUtils;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -7,6 +9,9 @@ import org.json.JSONObject;
 
 public class JSONCatch {
 	public static Double parseDouble(String data, JSONObject object) {
+		if(object == null){
+			return 0.00;
+		}
 		Double newdata = 0.00;
 		try {
 			if (object.has(data)) {
@@ -21,6 +26,9 @@ public class JSONCatch {
 	}
 
 	public static String parseString(String data, JSONObject object) {
+		if(object == null){
+			return "";
+		}
 		String newdata = "";
 		try {
 			if (object.has(data)&&!"null".equals(object.getString(data))) {
@@ -35,6 +43,9 @@ public class JSONCatch {
 	}
 
 	public static Integer parseInt(String data, JSONObject object) {
+		if(object == null){
+			return 0;
+		}
 		Integer newdata = 0;
 		try {
 			if (object.has(data)) {
@@ -60,7 +71,20 @@ public class JSONCatch {
 		}
 		return obj;
 	}
-	
+	public static JSONObject parseJsonobject(String data) {
+		if(TextUtils.isEmpty(data)){
+			return null;
+		}
+		JSONObject obj = null;
+		try {
+			obj = new JSONObject(data);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return obj;
+	}
+
 	public static JSONArray parseJsonarray(String data, JSONObject object) {
 		JSONArray array = null;
 		try {

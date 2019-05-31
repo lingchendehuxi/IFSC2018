@@ -58,7 +58,7 @@ public class MindBookListAdapter extends RecyclerView.Adapter<MindBookListAdapte
         }
         if(bean.getType() == 1){
             holder.tv_time.setText(bean.getTime());
-            holder.ll_sign.setVisibility(View.VISIBLE);
+            holder.ll_sign.setVisibility(View.GONE);
             holder.tv_type.setText(mContext.getString(R.string.question_meeting));
         }else if(bean.getType() == 3){
             holder.tv_time.setText(bean.getMonthDay()+"  "+bean.getTime());

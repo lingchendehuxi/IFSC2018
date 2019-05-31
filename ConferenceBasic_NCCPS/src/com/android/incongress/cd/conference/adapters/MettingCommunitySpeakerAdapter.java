@@ -110,10 +110,14 @@ public class MettingCommunitySpeakerAdapter extends BaseAdapter implements Pinne
 		if (position<0) {
 			return;
 		}
-		int realPosition = position;
-		int section = mIndexer.getSectionForPosition(realPosition);
-		String title = (String) mIndexer.getSections()[section];
-		((TextView) header.findViewById(R.id.hysqhome_jiangzhe_group_textItem)).setText(title);
+		try {
+			int realPosition = position;
+			int section = mIndexer.getSectionForPosition(realPosition);
+			String title = (String) mIndexer.getSections()[section];
+			((TextView) header.findViewById(R.id.hysqhome_jiangzhe_group_textItem)).setText(title);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
 	}
 
 	@Override

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_resource__search"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EBEBEB"
+    tools:context="com.android.incongress.cd.conference.Resource_SearchActivity">
+
+    <LinearLayout
+        android:id="@+id/search_titlelayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/black"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="6dp"
+            android:layout_marginLeft="@dimen/layout_padding"
+            android:layout_marginRight="@dimen/layout_padding"
+            android:layout_marginTop="6dp"
+            android:layout_weight="1"
+            android:background="@drawable/search_title"
+            android:gravity="center">
+
+            <com.android.incongress.cd.conference.uis.ClearEditText
+                android:id="@+id/search_edit"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:drawableRight="@drawable/edittext_delete"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:hint="搜索课件关键字"
+                android:imeOptions="actionSearch"
+                android:paddingLeft="5dp"
+                android:paddingRight="8dp"
+                android:singleLine="true"
+                android:textSize="16dp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/search_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:text="@string/cancel"
+            android:textColor="@color/white"
+            android:textSize="16dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/choiceLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/search_titlelayout"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/layout_padding"
+        android:paddingRight="@dimen/layout_padding">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:text="@string/search_keyword"
+            android:textColor="@color/popup_bg"
+            android:textSize="14dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/search_title_text"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/search_bt_true"
+                android:gravity="center"
+                android:paddingBottom="5dp"
+                android:paddingLeft="@dimen/layout_padding"
+                android:paddingRight="@dimen/layout_padding"
+                android:paddingTop="5dp"
+                android:text="@string/search_title"
+                android:textColor="@color/white"
+                android:textSize="14dp" />
+
+            <TextView
+                android:id="@+id/search_author_text"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/search_bt_false"
+                android:gravity="center"
+                android:paddingBottom="5dp"
+                android:paddingLeft="@dimen/layout_padding"
+                android:paddingRight="@dimen/layout_padding"
+                android:paddingTop="5dp"
+                android:text="@string/search_author"
+                android:textColor="@color/popup_bg"
+                android:textSize="14dp" />
+
+            <TextView
+                android:id="@+id/search_expert_text"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/search_bt_false"
+                android:gravity="center"
+                android:paddingBottom="5dp"
+                android:paddingLeft="@dimen/layout_padding"
+                android:paddingRight="@dimen/layout_padding"
+                android:paddingTop="5dp"
+                android:text="@string/search_expert"
+                android:textColor="@color/popup_bg"
+                android:textSize="14dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/search_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/go_search"
+        android:layout_below="@+id/search_titlelayout"
+        android:visibility="gone"></android.support.v7.widget.RecyclerView>
+
+    <ProgressBar
+        android:id="@+id/search_pgb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/search_result_null"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="没有结果\n请点击重新搜索"
+        android:textColor="@color/black"
+        android:textSize="25dp"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/go_search"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/black"
+        android:gravity="center"
+        android:text="@string/search_search"
+        android:textColor="@color/white"
+        android:textSize="16dp" />
+</RelativeLayout>

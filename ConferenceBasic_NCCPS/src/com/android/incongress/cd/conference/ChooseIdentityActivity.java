@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.RadioGroup;
 
 import com.android.incongress.cd.conference.base.BaseActivity;
+import com.android.incongress.cd.conference.ui.login.view.LoginActivity;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 
 import butterknife.BindView;

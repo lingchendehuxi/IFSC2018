@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.android.incongress.cd.conference.base.AppApplication;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -26,7 +27,7 @@ public class StringUtils {
 
     /**
      * is null or its length is 0 or it is made by space
-     *
+     * <p>
      * <pre>
      * isBlank(null) = true;
      * isBlank(&quot;&quot;) = true;
@@ -46,7 +47,7 @@ public class StringUtils {
 
     /**
      * is null or its length is 0
-     *
+     * <p>
      * <pre>
      * isEmpty(null) = true;
      * isEmpty(&quot;&quot;) = true;
@@ -74,7 +75,7 @@ public class StringUtils {
 
     /**
      * null string to empty string
-     *
+     * <p>
      * <pre>
      * nullStrToEmpty(null) = &quot;&quot;;
      * nullStrToEmpty(&quot;&quot;) = &quot;&quot;;
@@ -90,7 +91,7 @@ public class StringUtils {
 
     /**
      * capitalize first letter
-     *
+     * <p>
      * <pre>
      * capitalizeFirstLetter(null)     =   null;
      * capitalizeFirstLetter("")       =   "";
@@ -115,7 +116,7 @@ public class StringUtils {
 
     /**
      * encoded in utf-8
-     *
+     * <p>
      * <pre>
      * utf8Encode(null)        =   null
      * utf8Encode("")          =   "";
@@ -131,6 +132,40 @@ public class StringUtils {
         if (!isEmpty(str) && str.getBytes().length != str.length()) {
             try {
                 return URLEncoder.encode(str, "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                throw new RuntimeException("UnsupportedEncodingException occurred. ", e);
+            }
+        }
+        return str;
+    }
+
+    public static String newUtf8Encode(String str) {
+        if (!isEmpty(str)) {
+            try {
+                return URLEncoder.encode(str, "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                throw new RuntimeException("UnsupportedEncodingException occurred. ", e);
+            }
+        }
+        return str;
+    }
+
+    public static String gbkEncode(String str) {
+        if (!isEmpty(str) && str.getBytes().length != str.length()) {
+            try {
+                return URLEncoder.encode(str, "GBK");
+            } catch (UnsupportedEncodingException e) {
+                throw new RuntimeException("UnsupportedEncodingException occurred. ", e);
+            }
+        }
+        return str;
+    }
+
+    //utf-8 解码
+    public static String utf8Decode(String str) {
+        if (!isEmpty(str)) {
+            try {
+                return URLDecoder.decode(str, "UTF-8");
             } catch (UnsupportedEncodingException e) {
                 throw new RuntimeException("UnsupportedEncodingException occurred. ", e);
             }
@@ -158,7 +193,7 @@ public class StringUtils {
 
     /**
      * get innerHtml from href
-     *
+     * <p>
      * <pre>
      * getHrefInnerHtml(null)                                  = ""
      * getHrefInnerHtml("")                                    = ""
@@ -197,7 +232,7 @@ public class StringUtils {
 
     /**
      * process special char in html
-     *
+     * <p>
      * <pre>
      * htmlEscapeCharsToString(null) = null;
      * htmlEscapeCharsToString("") = "";
@@ -219,7 +254,7 @@ public class StringUtils {
 
     /**
      * transform half width char to full width char
-     *
+     * <p>
      * <pre>
      * fullWidthToHalfWidth(null) = null;
      * fullWidthToHalfWidth("") = "";
@@ -252,7 +287,7 @@ public class StringUtils {
 
     /**
      * transform full width char to half width char
-     *
+     * <p>
      * <pre>
      * halfWidthToFullWidth(null) = null;
      * halfWidthToFullWidth("") = "";
@@ -293,8 +328,9 @@ public class StringUtils {
         }
         return m;
     }
+
     //方法三：
-    public static boolean isNumeric(String str){
+    public static boolean isNumeric(String str) {
         Pattern pattern = Pattern.compile("[0-9]*");
         return pattern.matcher(str).matches();
     }
@@ -330,6 +366,7 @@ public class StringUtils {
         mUse.setSpan(ass, 0, mUse.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         editText.setHint(new SpannableString(mUse));
     }
+
     //将textview中的文字进行排版
     public static String autoSplitText(final TextView tv) {
         final String rawText = tv.getText().toString(); //原始文本
@@ -337,7 +374,7 @@ public class StringUtils {
         final float tvWidth = tv.getWidth() - tv.getPaddingLeft() - tv.getPaddingRight(); //控件可用宽度
 
         //将原始文本按行拆分
-        String [] rawTextLines = rawText.replaceAll("\r", "").split("\n");
+        String[] rawTextLines = rawText.replaceAll("\r", "").split("\n");
         StringBuilder sbNewText = new StringBuilder();
         for (String rawTextLine : rawTextLines) {
             if (tvPaint.measureText(rawTextLine) <= tvWidth) {
@@ -368,78 +405,106 @@ public class StringUtils {
 
         return sbNewText.toString();
     }
+
     //设置中英文显示分隔符#@#
-    public static void setTextShow(TextView textView,String text){
-        if(!TextUtils.isEmpty(text)){
+    public static void setTextShow(TextView textView, String text) {
+        if (!TextUtils.isEmpty(text)) {
             String[] texts = text.split("#@#");
-            if(AppApplication.systemLanguage == 1){
+            if (AppApplication.systemLanguage == 1) {
                 textView.setText(texts[0]);
-            }else {
-                if(texts.length>1){
+            } else {
+                if (texts.length > 1) {
                     textView.setText(texts[1]);
-                }else {
+                } else {
                     textView.setText(texts[0]);
                 }
             }
         }
     }
+
     //设置中英文显示分隔符,  第一个英文符分割
-    public static void setCommaTextShow(TextView textView,String text){
+    public static void setCommaTextShow(TextView textView, String text) {
         if (!TextUtils.isEmpty(text)) {
             int splitLength = text.indexOf(",");
+            if (splitLength == -1) {
+                textView.setText(text);
+                return;
+            }
             if (AppApplication.systemLanguage == 1) {
-                textView.setText(text.substring(0,splitLength));
+                textView.setText(text.substring(0, splitLength));
             } else {
-                if(splitLength != 0){
-                    textView.setText(text.substring(splitLength+1,text.length()));
-                }else {
+                if (splitLength != 0) {
+                    textView.setText(text.substring(splitLength + 1, text.length()));
+                } else {
                     textView.setText("");
                 }
             }
         }
     }
+
     //多个字符串替换  针对LiveListInfoFragment中使用  ""[] {}替换为空
-    public static String getNewString(String string){
+    public static String getNewString(String string) {
         StringBuilder builder = new StringBuilder();
         char[] chars = string.toCharArray();
-        for(Character ch :chars){
-            if('"'==ch||'['==ch||']'==ch||'{'==ch||'}'==ch){
-            }else if(':' == ch){
+        for (Character ch : chars) {
+            if ('"' == ch || '[' == ch || ']' == ch || '{' == ch || '}' == ch) {
+            } else if (':' == ch) {
                 builder.append(ch);
                 builder.append(" ");
-            }else {
+            } else {
                 builder.append(ch);
             }
         }
         String[] strings = builder.toString().split(",");
-        builder.delete(0,builder.toString().length());
-        for(int i = 0;i<strings.length;i++){
-            if(strings[i].contains(":")){
-                if(i != 0){
+        builder.delete(0, builder.toString().length());
+        for (int i = 0; i < strings.length; i++) {
+            if (strings[i].contains(":")) {
+                if (i != 0) {
                     builder.append("\n");
                 }
                 builder.append(strings[i]);
-            }else {
+            } else {
                 builder.append(",");
                 builder.append(strings[i]);
             }
         }
         return builder.toString();
     }
+
     //根据中英文获取字段
-    public static String getNeedString(String stringTitle){
-        if(!TextUtils.isEmpty(stringTitle)){
+    public static String getNeedString(String stringTitle) {
+        if (!TextUtils.isEmpty(stringTitle)) {
             String[] strings = stringTitle.split("#@#");
-            if(strings.length>1){
-                if(AppApplication.systemLanguage ==1){
+            if (strings.length > 1) {
+                if (AppApplication.systemLanguage == 1) {
                     return strings[0];
-                }else {
+                } else {
                     return strings[1];
                 }
             }
             return stringTitle;
-        }else {
+        } else {
             return "";
         }
+    }
+
+    //获取中文标题
+    public static String getChinaString(String stringTitle) {
+        if (!TextUtils.isEmpty(stringTitle)) {
+            String[] strings = stringTitle.split("#@#");
+            if (strings.length > 1) {
+                return strings[0];
+            }
+            return stringTitle;
+        } else {
+            return "";
+        }
+    }
+
+    public static boolean stringIsLegal(String string) {
+        if (string.matches(".*[`~!@#$%^&*()+=|{}':;',\\\\[\\\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？].*") || string.matches(".*\\p{So}.*")) {
+            return true;
+        }
+        return false;
     }
 }

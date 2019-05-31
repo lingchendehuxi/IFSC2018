@@ -1,11 +1,9 @@
 package com.android.incongress.cd.conference.fragments.me;
 
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
@@ -18,9 +16,7 @@ import com.android.incongress.cd.conference.beans.MeetingBean;
 import com.android.incongress.cd.conference.beans.SessionBean;
 import com.android.incongress.cd.conference.model.ConferenceDbUtils;
 import com.android.incongress.cd.conference.model.Note;
-import com.android.incongress.cd.conference.utils.ToastUtils;
 import com.android.incongress.cd.conference.widget.IncongressEditText;
-import com.android.incongress.cd.conference.widget.blws.PolyvKeyBoardUtils;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 
 public class MyMeetingNoteEditor extends BaseFragment {

@@ -1,30 +1,36 @@
 package com.android.incongress.cd.conference.services;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.Service;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.IBinder;
+import android.os.Message;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.FileProvider;
+import android.text.TextUtils;
+import android.util.Log;
+import android.widget.RemoteViews;
+import android.widget.Toast;
+
+import com.android.incongress.cd.conference.base.AppApplication;
+import com.mobile.incongress.cd.conference.basic.csccm.BuildConfig;
+import com.mobile.incongress.cd.conference.basic.csccm.R;
+
+import org.apache.http.HttpStatus;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-import org.apache.http.HttpStatus;
-
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.Service;
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Environment;
-import android.os.Handler;
-import android.os.IBinder;
-import android.os.Message;
-import android.text.TextUtils;
-import android.util.Log;
-import android.widget.RemoteViews;
-import android.widget.Toast;
-
-import com.mobile.incongress.cd.conference.basic.csccm.R;
 
 public class DownloadService extends Service {
 
@@ -57,6 +63,7 @@ public class DownloadService extends Service {
                     notifyNotification(100, 100);
                     notificationManager.cancelAll();
                     installApk(DownloadService.this, new File(DOWNLOAD_PATH, fileName));
+
                     Toast.makeText(DownloadService.this, "下载完成", Toast.LENGTH_SHORT).show();
                     break;
                 case URL_ERROR:
@@ -231,10 +238,24 @@ public class DownloadService extends Service {
 
     @SuppressWarnings("deprecation")
     public void createNotification() {
-        notification = new Notification(
-                R.drawable.ic_launcher,//应用的图标
-                "安装包正在下载...",
-                System.currentTimeMillis());
+        //处理android 8.0
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(AppApplication.getContext());
+        NotificationManager mNotificationManager = (NotificationManager) AppApplication.getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(
+                    "com.incongress.csd",
+                    TAG,
+                    NotificationManager.IMPORTANCE_DEFAULT
+
+            );
+
+            mNotificationManager.createNotificationChannel(channel);
+
+        }
+        mBuilder.setChannelId("com.incongress.csd");
+        mBuilder.setSmallIcon(R.drawable.ic_launcher).setContentText("安装包正在下载...");
+        notification = mBuilder.build();
+        notification.when = System.currentTimeMillis();
         notification.flags = Notification.FLAG_ONGOING_EVENT;
         //notification.flags = Notification.FLAG_AUTO_CANCEL;
 
@@ -245,16 +266,17 @@ public class DownloadService extends Service {
         notification.contentView = contentView;
 
         /*updateIntent = new Intent(this, AboutActivity.class);
-      	updateIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+          updateIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
      	updateIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
      	pendingIntent = PendingIntent.getActivity(this, 0, updateIntent, 0);
       	notification.contentIntent = pendingIntent;*/
+
         notification.flags = Notification.FLAG_AUTO_CANCEL;
         notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         //设置notification的PendingIntent
-		/*Intent intt = new Intent(this, MainActivity.class);
-		PendingIntent pi = PendingIntent.getActivity(this,100, intt,Intent.FLAG_ACTIVITY_NEW_TASK	| Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+        /*Intent intt = new Intent(this, MainActivity.class);
+        PendingIntent pi = PendingIntent.getActivity(this,100, intt,Intent.FLAG_ACTIVITY_NEW_TASK	| Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
 		notification.contentIntent = pi;*/
 
         notificationManager.notify(R.layout.view_notify_item, notification);
@@ -275,10 +297,20 @@ public class DownloadService extends Service {
      * @param file    APK文件
      */
     public static void installApk(Context context, File file) {
-        Intent intent = new Intent();
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setAction(Intent.ACTION_VIEW);
-        intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
-        context.startActivity(intent);
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+   /* Android N 写法*/
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            Uri contentUri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID +".fileprovider", file);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
+            context.startActivity(intent);
+        } else {
+   /* Android N之前的老版本写法*/
+            intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+        }
+
     }
 }

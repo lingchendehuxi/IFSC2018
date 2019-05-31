@@ -38,6 +38,25 @@ public class EsmosBean extends LitePalSupport {
     private int state;
     private int isExist; //本地是否已经存在
     private int isNeedUpdate;//是否有更新
+    //资源类型的icon和信息
+    private String resourceIcon;
+    private String resourceInfo;
+
+    public String getResourceIcon() {
+        return resourceIcon;
+    }
+
+    public void setResourceIcon(String resourceIcon) {
+        this.resourceIcon = resourceIcon;
+    }
+
+    public String getResourceInfo() {
+        return resourceInfo;
+    }
+
+    public void setResourceInfo(String resourceInfo) {
+        this.resourceInfo = resourceInfo;
+    }
 
     public int getState() {
         return state;

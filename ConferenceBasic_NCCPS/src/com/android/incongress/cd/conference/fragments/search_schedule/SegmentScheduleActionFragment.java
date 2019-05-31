@@ -283,6 +283,9 @@ public class SegmentScheduleActionFragment extends BaseFragment implements View.
                 mSessionDaysList.add(session.getSessionDay());
             }
         }
+        if(mSessionDaysList.size()<=0){
+            return;
+        }
         String[] timeStrings = mSessionDaysList.get(0).split("-");
         mTvCurrentTime.setText(timeStrings[1] + "月" + timeStrings[2] + "日");
         setArrowColor(0);

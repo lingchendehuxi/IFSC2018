@@ -8,33 +8,34 @@
     <com.ashokvarma.bottomnavigation.BottomNavigationBar
         android:id="@+id/bottom_navigation_bar"
         android:layout_width="match_parent"
-        android:layout_gravity="bottom"
-        android:visibility="gone"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:visibility="gone" />
 
     <LinearLayout
-        android:layout_above="@id/bottom_navigation_bar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@id/bottom_navigation_bar"
         android:orientation="vertical">
-        <include
-            layout="@layout/title" />
+
+        <include layout="@layout/title" />
+
         <FrameLayout
             android:id="@+id/maincontainer"
             android:layout_width="match_parent"
-            android:background="#1b293a"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:background="#1b293a" />
     </LinearLayout>
 
     <ImageView
         android:id="@+id/home_guide"
-        android:visibility="gone"
-        android:src="@drawable/home_back_guide"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="0"
-        android:scaleType="fitXY" />
+        android:scaleType="fitXY"
+        android:src="@drawable/home_back_guide"
+        android:visibility="gone" />
 
 </RelativeLayout>

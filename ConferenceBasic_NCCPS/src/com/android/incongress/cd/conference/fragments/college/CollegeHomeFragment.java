@@ -1,15 +1,21 @@
 package com.android.incongress.cd.conference.fragments.college;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.text.Editable;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.SpannedString;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.style.AbsoluteSizeSpan;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -89,13 +95,14 @@ public class CollegeHomeFragment extends BaseFragment implements XRecyclerView.L
     private static final int EDIT_OK = 104;
     private static String TITLE_NAME = "title_name";
 
-    public static CollegeHomeFragment getInstance(String titleName){
+    public static CollegeHomeFragment getInstance(String titleName) {
         CollegeHomeFragment fragment = new CollegeHomeFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(TITLE_NAME,titleName);
+        bundle.putString(TITLE_NAME, titleName);
         fragment.setArguments(bundle);
         return fragment;
     }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -176,7 +183,7 @@ public class CollegeHomeFragment extends BaseFragment implements XRecyclerView.L
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
                     }
-                    if(myHandler.hasMessages(EDIT_OK)){
+                    if (myHandler.hasMessages(EDIT_OK)) {
                         myHandler.removeMessages(EDIT_OK);
                     }
                     myHandler.sendEmptyMessageDelayed(EDIT_OK, 1000);
@@ -223,6 +230,7 @@ public class CollegeHomeFragment extends BaseFragment implements XRecyclerView.L
                 }
                 //获取title成功后操作
                 getSessionDays();
+                if(!isAdded()){return;}
                 mPageAdapter = new CollegeListFragmentAdapter(getChildFragmentManager(), mSessionDaysList, mSessionIDsList);
                 mViewPager.setScrollble(false);
                 mViewPager.setAdapter(mPageAdapter);
@@ -250,7 +258,7 @@ public class CollegeHomeFragment extends BaseFragment implements XRecyclerView.L
             if (getActivity() == null) {
                 return;
             }
-            if (i == 0) {
+            if (i == 0 && mSessionIDsList.get(0).contains("-")) {
                 view = LayoutInflater.from(getActivity()).inflate(R.layout.my_centertextview_first, null);
             } else {
                 view = LayoutInflater.from(getActivity()).inflate(R.layout.my_centertextview_sec, null);
@@ -291,12 +299,12 @@ public class CollegeHomeFragment extends BaseFragment implements XRecyclerView.L
                     for (int i = 0; i < length; i++) {
                         listCard.get(i).setVisibility(View.GONE);
                         listText.get(i).setVisibility(View.VISIBLE);
-                        if (i == 0) {
+                        if (i == 0&&mSessionIDsList.get(0).contains("-")) {
                             FrameLayout frameLayout = (FrameLayout) listText.get(i).getParent();
                             frameLayout.setVisibility(View.VISIBLE);
                         }
                     }
-                    if ((int) itemView.getTag() == 0) {
+                    if ((int) itemView.getTag() == 0&&mSessionIDsList.get(0).contains("-")) {
                         FrameLayout frameLayout = (FrameLayout) itemView.getParent();
                         frameLayout.setVisibility(View.GONE);
                     }
@@ -359,6 +367,7 @@ public class CollegeHomeFragment extends BaseFragment implements XRecyclerView.L
                 }
                 //获取title成功后操作
                 getSessionDays();
+                if(!isAdded()){return;}
                 mPageAdapter = new CollegeListFragmentAdapter(getChildFragmentManager(), mSessionDaysList, mSessionIDsList);
                 mViewPager.setScrollble(false);
                 mViewPager.setAdapter(mPageAdapter);
@@ -414,6 +423,13 @@ public class CollegeHomeFragment extends BaseFragment implements XRecyclerView.L
         fl_search = view.findViewById(R.id.fl_search);
         xRecyclerView = view.findViewById(R.id.no_gv_list);
         ll_tips = view.findViewById(R.id.ll_tips);
+        //设置英语状态下提示语的字体大小
+        if (AppApplication.systemLanguage != 1) {
+            SpannableString ss = new SpannableString(getString(R.string.seach_title_hint));//定义hint的值
+            AbsoluteSizeSpan ass = new AbsoluteSizeSpan(11, true);//设置字体大小 true表示单位是sp
+            ss.setSpan(ass, 0, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            et_search.setHint(new SpannedString(ss));
+        }
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         xRecyclerView.setLayoutManager(layoutManager);
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.app_normal_margin);
@@ -491,25 +507,35 @@ public class CollegeHomeFragment extends BaseFragment implements XRecyclerView.L
 
     @Override
     public void itemClick(int position) {
-        if (videoList.get(position).getVideoType() == 3) {
-            String[] string = videoList.get(position).getTitle().split(",");
-            if (AppApplication.systemLanguage == 1) {
-                CollegeActivity.startCitCollegeActivity(getActivity(), string[0], videoList.get(position).getVideoUrl());
-            } else {
-                CollegeActivity.startCitCollegeActivity(getActivity(), string[1], videoList.get(position).getVideoUrl());
+        FastOnLineBean.VideoArrayBean videoArrayBean = videoList.get(position);
+        if(videoArrayBean.getLimits() == 0){
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle(R.string.dialog_tips).setMessage(videoArrayBean.getLimitsTime()).setPositiveButton(R.string.positive_button, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                }
+            }).setCancelable(true).show();
+        }else {
+            if (videoArrayBean.getVideoType() == 3) {
+                String[] string = videoArrayBean.getTitle().split(",");
+                if (AppApplication.systemLanguage == 1) {
+                    CollegeActivity.startCitCollegeActivity(getActivity(), string[0], videoArrayBean.getVideoUrl());
+                } else {
+                    CollegeActivity.startCitCollegeActivity(getActivity(), string[1], videoArrayBean.getVideoUrl());
+                }
+            } else if (videoArrayBean.getVideoType() == 2) {
+                Intent intent = new Intent(getActivity(), VideoPlayDetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(Constants.VIDEO_DETIAL_BEAN, videoArrayBean);
+                intent.putExtras(bundle);
+                getActivity().startActivity(intent);
+            } else if (videoArrayBean.getVideoType() == 1) {
+                Intent intent = new Intent(getActivity(), PolyvVideoPlayDetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(Constants.VIDEO_DETIAL_BEAN, videoArrayBean);
+                intent.putExtras(bundle);
+                getActivity().startActivity(intent);
             }
-        } else if (videoList.get(position).getVideoType() == 2) {
-            Intent intent = new Intent(getActivity(), VideoPlayDetailActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putSerializable(Constants.VIDEO_DETIAL_BEAN, videoList.get(position));
-            intent.putExtras(bundle);
-            getActivity().startActivity(intent);
-        } else if (videoList.get(position).getVideoType() == 1) {
-            Intent intent = new Intent(getActivity(), PolyvVideoPlayDetailActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putSerializable(Constants.VIDEO_DETIAL_BEAN, videoList.get(position));
-            intent.putExtras(bundle);
-            getActivity().startActivity(intent);
         }
     }
 }

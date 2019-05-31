@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <litepal>
-    <dbname value="conference_cit"></dbname>
+    <dbname value="conference_csd"></dbname>
     <version value="1"></version>
 
     <list>

@@ -62,6 +62,8 @@ public class CollegeListDetailBean {
             private String classId;
             private String sessionId;
             private String sessionName;
+            private int limits;
+            private String limitsTime;
 
             public String getClassId() {
                 return classId;
@@ -85,6 +87,22 @@ public class CollegeListDetailBean {
 
             public void setSessionName(String sessionName) {
                 this.sessionName = sessionName;
+            }
+
+            public int getLimits() {
+                return limits;
+            }
+
+            public void setLimits(int limits) {
+                this.limits = limits;
+            }
+
+            public String getLimitsTime() {
+                return limitsTime;
+            }
+
+            public void setLimitsTime(String limitsTime) {
+                this.limitsTime = limitsTime;
             }
         }
     }

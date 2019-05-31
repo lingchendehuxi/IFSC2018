@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -17,17 +18,21 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.incongress.cd.conference.adapters.VideoBottomListAdapter;
+import com.android.incongress.cd.conference.api.CHYHttpClientUsage;
 import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.beans.BookCoursePlayBean;
 import com.android.incongress.cd.conference.beans.FastOnLineBean;
+import com.android.incongress.cd.conference.utils.DensityUtil;
+import com.android.incongress.cd.conference.utils.JSONCatch;
 import com.android.incongress.cd.conference.utils.LanguageUtil;
-import com.android.incongress.cd.conference.utils.NetWorkUtils;
 import com.android.incongress.cd.conference.utils.PicUtils;
 import com.android.incongress.cd.conference.utils.ShareUtils;
 import com.android.incongress.cd.conference.utils.StringUtils;
+import com.android.incongress.cd.conference.utils.ToastUtils;
 import com.android.incongress.cd.conference.widget.CircleImageView;
-import com.android.incongress.cd.conference.widget.StatusBarUtil;
+import com.android.incongress.cd.conference.widget.ListViewForFix;
 import com.android.incongress.cd.conference.widget.blws.PolyvErrorMessageUtils;
 import com.android.incongress.cd.conference.widget.blws.PolyvPlayerMediaController;
 import com.android.incongress.cd.conference.widget.blws.PolyvPlayerPreviewView;
@@ -37,29 +42,62 @@ import com.easefun.polyvsdk.video.PolyvVideoView;
 import com.easefun.polyvsdk.video.listener.IPolyvOnErrorListener2;
 import com.easefun.polyvsdk.video.listener.IPolyvOnVideoPlayErrorListener2;
 import com.easefun.polyvsdk.video.listener.IPolyvOnVideoStatusListener;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 import com.umeng.analytics.MobclickAgent;
 
-import org.yczbj.ycvideoplayerlib.constant.ConstantKeys;
-import org.yczbj.ycvideoplayerlib.controller.VideoPlayerController;
-import org.yczbj.ycvideoplayerlib.player.VideoPlayer;
+import org.json.JSONObject;
 
-public class PolyvVideoPlayDetailActivity extends AppCompatActivity {
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import cz.msebera.android.httpclient.Header;
+
+public class PolyvVideoPlayDetailActivity extends AppCompatActivity implements VideoBottomListAdapter.OnItemClickListener{
     private FastOnLineBean.VideoArrayBean videoBean;
     private BookCoursePlayBean.VideoArrayBean videoPlayBean;
-    private ImageView title_back, title_share;
-    private CircleImageView cir_head;
-    private TextView author, sec_author, title_address, content;
-    private RelativeLayout view_layout;
-    private PolyvVideoView polyv_video_view;
-    private PolyvPlayerMediaController polyv_player_media_controller;
-    private ProgressBar loading_progress;
-    private LinearLayout videoErrorLayout;
-    private TextView videoErrorContent;
-    private TextView videoErrorRetry;
-    private PolyvPlayerPreviewView firstStartView;
-    private RelativeLayout rl_video_top;
+    @BindView(R.id.title_back_polyv)
+    ImageView title_back_polyv;
+    @BindView(R.id.title_share_polyv)
+    ImageView title_share_polyv;
+    @BindView(R.id.cir_head)
+    CircleImageView cir_head;
+    @BindView(R.id.author)
+    TextView author;
+    @BindView(R.id.sec_author)
+    TextView sec_author;
+    @BindView(R.id.title_address)
+    TextView title_address;
+    @BindView(R.id.content)
+    TextView content;
+    @BindView(R.id.video_peopel_number)
+    TextView video_peopel_number;
+    @BindView(R.id.polyv_player_media_controller)
+    PolyvPlayerMediaController polyv_player_media_controller;
+    @BindView(R.id.loading_progress)
+    ProgressBar loading_progress;
+    @BindView(R.id.polyv_player_first_start_view)
+    PolyvPlayerPreviewView firstStartView;
+    @BindView(R.id.video_error_layout)
+    LinearLayout videoErrorLayout;
+    @BindView(R.id.video_error_content)
+    TextView videoErrorContent;
+    @BindView(R.id.video_error_retry)
+    TextView videoErrorRetry;
+    @BindView(R.id.polyv_video_view)
+    PolyvVideoView polyv_video_view;
+    @BindView(R.id.view_layout)
+    RelativeLayout view_layout;
+    @BindView(R.id.rl_video_top)
+    RelativeLayout rl_video_top;
+    @BindView(R.id.xr_video)
+    ListViewForFix xRecyclerView;
+    private List<BookCoursePlayBean.VideoArrayBean> listVideo;
+    private VideoBottomListAdapter listAdapter;
     private int dataId;
+    private int mCurrentPosition;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,28 +108,32 @@ public class PolyvVideoPlayDetailActivity extends AppCompatActivity {
         //StatusBarUtil.setTranslucentStatus(this);
         LanguageUtil.setLanguage(this, AppApplication.systemLanguage);
         setContentView(R.layout.activity_polyv_video_play_detail);
+        ButterKnife.bind(this);
         videoBean = (FastOnLineBean.VideoArrayBean) getIntent().getSerializableExtra(Constants.VIDEO_DETIAL_BEAN);
         videoPlayBean = (BookCoursePlayBean.VideoArrayBean) getIntent().getSerializableExtra("video_play_bean");
-        title_back = findViewById(R.id.title_back);
-        title_share = findViewById(R.id.title_share);
-        cir_head = findViewById(R.id.cir_head);
-        author = findViewById(R.id.author);
-        sec_author = findViewById(R.id.sec_author);
-        title_address = findViewById(R.id.title_address);
-        content = findViewById(R.id.content);
-        rl_video_top = findViewById(R.id.rl_video_top);
-        view_layout = findViewById(R.id.view_layout);
-        polyv_video_view = findViewById(R.id.polyv_video_view);
-        polyv_player_media_controller = findViewById(R.id.polyv_player_media_controller);
-        loading_progress = findViewById(R.id.loading_progress);
-        firstStartView = findViewById(R.id.polyv_player_first_start_view);
-        videoErrorLayout = findViewById(R.id.video_error_layout);
-        videoErrorContent = findViewById(R.id.video_error_content);
-        videoErrorRetry = findViewById(R.id.video_error_retry);
-        title_share.setVisibility(Constants.COLLEGE_HOME_SHARE?View.VISIBLE:View.INVISIBLE);
-        title_back.setVisibility(View.VISIBLE);
+        listVideo = (List<BookCoursePlayBean.VideoArrayBean>) getIntent().getSerializableExtra("video_list");
+        mCurrentPosition = getIntent().getIntExtra("chose_position",0);
+        if(listVideo!=null&&listVideo.size()>0){
+            xRecyclerView.setVisibility(View.VISIBLE);
+            xRecyclerView.setFocusable(false);
+            listVideo.get(mCurrentPosition).setSelected(true);
+            listAdapter = new VideoBottomListAdapter(listVideo,this,this);
+            xRecyclerView.setAdapter(listAdapter);
+        }else {
+            xRecyclerView.setVisibility(View.GONE);
+        }
+        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) view_layout.getLayoutParams();
+        params.width = DensityUtil.getScreenSize(this)[0];
+        params.height = DensityUtil.getScreenSize(this)[0]*9/16;
+        view_layout.setLayoutParams(params);
+        title_share_polyv.setVisibility(Constants.COLLEGE_HOME_SHARE?View.VISIBLE:View.INVISIBLE);
         initViewsAction();
     }
+    @OnClick(R.id.title_back_polyv)
+    void clickFinish(){ finish(); }
+    @OnClick(R.id.title_share_polyv)
+    void clickShare(){ ShareUtils.shareTextWithUrl(PolyvVideoPlayDetailActivity.this, content.getText().toString(), Constants.COLLEGE_SHARE_TITLE,
+                Constants.CIT_SHARE_URI + dataId + "&conId=" + Constants.getConId() +"&fromWhere=" + Constants.getFromWhere()+ "&isShare=1", null); }
 
 
     private void initViewsAction() {
@@ -100,6 +142,7 @@ public class PolyvVideoPlayDetailActivity extends AppCompatActivity {
                 setPolyvConfig(videoBean.getVideoId());
             }
             dataId = videoBean.getDataId();
+            getLookNumber(dataId);
             StringUtils.setTextShow(author, videoBean.getSpeakerName());
             StringUtils.setTextShow(sec_author, videoBean.getRoleName());
             StringUtils.setTextShow(title_address, videoBean.getClassesName());
@@ -107,8 +150,13 @@ public class PolyvVideoPlayDetailActivity extends AppCompatActivity {
                 String title = videoBean.getTitle();
                 int splitLength = title.indexOf(",");
                 if (AppApplication.systemLanguage == 1) {
-                    content.setText(title.substring(0,splitLength));
-                    polyv_player_media_controller.tv_title.setText(title.substring(0,splitLength));
+                    if(splitLength == -1){
+                        content.setText(title);
+                        polyv_player_media_controller.tv_title.setText(title);
+                    }else {
+                        content.setText(title.substring(0,splitLength));
+                        polyv_player_media_controller.tv_title.setText(title.substring(0,splitLength));
+                    }
                 } else {
                     if(splitLength != 0){
                         content.setText(title.substring(splitLength+1,title.length()));
@@ -129,6 +177,7 @@ public class PolyvVideoPlayDetailActivity extends AppCompatActivity {
                 setPolyvConfig(videoPlayBean.getVideoId());
             }
             dataId = videoPlayBean.getDataId();
+            getLookNumber(dataId);
             StringUtils.setTextShow(author, videoPlayBean.getSpeakerName());
             StringUtils.setTextShow(sec_author, videoPlayBean.getRoleName());
             StringUtils.setTextShow(title_address, videoPlayBean.getClassesName());
@@ -137,8 +186,13 @@ public class PolyvVideoPlayDetailActivity extends AppCompatActivity {
                 String title = videoPlayBean.getTitle();
                 int splitLength = title.indexOf(",");
                 if (AppApplication.systemLanguage == 1) {
-                    content.setText(title.substring(0,splitLength));
-                    polyv_player_media_controller.tv_title.setText(title.substring(0,splitLength));
+                    if(splitLength == -1){
+                        content.setText(title);
+                        polyv_player_media_controller.tv_title.setText(title);
+                    }else {
+                        content.setText(title.substring(0,splitLength));
+                        polyv_player_media_controller.tv_title.setText(title.substring(0,splitLength));
+                    }
                 } else {
                     if(splitLength != 0){
                         content.setText(title.substring(splitLength+1,title.length()));
@@ -155,19 +209,22 @@ public class PolyvVideoPlayDetailActivity extends AppCompatActivity {
                 cir_head.setImageResource(R.drawable.professor_default);
             }
         }
-        title_back.setOnClickListener(new View.OnClickListener() {
+    }
+    //获取课件查看人数
+    private void getLookNumber(int dataId){
+        CHYHttpClientUsage.getInstanse().uploadVideoPlayNumber(dataId,new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
             @Override
-            public void onClick(View view) {
-                finish();
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                video_peopel_number.setText(getString(R.string.read_count, JSONCatch.parseInt("readCount",response)));
             }
-        });
-        title_share.setOnClickListener(new View.OnClickListener() {
+
             @Override
-            public void onClick(View view) {
-                //分享
-                ShareUtils.shareTextWithUrl(PolyvVideoPlayDetailActivity.this, content.getText().toString(), "CIT学院",
-                        Constants.CIT_SHARE_URI + dataId + "&conId=" + Constants.getConId() +"&fromWhere=" + Constants.getFromWhere()+ "&isShare=1", null);
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                ToastUtils.showToast("获取信息失败，请联系管理员");
             }
+
         });
     }
 
@@ -318,5 +375,23 @@ public class PolyvVideoPlayDetailActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         MobclickAgent.onPageStart(Constants.FRAGMENT_COLLEGEFRAGMENT_DETIAL);
+    }
+    @Override
+    public void onItemClick(int position) {
+        if(mCurrentPosition == position){
+            return;
+        }
+        mCurrentPosition = position;
+        for(int i = 0;i<listVideo.size();i++){
+            listVideo.get(i).setSelected(false);
+        }
+        listVideo.get(position).setSelected(true);
+        listAdapter.notifyDataSetChanged();
+        videoPlayBean = listVideo.get(position);
+        if (polyv_video_view != null) {
+            polyv_video_view.pause();
+            polyv_video_view.release();
+        }
+        initViewsAction();
     }
 }

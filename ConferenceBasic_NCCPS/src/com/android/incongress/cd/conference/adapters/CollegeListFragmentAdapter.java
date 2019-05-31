@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Created by Jacky on 2016/1/21.
  */
-public class CollegeListFragmentAdapter extends FragmentPagerAdapter {
+public class CollegeListFragmentAdapter extends FragmentStatePagerAdapter {
     private int mPageSize;
     private List<String> mTitles;
     private List<String> mSessionIDsList;
@@ -29,7 +29,7 @@ public class CollegeListFragmentAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        if (position == 0) {
+        if (position == 0 && mSessionIDsList.get(0).contains("-")) {
             return CollegeVideoListFragment.getInstance(mSessionIDsList.get(position), "");
         } else {
             return CollegeListDetailFragment.getInstance(mTitles.get(position), mSessionIDsList.get(position), position);

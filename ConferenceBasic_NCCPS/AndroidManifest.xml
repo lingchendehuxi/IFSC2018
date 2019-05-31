@@ -8,18 +8,15 @@
     <uses-permission android:name="android.permission.ACCESS_ASSISTED_GPS" />
     <uses-permission android:name="android.permission.ACCESS_LOCATION" />
     <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
     <uses-permission android:name="android.permission.SUPPRESSACCESSCHECKS" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
@@ -27,6 +24,7 @@
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
     <!-- JPush 推送需要的权限 start  com.mobile.incongress.cd.conference.basic.csccm -->
     <!-- Required -->
@@ -65,6 +63,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
+        android:persistent="true"
         android:theme="@style/AppBaseTheme">
         <!--适配大屏-->
         <meta-data
@@ -73,10 +72,10 @@
         <!--今日头条适配方法-->
         <meta-data
             android:name="design_width_in_dp"
-            android:value="360"/>
+            android:value="360" />
         <meta-data
             android:name="design_height_in_dp"
-            android:value="640"/>
+            android:value="640" />
         <!-- 配置 -->
         <!-- <meta-data -->
         <!-- android:name="com.android.incongress.cd.conference.utils.glide.SimpleGlideModule" -->
@@ -97,6 +96,9 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="com.android.incongress.cd.conference.LoadDataActivity"
+            android:theme="@style/DefaultFullScreenDialogAnimation" />
+        <activity
             android:name="com.android.incongress.cd.conference.AdvertisesActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
@@ -105,7 +107,7 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name="com.android.incongress.cd.conference.HomeActivity"
-            android:configChanges="orientation|screenSize"
+            android:configChanges="mcc|mnc|orientation|keyboardHidden|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light"
@@ -116,7 +118,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="iccit" />
+                <data android:scheme="iccsccm" />
             </intent-filter>
         </activity>
         <activity
@@ -136,7 +138,7 @@
             android:theme="@android:style/Theme.NoTitleBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.android.incongress.cd.conference.LoginActivity"
+            android:name="com.android.incongress.cd.conference.ui.login.view.LoginActivity"
             android:launchMode="singleTop"
             android:theme="@style/splashTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
@@ -289,16 +291,25 @@
             android:enabled="true"
             android:exported="false">
             <intent-filter>
-                <!--Required 用户注册 SDK 的 intent-->
+                <!--Required 用户注册SDK的intent-->
+                                
                 <action android:name="cn.jpush.android.intent.REGISTRATION" />
-                <!--Required 用户接收 SDK 消息的 intent-->
+                                <!--Required 用户接收SDK消息的intent-->
+                                
                 <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
-                <!--Required 用户接收 SDK 通知栏信息的 intent-->
+                                <!--Required 用户接收SDK通知栏信息的intent-->
+                                
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />
-                <!--Required 用户打开自定义通知栏的 intent-->
+                                <!--Required 用户打开自定义通知栏的intent-->
+                                
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
-                <!-- 接收网络变化 连接/断开 since 1.6.3 -->
+                                <!-- 接收网络变化 连接/断开 since 1.6.3 -->
+                                
                 <action android:name="cn.jpush.android.intent.CONNECTION" />
+                                
+                <action android:name="android.intent.action.BOOT_COMPLETED" /><!--开机广播-->
+                                
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" /><!--网络状态改变广播-->
 
                 <category android:name="${applicationId}" />
             </intent-filter>
@@ -314,10 +325,10 @@
         <meta-data
             android:name="JPUSH_CHANNEL"
             android:value="developer-default" />
-        <!-- Required. AppKey copied from Portal -->
+        <!-- Required. AppKey copied from Portal 极光-->
         <meta-data
             android:name="JPUSH_APPKEY"
-            android:value="1166102290db1b4dea494322" />
+            android:value="f4ed957aed4d9e3369f681cc" />
         <!-- JPush Required end -->
         <activity android:name="com.android.incongress.cd.conference.CountryCodeActivity" />
         <activity android:name="com.android.incongress.cd.conference.ChooseIdentityActivity" />
@@ -340,14 +351,14 @@
 
         <!-- 微信回调页面 -->
         <activity
-            android:name="com.android.incongress.cd.conference.wxapi.WXEntryActivity"
+            android:name=".wxapi.WXEntryActivity"
             android:exported="true"
             android:theme="@android:style/Theme.Translucent" />
 
         <!-- 友盟相关设置 -->
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="5848f72ea325114764000448" />
+            android:value="5346bd2a56240b74b1044210" />
         <!-- 豌豆荚渠道 -->
         <!-- <meta-data android:value="Wandoujia" android:name="UMENG_CHANNEL"/> -->
         <!-- 百度渠道 -->
@@ -378,6 +389,24 @@
         -->
         <activity android:name="com.android.incongress.cd.conference.fragments.me.MyMeetingNoteEditorActivity" />
 
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+        <provider
+            android:name="com.android.incongress.cd.conference.utils.MyFileProvider"
+            android:authorities="${applicationId}.camera.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/img_paths" />
+        </provider>
         <!--
         <activity
             android:name=".WBShareActivity"
@@ -398,12 +427,25 @@
         <activity
             android:name="com.android.incongress.cd.conference.VideoPlayDetailActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name="com.android.incongress.cd.conference.PolyvVideoPlayDetailActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name="com.android.incongress.cd.conference.LoginForUpdateInfoActivity" />
+        <!--相机-->
+        <activity
+            android:name="com.android.incongress.cd.conference.widget.photo.galleryfinal.PhotoSelectActivity"
+            android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.android.incongress.cd.conference.widget.photo.galleryfinal.PhotoEditActivity"
+            android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.android.incongress.cd.conference.widget.photo.galleryfinal.PhotoPreviewActivity"
+            android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

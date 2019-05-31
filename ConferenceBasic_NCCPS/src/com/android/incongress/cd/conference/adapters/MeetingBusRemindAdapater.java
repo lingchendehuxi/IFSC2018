@@ -66,6 +66,7 @@ public class MeetingBusRemindAdapater extends RecyclerView.Adapter<MeetingBusRem
             if(busArrayBean.getBackTime().equals("")){
                 holder.backRemind.setVisibility(View.GONE);
                 holder.hc.setVisibility(View.GONE);
+                holder.busEndTime.setVisibility(View.GONE);
                 holder.isBus.setImageResource(R.drawable.shuttlebus_circulation);
             }else{
                 /*holder.backRemind.setVisibility(View.VISIBLE);
@@ -144,6 +145,6 @@ public class MeetingBusRemindAdapater extends RecyclerView.Adapter<MeetingBusRem
         void onBackRemindListener(View view, BusInfo.DateArrayBean.BusArrayBean busArrayBean, int position);
     }
 
-    
-    
+
+
 }

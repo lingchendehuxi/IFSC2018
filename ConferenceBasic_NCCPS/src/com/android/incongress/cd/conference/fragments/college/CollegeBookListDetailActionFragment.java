@@ -1,8 +1,10 @@
 package com.android.incongress.cd.conference.fragments.college;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +23,7 @@ import com.android.incongress.cd.conference.utils.NetWorkUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
 import com.android.incongress.cd.conference.utils.cache.DiskLruCacheUtil;
 import com.android.incongress.cd.conference.widget.StatusBarUtil;
+import com.android.incongress.cd.conference.widget.dialog.SingleButtonDialog;
 import com.android.incongress.cd.conference.widget.refresh_view.XRefreshView;
 import com.android.incongress.cd.conference.widget.stick_header.StickyListHeadersListView;
 import com.google.gson.Gson;
@@ -115,7 +118,7 @@ public class CollegeBookListDetailActionFragment extends BaseFragment implements
     }
 
     @Override
-    public void onItemOnclick(String sessionId, int mType) {
+    public void onItemOnclick(String sessionId, int mType, int limit, String limitTime) {
         Intent intent = new Intent(getActivity(), CollegeCourseBookActivity.class);
         intent.putExtra("book_session_id", sessionId);
         intent.putExtra("book_type", mType);

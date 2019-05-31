@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="#F5F5F5"
+    android:paddingBottom="8dp"
+    android:layout_height="wrap_content">
+<ImageView
+    android:layout_width="match_parent"
+    android:layout_height="0.1dp"
+    android:layout_alignParentTop="true"
+    android:layout_marginBottom="8dp"
+    android:background="@color/black"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingRight="8dp"
+        android:paddingLeft="8dp"
+        >
+    <TextView
+        android:layout_marginTop="10dp"
+        android:id="@+id/resource_cnsubject"
+        android:textSize="13dp"
+        android:textColor="@color/gray"
+        android:gravity="center_vertical"
+        android:text="指南"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_marginTop="5dp"
+        android:id="@+id/resource_title"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:textSize="18dp"
+        android:text="原发性肺癌治疗指南"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_marginTop="10dp"
+        android:id="@+id/resource_ensubject"
+        android:layout_width="match_parent"
+        android:textSize="13dp"
+        android:gravity="center_vertical"
+        android:text="Guidelines of Chinese Society of Clinical Oncology CSCO"
+        android:textColor="@color/gray"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_marginTop="5dp"
+        android:id="@+id/resource_entitle"
+        android:layout_width="match_parent"
+        android:textSize="15dp"
+        android:gravity="center_vertical"
+        android:text="PRIMARY LUNG CANCER"
+        android:textColor="@color/black"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_marginTop="5dp"
+        android:gravity="center_vertical"
+        android:id="@+id/resource_qici"
+        android:layout_width="match_parent"
+        android:textSize="13dp"
+        android:text="2017.V1"
+        android:textColor="@color/no_data_text_color"
+        android:layout_height="wrap_content" />
+    </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/resource_zntb"
+        android:layout_width="56dp"
+        android:background="@color/black"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="8dp"
+        android:layout_height="26dp">
+        <TextView
+            android:id="@+id/resource_type"
+            android:layout_margin="1dp"
+            android:layout_width="match_parent"
+            android:background="@color/white"
+            android:textSize="13dp"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:text="指南"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
+</RelativeLayout>

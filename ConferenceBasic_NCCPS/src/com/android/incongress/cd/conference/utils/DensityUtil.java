@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.DisplayMetrics;
 
+import com.android.incongress.cd.conference.HomeActivity;
+
 public class DensityUtil {
   
     /** 
@@ -29,7 +31,7 @@ public class DensityUtil {
      */
     public static int[] getScreenSize(Activity activity) {
         DisplayMetrics metric = new DisplayMetrics();
-        activity.getWindowManager().getDefaultDisplay().getMetrics(metric);
+        HomeActivity.activity.getWindowManager().getDefaultDisplay().getMetrics(metric);
 
         int width = metric.widthPixels;     // 屏幕宽度（像素）
         int height = metric.heightPixels;   // 屏幕高度（像素）

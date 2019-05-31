@@ -5,16 +5,16 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.android.incongress.cd.conference.api.CHYHttpClientUsage;
 import com.android.incongress.cd.conference.base.BaseActivity;
 import com.android.incongress.cd.conference.base.Constants;
-import com.android.incongress.cd.conference.utils.JSONCatch;
 import com.android.incongress.cd.conference.utils.StringUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
-import com.android.incongress.cd.conference.widget.StatusBarUtil;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 import com.umeng.analytics.MobclickAgent;
@@ -52,7 +52,6 @@ public class QRCodeCaptureActivity extends BaseActivity {
 
     @Override
     protected void initViewsAction() {
-        StatusBarUtil.setStatusBarDarkTheme(this, false);
     }
 
     /**
@@ -61,25 +60,30 @@ public class QRCodeCaptureActivity extends BaseActivity {
     CodeUtils.AnalyzeCallback analyzeCallback = new CodeUtils.AnalyzeCallback() {
         @Override
         public void onAnalyzeSuccess(Bitmap mBitmap, String result) {
-            if(StringUtils.isNumeric(result)){
-                uploadQRCode(result);
-                captureFragment.onPause();
+            Log.d("sgqTest", "onAnalyzeSuccess: "+result);
+            if(!TextUtils.isEmpty(result) && result.lastIndexOf("#") == result.length()-1&&result.lastIndexOf("#")!=-1){
+                String string = result.substring(0,result.lastIndexOf("#"));
+                if(StringUtils.isNumeric(string)){
+                    uploadQRCode(string);
+                    captureFragment.onPause();
+                }else {
+                    captureFragment.onPause();
+                    ToastUtils.showToast("二维码不正确，请联系管理员");
+                    captureFragment.onResume();
+                }
             }else {
                 captureFragment.onPause();
                 ToastUtils.showToast("二维码不正确，请联系管理员");
                 captureFragment.onResume();
             }
+
         }
 
         @Override
         public void onAnalyzeFailed() {
-            Intent resultIntent = new Intent();
-            Bundle bundle = new Bundle();
-            bundle.putInt(CodeUtils.RESULT_TYPE, CodeUtils.RESULT_FAILED);
-            bundle.putString(CodeUtils.RESULT_STRING, "");
-            resultIntent.putExtras(bundle);
-            QRCodeCaptureActivity.this.setResult(RESULT_OK, resultIntent);
-            QRCodeCaptureActivity.this.finish();
+            captureFragment.onPause();
+            ToastUtils.showToast("扫描失败，请重试");
+            captureFragment.onResume();
         }
     };
 
@@ -89,16 +93,22 @@ public class QRCodeCaptureActivity extends BaseActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-                AlertDialog.Builder builder = new AlertDialog.Builder(QRCodeCaptureActivity.this);
-                builder.setTitle(R.string.dialog_tips).setPositiveButton(R.string.positive_button, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        //对确定按钮的处理
-                        captureFragment.onResume();
-                    }
-                })
-                        .setCancelable(false)
-                        .setMessage(JSONCatch.parseString("remark", response)).show();
+                Log.d("sgqTest", "onSuccess: "+response.toString());
+                try {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(QRCodeCaptureActivity.this);
+                    builder.setTitle(R.string.dialog_tips).setPositiveButton(R.string.positive_button, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            //对确定按钮的处理
+                            captureFragment.onResume();
+                        }
+                    })
+                            .setCancelable(false)
+                            .setMessage(response.getString("remark")).show();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
             }
 
             @Override

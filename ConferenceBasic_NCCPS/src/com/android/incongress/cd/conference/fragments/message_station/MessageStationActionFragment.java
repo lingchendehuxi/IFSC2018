@@ -38,7 +38,7 @@ public class MessageStationActionFragment extends BaseFragment {
         titles = new String[]{getString(R.string.system_notify), getString(R.string.person_notify)};
         mViewPager = view.findViewById(R.id.viewpager);
         tab_layout = view.findViewById(R.id.tab_layout);
-        tab_layout.setIndicatorWidth(50);
+        tab_layout.setIndicatorWidth(80);
         adapter = new MessageListAdapter(getFragmentManager(), titles, titles.length);
         mViewPager.setAdapter(adapter);
         tab_layout.setViewPager(mViewPager);

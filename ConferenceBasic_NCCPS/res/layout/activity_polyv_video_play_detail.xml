@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.android.incongress.cd.conference.VideoPlayDetailActivity">
+    android:layout_height="match_parent">
 
-    <RelativeLayout
+    <FrameLayout
+        android:id="@+id/fl_video"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/black">
@@ -74,103 +73,129 @@
                     android:textSize="16sp" />
             </LinearLayout>
         </RelativeLayout>
+
         <RelativeLayout
+            android:id="@+id/rl_video_top"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/rl_video_top">
+            android:layout_height="wrap_content">
+
             <ImageView
-                android:id="@+id/title_back"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:id="@+id/title_back_polyv"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="@dimen/system_title_size"
-                android:clickable="false"
-                android:focusable="false"
                 android:scaleType="centerCrop"
                 android:src="@drawable/backimg"
                 android:tint="@color/white" />
+
             <ImageView
-                android:id="@+id/title_share"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:id="@+id/title_share_polyv"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:layout_alignParentEnd="true"
                 android:layout_gravity="center_vertical"
-                android:layout_marginRight="10dp"
                 android:layout_marginTop="@dimen/system_title_size"
-                android:clickable="false"
-                android:focusable="false"
+                android:layout_marginRight="10dp"
+                android:clickable="true"
+                android:focusable="true"
                 android:scaleType="centerCrop"
                 android:src="@drawable/icon_share"
                 android:tint="@color/white" />
         </RelativeLayout>
-    </RelativeLayout>
+    </FrameLayout>
 
-    <LinearLayout
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/video_detail_bg"
-        android:orientation="vertical"
-        android:paddingBottom="16dp"
-        android:paddingLeft="18dp"
-        android:paddingRight="18dp">
+        android:layout_height="match_parent"
+        android:layout_below="@id/fl_video">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <com.android.incongress.cd.conference.widget.CircleImageView
-                android:id="@+id/cir_head"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_marginTop="14dp"
-                android:src="@drawable/professor_default" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="17dp"
-                android:orientation="vertical">
+                android:background="@drawable/video_detail_bg"
+                android:orientation="vertical"
+                android:paddingLeft="18dp"
+                android:paddingRight="18dp"
+                android:paddingBottom="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.android.incongress.cd.conference.widget.CircleImageView
+                        android:id="@+id/cir_head"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_marginTop="14dp"
+                        android:src="@drawable/professor_default" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="17dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/author"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/sec_author"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:textColor="@color/white"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+                </LinearLayout>
 
                 <TextView
-                    android:id="@+id/author"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/title_address"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
                     android:textColor="@color/white"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:textSize="12sp"
+                    android:visibility="gone" />
 
                 <TextView
-                    android:id="@+id/sec_author"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
+                    android:layout_marginTop="8dp"
                     android:textColor="@color/white"
-                    android:textSize="12sp" />
-
+                    android:textSize="15sp" />
             </LinearLayout>
+
+            <com.android.incongress.cd.conference.widget.ListViewForFix
+                android:id="@+id/xr_video"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
         </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 
-        <TextView
-            android:id="@+id/title_address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:textColor="@color/white"
-            android:textSize="12sp"
-            android:visibility="gone"/>
-
-        <TextView
-            android:id="@+id/content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:textColor="@color/white"
-            android:textSize="15sp" />
-
-
-    </LinearLayout>
-
-</LinearLayout>
+    <TextView
+        android:id="@+id/video_peopel_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/margin_20"
+        android:paddingRight="10dp"
+        android:text="阅读" />
+</RelativeLayout>

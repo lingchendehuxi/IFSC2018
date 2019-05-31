@@ -214,6 +214,7 @@ public class QuestionSquarFragment extends BaseFragment implements View.OnClickL
                     View scane = CommonUtils.initView(getContext(), R.layout.title_right_image);
                     ((ImageView) scane).setImageResource(R.drawable.scane_scane);
                     PosterFragment post = new PosterFragment();
+                    post.setRightView(scane);
                     action(post, getString(R.string.home_wallpaper), scane, false, false, false);
                     mQuestionPopupWindow.dismiss();
                 }else{

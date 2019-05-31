@@ -1,15 +1,13 @@
 package com.android.incongress.cd.conference.save;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
-import com.android.incongress.cd.conference.HomeActivity;
-import com.android.incongress.cd.conference.LoginActivity;
 import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.Constants;
-import com.android.incongress.cd.conference.fragments.NewDynamicHomeFragment;
+import com.android.incongress.cd.conference.ui.login.view.LoginActivity;
 import com.android.incongress.cd.conference.utils.ConvertUtil;
-import com.android.incongress.cd.conference.utils.JSONCatch;
 import com.android.incongress.cd.conference.utils.StringUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -57,11 +55,13 @@ public class ParseUser {
 		AppApplication.userId = -1;
 		AppApplication.username = "";
 		AppApplication.facultyId = -1;
-		Intent loginIntent = new Intent();
+		/*Intent loginIntent = new Intent();
 		loginIntent.setAction(LoginActivity.LOGOUT_ACTION);
 		context.sendBroadcast(loginIntent);
 		((HomeActivity)context).performBackClick();
-		((HomeActivity)context).mNavigationBar.selectTab(0);
+		((HomeActivity)context).mNavigationBar.selectTab(0);*/
+		context.startActivity(new Intent(context,LoginActivity.class));
+		((Activity)context).finish();
 	}
 	//保存数据信息
 	public static void saveDataInfo(String dataInfo){

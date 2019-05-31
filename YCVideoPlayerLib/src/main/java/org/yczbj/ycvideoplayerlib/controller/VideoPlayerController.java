@@ -204,6 +204,13 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
             }
         }
     };
+    public void setShareVisibity(boolean isShare){
+        if(isShare){
+            mIvShare.setVisibility(VISIBLE);
+        }else {
+            mIvShare.setVisibility(GONE);
+        }
+    }
 
 
     public VideoPlayerController(Context context) {

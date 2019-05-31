@@ -169,7 +169,7 @@ public class PosterDiscussFragment extends BaseActivity implements OnClickListen
                     //此处如果是游客需要保存游客的身份信息 也需要持久化
                     int userType = AppApplication.userType;
                     if (userType == 0) {
-                        SharePreferenceUtils.saveUserString(Constants.USER_IS_LOGIN, "true");
+                        SharePreferenceUtils.saveUserBoolean(Constants.USER_IS_LOGIN, true);
 
                         AppApplication.userId = bean.getUserId();
                         AppApplication.username = bean.getUserName();

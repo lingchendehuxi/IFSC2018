@@ -4,12 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.incongress.cd.conference.CollegeActivity;
-import com.android.incongress.cd.conference.LoginActivity;
 import com.android.incongress.cd.conference.PolyvVideoPlayDetailActivity;
 import com.android.incongress.cd.conference.VideoPlayDetailActivity;
 import com.android.incongress.cd.conference.adapters.CollegeCourseBookAdapter;
@@ -20,6 +18,7 @@ import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.beans.BookCoursePlayBean;
 import com.android.incongress.cd.conference.beans.BookDetailBean;
 import com.android.incongress.cd.conference.save.SharePreferenceUtils;
+import com.android.incongress.cd.conference.ui.login.view.LoginActivity;
 import com.android.incongress.cd.conference.utils.JSONCatch;
 import com.android.incongress.cd.conference.utils.NetWorkUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
@@ -33,6 +32,7 @@ import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -214,12 +214,16 @@ public class CollegeCourseBookActivity extends BaseActivity implements CollegeCo
                 Intent intent = new Intent(this, VideoPlayDetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("video_play_bean", listVideo.get(position));
+                bundle.putSerializable("video_list",(Serializable) listVideo);
+                bundle.putInt("chose_position",position);
                 intent.putExtras(bundle);
                 this.startActivity(intent);
             }else if(listVideo.get(position).getVideoType() == 1){
                 Intent intent = new Intent(this, PolyvVideoPlayDetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("video_play_bean", listVideo.get(position));
+                bundle.putSerializable("video_list",(Serializable)listVideo);
+                bundle.putInt("chose_position",position);
                 intent.putExtras(bundle);
                 this.startActivity(intent);
             }

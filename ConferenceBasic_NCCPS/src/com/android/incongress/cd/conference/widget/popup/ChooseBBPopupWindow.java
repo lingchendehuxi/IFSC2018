@@ -10,6 +10,7 @@ import android.view.WindowManager;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 
+import com.android.incongress.cd.conference.base.AppApplication;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 
 /**
@@ -26,9 +27,9 @@ public class ChooseBBPopupWindow extends PopupWindow {
         return mListView;
     }
 
-    public ChooseBBPopupWindow(Context context ) {
+    public ChooseBBPopupWindow(Context context) {
         super(context);
-        calWidthAndHeight(context);
+        calWidthAndHeight();
 
         mConvertView = LayoutInflater.from(context).inflate(R.layout.time_yd_selector, null);
         mListView = mConvertView.findViewById(R.id.list_not_scroll);
@@ -53,10 +54,9 @@ public class ChooseBBPopupWindow extends PopupWindow {
 
     /**
      * 计算popupWindow的高度和宽度
-     * @param context
      */
-    private void calWidthAndHeight(Context context) {
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+    private void calWidthAndHeight() {
+        WindowManager wm = (WindowManager) AppApplication.getContext().getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics outMetrics = new DisplayMetrics();
         wm.getDefaultDisplay().getMetrics(outMetrics);
         mWidth = (int)(outMetrics.widthPixels*0.75);

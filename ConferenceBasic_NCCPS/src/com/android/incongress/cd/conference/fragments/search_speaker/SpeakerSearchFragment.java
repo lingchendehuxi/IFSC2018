@@ -395,7 +395,7 @@ public class SpeakerSearchFragment extends BaseFragment {
 
         @Override
         protected Object doInBackground(Object[] params) {
-            mSpeakers = ConferenceDbUtils.getAllSpeakerWithOrder();
+            mSpeakers = ConferenceDbUtils.getAllSpeakerWithOrderFL();
             Map<String, Integer> map = new HashMap<>();
 
             for (int i = 0; i < sections.length; i++) {

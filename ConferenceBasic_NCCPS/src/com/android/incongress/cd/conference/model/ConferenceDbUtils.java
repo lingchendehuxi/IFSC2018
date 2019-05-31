@@ -270,8 +270,8 @@ public class ConferenceDbUtils {
         Log.d("sgqTest", "getAlertByTitle: 更新会议闹钟");
         List<Session> sessions;
         List<Meeting> meetings;
-        sessions = LitePal.where("sessionName = ?", alertBean.getTitle()).find(Session.class);
-        meetings = LitePal.where("topic = ?", alertBean.getTitle()).find(Meeting.class);
+        sessions = LitePal.where("sessionName = ?and startTime = ?", alertBean.getTitle(),alertBean.getStart()).find(Session.class);
+        meetings = LitePal.where("topic = ? and meetingDay = ?and startTime = ? and endTime = ?", StringUtils.getChinaString(alertBean.getTitle()),alertBean.getDate(),alertBean.getStart(),alertBean.getEnd()).find(Meeting.class);
         if (sessions != null && sessions.size() > 0) {
             Session session = sessions.get(0);
             alertBean.setDate(session.getSessionDay());
@@ -282,6 +282,7 @@ public class ConferenceDbUtils {
             alertBean.setTitle(session.getSessionName() + "#@#" + session.getSessionNameEN());
             alertBean.setType(AlertBean.TYPE_SESSTION);
             alertBean.save();
+            session.save();
         } else if (meetings != null && meetings.size() > 0) {
             Meeting meeting = meetings.get(0);
             alertBean.setDate(meeting.getMeetingDay());
@@ -292,6 +293,8 @@ public class ConferenceDbUtils {
             alertBean.setTitle(meeting.getTopic() + "#@#" + meeting.getTopicEn());
             alertBean.setType(AlertBean.TYPE_MEETING);
             alertBean.save();
+            meeting.setAttention(1);
+            meeting.save();
         } else {
             //如果更新去掉了，就删除这个对象
             alertBean.delete();
@@ -690,15 +693,32 @@ public class ConferenceDbUtils {
     }
 
     /**
-     * 按照拼音顺序排序
+     * 按照首字母顺序排序
      *
      * @return
      */
-    public static List<Speaker> getAllSpeakerWithOrder() {
+    public static List<Speaker> getAllSpeakerWithOrderFL() {
         List<Speaker> speakers = null;
         try {
             speakers = LitePal.order("firstLetter asc").find(Speaker.class);
+            if(speakers==null||speakers.size()<=0){
+                return getAllSpeakerWithOrderSZM();
+            }
         } catch (Exception e) {
+            e.printStackTrace();
+            speakers = new ArrayList<>();
+        }
+        return speakers;
+    }
+    /**
+     * 按照拼音顺序排序
+     * @return
+     */
+    public static List<Speaker> getAllSpeakerWithOrderSZM() {
+        List<Speaker> speakers = null;
+        try {
+            speakers = LitePal.order("speakernamepingyin asc").find(Speaker.class);
+        }catch (Exception e) {
             e.printStackTrace();
             speakers = new ArrayList<>();
         }

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -105,7 +106,7 @@ public class MeetingScheduleListActionFragment extends BaseFragment {
             mSelectTime.setText(newSessionDaysList.get(0));
         }
         mPageAdapter = new MeetingScheduleListFragmentAdapter(getChildFragmentManager(), mSessionDaysList);
-        mViewPager.setScrollble(false);
+        mViewPager.setScrollble(true);
         mViewPager.setAdapter(mPageAdapter);
         mViewPager.setOffscreenPageLimit(3);
         for (int i = 0; i < mSessionDaysList.size(); i++) {
@@ -124,6 +125,23 @@ public class MeetingScheduleListActionFragment extends BaseFragment {
             addGuideView();
             SharePreferenceUtils.saveAppBoolean(Constants.MEETING_SHAPE_GUIDE,true);
         }
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                mCurrentPage = position;
+                mSelectTime.setText(newSessionDaysList.get(mCurrentPage));
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         return view;
     }
 

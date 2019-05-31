@@ -37,7 +37,6 @@
                     android:singleLine="true"
                     android:ellipsize="end"
                     android:layout_height="wrap_content"
-                    android:text="Jim"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_media" />
 
@@ -47,7 +46,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="6dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/scenicxiu_news" />
+                    android:src="@drawable/scenicxiu_news"
+                    android:tint="@color/theme_color"/>
 
                 <TextView
                     android:id="@+id/tv_publish_time"

@@ -27,7 +27,6 @@ dependencies {
     implementation  'com.android.support:appcompat-v7:27.1.0'
     //这两个是必须要加的，其它的可供选择
     implementation  'tv.danmaku.ijk.media:ijkplayer-java:0.8.4'
-    implementation  'tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.4'
     //其他库文件
     //compile 'tv.danmaku.ijk.media:ijkplayer-armv5:0.8.8'
     //compile 'tv.danmaku.ijk.media:ijkplayer-arm64:0.8.8'

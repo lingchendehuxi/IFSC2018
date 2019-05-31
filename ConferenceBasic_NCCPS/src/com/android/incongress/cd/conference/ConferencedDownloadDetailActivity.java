@@ -115,7 +115,7 @@ public class ConferencedDownloadDetailActivity extends BaseActivity {
                         ToastUtils.showToast(mDeleteSucees ? "删除成功" : "删除失败");
                         if(mDeleteSucees) {
                             ConferenceDbUtils.updateConferenceExistStatus(mConferenceId, 0);
-                            EventBus.getDefault().post(new HomeActivity.UpdateConferenceEvent(mConferenceId,false, false));
+                            EventBus.getDefault().post(new HomeActivity.UpdateConferenceEvent(false));
                             mIsFolderExist = false;
                         }
                         queryConferenceDataVersion();
@@ -334,7 +334,7 @@ public class ConferencedDownloadDetailActivity extends BaseActivity {
                 protected void postWork() {
                     ToastUtils.showToast("下载成功");
 
-                    EventBus.getDefault().post(new HomeActivity.UpdateConferenceEvent(mConferenceId,true, false));
+                    EventBus.getDefault().post(new HomeActivity.UpdateConferenceEvent(false));
                     dismissProgressBar();
                     mBtDelete.setVisibility(View.VISIBLE);
                     mBtHandle.setText("打开");

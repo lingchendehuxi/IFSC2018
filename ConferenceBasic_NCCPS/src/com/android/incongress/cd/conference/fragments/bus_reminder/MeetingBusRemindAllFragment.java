@@ -17,6 +17,7 @@ import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.BaseFragment;
 import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.model.BusInfo;
+import com.android.incongress.cd.conference.utils.DateUtil;
 import com.android.incongress.cd.conference.widget.StatusBarUtil;
 import com.google.gson.Gson;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -71,7 +72,11 @@ public class MeetingBusRemindAllFragment extends BaseFragment {
                         String[] titles = new String[busInfo.getDateArray().size()];
                         //日程存在
                         for (int i = 0; i < busInfo.getDateArray().size(); i++) {
-                            titles[i] = busInfo.getDateArray().get(i).getBusDate();
+                            if(AppApplication.systemLanguage ==1){
+                                titles[i] = DateUtil.getFormatMonthAndDayChinese(busInfo.getDateArray().get(i).getBusDate());
+                            }else {
+                                titles[i] = DateUtil.getFormatMonthAndDayEnglish(busInfo.getDateArray().get(i).getBusDate());
+                            }
                         }
                         mAdapter = new BusRemindAdapter(getChildFragmentManager(), titles,busInfo.getDateArray().size());
                         mViewPager.setAdapter(mAdapter);

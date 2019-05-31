@@ -45,7 +45,6 @@
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:singleLine="true"
-                        android:text="大会秘书处"
                         android:textColor="@color/time_chose_title_color"
                         android:textSize="@dimen/text_size_media"
                         android:textStyle="bold" />

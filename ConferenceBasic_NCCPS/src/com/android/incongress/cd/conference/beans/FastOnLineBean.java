@@ -58,6 +58,8 @@ public class FastOnLineBean {
         private String roleName;
         private String openTime;
         private String videoImage;
+        private int limits;
+        private String limitsTime;
 
         public int getDataId() {
             return dataId;
@@ -161,6 +163,22 @@ public class FastOnLineBean {
 
         public void setVideoImage(String videoImage) {
             this.videoImage = videoImage;
+        }
+
+        public int getLimits() {
+            return limits;
+        }
+
+        public void setLimits(int limits) {
+            this.limits = limits;
+        }
+
+        public String getLimitsTime() {
+            return limitsTime;
+        }
+
+        public void setLimitsTime(String limitsTime) {
+            this.limitsTime = limitsTime;
         }
     }
 }

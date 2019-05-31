@@ -13,11 +13,16 @@ public class CHYHttpClient {
     //测试服务器
 //    public static final String BASE_URL = "http://incongress.cn:8090"; //新接口地址都在这里面，因为Https的关系 测试服
     //新添加本地服务器
-    private static final String BASE_LOCAL= "http://192.168.0.153/chyNewApi.do?";//"http://incongress.cn:8090/chyNewApi.do?"
+    private static final String BASE_LOCAL= "http://incongress.cn:8090/chyNewApi.do?";//"http://incongress.cn:8090/chyNewApi.do?"
+    private static final String BASE_LOCAL2= "http://incongress.cn:8090/chyNewApi.do?";//"http://incongress.cn:8090/chyNewApi.do?"
     //----------------------  接口地址2   正式-------------------------
     //正式服务器
-    public static final String BASE_URL = "http://app.incongress.cn";
-
+    public static final String BASE_URL = "http://app.incongress.cn"; //http://app.incongress.cn
+    public static final String BASE_MVP_URL = "http://app.incongress.cn/"; //http://app.incongress.cn
+    //
+    public static final String BASE_MVP_INFO_LOGIN = "Conferences/conferencesHttps.do";
+    //compass接口
+    public static final String BASE_MVP_COMPASS_URL = "compassApiV2.do";
     /**
      * 接口集合
      */
@@ -33,6 +38,10 @@ public class CHYHttpClient {
     private static final String BASE_INFO_LOGIN = "/Conferences/conferencesHttps.do?";
     //大部分老接口
     private static final String BASE_COMMON_URL = "/Conferences/chyApiHttps.do?";
+    //资源接口
+    private static final String BASE_RESOURCE_URL = "/conpassApi.do?";
+    //compass接口
+    private static final String BASE_COMPASS_URL = "/compassApiV2.do?";
 
 
     //此超时不生效，使用的是默认的10*1000
@@ -64,10 +73,20 @@ public class CHYHttpClient {
         client.setTimeout(TIME_OUT);
         client.post(BASE_URL+BASE_POSTER_LIST, params, responseHandler);
     }
+    //壁报
+    public static void postResource(RequestParams params, JsonHttpResponseHandler responseHandler) {
+        client.setTimeout(TIME_OUT);
+        client.post(BASE_URL+BASE_RESOURCE_URL, params, responseHandler);
+    }
     //仅仅为了测试本地
     public static void postLOCAL(RequestParams params, JsonHttpResponseHandler responseHandler) {
         client.setTimeout(TIME_OUT);
         client.post(BASE_LOCAL, params, responseHandler);
+    }
+    //仅仅为了测试本地2
+    public static void postLOCAL2(RequestParams params, JsonHttpResponseHandler responseHandler) {
+        client.setTimeout(TIME_OUT);
+        client.post(BASE_LOCAL2, params, responseHandler);
     }
     public static void postMyQuestion(RequestParams params, JsonHttpResponseHandler responseHandler) {
         client.setTimeout(TIME_OUT);
@@ -87,6 +106,11 @@ public class CHYHttpClient {
     public static void postLiveList(RequestParams params, JsonHttpResponseHandler responseHandler) {
         client.setTimeout(TIME_OUT);
         client.post(BASE_URL+BASE_LIVE_LIST, params, responseHandler);
+    }
+    //compass接口 首页
+    public static void postCompass(RequestParams params, JsonHttpResponseHandler responseHandler) {
+        client.setTimeout(TIME_OUT);
+        client.post(BASE_URL+BASE_COMPASS_URL, params, responseHandler);
     }
 
     private static String getAbsoluteUrl(String methodName) {

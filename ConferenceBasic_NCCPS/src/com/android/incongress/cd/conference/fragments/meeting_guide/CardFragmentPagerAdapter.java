@@ -35,7 +35,7 @@ public class CardFragmentPagerAdapter extends FragmentStatePagerAdapter implemen
             }else{
                 mapName = bean.getMapRemark();
             }
-            addCardFragment(CardFragment.getInstance(bean.getMapUrl(),mapName));
+            addCardFragment(CardFragment.getInstance(bean.getMapUrl(),mapName,i));
         }
     }
 

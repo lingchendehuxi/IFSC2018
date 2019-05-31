@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
@@ -34,11 +36,13 @@ public class CollegeListDetailActionAdapter extends BaseAdapter implements Stick
     private String[] mSectionHeaders;
     private CollegeOnItemOnclicking onItemOnclicking;
     private int mType;
+    private Context mContext;
 
-    public CollegeListDetailActionAdapter(Context ctx, List<CollegeListDetailBean.ClassArrayBean.SessionArrayBean> session, List<CollegeListDetailBean.ClassArrayBean> mClassBean,CollegeOnItemOnclicking onItemOnclicking,int mType) {
+    public CollegeListDetailActionAdapter(Context ctx, List<CollegeListDetailBean.ClassArrayBean.SessionArrayBean> session, List<CollegeListDetailBean.ClassArrayBean> mClassBean, CollegeOnItemOnclicking onItemOnclicking, int mType) {
         this.mSessions = session;
         this.mInflater = LayoutInflater.from(ctx);
         this.mClassBean = mClassBean;
+        mContext = ctx;
         this.mType = mType;
         this.onItemOnclicking = onItemOnclicking;
         mSectionIndices = getSectionIndices();
@@ -72,6 +76,7 @@ public class CollegeListDetailActionAdapter extends BaseAdapter implements Stick
 
     /**
      * sectionIndices数组用来存放每一轮分组的第一个item的位置。
+     *
      * @return
      */
     private int[] getSectionIndices() {
@@ -79,10 +84,10 @@ public class CollegeListDetailActionAdapter extends BaseAdapter implements Stick
         int classId = Integer.parseInt(mSessions.get(0).getClassId());
         secionIndices.add(0);
 
-        for(int i=1; i< mSessions.size(); i++) {
+        for (int i = 1; i < mSessions.size(); i++) {
             int tempClassId = Integer.parseInt(mSessions.get(i).getClassId());
 
-            if(classId != tempClassId) {
+            if (classId != tempClassId) {
                 classId = tempClassId;
                 secionIndices.add(i);
             }
@@ -90,7 +95,7 @@ public class CollegeListDetailActionAdapter extends BaseAdapter implements Stick
 
         int[] secions = new int[secionIndices.size()];
 
-        for(int i=0; i<secionIndices.size(); i++) {
+        for (int i = 0; i < secionIndices.size(); i++) {
             secions[i] = secionIndices.get(i);
         }
         return secions;
@@ -98,11 +103,12 @@ public class CollegeListDetailActionAdapter extends BaseAdapter implements Stick
 
     /**
      * header中存放的数据
+     *
      * @return
      */
-    private String[] getSectionHeaders(){
+    private String[] getSectionHeaders() {
         String[] sectionHeader = new String[mSectionIndices.length];
-        for(int i=0; i< mSectionIndices.length; i++) {
+        for (int i = 0; i < mSectionIndices.length; i++) {
             sectionHeader[i] = mSessions.get(mSectionIndices[i]).getClassId();
         }
 
@@ -121,12 +127,12 @@ public class CollegeListDetailActionAdapter extends BaseAdapter implements Stick
         } else {
             holder = (HeaderViewHolder) convertView.getTag();
         }
-        for(int i=0; i<mClassBean.size(); i++) {
-            if(mSessions.get(position).getClassId().equals(mClassBean.get(i).getClassId())) {
+        for (int i = 0; i < mClassBean.size(); i++) {
+            if (mSessions.get(position).getClassId().equals(mClassBean.get(i).getClassId())) {
                 String[] strings = mClassBean.get(i).getClassName().split("#@#");
-                if(AppApplication.systemLanguage == 1) {
+                if (AppApplication.systemLanguage == 1) {
                     holder.tvClassRoom.setText(strings[0]);
-                }else {
+                } else {
                     holder.tvClassRoom.setText(strings[1]);
                 }
                 break;
@@ -163,15 +169,17 @@ public class CollegeListDetailActionAdapter extends BaseAdapter implements Stick
             holder = new ViewHolder();
             convertView = mInflater.inflate(R.layout.item_single_college_list, parent, false);
             holder.tvMeetingName = convertView.findViewById(R.id.schedule_list_title);
+            holder.iv_limit = convertView.findViewById(R.id.iv_limit);
+            holder.ll_content = convertView.findViewById(R.id.ll_content);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.tvMeetingName.setTag(position);
-        holder.tvMeetingName.setOnClickListener(new View.OnClickListener() {
+        holder.ll_content.setTag(position);
+        holder.ll_content.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onItemOnclicking.onItemOnclick(mSessions.get((int)view.getTag()).getSessionId(),mType);
+                onItemOnclicking.onItemOnclick(mSessions.get((int) view.getTag()).getSessionId(), mType, mSessions.get(position).getLimits(), mSessions.get(position).getLimitsTime());
             }
         });
         String[] strings = mSessions.get(position).getSessionName().split("#@#");
@@ -179,6 +187,13 @@ public class CollegeListDetailActionAdapter extends BaseAdapter implements Stick
             holder.tvMeetingName.setText(strings[0]);
         } else {
             holder.tvMeetingName.setText(strings[1]);
+        }
+        if (mSessions.get(position).getLimits() == 1 || mSessions.get(position).getLimitsTime() == null) {
+            holder.iv_limit.setVisibility(View.GONE);
+            holder.tvMeetingName.setTextColor(mContext.getResources().getColor(R.color.black_login_text));
+        } else {
+            holder.iv_limit.setVisibility(View.VISIBLE);
+            holder.tvMeetingName.setTextColor(mContext.getResources().getColor(R.color.unselect_color));
         }
         return convertView;
     }
@@ -189,9 +204,12 @@ public class CollegeListDetailActionAdapter extends BaseAdapter implements Stick
 
     class ViewHolder {
         TextView tvMeetingName;
+        ImageView iv_limit;
+        LinearLayout ll_content;
     }
-    public interface CollegeOnItemOnclicking{
-        void onItemOnclick(String sessionId,int mType);
+
+    public interface CollegeOnItemOnclicking {
+        void onItemOnclick(String sessionId, int mType, int limit, String limitTime);
     }
 
 }

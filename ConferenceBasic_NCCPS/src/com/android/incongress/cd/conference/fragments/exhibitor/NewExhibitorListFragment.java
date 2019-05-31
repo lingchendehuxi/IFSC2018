@@ -133,6 +133,8 @@ public class NewExhibitorListFragment extends BaseFragment implements XRecyclerV
             mRecyclerView.addItemDecoration(new RecycleViewDivider(getActivity(), LinearLayoutManager.VERTICAL, DensityUtil.dip2px(getActivity(), 18), getResources().getColor(R.color.white)) {
             });
             mRecyclerView.setLoadingMoreEnabled(false);
+        }else if(type == 5){
+
         }
         mRecyclerView.setLoadingListener(this);
         mRecyclerView.setRefreshing(true);

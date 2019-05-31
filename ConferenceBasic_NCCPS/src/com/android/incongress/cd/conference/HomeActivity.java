@@ -6,6 +6,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -33,11 +37,13 @@ import com.android.incongress.cd.conference.base.BaseFragment;
 import com.android.incongress.cd.conference.base.BaseFragment.MainCallBack;
 import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.beans.DZBBBean;
-import com.android.incongress.cd.conference.beans.FastOnLineBean;
 import com.android.incongress.cd.conference.beans.JpushDataBean;
 import com.android.incongress.cd.conference.beans.PosterBean;
 import com.android.incongress.cd.conference.beans.TitleEntry;
+import com.android.incongress.cd.conference.fragments.CSCOSoundFragment;
 import com.android.incongress.cd.conference.fragments.NewDynamicHomeFragment;
+import com.android.incongress.cd.conference.fragments.NewHomeFragment;
+import com.android.incongress.cd.conference.fragments.ResourceFragment;
 import com.android.incongress.cd.conference.fragments.me.MindBookFragment;
 import com.android.incongress.cd.conference.fragments.me.PersonCenterFragment;
 import com.android.incongress.cd.conference.fragments.message_station.MessageStationActionFragment;
@@ -48,34 +54,33 @@ import com.android.incongress.cd.conference.model.ConferenceDbUtils;
 import com.android.incongress.cd.conference.save.ParseUser;
 import com.android.incongress.cd.conference.save.SharePreferenceUtils;
 import com.android.incongress.cd.conference.services.AdService;
+import com.android.incongress.cd.conference.ui.login.view.LoginActivity;
 import com.android.incongress.cd.conference.utils.CommonUtils;
 import com.android.incongress.cd.conference.utils.ConvertUtil;
 import com.android.incongress.cd.conference.utils.ExampleUtil;
 import com.android.incongress.cd.conference.utils.FileUtils;
 import com.android.incongress.cd.conference.utils.JSONCatch;
-import com.android.incongress.cd.conference.utils.LanguageUtil;
 import com.android.incongress.cd.conference.utils.LogUtils;
 import com.android.incongress.cd.conference.utils.StringUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
 import com.android.incongress.cd.conference.widget.zxing.activity.CodeUtils;
-import com.ashokvarma.bottomnavigation.BadgeItem;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
-import com.baidu.mobstat.StatService;
+import com.ashokvarma.bottomnavigation.TextBadgeItem;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
-import com.tencent.mm.sdk.openapi.IWXAPI;
-import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.litepal.LitePal;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -103,7 +108,9 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
     private LinearLayout mCoustomRightView, mCustomTitleView, mBackButtonPanel, mHomeButtonPanel;//自定义view，返回按钮，小房子按钮
     private RelativeLayout mTitleContainer;//整个titleBar，就是上方操作栏
     public BottomNavigationBar mNavigationBar;
-    private BadgeItem mBadgeItem;
+    private TextBadgeItem mBadgeItem;
+    private List<Integer> listBottomBar = new ArrayList<>();
+    public static HomeActivity activity;
 
     public Stack<TitleEntry> getmTitleEntries() {
         return mTitleEntries;
@@ -115,19 +122,20 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
 
     //当前所处位置
     private int mCurrentPosition = 0;
-    private int mCurrentFirstPosition = 1; //0--ChooseConferenceFragmetn，1--DynamicHomeActionFragment
 
     //  private ChooseConferenceFragment mChooseConferenceFragment;
     public NewDynamicHomeFragment mDynamicHomeFragment;
     private ScenicXiuFragment mShowFragment;
+    private NewHomeFragment mNewHomeFragment;
     private PersonCenterFragment mMeFragment;
+    private CSCOSoundFragment mCscoSoundFragment;
+    private ResourceFragment mResourceFragment;
     private MessageStationActionFragment mMessageStationFragment;
 
     private Fragment mCurrentFragment;
     private FragmentManager mFragmentManager;
 
     protected List<Ad> mAdList;
-    private long timeOut = 0;
 
     /**
      * Jpush 推送数据，判断是否在主页
@@ -138,21 +146,15 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
     private static final int MSG_UPDATE_INFO = 0X0002;
 
     public static final int REQUEST_SCANE = 0X0003;
-    public static final int REQUEST_VIEW = 0X0004;
 
     private String mUpdateMsg = "";
 
     private Stack<TitleEntry> mTitleEntries = new Stack<TitleEntry>();
-    private IWXAPI api;
-
-    private static boolean stopTimer = false;
 
     //本地的icon.txt地址
     private String mIconFilePath = "";
-    //当前的页面位置
-    private int mCurrentHomePosition = DYNAMIC_POSITION;
-    private static final int DYNAMIC_POSITION = 1; //动态首页
-    private static final int STATIC_POSITION = 2;   //静态首页
+    private int totalConId, conId;
+    private String fromWhere;
 
     protected Handler mPdHandler = new Handler(new Handler.Callback() {
         @Override
@@ -180,17 +182,77 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
         mBackButton.performClick();
     }
 
+    /*
+     * 上传用户地理位置
+     */
+    private void uploadUserLoaction() {
+        Location location = getLastKnownLocation();
+        if(location==null){
+            ToastUtils.showToast("无法获取地址位置，请打开GPS");
+            return;
+        }
+        double longitude = location.getLongitude();
+        double latitude = location.getLatitude();
+        String provinceName ="",cityName="",address="";
+        Geocoder geocoder = new Geocoder(this);
+        try {
+            List<Address> addresses = geocoder.getFromLocation(latitude , longitude, 1);
+            if(addresses.size()>0){
+                Address addressP = addresses.get(0);
+                provinceName = addressP.getAdminArea();
+                cityName = addressP.getLocality();
+                if(provinceName.equals(cityName)){
+                    provinceName="";
+                }
+                address = addressP.getThoroughfare()+addressP.getSubThoroughfare();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            Log.d("ic", "uploadUserLoaction: "+e.toString());
+        }
+
+        CHYHttpClientUsage.getInstanse().doGetUploadUserLocation(location.getLongitude(),location.getLatitude(),provinceName,cityName,address, new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+            }
+        });
+    }
+    //获取地址
+    private Location getLastKnownLocation() {
+        LocationManager mLocationManager = (LocationManager)getSystemService(LOCATION_SERVICE);
+        List<String> providers = mLocationManager.getProviders(true);
+        Location bestLocation = null;
+        for (String provider : providers) {
+            Location l = null;
+            try {
+                l = mLocationManager.getLastKnownLocation(provider);
+            }catch (SecurityException e){
+                e.printStackTrace();
+            }
+            if (l == null) {
+                continue;
+            }
+            if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
+                // Found best last known location: %s", l);
+                bestLocation = l;
+            }
+        }
+        return bestLocation;
+    }
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void setContentView() {
+        activity = this;
+        setContentView(R.layout.activity_main);
+        getDialog();
+    }
+
+    @Override
+    protected void initViewsAction() {
         initData();
         initViews();
         initEvents();
-        initJpush();
-        if (AppApplication.isUserLogIn()) {
-            initRefreshUser();
-        }
-
+        uploadUserLoaction();
         EventBus.getDefault().register(this);
         Uri uri = getIntent().getData();
         if (uri != null) {
@@ -205,9 +267,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
             }
         }
 
-
-        startService(new Intent(getApplicationContext(), AdService.class));
-
         mFragmentManager = getSupportFragmentManager();
 //        mHomeFragment = new HomeFragment();
 //        mChooseConferenceFragment = new ChooseConferenceFragment();
@@ -216,47 +275,19 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
         //检测本地是否有动态布局的包，有的话加载动态首页，没有则加载本地页面
         mIconFilePath = AppApplication.instance().getSDPath() + Constants.FILESDIR + "/icon.txt";
 
-        if (FileUtils.isFileExist(mIconFilePath)) {
+        if (!FileUtils.isFileExist(mIconFilePath)) {
+            ToastUtils.showToast("没有找到icon.txt文件，请联系管理员");
+            this.finish();
+        } else {
             mDynamicHomeFragment = new NewDynamicHomeFragment();
             mCurrentFragment = mDynamicHomeFragment;
             addFragment(mDynamicHomeFragment, true);
-            mCurrentHomePosition = DYNAMIC_POSITION;
-        } else {
-            SharePreferenceUtils.saveAppInt(Constants.PREFERENCE_DB_VERSION, 0);
-            startActivity(new Intent(this, SplashActivity.class));
-            finish();
         }
-
         setTitleEntry(true, false, false, null, R.string.app_name, true, true, false, true, null, true);
 
         //判断是否从推送跳入，需要直接打开webview
-        try {
-            Bundle bundle = getIntent().getExtras();
-            String info = bundle.getString(JPushInterface.EXTRA_EXTRA);
-            if (info.contains("ModelId")) {
-                JpushDataBean bean = new Gson().fromJson(info, new TypeToken<FastOnLineBean>() {
-                }.getType());
-                switch (bean.getModelId()) {
-                    case "1":
-                        if (mDynamicHomeFragment != null) {
-                            mDynamicHomeFragment.goLookSchedule(StringUtils.getNeedString(bean.getModelTitle()));
-                        }
-                        break;
-                }
-                return;
-            }
-
-            if (bundle != null) {
-                String url = bundle.getString("url");
-                String title = bundle.getString("title");
-                long notificationId = bundle.getLong("notificationId");
-                if (!StringUtils.isEmpty(url))
-                    WebViewContainerActivity.startWebViewContainerActivity(HomeActivity.this, url, title);
-                JPushInterface.removeLocalNotification(HomeActivity.this, notificationId);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        //定向处理推送
+        fromJPUSH(getIntent());
 
         //显示数据包的更新信息
         if (getIntent().getBooleanExtra("isNeedShowMsg", false)) {
@@ -279,78 +310,13 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
             });
         }
 
-        if (AppApplication.userId != -1) {
-            String token = SharePreferenceUtils.getUser(Constants.USER_RONG_TOKEN);
-
-            if (TextUtils.isEmpty(token)) {
-                CHYHttpClientUsage.getInstanse().doGetToken(AppApplication.userId, new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                        super.onSuccess(statusCode, headers, response);
-                        LogUtils.println("response:" + response);
-                        try {
-                            int state = response.getInt("state");
-                            if (state == 1) {
-                                String tokenRes = response.getString("token");
-                                if (!TextUtils.isEmpty(tokenRes)) {
-                                    SharePreferenceUtils.saveUserString(Constants.USER_RONG_TOKEN, tokenRes);
-                                }
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                        super.onFailure(statusCode, headers, throwable, errorResponse);
-                        LogUtils.println("response:" + errorResponse);
-                    }
-                });
-            }
-        }
-
         //注册登录和退出登录的广播
-        // 获取测试设备ID
-        String testDeviceId = StatService.getTestDeviceId(this);
-// 日志输出
-        android.util.Log.d("sgqtest", "Test DeviceId : " + testDeviceId);
         //这里对41版本强制删除用户信息，重新登录
-        if (!SharePreferenceUtils.getAppBoolean("force_login", false)) {
-            SharePreferenceUtils.saveAppBoolean("force_login", true);
+        if (!SharePreferenceUtils.getAppBoolean(Constants.FORCE_LOGOUT, false)) {
+            SharePreferenceUtils.saveAppBoolean(Constants.FORCE_LOGOUT, true);
             umengDeleteOauth(this, SHARE_MEDIA.WEIXIN);
             ParseUser.clearUserInfo(this);
         }
-    }
-
-    /*
-     * 根据用户id更新用户信息
-     */
-    private void initRefreshUser() {
-        CHYHttpClientUsage.getInstanse().doGetMobileUserInfoByMobile(LanguageUtil.getCurrentLan(HomeActivity.this), Constants.getConId() + "", Constants.getFromWhere(), new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                super.onSuccess(statusCode, headers, response);
-                if (JSONCatch.parseInt("state", response) == 1) {
-                    ParseUser.saveUserInfo(response.toString());
-                    if (mMeFragment != null) {
-                        mMeFragment.refreshInfo();
-                    }
-                } else {
-                    startActivity(new Intent(HomeActivity.this, LoginActivity.class));
-                }
-            }
-        });
-    }
-
-    @Override
-    protected void setContentView() {
-        setContentView(R.layout.activity_main);
-        getDialog();
-    }
-
-    @Override
-    protected void initViewsAction() {
     }
 
     private void getDialog() {
@@ -392,25 +358,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
         });
     }
 
-    /**
-     * 将JPush的registerId发送给服务端，方便服务端进行推送
-     */
-    private void initJpush() {
-        final String registrationID = JPushInterface.getRegistrationID(this);
-        Log.d("sgqTest", "initJpush: " + registrationID);
-        CHYHttpClientUsage.getInstanse().doSendToken(Constants.getConId() + "", Constants.TYPE_ANDROID, registrationID, SharePreferenceUtils.getUser(Constants.USER_ID) + "", new JsonHttpResponseHandler("gbk") {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                super.onSuccess(statusCode, headers, response);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                super.onFailure(statusCode, headers, throwable, errorResponse);
-            }
-        });
-    }
-
     private void initEvents() {
         mBackButton.setOnClickListener(this);
         mHomeButton.setOnClickListener(this);
@@ -419,7 +366,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
     }
 
     private void initViews() {
-
         mBackButton = (ImageView) findViewById(R.id.title_back);
         mBackButtonPanel = (LinearLayout) findViewById(R.id.title_back_panel);
 
@@ -434,109 +380,16 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
 
         mHomeGuide = (ImageView) findViewById(R.id.home_guide);
 
-        mNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar);
+        mNavigationBar = findViewById(R.id.bottom_navigation_bar);
 
 //        mDynamicHomeFragment = new DynamicHomeFragment();
         View scenicTitle = CommonUtils.initView(HomeActivity.this, R.layout.scenic_xiu_title);
         LinearLayout mlayout = (LinearLayout) scenicTitle.findViewById(R.id.ll_senic_xiu_title);
-        mShowFragment = new ScenicXiuFragment();
-        mShowFragment.setScenicXiuTitle(mlayout);
-        mMeFragment = new PersonCenterFragment();
-        mNavigationBar.setBackgroundStyle(BACKGROUND_STYLE_STATIC);
-        mNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);
-        mNavigationBar.setBarBackgroundColor(R.color.white);
-        mNavigationBar.setActiveColor(R.color.theme_color);
-        mNavigationBar.setInActiveColor(R.color.unselect_color);
-        mBadgeItem = new BadgeItem()
-                .setBorderWidth(12)
-                .setBackgroundColor(Color.RED)
-                .setText("  ")
-                .setHideOnSelect(false);
-        mNavigationBar
-                .addItem(new BottomNavigationItem(R.drawable.bottom_home_ed, R.string.bottom_home).setInactiveIconResource(R.drawable.bottom_home))
-                .addItem(new BottomNavigationItem(R.drawable.bottom_boke_ed, R.string.bottom_broadcast).setInactiveIconResource(R.drawable.bottom_boke))
-                .addItem(new BottomNavigationItem(R.drawable.bottom_message_ed, R.string.bottom_message).setInactiveIconResource(R.drawable.bottom_message).setBadgeItem(mBadgeItem))
-                .addItem(new BottomNavigationItem(R.drawable.bottom_me_ed, R.string.bottom_me).setInactiveIconResource(R.drawable.bottom_me))
-                .initialise();
-        mNavigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(int position) {
-                if (position != mCurrentPosition) {
-                    switch (position) {
-                        case 0:
-                            mHomeGuide.setVisibility(View.GONE);
-//                            if(Constants.HAS_COMPAS) {
-//                                if (mDynamicHomeFragment == null)
-//                                    mDynamicHomeFragment = new DynamicHomeFragment();
-//                                if (mCurrentFirstPosition == 0) {
-//                                    mCurrentFirstPosition = 0;
-//                                    switchContent(mChooseConferenceFragment);
-//                                } else {
-//                                    mCurrentFirstPosition = 1;
-//                                    switchContent(mDynamicHomeFragment);
-//                                }
-//                            }else {
-//                                if (mDynamicHomeFragment == null)
-//                                    mDynamicHomeFragment = new DynamicHomeFragment();
-//
-//                                switchContent(mDynamicHomeFragment);
-//                            }
-                            switchContent(mDynamicHomeFragment);
-                            break;
-                        case 1:
-                            MobclickAgent.onEvent(HomeActivity.this, Constants.EVENT_ID_BROADCAST);
-                            if (mShowFragment == null) {
-                                View scenicTitle = CommonUtils.initView(HomeActivity.this, R.layout.scenic_xiu_title);
-                                LinearLayout mlayout = (LinearLayout) scenicTitle.findViewById(R.id.ll_senic_xiu_title);
-                                mShowFragment = new ScenicXiuFragment();
-                                mShowFragment.setScenicXiuTitle(mlayout);
-                            }
-                            switchContent(mShowFragment);
-                            break;
-                        case 2:
-                            mBadgeItem.hide();
-                            mHomeGuide.setVisibility(View.GONE);
-                            if (mMessageStationFragment == null) {
-                                mMessageStationFragment = new MessageStationActionFragment();
-                            }
-                            switchContent(mMessageStationFragment);
-                            break;
-                        case 3:
-                            mHomeGuide.setVisibility(View.GONE);
-                            MobclickAgent.onEvent(HomeActivity.this, Constants.EVENT_ID_PERSON);
-                            if (!AppApplication.isUserLogIn()) {
-                                mNavigationBar.selectTab(mCurrentPosition);
-                                startActivity(new Intent(HomeActivity.this, LoginActivity.class));
-                                return;
-                            }
-                            if (mMeFragment == null) {
-                                mMeFragment = new PersonCenterFragment();
-                            }
-                            switchContent(mMeFragment);
-                            break;
-                    }
-                    mCurrentPosition = position;
-                }
-            }
-
-            @Override
-            public void onTabUnselected(int position) {
-
-            }
-
-            @Override
-            public void onTabReselected(int position) {
-//                if(Constants.HAS_COMPAS) {
-//                    if (position == 0 && mCurrentFirstPosition == 1) {
-//                        mCurrentFirstPosition = 0;
-//                        switchContent(mChooseConferenceFragment);
-//                    }
-//                }
-            }
-        });
-        if (!AppApplication.instance().NetWorkIsOpen()) {
-            mBadgeItem.hide();
-        }
+        //mShowFragment = new ScenicXiuFragment();
+        //mShowFragment.setScenicXiuTitle(mlayout);
+        mBadgeItem = new TextBadgeItem().setBackgroundColor(Color.RED).setHideOnSelect(false);
+        getBottomButton();
+        getHomeNums();
         mHomeGuide.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -568,18 +421,168 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
         transaction.commit();
     }
 
-    //设置转场动画
-    public void addScheduleDetailFragment(BaseFragment oldfragment, BaseFragment newfragment, View view) {
-        FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        newfragment.setCallBack(this);
-//        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        transaction.hide(oldfragment);
-        transaction.add(R.id.maincontainer, newfragment);
-        transaction.show(newfragment);
-        transaction.addSharedElement(view, "simple transition name");
-        transaction.addToBackStack(newfragment.getClass().getSimpleName());
-        transaction.commit();
+    //获取底部title数量
+    private void getBottomButton() {
+        CHYHttpClientUsage.getInstanse().doGetTitleButton(new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                mNavigationBar.setBackgroundStyle(BACKGROUND_STYLE_STATIC);
+                mNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);
+                mNavigationBar.setBarBackgroundColor(R.color.white);
+                mNavigationBar.setActiveColor(R.color.new_home_color1);
+                mNavigationBar.setInActiveColor(R.color.unselect_color);
+                if (JSONCatch.parseInt("state", response) == 1) {
+                    listBottomBar.clear();
+                    JSONArray jsonArray = JSONCatch.parseJsonarray("menu", response);
+                    if (jsonArray != null && jsonArray.length() > 0) {
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            try {
+                                JSONObject object = jsonArray.getJSONObject(i);
+                                if (JSONCatch.parseInt("tabbarItemIsShow", object) == 1) {
+                                    mCurrentPosition = i;
+                                }
+                                int tabbarID = JSONCatch.parseInt("tabbarItemID", object);
+                                if (i == 2) {
+                                    totalConId = JSONCatch.parseInt("totalConId", object);
+                                    conId = JSONCatch.parseInt("conId", object);
+                                    fromWhere = JSONCatch.parseString("fromWhere", object);
+                                    if (totalConId != 0) {
+                                        SharePreferenceUtils.saveDataBoolean(String.valueOf(totalConId), true);
+                                    } else {
+                                        SharePreferenceUtils.saveDataBoolean(String.valueOf(totalConId), false);
+                                    }
+                                }
+                                listBottomBar.add(tabbarID);
+                                switch (tabbarID) {
+                                    case 1:
+                                        mNavigationBar
+                                                .addItem(new BottomNavigationItem(R.drawable.bottom_home_ed, StringUtils.getNeedString(JSONCatch.parseString("tabbarItemName", object))).setInactiveIconResource(R.drawable.bottom_home));
+                                        break;
+                                    case 2:
+                                        mNavigationBar
+                                                .addItem(new BottomNavigationItem(R.drawable.bottom_resource_ed, StringUtils.getNeedString(JSONCatch.parseString("tabbarItemName", object))).setInactiveIconResource(R.drawable.bottom_resource));
+                                        break;
+                                    case 3:
+                                        mNavigationBar
+                                                .addItem(new BottomNavigationItem(R.drawable.bottom_current_ed, StringUtils.getNeedString(JSONCatch.parseString("tabbarItemName", object))).setInactiveIconResource(R.drawable.bottom_current));
+                                        break;
+                                    case 4:
+                                        mNavigationBar
+                                                .addItem(new BottomNavigationItem(R.drawable.bottom_boke_ed, StringUtils.getNeedString(JSONCatch.parseString("tabbarItemName", object))).setInactiveIconResource(R.drawable.bottom_boke).setBadgeItem(mBadgeItem));
+                                        break;
+                                    case 5:
+                                        mNavigationBar
+                                                .addItem(new BottomNavigationItem(R.drawable.bottom_me_ed, StringUtils.getNeedString(JSONCatch.parseString("tabbarItemName", object))).setInactiveIconResource(R.drawable.bottom_me));
+                                        break;
+                                }
+                            } catch (JSONException e) {
+                                Log.d("sgqTest", "gson异常: ");
+                            }
+                        }
+                        mNavigationBar.setFirstSelectedPosition(mCurrentPosition).initialise();
+                        CommonUtils.setBottomNavigationItem(mNavigationBar,-2,28,12);
+                    }
+                    mNavigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
+                        @Override
+                        public void onTabSelected(int position) {
+                            if (position != mCurrentPosition) {
+                                switch (position) {
+                                    case 0:
+                                        if (listBottomBar.contains(1)) {
+                                            MobclickAgent.onEvent(HomeActivity.this, Constants.EVENT_ID_HOME);
+                                            if (mNewHomeFragment == null) {
+                                                mNewHomeFragment = new NewHomeFragment();
+                                            }
+                                            switchContent(mNewHomeFragment);
+                                        }
+                                        break;
+                                    case 1:
+                                        if (listBottomBar.contains(2)) {
+                                            MobclickAgent.onEvent(HomeActivity.this, Constants.EVENT_ID_BROADCAST);
+                                            if (mResourceFragment == null) {
+                                                mResourceFragment = new ResourceFragment();
+                                            }
+                                            switchContent(mResourceFragment);
+                                        }
+                                        break;
+                                    case 2:
+                                        if (listBottomBar.contains(3)) {
+                                            MobclickAgent.onEvent(HomeActivity.this, Constants.EVENT_ID_OLD_HOME);
+                                            if (mDynamicHomeFragment == null) {
+                                                mDynamicHomeFragment = new NewDynamicHomeFragment();
+                                            }
+                                            SharePreferenceUtils.saveAppInt(Constants.TOTALCONID, totalConId);
+                                            SharePreferenceUtils.saveAppInt(Constants.CONID, conId);
+                                            SharePreferenceUtils.saveAppString(Constants.FROMWHERE, fromWhere);
+                                            //使用默认数据库
+                                            LitePal.useDefault();
+                                            switchContent(mDynamicHomeFragment);
+                                        } else {
+                                            mHomeGuide.setVisibility(View.GONE);
+                                            if (mMessageStationFragment == null) {
+                                                mMessageStationFragment = new MessageStationActionFragment();
+                                            }
+                                            switchContent(mMessageStationFragment);
+                                        }
+                                        break;
+                                    case 3:
+                                        if (listBottomBar.contains(4)) {
+                                            mHomeGuide.setVisibility(View.GONE);
+                                            MobclickAgent.onEvent(HomeActivity.this, Constants.EVENT_ID_PERSON);
+                                            if (mCscoSoundFragment == null) {
+                                                mCscoSoundFragment = new CSCOSoundFragment();
+                                            }
+                                            if (mDynamicHomeFragment == null) {
+                                                mDynamicHomeFragment = new NewDynamicHomeFragment();
+                                            }
+                                            mDynamicHomeFragment.postUNReadQuestionNumber(true, 4);
+                                            mBadgeItem.hide();
+                                            switchContent(mCscoSoundFragment);
+                                        }
+                                        break;
+                                    case 4:
+                                        if (listBottomBar.contains(5)) {
+                                            mHomeGuide.setVisibility(View.GONE);
+                                            MobclickAgent.onEvent(HomeActivity.this, Constants.EVENT_ID_PERSON);
+                                            if (!SharePreferenceUtils.getUserBoolean(Constants.USER_IS_LOGIN, false)) {
+                                                mNavigationBar.selectTab(mCurrentPosition);
+                                                startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+                                                return;
+                                            }
+                                            if (mMeFragment == null) {
+                                                mMeFragment = new PersonCenterFragment();
+                                            }
+                                            switchContent(mMeFragment);
+                                        }
+                                        break;
+                                }
+                                mCurrentPosition = position;
+                            }
+                        }
+
+                        @Override
+                        public void onTabUnselected(int position) {
+
+                        }
+
+                        @Override
+                        public void onTabReselected(int position) {
+                        }
+                    });
+                    if (!AppApplication.instance().NetWorkIsOpen()) {
+                        mBadgeItem.hide();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                ToastUtils.showToast("获取信息失败，请联系管理员");
+            }
+
+        });
     }
 
     /***
@@ -793,14 +796,18 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
             if (manager.getBackStackEntryCount() == 1) {
                 showexitdialog();
             } else {
-                hideShurufa();
-                manager.popBackStackImmediate();
-                mTitleEntries.pop();
-                setTitleBar(mTitleEntries.peek());
-                //TODO 这边有时候会发生异常
+                try{
+                    hideShurufa();
+                    manager.popBackStackImmediate();
+                    mTitleEntries.pop();
+                    setTitleBar(mTitleEntries.peek());
+                    //TODO 这边有时候会发生异常
 //                if (mPreFragment != null) {
 //                    mPreFragment.setUserVisibleHint(true);
 //                }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
             return true;
         }
@@ -845,49 +852,44 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
 
         AppApplication.instance().setDisPlayMetrics(dm);
         mAdList = AppApplication.adList;
-
-        AppApplication.TOKEN_IMEI = ((TelephonyManager) getSystemService(TELEPHONY_SERVICE)).getDeviceId();
+        try {
+            AppApplication.TOKEN_IMEI = ((TelephonyManager) getSystemService(TELEPHONY_SERVICE)).getDeviceId();
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        }
 
         if (AppApplication.instance().NetWorkIsOpen()) {
             init();
             registerMessageReceiver();
         }
 
-        api = WXAPIFactory.createWXAPI(this, Constants.WXKey);
-        api.registerApp(Constants.WXKey);
-
-        ((AppApplication) getApplication()).setApi(api);
     }
 
 
     @Override
     protected void onResume() {
-        isForeground = true;
-        if (AppApplication.isUserLogIn()) {
-            initRefreshUser();
-        }
-        getHomeNums();
         super.onResume();
+        isForeground = true;
         MobclickAgent.onResume(this);
     }
 
     /**
-     * 获取数据
+     * 获取数据返回结果：sceneShowCount
      */
     private void getHomeNums() {
-        CHYHttpClientUsage.getInstanse().doGetLookCount(Constants.getConId() + "", AppApplication.userId + "", AppApplication.userType + "", AppApplication.TOKEN_IMEI, new JsonHttpResponseHandler() {
+        CHYHttpClientUsage.getInstanse().doGetLookBoKeCount(new JsonHttpResponseHandler() {
             @Override
-            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-                try {
-                    int type = response.getInt("tokenMessageCount");
-                    if (type != 0) {
-                        mBadgeItem.show();
+                int number = JSONCatch.parseInt("sceneShowCount", response);
+                if (number != 0) {
+                    if (number > 99) {
+                        mBadgeItem.setText("99+");
                     } else {
-                        mBadgeItem.hide();
+                        mBadgeItem.setText(String.valueOf(number));
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } else {
+                    mBadgeItem.hide();
                 }
             }
         });
@@ -926,6 +928,10 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         setIntent(intent);
+        fromJPUSH(intent);
+    }
+
+    private void fromJPUSH(Intent intent) {
         Bundle bundle = intent.getExtras();
         if (bundle != null) {
             String info = bundle.getString(JPushInterface.EXTRA_EXTRA);
@@ -975,7 +981,9 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
             String url = bundle.getString("H5URL");
             String title = bundle.getString("H5TITLE");
             String share = bundle.getString("H5SHARE");
-            long notificationId = bundle.getLong("notificationId");
+            if (url.contains("http%")) {
+                url = StringUtils.utf8Decode(url);
+            }
             if (!StringUtils.isEmpty(url)) {
                 int type = 3;
                 if (share.equals("1")) {
@@ -985,7 +993,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
                 }
                 CollegeActivity.startCitCollegeActivity(HomeActivity.this, title, url, type);
             }
-            JPushInterface.removeLocalNotification(HomeActivity.this, notificationId);
+            //JPushInterface.removeLocalNotification(HomeActivity.this, notificationId);
         }
     }
 
@@ -1102,22 +1110,17 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
         }
     }
 
-    public void setFirstPosition(int position) {
-        mCurrentFirstPosition = position;
-    }
-
     /**
      *
      */
     public static class UpdateConferenceEvent {
-        public int conId;
-        private boolean isExist;
         private boolean isNeedUpdate;
 
-        public UpdateConferenceEvent(int conId, boolean isExist, boolean isNeedUpdate) {
-            this.conId = conId;
-            this.isExist = isExist;
+        public UpdateConferenceEvent( boolean isNeedUpdate) {
             this.isNeedUpdate = isNeedUpdate;
+        }
+        public boolean isNeedUpdate(){
+            return isNeedUpdate;
         }
     }
 
@@ -1129,6 +1132,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
 //        if(mChooseConferenceFragment != null) {
 //            mChooseConferenceFragment.updateConferenceData();
 //        }
+        Log.d("", "onUpdateConferenceEvent: ");
     }
 
     @Override
@@ -1199,30 +1203,31 @@ public class HomeActivity extends BaseActivity implements OnClickListener, MainC
             } else if (requestCode == PersonCenterFragment.REQUEST_LOGIN) {
                 mMeFragment.refreshInfo();
             } else {
-                Bundle extras = data.getExtras();
-                if (extras != null) {
-                    String result = extras.getString(CodeUtils.RESULT_STRING);
+                if (data != null) {
+                    Bundle extras = data.getExtras();
+                    if (extras != null) {
+                        String result = extras.getString(CodeUtils.RESULT_STRING);
+                        if (TextUtils.isEmpty(result)) {
+                            return;
+                        }
 
-                    Pattern pattern = Pattern
-                            .compile("^([hH][tT]{2}[pP]://|[hH][tT]{2}[pP][sS]://)(([A-Za-z0-9-~]+).)+([A-Za-z0-9-~\\/])+$");
+                        Pattern pattern = Pattern
+                                .compile("^([hH][tT]{2}[pP]://|[hH][tT]{2}[pP][sS]://)(([A-Za-z0-9-~]+).)+([A-Za-z0-9-~\\/])+$");
 
-                    if (pattern.matcher(result).matches()) {
-                        Intent intent = new Intent();
-                        intent.setAction("android.intent.action.VIEW");
-                        Uri url = Uri.parse(result);
-                        intent.setData(url);
-                        startActivity(intent);
-                    } else {
-                        ToastUtils.showToast(result);
+                        if (pattern.matcher(result).matches()) {
+                            Intent intent = new Intent();
+                            intent.setAction("android.intent.action.VIEW");
+                            Uri url = Uri.parse(result);
+                            intent.setData(url);
+                            startActivity(intent);
+                        } else {
+                            ToastUtils.showToast(result);
+                        }
+
                     }
-
                 }
             }
         }
-    }
-
-    public static void notifyActivitySkip(Bundle bundle) {
-
     }
 
     private List<MindBookFragment.ManagerNewLister> listLister = new ArrayList<>();

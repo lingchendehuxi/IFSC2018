@@ -12,12 +12,12 @@ import android.view.ViewGroup;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
-import com.android.incongress.cd.conference.LoginActivity;
 import com.android.incongress.cd.conference.api.CHYHttpClientUsage;
 import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.BaseFragment;
 import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.save.SharePreferenceUtils;
+import com.android.incongress.cd.conference.ui.login.view.LoginActivity;
 import com.android.incongress.cd.conference.utils.MyLogger;
 import com.android.incongress.cd.conference.utils.PicUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
@@ -25,6 +25,9 @@ import com.android.incongress.cd.conference.utils.transformer.CircleTransform;
 import com.android.incongress.cd.conference.widget.CircleImageView;
 import com.android.incongress.cd.conference.widget.IconChoosePopupWindow;
 import com.android.incongress.cd.conference.widget.StatusBarUtil;
+import com.android.incongress.cd.conference.widget.photo.galleryfinal.FunctionConfig;
+import com.android.incongress.cd.conference.widget.photo.galleryfinal.GalleryFinal;
+import com.android.incongress.cd.conference.widget.photo.galleryfinal.model.PhotoInfo;
 import com.bumptech.glide.Glide;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
@@ -37,9 +40,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
-import cn.finalteam.galleryfinal.FunctionConfig;
-import cn.finalteam.galleryfinal.GalleryFinal;
-import cn.finalteam.galleryfinal.model.PhotoInfo;
 
 public class ModifyInfoFragment extends BaseFragment implements View.OnClickListener, GalleryFinal.OnHanlderResultCallback {
     private RelativeLayout rl_head;
@@ -169,7 +169,7 @@ public class ModifyInfoFragment extends BaseFragment implements View.OnClickList
     private void doUploadFile(String userId, String userType, File uploadFile) {
 
         try {
-            CHYHttpClientUsage.getInstanse().doCreateUserImg(userId, userType, uploadFile, new JsonHttpResponseHandler() {
+            CHYHttpClientUsage.getInstanse().doCreateUserImg(userId, uploadFile, new JsonHttpResponseHandler() {
                 @Override
                 public void onStart() {
                     super.onStart();

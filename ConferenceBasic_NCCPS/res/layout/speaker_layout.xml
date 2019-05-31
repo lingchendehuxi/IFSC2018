@@ -11,7 +11,8 @@
         android:layout_height="9dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="9dp"
-        android:src="@drawable/point_speaker_other" />
+        android:src="@drawable/point_speaker_other"
+        android:tint="@color/theme_color"/>
 
     <TextView
         android:id="@+id/speaker_name"

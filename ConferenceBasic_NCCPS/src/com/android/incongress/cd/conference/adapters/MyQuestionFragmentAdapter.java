@@ -22,10 +22,10 @@ import java.util.List;
 /**
  * Created by Jacky on 2016/1/22.
  */
-public class MyQuestionFragmentAdapter extends RecyclerView.Adapter<MyQuestionFragmentAdapter.ViewHolder>  implements View.OnClickListener,
+public class MyQuestionFragmentAdapter extends RecyclerView.Adapter<MyQuestionFragmentAdapter.ViewHolder> implements
         FlexibleDividerDecoration.PaintProvider,
         FlexibleDividerDecoration.VisibilityProvider,
-        HorizontalDividerItemDecoration.MarginProvider{
+        HorizontalDividerItemDecoration.MarginProvider {
 
     private Context mContext;
     private List<SceneShowArrayBean> mBeans;
@@ -61,9 +61,8 @@ public class MyQuestionFragmentAdapter extends RecyclerView.Adapter<MyQuestionFr
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_i_got_question,null);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_i_got_question, null);
         ViewHolder holder = new ViewHolder(view);
-        view.setOnClickListener(this);
         return holder;
     }
 
@@ -72,9 +71,14 @@ public class MyQuestionFragmentAdapter extends RecyclerView.Adapter<MyQuestionFr
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        SceneShowArrayBean bean = mBeans.get(position);
-        holder.itemView.setTag(bean);
+    public void onBindViewHolder(ViewHolder holder, final int position) {
+        final SceneShowArrayBean bean = mBeans.get(position);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mOnItemClickListener.onItemClick(view, bean, position);
+            }
+        });
 
         holder.tvTime.setText(bean.getTimeShow());
         holder.tvAuthorName.setText(bean.getAuthor());
@@ -84,10 +88,10 @@ public class MyQuestionFragmentAdapter extends RecyclerView.Adapter<MyQuestionFr
             e.printStackTrace();
         }
 
-        if(bean.getIsHuiFu() == 1) {
+        if (bean.getIsHuiFu() == 1) {
             holder.tvAnswer.setBackgroundResource(R.drawable.bg_button_gray);
             holder.tvAnswer.setText("已回答");
-        }else {
+        } else {
             holder.tvAnswer.setBackgroundResource(R.drawable.bg_button_ed);
             holder.tvAnswer.setText("去回答");
         }
@@ -117,11 +121,6 @@ public class MyQuestionFragmentAdapter extends RecyclerView.Adapter<MyQuestionFr
 
     //define interface
     public interface OnRecyclerViewItemClickListener {
-        void onItemClick(View view , SceneShowArrayBean question);
-    }
-
-    @Override
-    public void onClick(View v) {
-        mOnItemClickListener.onItemClick(v,(SceneShowArrayBean)v.getTag());
+        void onItemClick(View view, SceneShowArrayBean question, int position);
     }
 }

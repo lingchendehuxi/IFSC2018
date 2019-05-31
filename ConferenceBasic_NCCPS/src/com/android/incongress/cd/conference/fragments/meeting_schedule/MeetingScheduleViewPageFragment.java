@@ -207,6 +207,9 @@ public class MeetingScheduleViewPageFragment extends BaseFragment {
             }
             adapter = new MeetingScheduleAdapter(getChildFragmentManager(), fragmentList);
             mViewpager.setAdapter(adapter);
+            if(list.size()<=0){
+                return;
+            }
             list.get(mCurrentPage).setTextColor(getResources().getColor(R.color.black));
             list.get(mCurrentPage).setBackground(getResources().getDrawable(R.drawable.bg_schedule_selected));
             mViewpager.setCurrentItem(mCurrentPage);

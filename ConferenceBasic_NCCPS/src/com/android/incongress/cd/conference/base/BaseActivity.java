@@ -12,6 +12,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.incongress.cd.conference.mvp.BasePresenter;
 import com.android.incongress.cd.conference.utils.ActivityUtils;
 import com.android.incongress.cd.conference.utils.LanguageUtil;
 import com.android.incongress.cd.conference.widget.StatusBarUtil;
@@ -19,13 +20,20 @@ import com.mobile.incongress.cd.conference.basic.csccm.R;
 
 import butterknife.ButterKnife;
 
-public abstract class BaseActivity extends FragmentActivity {
+public abstract class BaseActivity<T extends BasePresenter> extends FragmentActivity {
     /** 基类sharePreference **/
+    /**
+     * 将代理类通用行为抽出来
+     */
+    protected T mPresenter;
 
     @SuppressWarnings("deprecation")
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(savedInstanceState!= null){
+            savedInstanceState.remove("android:support:fragments");
+        }
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         StatusBarUtil.setRootViewFitsSystemWindows(this,true);
         //设置状态栏透明
@@ -37,20 +45,24 @@ public abstract class BaseActivity extends FragmentActivity {
             //这样半透明+白=灰, 状态栏的文字能看得清
             StatusBarUtil.setStatusBarColor(this,0x55000000);
         }
+        if (mPresenter != null){
+            mPresenter.subscribe();
+        }
         LanguageUtil.setLanguage(this,AppApplication.systemLanguage);
         setContentView();
         ButterKnife.bind(this);
         initViewsAction();
 
     }
+
     /*@Override
-    public Resources getResources() {
-        Resources res = super.getResources();
-        Configuration config = res.getConfiguration();
-        config.fontScale = 1.25f; //1 设置正常字体大小的倍数
-        res.updateConfiguration(config, res.getDisplayMetrics());
-        return res;
-    }*/
+        public Resources getResources() {
+            Resources res = super.getResources();
+            Configuration config = res.getConfiguration();
+            config.fontScale = 1.25f; //1 设置正常字体大小的倍数
+            res.updateConfiguration(config, res.getDisplayMetrics());
+            return res;
+        }*/
     protected abstract void setContentView();
 
     protected abstract void initViewsAction();
@@ -91,6 +103,9 @@ public abstract class BaseActivity extends FragmentActivity {
     @Override
 	protected void onDestroy() {
 		super.onDestroy();
+        if (mPresenter != null){
+            mPresenter.unSubscribe();
+        }
         ActivityUtils.removeActivity(this);
 	}
 
@@ -144,5 +159,15 @@ public abstract class BaseActivity extends FragmentActivity {
         InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         manager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
         return manager.isActive();
+    }
+    /**
+     * 强制隐藏输入法键盘
+     *
+     * @param context Context
+     * @param view    EditText
+     */
+    public static void hideInput(Context context, View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

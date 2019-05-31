@@ -21,12 +21,14 @@ public class CardFragment extends BaseFragment {
     private CardView mCardView;
     private String mMapUrl,mMapName;
     private ImageView mMapImg,mMapOnclick;
+    private int currentPostion;
 
-    public static final CardFragment getInstance(String path, String name) {
+    public static final CardFragment getInstance(String path, String name,int currentPositon) {
         CardFragment fragment = new CardFragment();
         Bundle bundle = new Bundle();
         bundle.putString("imgpath", path);
         bundle.putString("imgname",name);
+        bundle.putInt("currentPositon",currentPositon);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -35,6 +37,7 @@ public class CardFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
         mMapUrl = AppApplication.instance().getSDPath() + Constants.FILESDIR + getArguments().getString("imgpath");
         mMapName = getArguments().getString("imgname");
+        currentPostion = getArguments().getInt("currentPositon");
     }
 
     @Nullable
@@ -52,9 +55,11 @@ public class CardFragment extends BaseFragment {
         mMapOnclick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MeetingGuideRoomMapFragment fragment = new MeetingGuideRoomMapFragment();
-                fragment.setFilePath(mMapUrl);
-                action(fragment, mMapName, false, false, false);
+                MeetingGuideRoomMapViewPage fragment = new MeetingGuideRoomMapViewPage();
+                Bundle bundle = new Bundle();
+                bundle.putInt("currentPosition",currentPostion);
+                fragment.setArguments(bundle);
+                action(fragment, null);
             }
         });
         return view;

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.incongress.cd.conference.base.AppApplication;
@@ -18,11 +19,13 @@ import com.android.incongress.cd.conference.base.BaseFragment;
 import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.model.ConferenceDbUtils;
 import com.android.incongress.cd.conference.model.Map;
+import com.android.incongress.cd.conference.utils.DensityUtil;
 import com.android.incongress.cd.conference.widget.StatusBarUtil;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Admin on 2018/6/8.
@@ -50,6 +53,10 @@ public class NewMeetingInfoFragment extends BaseFragment implements CompoundButt
         initDots();
         mFragmentCardAdapter = new CardFragmentPagerAdapter(getActivity().getSupportFragmentManager(),
                 dpToPixels(2, getActivity()));
+        List<Map> listMap = ConferenceDbUtils.getAllMaps();
+        if(listMap==null&&listMap.size()<=0){
+            return view;
+        }
         Map bean = ConferenceDbUtils.getAllMaps().get(0);
         String mapName = "";
         if(bean.getMapRemark().contains("#@#")){
@@ -62,6 +69,10 @@ public class NewMeetingInfoFragment extends BaseFragment implements CompoundButt
             mapName = bean.getMapRemark();
         }
         nMapName.setText(mapName);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(DensityUtil.getScreenSize(getActivity())[0],
+                DensityUtil.getScreenSize(getActivity())[1]*2/3);
+        params.addRule(RelativeLayout.CENTER_IN_PARENT);
+        mViewPager.setLayoutParams(params);
         //mCardShadowTransformer = new ShadowTransformer(mViewPager, mCardAdapter);
         mFragmentCardShadowTransformer = new ShadowTransformer(mViewPager, mFragmentCardAdapter);
         //mCardShadowTransformer.enableScaling(true);

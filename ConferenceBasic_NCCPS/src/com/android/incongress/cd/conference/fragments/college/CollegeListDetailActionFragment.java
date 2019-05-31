@@ -1,5 +1,6 @@
 package com.android.incongress.cd.conference.fragments.college;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,6 +21,7 @@ import com.android.incongress.cd.conference.utils.NetWorkUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
 import com.android.incongress.cd.conference.utils.cache.DiskLruCacheUtil;
 import com.android.incongress.cd.conference.widget.StatusBarUtil;
+import com.android.incongress.cd.conference.widget.dialog.SingleButtonDialog;
 import com.android.incongress.cd.conference.widget.refresh_view.XRefreshView;
 import com.android.incongress.cd.conference.widget.stick_header.StickyListHeadersListView;
 import com.google.gson.Gson;
@@ -62,6 +64,7 @@ public class CollegeListDetailActionFragment extends BaseFragment implements Col
     private static final String CACHE_COLLEGE_DATA_DETAIL = "college_data_detail_list";
     private static final String CACHE_COLLEGE_BOOK_DETAIL = "college_book_detail_list";
     private DiskLruCacheUtil mDiskLruCacheUtil;
+    private Context context;
 
     public static CollegeListDetailActionFragment getInstance(String meetingDay, int mDataType, String stringModelId, String cache_dir) {
         CollegeListDetailActionFragment fragment = new CollegeListDetailActionFragment();
@@ -84,7 +87,7 @@ public class CollegeListDetailActionFragment extends BaseFragment implements Col
             cache_dir = getArguments().getString(BUNDLE_CACHE_ID);
             stringModelId = getArguments().getString(BUNDLE_COLLEGE_MODEL_ID);
             cacheManager = CacheManager.getInstance().open(CACHE_COLLEGE_DATA_DETAIL + cache_dir, 1);
-            mDiskLruCacheUtil = new DiskLruCacheUtil(getActivity(), CACHE_COLLEGE_BOOK_DETAIL + cache_dir);
+            mDiskLruCacheUtil = new DiskLruCacheUtil(context, CACHE_COLLEGE_BOOK_DETAIL + cache_dir);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -94,6 +97,7 @@ public class CollegeListDetailActionFragment extends BaseFragment implements Col
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_schedule_college_list, null);
+        context = getContext();
         mStickLVSpeaker = view.findViewById(R.id.slhlv_sessions);
         mPbLoading = view.findViewById(R.id.pb_loading);
         refreshView = view.findViewById(R.id.custom_view);
@@ -109,14 +113,12 @@ public class CollegeListDetailActionFragment extends BaseFragment implements Col
         refreshView.setXRefreshViewListener(new XRefreshView.SimpleXRefreshListener() {
             @Override
             public void onRefresh(boolean isPullDown) {
-                if (!NetWorkUtils.isNetworkConnected(getActivity())) {
+                if (!NetWorkUtils.isNetworkConnected(context)) {
                     refreshView.stopRefresh();
                     ToastUtils.showToast(getString(R.string.connect_network));
                     return;
                 }
-                if (mCurrentCollegeType == BOOKTYPE) {
-                    getCollegeBookDetailList();
-                } else if (mCurrentCollegeType == VIDEOTYPE) {
+                if (mCurrentCollegeType == VIDEOTYPE) {
                     getCollegeDayList();
                 }
             }
@@ -137,12 +139,10 @@ public class CollegeListDetailActionFragment extends BaseFragment implements Col
 
     //无网络的时候加载本地数据
     private void loadLocalDate() {
-        if (!NetWorkUtils.isNetworkConnected(getActivity())) {
+        if (!NetWorkUtils.isNetworkConnected(context)) {
             ll_tips.setVisibility(View.GONE);
             String stringJson = "";
-            if (mCurrentCollegeType == BOOKTYPE) {
-                stringJson = mDiskLruCacheUtil.getStringCache(CACHE_COLLEGE_BOOK_DETAIL + cache_dir);
-            } else if (mCurrentCollegeType == VIDEOTYPE) {
+            if (mCurrentCollegeType == VIDEOTYPE) {
                 stringJson = cacheManager.getString(CACHE_COLLEGE_DATA_DETAIL + cache_dir);
             }
             if (!TextUtils.isEmpty(stringJson)) {
@@ -157,19 +157,15 @@ public class CollegeListDetailActionFragment extends BaseFragment implements Col
                     mPbLoading.setVisibility(View.GONE);
                     return;
                 }
-                if (mCurrentCollegeType == BOOKTYPE) {
-                    mScheduleListAdapter = new CollegeListDetailActionAdapter(getActivity(), listBean, bean.getClassArray(), CollegeListDetailActionFragment.this, BOOKTYPE);
-                } else if (mCurrentCollegeType == VIDEOTYPE) {
-                    mScheduleListAdapter = new CollegeListDetailActionAdapter(getActivity(), listBean, bean.getClassArray(), CollegeListDetailActionFragment.this, VIDEOTYPE);
+                if (mCurrentCollegeType == VIDEOTYPE) {
+                    mScheduleListAdapter = new CollegeListDetailActionAdapter(context, listBean, bean.getClassArray(), CollegeListDetailActionFragment.this, VIDEOTYPE);
                 }
                 mStickLVSpeaker.setAdapter(mScheduleListAdapter);
             }
             mPbLoading.setVisibility(View.GONE);
             ToastUtils.showToast(getString(R.string.connect_network));
         } else {
-            if (mCurrentCollegeType == BOOKTYPE) {
-                getCollegeBookDetailList();
-            } else if (mCurrentCollegeType == VIDEOTYPE) {
+            if (mCurrentCollegeType == VIDEOTYPE) {
                 getCollegeDayList();
             }
         }
@@ -190,7 +186,7 @@ public class CollegeListDetailActionFragment extends BaseFragment implements Col
                     }
                     if (listBean.size() > 0) {
                         ll_tips.setVisibility(View.GONE);
-                        mScheduleListAdapter = new CollegeListDetailActionAdapter(getActivity(), listBean, bean.getClassArray(), CollegeListDetailActionFragment.this, VIDEOTYPE);
+                        mScheduleListAdapter = new CollegeListDetailActionAdapter(context, listBean, bean.getClassArray(), CollegeListDetailActionFragment.this, VIDEOTYPE);
                         mStickLVSpeaker.setAdapter(mScheduleListAdapter);
                     } else {
                         ll_tips.setVisibility(View.VISIBLE);
@@ -212,71 +208,26 @@ public class CollegeListDetailActionFragment extends BaseFragment implements Col
         });
     }
 
-    //获取当年当日可预约的课件
-    private void getCollegeBookDetailList() {
-        CHYHttpClientUsage.getInstanse().doGetCollegeBookDetailList(mCurrentCollegeDay, Constants.getConId() + "", new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                super.onSuccess(statusCode, headers, response);
-                mDiskLruCacheUtil.put(CACHE_COLLEGE_BOOK_DETAIL + cache_dir, response.toString());
-                listBean.clear();
-                CollegeListDetailBean bean = new Gson().fromJson(response.toString(), new TypeToken<CollegeListDetailBean>() {
-                }.getType());
-                if ("1".equals(bean.getState())) {
-                    refreshView.stopRefresh(true);
-                    for (int i = 0; i < bean.getClassArray().size(); i++) {
-                        listBean.addAll(bean.getClassArray().get(i).getSessionArray());
-                    }
-                    if (listBean.size() > 0) {
-                        ll_tips.setVisibility(View.GONE);
-                        mScheduleListAdapter = new CollegeListDetailActionAdapter(getActivity(), listBean, bean.getClassArray(), CollegeListDetailActionFragment.this, BOOKTYPE);
-                        mStickLVSpeaker.setAdapter(mScheduleListAdapter);
-                    } else {
-                        ll_tips.setVisibility(View.VISIBLE);
-                    }
-                    mPbLoading.setVisibility(View.GONE);
-                } else {
-                    mPbLoading.setVisibility(View.GONE);
-                    refreshView.stopRefresh(false);
+    @Override
+    public void onItemOnclick(String sessionId, int mType,int limit,String limitTime) {
+        if(limit == 0){
+            final SingleButtonDialog dialog =new SingleButtonDialog(getActivity(),R.style.MyDialog);
+            dialog.setYesOnclickListener("确定", new SingleButtonDialog.onYesOnclickListener() {
+                @Override
+                public void onYesOnclick() {
+                    dialog.dismiss();
                 }
+            });
+            if(limitTime!=null){
+                dialog.setMessage(limitTime);
             }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                super.onFailure(statusCode, headers, throwable, errorResponse);
-                refreshView.stopRefresh(false);
-                ToastUtils.showToast("获取信息失败，请联系管理员");
-            }
-        });
-    }
-
-    @Override
-    public void onItemOnclick(String sessionId, int mType) {
-        Intent intent = new Intent(getActivity(), CollegeCourseBookActivity.class);
-        intent.putExtra("book_session_id", sessionId);
-        intent.putExtra("book_type", mType);
-        startActivity(intent);
-    }
-
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if (!hidden) {
-            if (mCurrentCollegeType == BOOKTYPE) {
-                StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
-            } else if (mCurrentCollegeType == VIDEOTYPE) {
-                StatusBarUtil.setStatusBarDarkTheme(getActivity(), false);
-            }
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (mCurrentCollegeType == BOOKTYPE) {
-            StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
-        } else if (mCurrentCollegeType == VIDEOTYPE) {
-            StatusBarUtil.setStatusBarDarkTheme(getActivity(), false);
+            dialog.setCancelable(true);
+            dialog.show();
+        }else {
+            Intent intent = new Intent(context, CollegeCourseBookActivity.class);
+            intent.putExtra("book_session_id", sessionId);
+            intent.putExtra("book_type", mType);
+            startActivity(intent);
         }
     }
 }

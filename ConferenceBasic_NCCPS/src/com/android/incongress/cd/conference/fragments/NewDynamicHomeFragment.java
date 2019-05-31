@@ -2,11 +2,8 @@ package com.android.incongress.cd.conference.fragments;
 
 import android.animation.ValueAnimator;
 import android.app.AlertDialog;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -34,14 +31,16 @@ import android.widget.ViewFlipper;
 
 import com.android.incongress.cd.conference.CollegeActivity;
 import com.android.incongress.cd.conference.HomeActivity;
-import com.android.incongress.cd.conference.LoginActivity;
 import com.android.incongress.cd.conference.adapters.CourSewareAdapter;
+import com.android.incongress.cd.conference.adapters.HomeNormalAdapter;
 import com.android.incongress.cd.conference.api.CHYHttpClientUsage;
 import com.android.incongress.cd.conference.base.AppApplication;
 import com.android.incongress.cd.conference.base.BaseFragment;
 import com.android.incongress.cd.conference.base.Constants;
 import com.android.incongress.cd.conference.beans.ActivityBean;
 import com.android.incongress.cd.conference.beans.CoursewareBean;
+import com.android.incongress.cd.conference.beans.HomePersonBean;
+import com.android.incongress.cd.conference.beans.NewHomeIconBean;
 import com.android.incongress.cd.conference.beans.Row;
 import com.android.incongress.cd.conference.beans.SceneShowArrayBean;
 import com.android.incongress.cd.conference.fragments.bus_reminder.MeetingBusRemindAllFragment;
@@ -59,6 +58,7 @@ import com.android.incongress.cd.conference.fragments.my_schedule.MyScheduleActi
 import com.android.incongress.cd.conference.fragments.now_next.NextFragment;
 import com.android.incongress.cd.conference.fragments.now_next.NowFragment;
 import com.android.incongress.cd.conference.fragments.photo_album.PhotoAlbumFragment;
+import com.android.incongress.cd.conference.fragments.professor_secretary.ScretaryProfessorFragment;
 import com.android.incongress.cd.conference.fragments.professor_secretary.SecretaryActivity;
 import com.android.incongress.cd.conference.fragments.question.QuestionSquarFragment;
 import com.android.incongress.cd.conference.fragments.scenic_xiu.ScenicXiuFragment;
@@ -68,21 +68,28 @@ import com.android.incongress.cd.conference.fragments.search_speaker.SpeakerSear
 import com.android.incongress.cd.conference.fragments.wall_poster.PosterFragment;
 import com.android.incongress.cd.conference.model.Ad;
 import com.android.incongress.cd.conference.model.ConferenceDbUtils;
+import com.android.incongress.cd.conference.save.ParseUser;
 import com.android.incongress.cd.conference.save.SharePreferenceUtils;
+import com.android.incongress.cd.conference.ui.login.view.LoginActivity;
 import com.android.incongress.cd.conference.utils.ActivityUtils;
 import com.android.incongress.cd.conference.utils.ArrayUtils;
 import com.android.incongress.cd.conference.utils.CommonUtils;
 import com.android.incongress.cd.conference.utils.DateUtil;
 import com.android.incongress.cd.conference.utils.DensityUtil;
 import com.android.incongress.cd.conference.utils.JSONCatch;
+import com.android.incongress.cd.conference.utils.LanguageUtil;
+import com.android.incongress.cd.conference.utils.LogUtils;
 import com.android.incongress.cd.conference.utils.MyLogger;
 import com.android.incongress.cd.conference.utils.PicUtils;
 import com.android.incongress.cd.conference.utils.ToastUtils;
+import com.android.incongress.cd.conference.widget.CircleImageView;
+import com.android.incongress.cd.conference.widget.LikeView.FlowLikeView;
 import com.android.incongress.cd.conference.widget.StatusBarUtil;
 import com.android.incongress.cd.conference.widget.zxing.activity.CaptureActivity;
 import com.android.incongress.cd.conference.widget.zxing.activity.QRCodeCaptureActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.jude.rollviewpager.RollPagerView;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mobile.incongress.cd.conference.basic.csccm.R;
 import com.umeng.analytics.MobclickAgent;
@@ -93,7 +100,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -101,8 +107,14 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
+import cn.jpush.android.api.JPushInterface;
 import cz.msebera.android.httpclient.Header;
+import io.reactivex.Observable;
+import io.reactivex.functions.Consumer;
+import q.rorbin.badgeview.Badge;
+import q.rorbin.badgeview.QBadgeView;
 
 /**
  * Created by GG on 2018/1/3.
@@ -114,11 +126,8 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
     private ViewFlipper mMarqueeView;
     private Row mRow;
     private RecyclerView mRecyclerView;
-    //广告轮播
-    protected List<Ad> mAdList;
-    private AdReceiver mAdReceiver;
     //上方广告抽取
-    private ImageView mIvADTop, mTopADImg;
+    private ImageView mTopADImg;
     private String mIconFilePath;
 
     private ImageView zk, zk_inner;
@@ -133,6 +142,11 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
     private Map<String, String> textUrlMap = new HashMap<>();
     //参数为了在切换到activity返回后，fragment重新设置导航栏字体颜色
     private boolean isBackView = true;
+    //角标显示
+    private int photoNumber, sessionNumber, questionNumber;
+    private List<NewHomeIconBean> iconCodeBeans;
+    private Badge photoBadge, sessionBadge, questionBadge;
+    private List<View> viewList;
 
     private static final int PROGRAM = 1; //看日程
     private static final int SEARCH = 2;    //查日程
@@ -165,31 +179,36 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
     private List<CoursewareBean> coursewareBeanList = new ArrayList<>();
     private CourSewareAdapter mCourSewareAdapter;
     private List<String> textList = new ArrayList<>();
+    private RollPagerView roll_view;
+    private FlowLikeView flow_like;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         StatusBarUtil.setStatusBarDarkTheme(getActivity(), false);
         View view = inflater.inflate(R.layout.new_dynamic_home_fragment, null);
-        mLlConstainer = (LinearLayout) view.findViewById(R.id.ll_container);
-        mIvADTop = (ImageView) view.findViewById(R.id.ad_top);
-        mTopADImg = (ImageView) view.findViewById(R.id.layout_ad_top);
+        doGetUserInfo(SharePreferenceUtils.getUser(Constants.USER_IC_ID));
+        mLlConstainer = view.findViewById(R.id.ll_container);
+        roll_view = view.findViewById(R.id.roll_view);
+        mTopADImg = view.findViewById(R.id.layout_ad_top);
         zk = Constants.HOME_CLICK_POSITION_INNER ? (ImageView) view.findViewById(R.id.zk_inner_button) : (ImageView) view.findViewById(R.id.zk_button);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.courseware_recycler);
+        mRecyclerView = view.findViewById(R.id.courseware_recycler);
         mRecyclerView.setFocusable(false);
         marquee_layout = view.findViewById(R.id.marquee_layout);
-        courseware_text = (LinearLayout) view.findViewById(R.id.courseware_layout);
-        mMarqueeView = (ViewFlipper) view.findViewById(R.id.viewflipper);
+        courseware_text = view.findViewById(R.id.courseware_layout);
+        mMarqueeView = view.findViewById(R.id.viewflipper);
 
-        mSecretaryView = (LinearLayout) view.findViewById(R.id.ll_secretary);
-        mTvSecretaryTime = (TextView) view.findViewById(R.id.tv_secretary_time);
-        mTvSecretaryRoom = (TextView) view.findViewById(R.id.tv_secretary_room);
-        mTvSecretaryTask = (TextView) view.findViewById(R.id.tv_secretary_task);
-        mTvSecretarySessionName = (TextView) view.findViewById(R.id.tv_secretary_session_name);
+        mSecretaryView = view.findViewById(R.id.ll_secretary);
+        mTvSecretaryTime = view.findViewById(R.id.tv_secretary_time);
+        mTvSecretaryRoom = view.findViewById(R.id.tv_secretary_room);
+        mTvSecretaryTask = view.findViewById(R.id.tv_secretary_task);
+        mTvSecretarySessionName = view.findViewById(R.id.tv_secretary_session_name);
+        flow_like = view.findViewById(R.id.flow_like);
+        roll_view.setAdapter(new HomeNormalAdapter(null, getTopImage(), getActivity(), ""));
+        roll_view.setHintView(null);
 
 //       mIconFilePath = AppApplication.instance().getSDPath() + Constants.FILE_CONFERENCES + "incongress" + AppApplication.conId + "/icon.txt";
         mIconFilePath = AppApplication.instance().getSDPath() + Constants.FILESDIR + "/icon.txt";
 
-        mAdList = AppApplication.adList;
         ScaleAnimation sa = (ScaleAnimation) AnimationUtils.loadAnimation(getActivity(), R.anim.scale);
         LayoutAnimationController lac = new LayoutAnimationController(sa, 0);
         mLlConstainer.setLayoutAnimation(lac);
@@ -252,19 +271,6 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
 
         getHomeAssistant();
 
-        mIvADTop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int top = AppApplication.topNum;
-                if (top >= 0) {
-                    Ad bean = AppApplication.adList.get(top);
-                    String link = bean.getAdLink().trim();
-                    if (link != null && !link.equals("")) {
-                        CollegeActivity.startCitCollegeActivity(getActivity(), "", link);
-                    }
-                }
-            }
-        });
         zk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -298,43 +304,20 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
                 CollegeActivity.startCitCollegeActivity(getActivity(), bean.getTitle(), url);
             }
         });
-
-        initReceiver();
+        getUNReadQuestionNumber();
+        postNameAndHeadFloat();
         return view;
     }
 
-    private class AdReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (AppApplication.topNum < 0) {
-                return;
-            }
-
-            int top = AppApplication.topNum;
-
-//          String filespath = AppApplication.instance().getSDPath() + Constants.FILE_CONFERENCES + "incongress" + AppApplication.conId + "/"; //如果是compas会议的情况下会有这个conId存在
-            String filespath = AppApplication.instance().getSDPath() + Constants.FILESDIR;
-            String pathTop = "";
-            if (mAdList != null && mAdList.size() > top) {
-                pathTop = filespath + mAdList.get(top).getAdImage();
-            }
-
-            File fileTop = new File(pathTop);
-            if (fileTop.exists()) {
-                setAdImageView(fileTop.getAbsolutePath(), mIvADTop);
+    private List<Ad> getTopImage() {
+        List<Ad> topList = new ArrayList<>();
+        List<Ad> adList = ConferenceDbUtils.getAllAds();
+        for (int i = 0; i < adList.size(); i++) {
+            if (adList.get(i).getAdLevel() == 2) {
+                topList.add(adList.get(i));
             }
         }
-    }
-
-    private void setAdImageView(String filepath, ImageView imageview) {
-        File file = new File(filepath);
-        if (file != null) {
-            PicUtils.loadHomeImageFile(getActivity(), file, imageview);
-            int width = getActivity().getWindowManager().getDefaultDisplay().getWidth();
-            ViewGroup.LayoutParams lp = imageview.getLayoutParams();
-            lp.height = (int) (width * 0.17);
-            imageview.setLayoutParams(lp);
-        }
+        return topList;
     }
 
     private TextView getTextViewTitle(String title) {
@@ -360,6 +343,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
     }
 
     private void getHomeIconInfo() {
+        iconCodeBeans = new ArrayList<>();
         try {
             JSONObject obj = new JSONObject(readFileSdcardFile(mIconFilePath));
             Gson gson = new Gson();
@@ -412,10 +396,11 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
                         innerLinearLayout.setOnClickListener(this);
                         linearLayout.addView(innerLinearLayout);
                     }
-                    if (i == 1 || i == 2) {
+                    if (i == 1) {
                         fixedSize = fixedSize + ActivityUtils.getViewHeight(linearLayout) + 43;
+                    } else if (i == 2) {
+                        fixedSize = fixedSize * 2;
                     }
-
                     mLlConstainer.addView(linearLayout);
                 }
             }
@@ -491,7 +476,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
 
     //更新专家秘书状态
     public void updateSecretaryView() {
-        if (AppApplication.facultyId != -1 && Constants.IS_SECRETARY_SHOW && AppApplication.isUserLogIn()) {
+        if (AppApplication.facultyId != -1 && Constants.IS_SECRETARY_SHOW && SharePreferenceUtils.getUserBoolean(Constants.USER_IS_LOGIN, false)) {
             mSecretaryView.setVisibility(View.VISIBLE);
         } else {
             mSecretaryView.setVisibility(View.GONE);
@@ -520,7 +505,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
             lp.setMargins(spMarginBottom, 0, spMarginBottom, 0);
         } else if (index == 2) {
             lp.setMargins(spMarginBottom, 0, 0, 0);
-        }else if(index == 3){
+        } else if (index == 3) {
             lp.setMargins(spMargin2Bottom, 0, 0, 0);
         }
         linearLayout.setLayoutParams(lp);
@@ -538,8 +523,6 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
 
         int spWidth = DensityUtil.dip2px(getActivity(), 110);
         int spMarginBottom = DensityUtil.dip2px(getActivity(), 6);
-        int spPadding = DensityUtil.dip2px(getActivity(), 5);
-
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, spWidth);
         if (have) {
             lp.setMargins(0, 0, 0, spMarginBottom);
@@ -567,20 +550,26 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
                 //横向布局
                 View view = LayoutInflater.from(getActivity()).inflate(R.layout.merge_horizontal_text_image, parentView, false);
                 view.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-                TextView tvName =  view.findViewById(R.id.tv_name);
-                ImageView ivLogo =  view.findViewById(R.id.iv_logo);
-                TextView tvMsgNum =  view.findViewById(R.id.tv_msg_nums);
-                ImageView ivInteractive =  view.findViewById(R.id.iv_hd_session_on);
+                TextView tvName = view.findViewById(R.id.tv_name);
+                ImageView ivLogo = view.findViewById(R.id.iv_logo);
+                TextView tvMsgNum = view.findViewById(R.id.tv_msg_nums);
+                ImageView ivInteractive = view.findViewById(R.id.iv_hd_session_on);
+                TextView remind_red = view.findViewById(R.id.remind_red);
                 view.setBackgroundColor(Color.parseColor(bean.getIconColor()));
-                //AppApplication.applyFont(getActivity(), view, "fonts/cg.TTF");
                 if (AppApplication.systemLanguage == 1) {
                     tvName.setText(bean.getIconName());
                     int dimen = getResources().getDimensionPixelSize(R.dimen.large_home_text);
-                    tvName.setTextSize(TypedValue.COMPLEX_UNIT_PX,dimen);
+                    tvName.setTextSize(TypedValue.COMPLEX_UNIT_PX, dimen);
                 } else {
                     tvName.setText(bean.getIconEnName());
                     int dimen = getResources().getDimensionPixelSize(R.dimen.shifting_label);
-                    tvName.setTextSize(TypedValue.COMPLEX_UNIT_PX,dimen);
+                    tvName.setTextSize(TypedValue.COMPLEX_UNIT_PX, dimen);
+                }
+                if (iconCode == PHOTOWALL || iconCode == DEMAND) {
+                    NewHomeIconBean bean1 = new NewHomeIconBean();
+                    bean1.setIconCode(iconCode);
+                    bean1.setTextView(remind_red);
+                    iconCodeBeans.add(bean1);
                 }
                 tvName.setTextColor(Color.parseColor(bean.getIconFontColor()));
                 if (TextUtils.isEmpty(bean.getIconUrl())) {
@@ -593,20 +582,26 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
             } else {
                 //纵向布局
                 View view = LayoutInflater.from(getActivity()).inflate(R.layout.merge_vertical_text_image, parentView, false);
-                LinearLayout ll_item = (LinearLayout) view.findViewById(R.id.ll_item);
-                TextView tvName = (TextView) view.findViewById(R.id.tv_name);
-                ImageView ivLogo = (ImageView) view.findViewById(R.id.iv_logo);
-                TextView tvMsgNum = (TextView) view.findViewById(R.id.tv_msg_nums);
-                ImageView ivInteractive = (ImageView) view.findViewById(R.id.iv_hd_session_on);
+                TextView tvName = view.findViewById(R.id.tv_name);
+                ImageView ivLogo = view.findViewById(R.id.iv_logo);
+                TextView tvMsgNum = view.findViewById(R.id.tv_msg_nums);
+                ImageView ivInteractive = view.findViewById(R.id.iv_hd_session_on);
+                TextView remind_red = view.findViewById(R.id.remind_red);
                 //AppApplication.applyFont(getActivity(), view, "fonts/cg.TTF");
                 if (AppApplication.systemLanguage == 1) {
                     tvName.setText(bean.getIconName());
                     int dimen = getResources().getDimensionPixelSize(R.dimen.large_home_text);
-                    tvName.setTextSize(TypedValue.COMPLEX_UNIT_PX,dimen);
+                    tvName.setTextSize(TypedValue.COMPLEX_UNIT_PX, dimen);
                 } else {
                     tvName.setText(bean.getIconEnName());
                     int dimen = getResources().getDimensionPixelSize(R.dimen.shifting_label);
-                    tvName.setTextSize(TypedValue.COMPLEX_UNIT_PX,dimen);
+                    tvName.setTextSize(TypedValue.COMPLEX_UNIT_PX, dimen);
+                }
+                if (iconCode == PHOTOWALL || iconCode == DEMAND || iconCode == QUESTION) {
+                    NewHomeIconBean bean1 = new NewHomeIconBean();
+                    bean1.setIconCode(iconCode);
+                    bean1.setTextView(remind_red);
+                    iconCodeBeans.add(bean1);
                 }
                 tvName.setTextColor(Color.parseColor(bean.getIconFontColor()));
 
@@ -690,6 +685,9 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
         Row.RowsBean.ObjBean rowBean = (Row.RowsBean.ObjBean) v.getTag();
         StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
         if (rowBean != null) {
+            if (!TextUtils.isEmpty(rowBean.getIconName())) {
+                uploadClick(rowBean.getIconName());
+            }
             if (TextUtils.isEmpty(rowBean.getNewModel())) {//&& Integer.valueOf(rowBean.getIconCode()) != DEMAND
                 //根据ID跳转到不同的模块中
                 switch (Integer.parseInt(rowBean.getIconCode())) {
@@ -756,12 +754,16 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
                         break;
                     case DEMAND:
                         //学院
+                        StatusBarUtil.setStatusBarDarkTheme(getActivity(), false);
                         if (AppApplication.systemLanguage == 1) {
-                            goCollege(rowBean.getIconName());
+                            checkUserInfo(rowBean.getIconName());
                         } else {
-                            goCollege(rowBean.getIconEnName());
+                            checkUserInfo(rowBean.getIconEnName());
                         }
-                        //goLive();
+                        postUNReadQuestionNumber(false, 12);
+                        if (sessionBadge != null) {
+                            sessionBadge.hide(false);
+                        }
                         break;
                     case EXHIBITORS:
                         //参展商
@@ -815,6 +817,10 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
                         } else {
                             goQuestions(rowBean.getIconEnName());
                         }
+                        postUNReadQuestionNumber(false, 18);
+                        if (questionBadge != null) {
+                            questionBadge.hide(false);
+                        }
                         break;
                     case SCANE:
                         goScane();
@@ -847,6 +853,10 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
                         } else {
                             goPhotoAlbum(rowBean.getIconEnName());
                         }
+                        postUNReadQuestionNumber(false, 23);
+                        if (photoBadge != null) {
+                            photoBadge.hide(false);
+                        }
                         break;
                     case VENUEPICTURE:
                         if (AppApplication.systemLanguage == 1) {
@@ -872,7 +882,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
                 }
 
                 if (url.contains("appOpenCheckLogin")) {
-                    if (AppApplication.isUserLogIn()) {
+                    if (SharePreferenceUtils.getUserBoolean(Constants.USER_IS_LOGIN, false)) {
                         if (AppApplication.systemLanguage == 1) {
                             CollegeActivity.startCitCollegeActivity(getActivity(), rowBean.getIconName(), url);
                         } else {
@@ -894,6 +904,20 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
         }
 
     }
+
+    private void uploadClick(String modelName) {
+        CHYHttpClientUsage.getInstanse().doChyModuleTongji(modelName, new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+        });
+    }
     //=======================================================================模块跳转=======================================================================
 
     /**
@@ -910,8 +934,6 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
 
         listFragment.setRightListener(view);
         action(listFragment, view);
-
-
     }
 
     /**
@@ -994,7 +1016,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
      * 专家秘书
      */
     private void goSecretary() {
-        CHYHttpClientUsage.getInstanse().doGetSceneShowQuestions(Constants.getConId() + "", AppApplication.userId + "", "-1", AppApplication.getSystemLanuageCode(), new JsonHttpResponseHandler("gbk") {
+        CHYHttpClientUsage.getInstanse().doGetSceneShowQuestions(Constants.getConId() + "", AppApplication.facultyId + "", "-1", AppApplication.getSystemLanuageCode(), new JsonHttpResponseHandler("gbk") {
             @Override
             public void onStart() {
                 super.onStart();
@@ -1032,6 +1054,13 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
     }
 
     /**
+     * 新专家秘书
+     */
+    private void goScretary2019() {
+        action(new ScretaryProfessorFragment(), getString(R.string.secretary_fragment_title), false, false, false);
+    }
+
+    /**
      * 参会指南
      */
     private void goGuide(String title) {
@@ -1065,7 +1094,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
      * 现场互动
      */
     private void goQuestionAndA(String title) {
-        if (AppApplication.isUserLogIn()) {
+        if (SharePreferenceUtils.getUserBoolean(Constants.USER_IS_LOGIN, false)) {
             HdSessionActionFragment hdFragment = new HdSessionActionFragment();
             View hdTtile = CommonUtils.initView(this.getActivity(), R.layout.title_hdsession);
             hdFragment.setRightListener(hdTtile);
@@ -1079,12 +1108,43 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
      * 提问模块
      */
     public void goQuestions(String title) {
-        if (AppApplication.isUserLogIn()) {
+        if (SharePreferenceUtils.getUserBoolean(Constants.USER_IS_LOGIN, false)) {
             action(new QuestionSquarFragment(), title, false, false, false);
         } else {
             LoginActivity.startLoginActivity(getActivity(), LoginActivity.TYPE_NORMAL, "", "", "", "");
         }
         // action(new QuestionsFragment(), R.string.question, false, false, false);
+    }
+
+    /**
+     * 添加课件权限
+     */
+    public void checkUserInfo(final String title) {
+        if (AppApplication.isUserLogIn()) {
+            CHYHttpClientUsage.getInstanse().doGetCheckUserInfo(new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
+
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    super.onSuccess(statusCode, headers, response);
+                    if (JSONCatch.parseInt("userState", response) == 1) {
+                        StatusBarUtil.setStatusBarDarkTheme(getActivity(), true);
+                        goCollege(title);
+                    } else {
+                        ToastUtils.showToast("请先补全个人信息");
+                        CollegeActivity.startCitCollegeActivity(getContext(), HomeActivity.activity.getResources().getString(R.string.settings_modify_info_title), Constants.MODEFIY_INFO_URI + SharePreferenceUtils.getUser(Constants.USER_IC_ID));
+                    }
+
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    super.onFailure(statusCode, headers, throwable, errorResponse);
+                    ToastUtils.showToast("获取信息失败，请联系管理员");
+                }
+            });
+        } else {
+            LoginActivity.startLoginActivity(getActivity(), LoginActivity.TYPE_NORMAL, "", "", "", "");
+        }
     }
 
     /**
@@ -1146,12 +1206,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
      * 学院
      */
     public void goCollege(String titleName) {
-        /*View titleView = CommonUtils.initView(getActivity(), R.layout.title_segment);
-        searchFragment.setCenterView(titleView);*/
-        //goQuestions("提问");
-        //只有日程搜索
         action(CollegeHomeFragment.getInstance(titleName), null);
-        //action(searchFragment, title, searchView, false, false, false);
     }
 
     /**
@@ -1189,18 +1244,6 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
         StatusBarUtil.setStatusBarDarkTheme(getActivity(), false);
         Intent intent = new Intent(getActivity(), QRCodeCaptureActivity.class);
         getActivity().startActivity(intent);
-    }
-
-
-    /**
-     * 初始化接收器
-     */
-    private void initReceiver() {
-        mAdReceiver = new AdReceiver();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(Constants.ACTION_CHANGE_AD);
-
-        getActivity().registerReceiver(mAdReceiver, filter);
     }
 
     //读SD中的文件
@@ -1321,6 +1364,7 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
         MobclickAgent.onPageEnd(Constants.FRAGMENT_DYNAMICHOME);
     }
 
+    //设置收缩高度
     private void setHeightAnimator(int height) {
         int mLayoutHeight = mLlConstainer.getHeight();
         ValueAnimator valueAnimator = createDropAnimator(mLlConstainer, mLayoutHeight, height);
@@ -1328,4 +1372,176 @@ public class NewDynamicHomeFragment extends BaseFragment implements View.OnClick
         valueAnimator.start();
         currentSize = height;
     }
+
+    //根据icUserID获取用户信息
+    private void doGetUserInfo(String icUserId) {
+        CHYHttpClientUsage.getInstanse().doGetMobileUserInfoByIcUserId(icUserId, LanguageUtil.getCurrentLan(getActivity()), new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                if (JSONCatch.parseInt("state", response) == 1) {
+                    ParseUser.saveUserInfo(response.toString());
+                    initJpush();
+                    saveToken();
+                }
+            }
+        });
+    }
+
+    /**
+     * 将JPush的registerId发送给服务端，方便服务端进行推送
+     */
+    private void initJpush() {
+        final String registrationID = JPushInterface.getRegistrationID(HomeActivity.activity);
+        Log.d("sgqTest", "initJpush: " + registrationID);
+        CHYHttpClientUsage.getInstanse().doSendToken(SharePreferenceUtils.getUser(Constants.CONID) + "", Constants.TYPE_ANDROID, registrationID, SharePreferenceUtils.getUser(Constants.USER_ID) + "", new JsonHttpResponseHandler("gbk") {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+        });
+    }
+
+    private void saveToken() {
+        String token = SharePreferenceUtils.getUser(Constants.USER_RONG_TOKEN);
+        if (TextUtils.isEmpty(token)) {
+            CHYHttpClientUsage.getInstanse().doGetToken(AppApplication.userId, new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    super.onSuccess(statusCode, headers, response);
+                    try {
+                        int state = response.getInt("state");
+                        if (state == 1) {
+                            String tokenRes = response.getString("token");
+                            if (!cz.msebera.android.httpclient.util.TextUtils.isEmpty(tokenRes)) {
+                                SharePreferenceUtils.saveUserString(Constants.USER_RONG_TOKEN, tokenRes);
+                            }
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    super.onFailure(statusCode, headers, throwable, errorResponse);
+                    LogUtils.println("response:" + errorResponse);
+                }
+            });
+        }
+    }
+
+    /**
+     * 获取未读问答数
+     * 返回结果：photoWallCount、coursewareCount、questionCount
+     */
+    private void getUNReadQuestionNumber() {
+        CHYHttpClientUsage.getInstanse().doGetUNReadQuestion(new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                photoNumber = JSONCatch.parseInt("photoWallCount", response);
+                sessionNumber = JSONCatch.parseInt("coursewareCount", response);
+                questionNumber = JSONCatch.parseInt("questionCount", response);
+                for (int i = 0; i < iconCodeBeans.size(); i++) {
+                    if (iconCodeBeans.get(i).getIconCode() == PHOTOWALL) {
+                        photoBadge = new QBadgeView(getContext()).bindTarget(iconCodeBeans.get(i).getTextView()).setBadgeNumber(photoNumber).setBadgeGravity(Gravity.TOP | Gravity.END).setBadgeTextSize(9, true).setBadgePadding(-0.00005f, true).stroke(getResources().getColor(R.color.remind_cycle_color), 2, true).setBadgeBackgroundColor(getResources().getColor(R.color.remind_cycle_color));//.setBadgeNumber()
+                    } else if (iconCodeBeans.get(i).getIconCode() == DEMAND) {
+                        sessionBadge = new QBadgeView(getContext()).bindTarget(iconCodeBeans.get(i).getTextView()).setBadgeNumber(sessionNumber).setBadgeGravity(Gravity.TOP | Gravity.END).setBadgeTextSize(9, true).setBadgePadding(-0.00005f, true).stroke(getResources().getColor(R.color.remind_cycle_color), 2, true).setBadgeBackgroundColor(getResources().getColor(R.color.remind_cycle_color));//.setBadgeNumber()
+                    } else if (iconCodeBeans.get(i).getIconCode() == QUESTION) {
+                        questionBadge = new QBadgeView(getContext()).bindTarget(iconCodeBeans.get(i).getTextView()).setBadgeNumber(questionNumber).setBadgeGravity(Gravity.TOP | Gravity.END).setBadgeTextSize(9, true).setBadgePadding(-0.00005f, true).stroke(getResources().getColor(R.color.remind_cycle_color), 2, true).setBadgeBackgroundColor(getResources().getColor(R.color.remind_cycle_color));//.setBadgeNumber()
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                ToastUtils.showToast("获取信息失败，请联系管理员");
+            }
+
+        });
+    }
+
+    /**
+     * 上传红点点击记录
+     * 返回结果：photoWallCount、coursewareCount、questionCount
+     */
+    public void postUNReadQuestionNumber(boolean isCompass, int moduleNo) {
+        CHYHttpClientUsage.getInstanse().doPostUNReadQuestion(isCompass, moduleNo, new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+            }
+
+        });
+    }
+    //来访者飘起来
+
+    /**
+     * 头像飘起来
+     */
+    public void postNameAndHeadFloat() {
+        CHYHttpClientUsage.getInstanse().doPostNameAnddPHeadFloat(new JsonHttpResponseHandler(Constants.ENCODING_GBK) {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                HomePersonBean bean = new Gson().fromJson(response.toString(), new TypeToken<HomePersonBean>() {
+                }.getType());
+                if (viewList == null) {
+                    viewList = new ArrayList<>();
+                } else {
+                    viewList.clear();
+                }
+                if (bean.getArray() != null && bean.getArray().size() > 0) {
+                    for (int i = 0; i < bean.getArray().size(); i++) {
+                        HomePersonBean.ArrayBean bean1 = bean.getArray().get(i);
+                        final View view = LayoutInflater.from(getActivity()).inflate(R.layout.flow_like_view, null);
+                        CircleImageView iv_head = view.findViewById(R.id.iv_head);
+                        TextView tv_name = view.findViewById(R.id.tv_name);
+                        PicUtils.loadCircleImage(getActivity(), bean1.getImgUrl(), iv_head);
+                        tv_name.setText(bean1.getName());
+                        viewList.add(view);
+                    }
+                    Observable
+                            .intervalRange(0, bean.getArray().size(), 0, 1, TimeUnit.SECONDS)
+                            .subscribe(new Consumer<Long>() {
+                                @Override
+                                public void accept(Long aLong) {
+                                    Message message = myHandler.obtainMessage();
+                                    message.what = 100;
+                                    message.obj = aLong;
+                                    myHandler.sendMessage(message);
+                                }
+                            });
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+            }
+
+        });
+    }
+
+    private Handler myHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message message) {
+            if (message.what == 100) {
+                flow_like.addLikeView(viewList.get(new Long((Long) message.obj).intValue()));
+            }
+            return false;
+        }
+    });
 }
